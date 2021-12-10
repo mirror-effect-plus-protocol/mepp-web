@@ -1,0 +1,136 @@
+import React, { Fragment, useEffect, useState } from 'react';
+import {
+  Datagrid,
+  List,
+  ListContextProvider,
+  ReferenceField,
+  TextField,
+  useListContext,
+  useLocale,
+  useTranslate,
+} from 'react-admin';
+import { Divider, Tabs, Tab } from '@material-ui/core';
+
+import ArchivableFilter from '@components/admin/shared/filters/ArchivableFilter';
+import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
+import ListActions from '@components/admin/shared/toolbars/ListToolbar';
+import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
+import Spinner from '@components/admin/shared/Spinner';
+import ExerciseListAside from './ExerciseListAside';
+
+const tabs = [
+  { id: 'user', is_system: false },
+  { id: 'system', is_system: true },
+];
+
+const ExerciseDatagrid = ({locale, permissions, ...props}) => {
+
+  return (
+    <Datagrid {...props}>
+      <TextField source={`i18n.description.${locale}`} />
+      {permissions === 'admin' && (
+        <ReferenceField
+          source="clinician_uid"
+          reference="clinicians"
+        >
+          <TextField source="full_name" />
+        </ReferenceField>
+      )}
+      <RowActionToolbar
+        permissions={permissions}
+        clonable={true}
+      />
+    </Datagrid>
+  );
+};
+
+const TabbedDatagrid = ({permissions, ...props}) => {
+  const listContext = useListContext();
+  const locale = useLocale();
+  const t = useTranslate();
+  const { ids, filterValues, setFilters, displayedFilters, loading } =
+    listContext;
+  const [userExerciseIds, setUserExerciseIds] = useState([]);
+  const [systemExerciseIds, setSystemExerciseIds] = useState([]);
+  const [value, setValue] = useState('user');
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    setFilters &&
+      setFilters(
+        { ...filterValues, is_system: newValue === 'user' ? false : true },
+        displayedFilters,
+      );
+  };
+
+  useEffect(() => {
+    if (filterValues.is_system) {
+      // reset `value` to `system` when it's out of sync
+      if (value === 'user') { setValue('system'); }
+      setSystemExerciseIds(ids);
+    } else {
+      setUserExerciseIds(ids);
+    }
+  }, [ids, filterValues.is_system]);
+
+  return (
+    <Fragment>
+      <Tabs
+        value={value}
+        indicatorColor="primary"
+        onChange={handleChange}
+      >
+        {tabs.map((choice) => (
+          <Tab
+            key={choice.id}
+            label={t(`resources.${props.resource}.list.labels.${choice.id}`)}
+            value={choice.id}
+          />
+        ))}
+      </Tabs>
+      <Divider />
+      <div>
+        {loading && <Spinner />}
+        {!loading && filterValues.is_system === false && (
+          <ListContextProvider value={{ ...listContext, ids: userExerciseIds }}>
+            <ExerciseDatagrid
+              locale={locale}
+              permissions={permissions}
+              {...props}
+            />
+          </ListContextProvider>
+        )}
+        {!loading && filterValues.is_system === true && (
+          <ListContextProvider value={{ ...listContext, ids: systemExerciseIds }}>
+            <ExerciseDatagrid
+              locale={locale}
+              permissions={permissions}
+              {...props}
+            />
+          </ListContextProvider>
+        )}
+      </div>
+    </Fragment>
+  );
+};
+
+export const ExerciseList = (props) => {
+  const locale = useLocale();
+  return (
+    <List
+      {...props}
+      filterDefaultValues={{
+        archived: false,
+        is_system: false,
+        language: locale,
+      }}
+      filters={<ArchivableFilter />}
+      bulkActionButtons={<BulkActionButtons permissions={props.permissions} />}
+      aside={<ExerciseListAside permissions={props.permissions} />}
+      sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
+      perPage={25}
+      actions={<ListActions/>}
+    >
+      <TabbedDatagrid permissions={props.permissions}/>
+    </List>
+  )
+};

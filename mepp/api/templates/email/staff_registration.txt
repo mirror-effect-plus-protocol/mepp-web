@@ -1,0 +1,30 @@
+{% load i18n %}
+{% trans "Hello" %} {{ first_name }},
+
+{% trans "Welcome to the MEPP 2.0, your staff facial rehabilitation website, at" %}
+
+{% trans "Your username is:" %} {{ email }}
+
+{% blocktranslate with mepp_host=mepp_host %}We invite you to visit {{ mepp_host }} and click on "Forgot your password?" to reset and create your own your password.{% endblocktranslate %}
+
+{% trans "The administrator has created a therapist profile for you. We invite you to look at the following video of instructions to understand how to navigate in the system:" %}
+https://www.youtube.com/
+
+{% trans "You can now go to your profile, create profiles, practical sessions and intervention plans for your patients." %}
+
+{% trans "Below are important tips to use the MEPP in an efficient way and to have a better experience:" %}
+
+{% trans "   - On your mobile devices, it is imperative to hold your device vertically" %}
+{% trans "   - On your computer, put your browser in fullscreen" %}
+
+{% trans "Please, follow this flash training on important principles for facial rehabilitation:" %}
+https://www.youtube.com/
+
+{% trans "We also encourage you to continue training in the field to learn how to guide your patients in an optimal way." %}
+
+{% trans "In case of technical problems with the website or application, please contact us at info@mirroreffectplus.org." %}
+
+{% trans "We wish you a successful intervention!" %}
+
+{% trans "The MEPP team" %}
+

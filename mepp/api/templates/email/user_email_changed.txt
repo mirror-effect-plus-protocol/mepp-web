@@ -1,0 +1,10 @@
+{% load i18n %}
+{% trans "Hello" %} {{ first_name }},
+
+{% trans "Your e-mail address used with your MEPP account has been changed!" %}
+
+{% blocktranslate with previous_email=previous_email email=email %}The previous address was {{ previous_email }} and the new address is {{ email }}.{% endblocktranslate %}
+
+{% trans "If you have not made this change, please contact us immediately at info@mirroreffectplus.org." %}
+
+{% trans "The MEPP team" %}

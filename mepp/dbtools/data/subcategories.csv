@@ -1,0 +1,20 @@
+"Tiers supérieur","Superior Third",1
+"Tiers médian","Median Third",1
+"Tiers inférieur","Inferior Third",1
+"Surpris(e)","Surprised",2
+"Fâché(e)","Angry",2
+"Dégoûté(e)","Disgusted",2
+"Heureux(euse)","Happy",2
+"Amoureux(euse)","In love",2
+"Tiers supérieur et surpris(e)","Superior Third and Surprised",3
+"Tiers supérieur et fâché(e)","Superior Third and Angry",3
+"Tiers médian et dégoûté(e)","Median Third and Disgusted",3
+"Tiers inférieur et heureux(euse)","Inferior Third and Happy",3
+"Tiers inférieur et dégoûté(e)","Inferior Third and Disgusted",3
+"Tiers inférieur et amoureux(euse)","Inferior Third and in love",3
+"Passif assisté","Passive Assisted",4
+"Actif assisté","Active Assisted",4
+"Actif   ","Active  ",4
+"Parole","Speech",5
+"Déglutition","Swallowing",5
+"Contrôle des syncinésies","Synkinesis control",5
