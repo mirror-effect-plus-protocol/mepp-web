@@ -20,3 +20,4 @@ __pycache__
 # develop branch only
 build
 requirements.txt
+.well-known
