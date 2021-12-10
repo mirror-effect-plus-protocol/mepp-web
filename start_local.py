@@ -240,7 +240,7 @@ services:
 
     def __write_new_ip(self):
 
-        with open(f'{self.BASE_DIR}/.last_ip.txt', 'w') as f:
+        with open(f'{self.BASE_DIR}/.vols/last_ip.txt', 'w') as f:
             f.write(self.__ip_address)
 
     def __write_nginx_config(self):

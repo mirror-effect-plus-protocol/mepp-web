@@ -54,6 +54,8 @@ Run with option `--help` for more details
 
 _Notes: Ports `8000`, `8080` and `9090` are required_
 
+Have a look at the [wiki](https://github.com/mirror-effect-plus-protocol/mepp-web/wiki) for more info.
+
 ## Tests
 
 Dev dependencies are installed when using `pipenv`.

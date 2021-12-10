@@ -67,7 +67,16 @@ const Footer = () => {
         <CopyrightWrapper>
           <Copyright small>
             <Href href="https://github.com/mirror-effect-plus-protocol/mepp-web/">MEPP</Href>&nbsp;©&nbsp;2021&nbsp;
-            <Href href="https://github.com/mirror-effect-plus-protocol/mepp-web/blob/main/LICENSE" target="_blank" rel="license noopener noreferrer">
+            <Href
+              href="https://github.com/mirror-effect-plus-protocol/mepp-web/blob/main/LICENSE"
+              target="_blank"
+              rel="license noopener noreferrer"
+              style={{
+                display: 'inline-block',
+                verticalAlign: 'middle',
+                marginTop: '2px',
+              }}
+            >
               <svg width="100" height="20">
                 <linearGradient id="b" x2="0" y2="100%">
                   <stop offset="0" stopColor="#bbb" stopOpacity=".1"/>
