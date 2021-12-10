@@ -32,7 +32,7 @@ Look at [`mepp-docker` README](https://github.com/mirror-effect-plus-protocol/me
 
 ### Run it locally 
 
-If you want to test it locally, a script is provided (only for macOS or linux) to run the application on a local environment: `start_dev.py`
+If you want to test it locally, a script is provided (only for macOS or linux) to run the application on a local environment: `start_local.py`
 
 It uses `docker` (and `docker-compose`) to start NGINX as a proxy for both front-end and back-end webservers in order to make the React app be able to speak with Django API.  
 Both are hosted under the same domain (`mepp.local`) to avoid CORS errors.  
