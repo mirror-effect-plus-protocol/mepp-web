@@ -29,13 +29,13 @@ class AdminExerciseListAPITestCase(BaseV1TestCase):
 
     def test_list_exercises_as_admin(self):
         token = self.login(self.admin.username, self.common_password)
-        exercices_count = Exercise.objects.all().count()
+        exercises_count = Exercise.objects.all().count()
         response = self.client.get(
             self.reverse('exercise-list'),
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['count'], exercices_count)
+        self.assertEqual(response.data['count'], exercises_count)
 
     def test_list_exercises_as_clinician_not_system(self):
         url = self.reverse('exercise-list') + '?is_system=false'
@@ -81,7 +81,7 @@ class AdminExerciseListAPITestCase(BaseV1TestCase):
 
 class AdminExerciseCreateAPITestCase(BaseV1TestCase):
 
-    def create_exercise(self, user, **kwargs):
+    def get_exercise_dict(self, user, **kwargs):
         sub_category = SubCategory.objects.first()
         return {
             'archived': False,
@@ -97,14 +97,15 @@ class AdminExerciseCreateAPITestCase(BaseV1TestCase):
             'sub_categories': [
                 {'uid': sub_category.uid}
             ],
-            'is_system': kwargs.get('is_system', False)
+            'is_system': kwargs.get('is_system', False),
+            'clinician_uid': user.uid,
         }
 
     def test_create_exercise_as_admin(self):
         token = self.login(self.admin.username, self.common_password)
         response = self.client.post(
             self.reverse('exercise-list'),
-            data=self.create_exercise(self.admin),
+            data=self.get_exercise_dict(self.admin),
             format='json',
             **self.get_token_header(token),
         )
@@ -114,7 +115,7 @@ class AdminExerciseCreateAPITestCase(BaseV1TestCase):
         token = self.login(self.helen.username, self.common_password)
         response = self.client.post(
             self.reverse('exercise-list'),
-            data=self.create_exercise(self.helen),
+            data=self.get_exercise_dict(self.helen),
             format='json',
             **self.get_token_header(token),
         )
@@ -124,14 +125,14 @@ class AdminExerciseCreateAPITestCase(BaseV1TestCase):
         token = self.login(self.patient_john.username, self.common_password)
         response = self.client.post(
             self.reverse('exercise-list'),
-            data=self.create_exercise(self.patient_john),
+            data=self.get_exercise_dict(self.patient_john),
             format='json',
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_cannot_create_not_valid_exercise(self):
-        exercise = self.create_exercise(self.helen)
+        exercise = self.get_exercise_dict(self.helen)
         del exercise['i18n']
         token = self.login(self.helen.username, self.common_password)
         response = self.client.post(
@@ -144,7 +145,7 @@ class AdminExerciseCreateAPITestCase(BaseV1TestCase):
 
     def test_cannot_create_system_exercise_as_clinician(self):
         token = self.login(self.helen.username, self.common_password)
-        exercise = self.create_exercise(self.helen, is_system=True)
+        exercise = self.get_exercise_dict(self.helen, is_system=True)
         response = self.client.post(
             self.reverse('exercise-list'),
             data=exercise,
@@ -152,6 +153,30 @@ class AdminExerciseCreateAPITestCase(BaseV1TestCase):
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_cannot_assign_exercise_as_another_clinician(self):
+        token = self.login(self.helen.username, self.common_password)
+        exercise = self.get_exercise_dict(self.john)
+        response = self.client.post(
+            self.reverse('exercise-list'),
+            data=exercise,
+            format='json',
+            **self.get_token_header(token),
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data['clinician_uid'], self.helen.uid)
+
+    def test_can_assign_exercise_as_admin(self):
+        token = self.login(self.admin.username, self.common_password)
+        exercise = self.get_exercise_dict(self.john)
+        response = self.client.post(
+            self.reverse('exercise-list'),
+            data=exercise,
+            format='json',
+            **self.get_token_header(token),
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data['clinician_uid'], self.john.uid)
 
 
 class AdminExerciseUpdateAPITestCase(BaseV1TestCase):
