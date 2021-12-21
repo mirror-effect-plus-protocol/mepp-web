@@ -87,54 +87,6 @@ class PatientSerializer(CredentialsMixin, HyperlinkedModelUUIDSerializer):
         self.validate_clinician_uid(attrs)
         return attrs
 
-    def validate_clinician_uid(self, attrs):
-        request = self.context['request']
-
-        def _get_clinician_uid():
-            try:
-                return request.data['clinician_uid']
-            except KeyError:
-                return None
-
-        clinician_uid = _get_clinician_uid()
-
-        if request.user.is_superuser:
-            if (
-                self.instance
-                and self.instance.pk is not None
-                and not clinician_uid
-            ):
-                return attrs
-
-            if not clinician_uid:
-                raise serializers.ValidationError({
-                    'clinician_uid': 'This field is required'
-                })
-            else:
-                try:
-                    clinician = User.objects.get(uid=clinician_uid, is_staff=True)
-                except User.DoesNotExist:
-                    raise serializers.ValidationError({
-                        'clinician_uid': 'This user does not exist'
-                    })
-
-                attrs['clinician_id'] = clinician.pk
-        else:
-            if (
-                clinician_uid
-                and self.instance
-                and self.instance.pk is not None
-                and clinician_uid != self.instance.clinician.uid
-            ):
-                raise serializers.ValidationError({
-                    'clinician_uid': 'Action forbidden'
-                })
-            else:
-                if not self.instance or self.instance.pk is None:
-                    attrs['clinician_id'] = request.user.pk
-
-        return attrs
-
 
 class NestedPatientSerializer(PatientSerializer):
 

@@ -24,6 +24,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from mepp.api.fields.uuid import UUIDRelatedField
+from mepp.api.mixins.serializers.clinician import ClinicianValidatorMixin
 from mepp.api.models.exercise import Exercise
 from mepp.api.models.plan import (
     TreatmentPlan,
@@ -115,11 +116,13 @@ class TreatmentPlanI18nSerializer(serializers.ModelSerializer):
         list_serializer_class = I18nSerializer
 
 
-class TreatmentPlanSerializer(HyperlinkedModelUUIDSerializer):
+class TreatmentPlanSerializer(
+    ClinicianValidatorMixin, HyperlinkedModelUUIDSerializer
+):
 
     clinician_uid = serializers.SerializerMethodField()
     patient_uid = UUIDRelatedField(
-        source="patient",
+        source='patient',
         queryset=get_user_model().objects.filter(is_staff=False),
         allow_null=True,
         required=False,
@@ -181,6 +184,7 @@ class TreatmentPlanSerializer(HyperlinkedModelUUIDSerializer):
         return None
 
     def validate(self, attrs):
+        self.validate_clinician_uid(attrs)
         exercises = self._validate_exercises()
         if exercises:
             attrs['exercises'] = exercises
@@ -193,6 +197,13 @@ class TreatmentPlanSerializer(HyperlinkedModelUUIDSerializer):
             self.instance
             and self.instance.pk
             and self.instance.is_system
+            and not request.user.is_superuser
+        ):
+            raise serializers.ValidationError('Action forbidden')
+
+        if (
+            not self.instance
+            and is_system
             and not request.user.is_superuser
         ):
             raise serializers.ValidationError('Action forbidden')
@@ -295,9 +306,34 @@ class TreatmentPlanSerializer(HyperlinkedModelUUIDSerializer):
 
     def _update_i18n(self, instance: TreatmentPlan, i18n: list):
         for translation in i18n:
+            try:
+                translated_language = translation['language']
+            except KeyError:
+                raise serializers.ValidationError({
+                    'i18n.language': 'Field is required'
+                })
+
+            try:
+                translated_name = translation['name']
+            except KeyError:
+                raise serializers.ValidationError({
+                    'i18n.name': (
+                        f'Field is required for language: {translated_language}'
+                    )
+                })
+
+            try:
+                translated_description = translation['description']
+            except KeyError:
+                raise serializers.ValidationError({
+                    'i18n.description': (
+                        f'Field is required for language: {translated_language}'
+                    )
+                })
+
             treatment_plan_i18n, _ = TreatmentPlanI18n.objects.get_or_create(
-                language=translation['language'], parent=instance
+                language=translated_language, parent=instance
             )
-            treatment_plan_i18n.name = translation['name']
-            treatment_plan_i18n.description = translation['description']
+            treatment_plan_i18n.name = translated_name
+            treatment_plan_i18n.description = translated_description
             treatment_plan_i18n.save()

@@ -24,12 +24,12 @@ from rest_framework import serializers
 
 from mepp.api.enums.language import LanguageEnum
 from mepp.api.fields.uuid import HyperlinkedUUIDRelatedField
+from mepp.api.mixins.serializers.clinician import ClinicianValidatorMixin
 from mepp.api.models.exercise import (
     Exercise,
     ExerciseI18n,
     SubCategory,
 )
-
 from mepp.api.serializers import (
     I18nSerializer,
     HyperlinkedModelUUIDSerializer,
@@ -47,7 +47,9 @@ class ExerciseI18nSerializer(serializers.ModelSerializer):
         list_serializer_class = I18nSerializer
 
 
-class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
+class ExerciseSerializer(
+    ClinicianValidatorMixin, HyperlinkedModelUUIDSerializer
+):
 
     clinician = HyperlinkedUUIDRelatedField(
         lookup_field='uid',
@@ -108,6 +110,7 @@ class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
         return list(exercise.sub_categories.values('uid', 'category__uid').all())
 
     def validate(self, attrs):
+        self.validate_clinician_uid(attrs)
         sub_categories = self._validate_sub_categories()
         if sub_categories:
             attrs['sub_categories'] = sub_categories
