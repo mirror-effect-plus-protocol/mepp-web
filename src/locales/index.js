@@ -45,5 +45,4 @@ i18n
   });
 
 export const LANGUAGES = Object.freeze([Language.FR, Language.EN]);
-export const languageOptions = Object.freeze([Language.FR, Language.EN]);
 export default i18n;

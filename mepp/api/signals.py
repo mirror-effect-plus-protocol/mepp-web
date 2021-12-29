@@ -128,7 +128,8 @@ def password_reset_token_created(
     mepp_host = settings.HTTP_HOST
     context = {
         'first_name': reset_password_token.user.first_name,
-        'reset_password_url': f'{mepp_host}/?t={reset_password_token.key}#reset-password',
+        'reset_password_url': f'{mepp_host}/?l={reset_password_token.user.language}'
+                              f'&t={reset_password_token.key}#reset-password',
         'mepp_host': mepp_host,
     }
 
