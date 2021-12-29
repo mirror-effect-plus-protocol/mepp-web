@@ -25,12 +25,15 @@ from rest_framework.reverse import reverse
 from rest_framework.fields import empty
 
 from mepp.api.fields.uuid import HyperlinkedUUIDIdentityField
+from mepp.api.mixins.serializers.clinician import ClinicianValidatorMixin
 from mepp.api.mixins.serializers.credential import CredentialsMixin
 from mepp.api.models.user import User
 from mepp.api.serializers import HyperlinkedModelUUIDSerializer
 
 
-class PatientSerializer(CredentialsMixin, HyperlinkedModelUUIDSerializer):
+class PatientSerializer(
+    ClinicianValidatorMixin, CredentialsMixin, HyperlinkedModelUUIDSerializer
+):
 
     url = HyperlinkedUUIDIdentityField(
         lookup_field='uid',
