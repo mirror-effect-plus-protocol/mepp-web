@@ -21,9 +21,13 @@
  */
 
 import React, { useEffect } from 'react';
-import { Notification } from 'react-admin';
+import {
+  Notification,
+  useSetLocale,
+  useLocale,
+} from 'react-admin';
 import { useLocation } from 'react-router-dom';
-
+import { LANGUAGES } from '../locales';
 import { temporaryProfil } from '@admin/authProvider';
 
 import GlobalStyles from '@styles/Global';
@@ -37,11 +41,27 @@ import OverlayProvider from '@components/overlays/OverlayProvider';
  */
 const withPage = (Component) => {
   return function withPage(props) {
+    const locale = useLocale();
+    const setLocale = useSetLocale();
     const location = useLocation();
 
     useEffect(() => {
       window.scrollTo(0, 0);
     }, [location]);
+
+
+    useEffect(() => {
+      const queries = new URLSearchParams(window.location.search);
+      const lang = queries.get('l');
+
+      if (lang !== locale && LANGUAGES.includes(lang)) {
+        setLocale(lang).then(() => {
+          // setLocale does not change the language right away.
+          // Force reload
+         window.location.reload();
+        });
+      }
+    }, []);
 
     return (
       <OverlayProvider>
