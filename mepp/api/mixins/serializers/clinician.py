@@ -46,9 +46,7 @@ class ClinicianValidatorMixin:
                 return attrs
 
             if not clinician_uid:
-                raise serializers.ValidationError({
-                    'clinician_uid': 'This field is required'
-                })
+                attrs['clinician_id'] = request.user.pk
             else:
                 try:
                     clinician = User.objects.get(uid=clinician_uid, is_staff=True)
