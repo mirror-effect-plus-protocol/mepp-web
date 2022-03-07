@@ -29,6 +29,10 @@ from django.utils import translation
 from django_rest_passwordreset.signals import reset_password_token_created
 
 from mepp.api.models.expiring_token import ExpiringToken
+from mepp.api.helpers.emails import (
+    send_alert_email,
+    send_onboarding_patient_email,
+)
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -44,75 +48,10 @@ def user_post_save(instance=None, created=False, **kwargs):
         ))
 
         if not skip:
+            send_onboarding_patient_email(instance)
 
-            # send an e-mail to the user
-            mepp_host = settings.HTTP_HOST
-            context = {
-                'first_name': instance.first_name,
-                'email': instance.email,
-                'mepp_host': mepp_host,
-            }
-
-            translation.activate(instance.language)
-            template = (
-                'staff_registration'
-                if instance.is_staff
-                else 'user_registration'
-            )
-            # render email text
-            email_html_message = render_to_string(
-                f'email/{template}.html', context
-            )
-            email_plaintext_message = render_to_string(
-                f'email/{template}.txt', context
-            )
-
-            msg = EmailMultiAlternatives(
-                # title:
-                translation.gettext('Your profile has been activated'),
-                # message:
-                email_plaintext_message,
-                # from:
-                settings.DEFAULT_FROM_EMAIL,
-                # to:
-                [instance.email]
-            )
-            msg.attach_alternative(email_html_message, "text/html")
-            msg.send()
-
-        if not created and instance.email_has_changed:
-
-            # send an e-mail to the user
-            mepp_host = settings.HTTP_HOST
-            context = {
-                'first_name': instance.first_name,
-                'email': instance.email,
-                'previous_email': instance.previous_email,
-                'mepp_host': mepp_host,
-            }
-
-            translation.activate(instance.language)
-
-            # render email text
-            email_html_message = render_to_string(
-                'email/user_email_changed.html', context
-            )
-            email_plaintext_message = render_to_string(
-                'email/user_email_changed.txt', context
-            )
-
-            msg = EmailMultiAlternatives(
-                # title:
-                translation.gettext('Your e-mail address has been changed'),
-                # message:
-                email_plaintext_message,
-                # from:
-                settings.DEFAULT_FROM_EMAIL,
-                # to:
-                [instance.previous_email]
-            )
-            msg.attach_alternative(email_html_message, "text/html")
-            msg.send()
+    if not created and instance.email_has_changed:
+        send_alert_email(instance)
 
 
 @receiver(reset_password_token_created)
