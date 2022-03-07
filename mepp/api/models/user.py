@@ -123,6 +123,13 @@ class User(AbstractUser, Archivable, Searchable):
             active=True,
         ).first()
 
+    def delete(self, using=None, keep_parents=False):
+        # Delete relationship with treatment plans manually to avoid
+        # maximum recursions bug
+        self.patient_treatment_plans.all().delete()
+        self.clinician_treatment_plans.all().delete()
+        return super().delete(using=using, keep_parents=keep_parents)
+
     def generate_new_token(self) -> ExpiringToken:
         try:
             token = ExpiringToken.objects.get(user=self, temporary=False)
