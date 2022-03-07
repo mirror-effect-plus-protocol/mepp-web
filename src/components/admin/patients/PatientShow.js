@@ -20,12 +20,17 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { useState } from 'react';
+import React, {Fragment, useState} from 'react';
 import {
+  IconButton,
   FormGroup,
   FormControlLabel,
   Switch,
+  DialogTitle,
+  DialogContent,
+  DialogActions, Button, Dialog, DialogContentText
 } from '@material-ui/core';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import { makeStyles } from '@material-ui/core/styles';
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import {
@@ -39,6 +44,7 @@ import {
   ListContextProvider,
   useLocale,
   useGetList,
+  useNotify,
   useTranslate,
 } from 'react-admin';
 
@@ -50,6 +56,9 @@ import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import {sanitizeRestProps} from "@admin/utils/props";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import CheckCircle from "@material-ui/icons/CheckCircle";
+import {fetchJsonWithAuthToken} from "ra-data-django-rest-framework";
 
 const useRaBoxStyles = makeStyles((theme) => ({
   root: {
@@ -94,9 +103,11 @@ const useArchivesStyles = makeStyles((theme) => ({
 export const PatientShow = (props) => {
   const t = useTranslate();
   const locale = useLocale();
+  const notify = useNotify();
   const classes = useRaBoxStyles();
   const archivesToggleClasses = useArchivesStyles();
   const [sort, setSort] = useState({ field: 'start_date', order: 'DESC' });
+  const [openDialogEmail, setOpenDialogEmail] = useState(false);
   const [archives, setArchives] = useState(false);
   const {data, ids, total, loaded} = useGetList(
     'plans',
@@ -106,6 +117,31 @@ export const PatientShow = (props) => {
   );
   const handleArchivesChange = (event) => {
     setArchives(event.target.checked);
+  };
+
+  const handleOpenDialogEmail = (event) => {
+    setOpenDialogEmail(true);
+  };
+
+  const handleCloseDialogEmail = (event) => {
+    setOpenDialogEmail(false);
+  };
+
+  const handleSendOnboarding = (event) => {
+    setOpenDialogEmail(false);
+    const url = `${process.env.API_ENDPOINT}/patients/${props.id}/resend/`;
+    fetchJsonWithAuthToken(url, {
+      method: 'POST',
+      body: JSON.stringify({'confirm': true})
+    })
+    .then(() => {
+      notify('resources.patients.notifications.email.send.success', 'info');
+    })
+    .catch((e) => {
+      notify('resources.patients.notifications.email.send.failure', 'error');
+    })
+    .finally(() => {
+    });
   };
 
   return (
@@ -122,7 +158,48 @@ export const PatientShow = (props) => {
             <RaBox className={classes.columnChild}>
               <RaBox className={classes.innerChild}>
                 <TextField source="first_name" />
+                <div>
                 <EmailField source="email" />
+                <IconButton
+                  size="small"
+                  style={{marginLeft: '0.5em'}}
+                  onClick={handleOpenDialogEmail}
+                >
+                  <MailOutlineIcon />
+                </IconButton>
+                <Dialog
+                  open={openDialogEmail}
+                >
+                  <DialogTitle>
+                    {t('admin.shared.text.emailDialog.title')}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      {t('admin.shared.text.emailDialog.body')}
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={handleCloseDialogEmail}
+                      autoFocus
+                      size="small"
+                      variant="contained"
+                      color="secondary"
+                      startIcon={<ErrorOutlineIcon />}
+                    >
+                      {t('admin.shared.labels.cancelButton')}
+                    </Button>
+                    <Button
+                      onClick={handleSendOnboarding}
+                      color="primary"
+                      variant="contained"
+                      startIcon={<CheckCircle />}
+                    >
+                      {t('admin.shared.labels.confirmButton')}
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+                </div>
               </RaBox>
               <RaBox className={classes.innerChild}>
                 <TextField source="last_name" />
