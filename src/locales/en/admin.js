@@ -86,6 +86,10 @@ export default {
           title: 'Are your sure?',
           body: 'All the changes will be lost',
         },
+        emailDialog: {
+          title: 'Onboarding e-mail',
+          body: 'Are you sure you want to send the e-mail again?',
+        },
       },
       errors: {
         field_required: 'This field is required',
@@ -275,6 +279,12 @@ export default {
             failure: 'An error has occurred',
           },
         },
+        email: {
+          send: {
+            success: 'E-mail has been sent successfully',
+            failure: 'An error has occurred. No e-mails have been sent',
+          }
+        }
       },
     },
     plans: {

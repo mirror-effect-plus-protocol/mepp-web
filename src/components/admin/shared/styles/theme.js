@@ -126,6 +126,11 @@ export const MeppTheme = merge({}, defaultTheme, {
         }
       }
     },
+    RaBulkActionsToolbar: {
+      topToolbar: {
+        paddingTop: '10px',
+      },
+    },
     MuiDialogActions: {
       root: {
         '& button': {

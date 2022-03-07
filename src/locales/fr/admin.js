@@ -79,12 +79,16 @@ export default {
         },
         profile: {
           success: 'Votre profil a été mis à jour avec succès',
-        }
+        },
       },
       text: {
         cancelDialog: {
-          title: 'Voulez vous vraiment annuler?',
+          title: 'Voulez-vous vraiment annuler?',
           body: 'Tous les changements seront perdus.',
+        },
+        emailDialog: {
+          title: 'Courriel de bienvenue',
+          body: 'Voulez-vous renvoyer le courriel?',
         },
       },
       errors: {
@@ -274,6 +278,12 @@ export default {
             success: 'Plan d’intervention ajouté avec succès',
             failure: 'Une erreur est survenue',
           },
+        },
+        email: {
+          send: {
+            success: 'Courriel envoyé avec succès',
+            failure: 'Une erreur est survenue. Aucun courriel n’a été envoyé',
+          }
         },
       },
     },

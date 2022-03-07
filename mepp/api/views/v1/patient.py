@@ -21,7 +21,6 @@
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
 import io
-from distutils.util import strtobool
 
 import xlsxwriter
 from django.db.models import F
@@ -45,6 +44,7 @@ from mepp.api.serializers.v1.widget import (
     DailyRepeatWidgetSerializer,
     SessionsWidgetSerializer,
 )
+from mepp.api.helpers.emails import send_onboarding_patient_email
 from mepp.api.models.log import Log
 from mepp.api.models.user import User
 from mepp.api.permissions import MeppExportPermission
@@ -241,6 +241,14 @@ class PatientViewSet(UUIDLookupFieldViewSet):
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
         return response
+
+    @action(detail=True, methods=['POST'])
+    def resend(self, request, uid, *args, **kwargs) -> Response:
+        if request.data.get('confirm', False):
+            if send_onboarding_patient_email(self.get_object()):
+                return Response({'send', 'ok'})
+
+        return Response({'send', 'ko'})
 
     @action(
         detail=False,
