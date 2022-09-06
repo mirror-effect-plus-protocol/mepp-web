@@ -33,7 +33,7 @@ import {
   useTranslate,
   useNotify,
 } from 'react-admin';
-import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolBar';
+import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
 import {
   validateAudio,
   validateClinician,

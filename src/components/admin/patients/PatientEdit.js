@@ -35,7 +35,7 @@ import {
   useNotify,
 } from 'react-admin';
 
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolBar';
+import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import {
   validateAudio,
   validateClinician,

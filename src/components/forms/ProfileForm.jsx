@@ -30,7 +30,7 @@ import { spacings } from '@styles/configs/spacings';
 import { FlexAlignCenter } from '@styles/tools';
 import { rem } from '@styles/utils/rem';
 
-import { useApi } from '@hooks/useAPI';
+import { useApi } from '@hooks/useApi';
 
 import { RequestEndpoint } from '@utils/constants';
 
