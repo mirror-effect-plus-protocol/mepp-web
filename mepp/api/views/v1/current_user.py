@@ -62,6 +62,10 @@ class CurrentUserViewSet(
         user = serializer.validated_data['user']
         user.last_login = now()
         user.save()
+
+        # On login, always create a new token. Those in DB could have expired
+        user.generate_new_token()
+
         return Response(self.__detail(user))
 
     def get_object(self):
@@ -162,4 +166,3 @@ class CurrentUserViewSet(
             },
             'permissions': RoleEnum.get_role(user),
         }
-

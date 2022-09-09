@@ -19,8 +19,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
+from datetime import timedelta
 
 import pytest
+from django.utils.timezone import now
 from rest_framework import status
 
 from mepp.api.enums.action import ActionEnum
@@ -38,6 +40,22 @@ class MeAPITestCase(BaseV1TestCase):
 
     def test_get_profile(self):
         pass
+
+    def test_new_token_on_login(self):
+        expiry_date = now() - timedelta(minutes=1)
+        john_token = self.patient_john.auth_token.last()
+        # Have to force expiry date on an existing date because it is overridden
+        # in `ExpiringToken.save()`
+        john_token.expiry_date = expiry_date
+        john_token.save()
+        # self.patient_john.refresh_from_db()
+        self.assertTrue(john_token.is_expired)
+        current_token = self.patient_john.token
+        self.assertEqual(current_token, john_token.key)
+        self.login(self.patient_john.username, self.common_password)
+        self.patient_john.refresh_from_db()
+        self.assertNotEqual(self.patient_john.token, current_token)
+        self.assertFalse(self.patient_john.auth_token.all()[0].is_expired)
 
 
 class MeSessionAPITestCase(BaseV1TestCase):
