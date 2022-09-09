@@ -27,6 +27,8 @@ import { fetchData } from '@utils/fetch';
 let temporaryToken = null;
 // temporary profil managed by authTemporaryToken
 let temporaryProfil = null;
+// permission user store
+let permissions = null;
 
 /**
  * Based on `tokenAuthProvider` from ra-data-django-rest-framework
@@ -83,11 +85,18 @@ const authProvider = {
   },
 
   getPermissions: async () => {
-    const { data } = await fetchData(RequestEndpoint.PERMISSIONS);
-    try {
-      return Promise.resolve(data.permissions);
-    } catch (error) {
-      return Promise.resolve('guest');
+    if (!permissions) {
+      const { data } = await fetchData(RequestEndpoint.PERMISSIONS);
+      if (data.permissions) {
+        try {
+          permissions = data.permissions
+          return Promise.resolve(data.permissions);
+        } catch (error) {
+          return Promise.reject();
+        }
+      } else return Promise.reject();
+    } else {
+      return Promise.resolve(permissions);
     }
   },
 
