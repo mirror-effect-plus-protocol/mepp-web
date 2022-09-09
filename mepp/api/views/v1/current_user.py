@@ -62,6 +62,10 @@ class CurrentUserViewSet(
         user = serializer.validated_data['user']
         user.last_login = now()
         user.save()
+
+        # On login, always create a new token. Those in DB could have expired
+        user.generate_new_token()
+
         return Response(self.__detail(user))
 
     def get_object(self):
@@ -96,6 +100,7 @@ class CurrentUserViewSet(
         url_path='session',
     )
     def user_session_view(self, request, *args, **kwargs):
+        print('USER_SESSION_VIEW', flush=True)
         user_session = request.user.active_session
         if not user_session:
             raise Http404
@@ -148,6 +153,8 @@ class CurrentUserViewSet(
         return Response(serializer.data)
 
     def __detail(self, user):
+        print('user', user.token, flush=True)
+        print('is expired', user.auth_token.all()[0].is_expired, flush=True)
         return {
             'token': user.token,
             'profile': {
@@ -162,4 +169,3 @@ class CurrentUserViewSet(
             },
             'permissions': RoleEnum.get_role(user),
         }
-

@@ -43,6 +43,7 @@ class ExpiringToken(Token):
         related_name='auth_token',
         on_delete=models.CASCADE,
     )
+    created_date = models.DateTimeField(default=now)
 
     class Meta(Token.Meta):
         constraints = [
@@ -51,6 +52,7 @@ class ExpiringToken(Token):
                 name='token_unique'
             ),
         ]
+        ordering = ['created_date']
 
     def extend_expiry(self):
         if not self.temporary:

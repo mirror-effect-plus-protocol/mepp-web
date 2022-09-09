@@ -165,7 +165,7 @@ HTTP_HOST = os.environ.get('HTTP_HOST', 'https://mirroreffectplus.org')
 
 # Tokens lifespan in seconds
 TOKEN_EXPIRY_TTLS = {
-    'authenticated': 60 * 60 * 24,  # 1 day
+    'authenticated': 60 * 60 * 24 * 14,  # 7 days
     'mirror': 60 * 30,  # 30 minutes
     'export': 15,  # 15 seconds
     'default': 60,  # 1 minute
