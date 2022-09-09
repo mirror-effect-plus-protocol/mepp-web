@@ -27,7 +27,7 @@ import { fetchData } from '@utils/fetch';
 let temporaryToken = null;
 // temporary profil managed by authTemporaryToken
 let temporaryProfil = null;
-// permission user store
+// permissions user
 let permissions = null;
 
 /**
@@ -56,6 +56,7 @@ const authProvider = {
   logout: (reload) => {
     localStorage.removeItem('token');
     localStorage.removeItem('profile');
+    permissions = null;
 
     // prevent rendering previous page(react-admin behaviour) after a success login
     if (reload === true) {
@@ -72,6 +73,8 @@ const authProvider = {
       const hasToken = localStorage.getItem('token');
       localStorage.removeItem('token');
       localStorage.removeItem('profile');
+      permissions = null;
+
       if (hasToken) window.location.href = '/'; // go to login
       return Promise.reject();
     }
