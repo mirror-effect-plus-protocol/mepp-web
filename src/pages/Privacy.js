@@ -948,7 +948,7 @@ const PrivacyEn = ({t}) => {
         <BR/>
         Montréal, QC H1T 2M4
         <BR/>
-        <P>Courriel&nbsp;: <a href="mailto:info@mirroreffectplus.org">info@mirroreffectplus.org</a></P>
+        Courriel&nbsp;: <a href="mailto:info@mirroreffectplus.org">info@mirroreffectplus.org</a>
       </P>
 
       <ButtonsWrapper>

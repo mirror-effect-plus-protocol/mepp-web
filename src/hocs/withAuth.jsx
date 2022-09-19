@@ -32,25 +32,31 @@ import { authTemporaryToken } from '@admin/authProvider';
  */
 const withAuth = (Component) => {
   return function withAuth(props) {
-    useEffect(() => {
-      const queries = new URLSearchParams(window.location.search);
-      const token = queries.get('tt');
-      if (token) authTemporaryToken(token);
-    }, []);
-
     return (
       <Authenticated location={props.location}>
-        <WithPermissions
-          location={props.location}
-          render={({ permissions }) =>
-            permissions === 'user' || permissions === 'admin' ? (
-              <Component {...props} />
-            ) : null
-          }
-        />
+        <Main>
+          <WithPermissions
+            location={props.location}
+            render={({ permissions }) =>
+              permissions === 'user' || permissions === 'admin' ? (
+                <Component {...props} />
+              ) : null
+            }
+          />
+        </Main>
       </Authenticated>
     );
   };
 };
+
+const Main = (props) => {
+  useEffect(() => {
+    const queries = new URLSearchParams(window.location.search);
+    const token = queries.get('tt');
+    if (token) authTemporaryToken(token);
+  }, []);
+
+  return <div>{ props.children}</div>
+}
 
 export default withAuth;
