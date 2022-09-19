@@ -90,15 +90,15 @@ const authProvider = {
   getPermissions: async () => {
     if (!permissions) {
       const { data } = await fetchData(RequestEndpoint.PERMISSIONS);
-      if (data.permissions) {
+      if (data?.permissions) {
         try {
           permissions = data.permissions;
           return Promise.resolve(data.permissions);
         } catch (error) {
-          return Promise.reject();
+          return Promise.resolve('guest');
         }
       } else {
-        return Promise.reject();
+        return Promise.resolve('guest');
       }
     } else {
       return Promise.resolve(permissions);
