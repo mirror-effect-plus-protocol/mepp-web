@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Authenticated } from 'react-admin';
 import { WithPermissions } from 'react-admin';
 
@@ -50,13 +50,18 @@ const withAuth = (Component) => {
 };
 
 const Main = (props) => {
-  useEffect(() => {
+  const [children, setChildren] = useState();
+
+  useEffect(async () => {
     const queries = new URLSearchParams(window.location.search);
     const token = queries.get('tt');
-    if (token) authTemporaryToken(token);
+    if (token) {
+      await authTemporaryToken(token);
+      setChildren(props.children);
+    } else setChildren(props.children);
   }, []);
 
-  return <div>{ props.children}</div>
+  return <div>{children}</div>
 }
 
 export default withAuth;
