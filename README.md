@@ -37,7 +37,10 @@ with the MEPP website.
 ## Run the application
 
 ```shell
-computer:mepp user$ yarn install
+computer:mepp user$ npm install --legacy-peer-deps
+or
+computer:mepp user$ npm run install
+
 ```
 
 The easiest way to run the application is to clone [`mepp-docker`](https://github.com/mirror-effect-plus-protocol/mepp-docker) repository 

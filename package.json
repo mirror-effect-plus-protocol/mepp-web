@@ -4,6 +4,7 @@
   "private": false,
   "description": "mepp",
   "scripts": {
+    "install": "npm install --legacy-peer-deps",
     "start": "cross-env NODE_ENV=dev ENV=dev webpack-dev-server --port 8080 --open --public mepp.local:9090",
     "staging": "cross-env NODE_ENV=production ENV=staging webpack",
     "prod": "cross-env NODE_ENV=production ENV=production webpack",
@@ -12,8 +13,7 @@
     "format": "prettier --write \"**/*.(jsx|js)\""
   },
   "engines": {
-    "node": ">=16.17.0",
-    "yarn": ">=1.22.5"
+    "node": ">=16.17.0"
   },
   "dependencies": {
     "date-fns": "^2.23.0",

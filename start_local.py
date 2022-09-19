@@ -119,7 +119,8 @@ class EnvStarter:
 
     def start_webpack(self):
         cmd = [
-            'yarn',
+            'npm',
+            'run',
             'start',
         ]
         self.run_shell(cmd)
