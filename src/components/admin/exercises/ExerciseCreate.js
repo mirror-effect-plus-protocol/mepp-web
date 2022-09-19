@@ -49,7 +49,7 @@ import {
 import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
 import { LANGUAGES } from '../../../locales';
 import {requiredLocalizedField} from '@components/admin/shared/validators';
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolBar';
+import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import {
   preSave
 } from '@components/admin/exercises/callbacks';
