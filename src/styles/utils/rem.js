@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { BASE_FONT_SIZE } from '@styles/configs/fontsize';
+import { BASE_FONT_SIZE } from '../configs/fontsize';
 
 /**
  * rem to px from BASE_FONT_SIZE

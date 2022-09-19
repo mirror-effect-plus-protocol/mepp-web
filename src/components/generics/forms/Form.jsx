@@ -24,7 +24,7 @@ import React, { createElement, useEffect } from 'react';
 import { useLocale } from 'react-admin';
 import { useForm } from 'react-hook-form';
 
-import Input from '@components/generics/forms/Input';
+import Input from '../../../components/generics/forms/Input';
 
 /**
  * Form base with react-hook-form

@@ -25,7 +25,6 @@ with the MEPP website.
 **Front end:**
 
 - nodejs 15.x
-- yarn
 
 **DeepAR.ai**
 

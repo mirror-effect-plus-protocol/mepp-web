@@ -22,27 +22,26 @@
 
 import i18n from 'i18next';
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { hot } from 'react-hot-loader/root';
+import ReactDOM from 'react-dom/client';
+
 import { ThemeProvider } from 'styled-components';
 
-import Admin from '@admin/index';
+import Admin from './admin/index';
 
-import { theme } from '@themes/index';
+import { theme } from './themes/index';
 
-import { log } from '@utils/log';
+import { log } from './utils/log';
 
 /**
  * Application initialisation with hot reload
  */
-const App = hot(() => {
+const App = () => {
   useEffect(() => {
     // set dom starting language
     document.documentElement.lang = i18n.language;
 
-    log(`project name: ${process.env.PROJECT_NAME}`);
-    log(`project version: ${process.env.PROJECT_VERSION}`);
-    log(`project environment: ${process.env.ENVIRONMENT}`);
+    log(`project node env: ${process.env.NODE_ENV}`);
+    log(`project environment: ${process.env.REACT_APP_ENVIRONMENT}`);
   }, []);
 
   return (
@@ -50,6 +49,7 @@ const App = hot(() => {
       <Admin />
     </ThemeProvider>
   );
-});
+};
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const root = ReactDOM.createRoot(document.getElementById('app'));
+root.render(<App />);

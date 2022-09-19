@@ -20,11 +20,13 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  ArrayField, BooleanField,
+  ArrayField,
+  BooleanField,
   Datagrid,
-  NumberField, NumberInput,
+  NumberField,
+  NumberInput,
   Show,
   TextField,
   TranslatableFields,
@@ -32,26 +34,25 @@ import {
   useTranslate,
 } from 'react-admin';
 import { BoxedShowLayout } from 'ra-compact-ui';
-import { useTranslatorInputStyles } from '@components/admin/exercises/styles';
-import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
-import {LANGUAGES} from "../../../locales";
-import { Typography } from '@components/admin/shared/dom/sanitize';
-import ClinicianTextField
-  from '@components/admin/clinicians/ClinicianTextField';
+import { useTranslatorInputStyles } from '../exercises/styles';
+import ShowToolBar from '../shared/toolbars/ShowToolbar';
+import TopToolbar from '../shared/toolbars/TopToolbar';
+import { LANGUAGES } from '../../../locales';
+import { Typography } from '../shared/dom/sanitize';
+import ClinicianTextField from '../clinicians/ClinicianTextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { useOnelineStyles } from '@components/admin/shared/styles/oneline';
+import { useOnelineStyles } from '../shared/styles/oneline';
 
 const useStyles = makeStyles((theme) => {
   return {
     root: {
       '& .ra-field-exercises': {
         marginTop: '-15px',
-        '& > .MuiFormControl-root' : {
-          width: '100%'
-        }
-      }
-    }
+        '& > .MuiFormControl-root': {
+          width: '100%',
+        },
+      },
+    },
   };
 });
 
@@ -86,14 +87,8 @@ export const PlanShow = (props) => {
           defaultLocale={locale}
           classes={translatorClasses}
         >
-          <TextField
-            source="i18n.name"
-            fullWidth={true}
-          />
-          <TextField
-            source="i18n.description"
-            fullWidth={true}
-          />
+          <TextField source="i18n.name" fullWidth={true} />
+          <TextField source="i18n.description" fullWidth={true} />
         </TranslatableFields>
         <NumberField source="daily_repeat" className={onelineClasses.oneline} />
         <BooleanField source="is_system" className={onelineClasses.oneline} />

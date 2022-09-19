@@ -31,10 +31,10 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(2),
     minWidth: 180,
-  }
+  },
 }));
 
-const DropDown = ({label, initialValue, choices, onChange, emptyLabel}) => {
+const DropDown = ({ label, initialValue, choices, onChange, emptyLabel }) => {
   const classes = useStyles();
   const items = choices || [];
   const addEmpty = emptyLabel ? true : false;
@@ -42,19 +42,20 @@ const DropDown = ({label, initialValue, choices, onChange, emptyLabel}) => {
   return (
     <FormControl variant="filled" className={classes.formControl}>
       <InputLabel>{label}</InputLabel>
-      <Select
-        value={initialValue}
-        onChange={onChange}
-      >
-        {addEmpty &&
-          <MenuItem key="-1" value="">{emptyLabel}</MenuItem>
-        }
+      <Select value={initialValue} onChange={onChange}>
+        {addEmpty && (
+          <MenuItem key="-1" value="">
+            {emptyLabel}
+          </MenuItem>
+        )}
         {items.map((choice) => (
-            <MenuItem key={choice.id} value={choice.id}>{choice.name}</MenuItem>
+          <MenuItem key={choice.id} value={choice.id}>
+            {choice.name}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>
   );
-}
+};
 
 export default DropDown;

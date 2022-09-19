@@ -21,28 +21,15 @@
  */
 
 import React from 'react';
-import {
-  FilterList,
-  FilterListItem,
-  FilterLiveSearch,
-} from 'react-admin';
+import { FilterList, FilterListItem, FilterLiveSearch } from 'react-admin';
 import { CardContent, withStyles } from '@material-ui/core';
-import {
-  endOfYesterday,
-  startOfWeek,
-  startOfMonth,
-} from 'date-fns';
+import { endOfYesterday, startOfWeek, startOfMonth } from 'date-fns';
 
-import {
-  ClinicianIcon,
-  FaceIcon,
-  SoundIcon,
-  TimeIcon,
-} from '@components/admin/shared/icons';
-import useGetClinicians from '@components/admin/shared/hook/useGetClinicians';
-import { ASide } from '@components/admin/shared/cards/ASide';
+import { ClinicianIcon, FaceIcon, SoundIcon, TimeIcon } from '../shared/icons';
+import useGetClinicians from '../shared/hook/useGetClinicians';
+import { ASide } from '../shared/cards/ASide';
 
-const PatientListAside = ({permissions}) => {
+const PatientListAside = ({ permissions }) => {
   const { data: clinicians, loaded } = useGetClinicians(permissions);
 
   return (
@@ -77,10 +64,7 @@ const PatientListAside = ({permissions}) => {
           />
         </FilterList>
 
-        <FilterList
-          label="resources.patients.fields.side"
-          icon={<FaceIcon />}
-        >
+        <FilterList label="resources.patients.fields.side" icon={<FaceIcon />}>
           <FilterListItem
             label="resources.patients.shared.side.0"
             value={{ side: 0 }}
@@ -102,7 +86,7 @@ const PatientListAside = ({permissions}) => {
           />
         </FilterList>
 
-        {permissions === 'admin' &&
+        {permissions === 'admin' && (
           <FilterList
             label="resources.patients.fields.clinician_uid"
             icon={<ClinicianIcon />}
@@ -114,10 +98,9 @@ const PatientListAside = ({permissions}) => {
                   key={clinician.id}
                   value={{ clinician_uid: clinician.id }}
                 />
-              ))
-            }
+              ))}
           </FilterList>
-        }
+        )}
       </CardContent>
     </ASide>
   );

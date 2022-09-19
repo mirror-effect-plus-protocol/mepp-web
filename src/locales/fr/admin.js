@@ -39,7 +39,7 @@ export default {
           reset_password: 'Réinitialiser le mot de passe',
           create_password: 'Créer le mot de passe',
         },
-        profile: 'Mon profil'
+        profile: 'Mon profil',
       },
       notifications: {
         archive: {
@@ -75,7 +75,8 @@ export default {
         },
         language: {
           success: 'Votre langue a été mise à jour avec succès',
-          failure: 'Une erreur est survenue, votre profil n’a pas été mis à jour',
+          failure:
+            'Une erreur est survenue, votre profil n’a pas été mis à jour',
         },
         profile: {
           success: 'Votre profil a été mis à jour avec succès',
@@ -94,19 +95,21 @@ export default {
       errors: {
         field_required: 'Ce champ est requis',
         password_mismatch: 'Les mots de passe ne correspondent pas',
-        password_too_short: 'Le mot de passe doit contenir %{min_length} caractères',
-        password_not_secure: 'Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial (-_ @$!%*#?&)',
+        password_too_short:
+          'Le mot de passe doit contenir %{min_length} caractères',
+        password_not_secure:
+          'Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial (-_ @$!%*#?&)',
         password_required: 'Ce champ est requis',
-      }
+      },
     },
     dashboard: {
       title: 'Bienvenue %{name}',
       labels: {
-        openMirrorButton: 'Ouvrir le miroir facial'
+        openMirrorButton: 'Ouvrir le miroir facial',
       },
       widgets: {
         daily_repeats: {
-          card_header: 'Fréquences quotidiennes atteintes'
+          card_header: 'Fréquences quotidiennes atteintes',
         },
         sessions: {
           card_header: 'Séances ouvertes',
@@ -115,20 +118,20 @@ export default {
           one_week: 'les 7 derniers jours',
           two_weeks: 'les 14 derniers jours',
           one_month: 'les 30 derniers jours',
-          all: 'le début'
+          all: 'le début',
         },
         labels: {
           completed: 'Entièrement exécutées',
           uncompleted: 'Partiellement exécutées',
-          since: 'Depuis'
-        }
+          since: 'Depuis',
+        },
       },
       mirror_dialog: {
         title: 'Ouvrir le miroir facial',
         labels: {
-          autocomplete: 'Choisir un patient'
-        }
-      }
+          autocomplete: 'Choisir un patient',
+        },
+      },
     },
   },
 
@@ -142,8 +145,8 @@ export default {
       name: 'Catégorie |||| Catégories',
       fields: {
         'i18n.name.fr': 'Nom',
-        'i18n.name': 'Nom'
-      }
+        'i18n.name': 'Nom',
+      },
     },
     clinicians: {
       name: 'Clinicien(ne) |||| Clinicien(ne)s',
@@ -156,7 +159,7 @@ export default {
         password: 'Mot de passe',
         confirm_password: 'Confirmer le mot de passe',
         archived: 'Archives',
-        is_superuser: 'Administrateur'
+        is_superuser: 'Administrateur',
       },
       list: {
         labels: {
@@ -166,14 +169,14 @@ export default {
       card: {
         title: {
           default: 'Clinicien(ne) %{placeholder}',
-          create: 'Ajouter un(e) clinicien(ne)'
+          create: 'Ajouter un(e) clinicien(ne)',
         },
       },
       delete: {
         confirmTitle: 'Supprimer le(la) clinicien(ne) %{placeholder}',
       },
       errors: {
-        email: 'Adresse courriel déjà utilisée'
+        email: 'Adresse courriel déjà utilisée',
       },
     },
     exercises: {
@@ -189,31 +192,32 @@ export default {
         category__uid: 'Catégorie',
         uid: 'Sous-catégorie',
         is_system: 'Système',
-        sub_categories: 'Catégories et sous-catégories'
+        sub_categories: 'Catégories et sous-catégories',
       },
       card: {
         title: {
           default: 'Exercice %{placeholder}',
-          create: 'Ajouter un exercice'
+          create: 'Ajouter un exercice',
         },
         labels: {
           definition: 'Caractéristiques',
-          classification: 'Classification'
-        }
+          classification: 'Classification',
+        },
       },
       list: {
         labels: {
           user: 'Mes exercices',
-          system: 'Système'
-        }
+          system: 'Système',
+        },
       },
       delete: {
         confirmTitle: 'Supprimer l’exercice %{placeholder}',
       },
       errors: {
-        sub_categories: 'Vous devez choisir au moins une catégorie/sous-catégorie',
-        gt_zero: 'Doit être supérieur à zéro'
-      }
+        sub_categories:
+          'Vous devez choisir au moins une catégorie/sous-catégorie',
+        gt_zero: 'Doit être supérieur à zéro',
+      },
     },
     patients: {
       name: 'Patient(e) |||| Patient(e)s',
@@ -233,7 +237,7 @@ export default {
       card: {
         title: {
           default: 'Patient(e) %{placeholder}',
-          create: 'Ajouter un(e) patient(e)'
+          create: 'Ajouter un(e) patient(e)',
         },
         labels: {
           plans: 'Plans d’intervention',
@@ -243,21 +247,21 @@ export default {
           labels: {
             autocomplete: 'Nom',
             radio_new: 'Créer un nouveau plan d’intervention',
-            radio_template: 'Utiliser un modèle existant'
-          }
+            radio_template: 'Utiliser un modèle existant',
+          },
         },
         actions: {
-          copy: 'Créer un modèle'
-        }
+          copy: 'Créer un modèle',
+        },
       },
       errors: {
-        email: 'Adresse courriel déjà utilisée'
+        email: 'Adresse courriel déjà utilisée',
       },
       filters: {
         last_visited: 'Dernière visite',
         today: 'Aujourd’hui',
         this_week: 'Cette semaine',
-        this_month: 'Ce mois-ci'
+        this_month: 'Ce mois-ci',
       },
       shared: {
         side: {
@@ -283,7 +287,7 @@ export default {
           send: {
             success: 'Courriel envoyé avec succès',
             failure: 'Une erreur est survenue. Aucun courriel n’a été envoyé',
-          }
+          },
         },
       },
     },
@@ -305,15 +309,15 @@ export default {
           description: 'Description',
           movement_duration: 'Durée',
           pause: 'Pause',
-          repeat: 'Répétitions'
-        }
+          repeat: 'Répétitions',
+        },
       },
       list: {
         labels: {
           exercises_count: 'Exercices',
           user: 'Mes modèles',
           admin: 'Modèles',
-          system: 'Système'
+          system: 'Système',
         },
       },
       edit: {
@@ -333,20 +337,21 @@ export default {
               category: 'Catégorie',
               sub_category: 'Sous-catégorie',
               exercise: 'Description',
-              sub_category_empty_label: 'Toutes'
-            }
-          }
+              sub_category_empty_label: 'Toutes',
+            },
+          },
         },
         title: {
           default: 'Plan d’intervention %{placeholder}',
-          create: 'Ajouter un plan d’intervention'
+          create: 'Ajouter un plan d’intervention',
         },
         labels: {
           definition: 'Caractéristiques',
           exercises: 'Exercices',
-          is_system_warning: 'Tous les exercices associés seront aussi publiquement accessibles'
-        }
-      }
+          is_system_warning:
+            'Tous les exercices associés seront aussi publiquement accessibles',
+        },
+      },
     },
   },
 };

@@ -24,14 +24,14 @@ import PreventFocusKeyTrap from 'focus-trap-react';
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { spacings } from '@styles/configs/spacings';
-import { zindex } from '@styles/configs/zindex';
-import { WrapperFullSize } from '@styles/tools';
-import { DisabledBodyScrollGlogalStyle } from '@styles/utils/DisabledBodyScroll';
+import { spacings } from '../../styles/configs/spacings';
+import { zindex } from '../../styles/configs/zindex';
+import { WrapperFullSize } from '../../styles/tools';
+import { DisabledBodyScrollGlogalStyle } from '../../styles/utils/DisabledBodyScroll';
 
-import { Keys, useKeyPress } from '@hooks/keyboard/useKeyPress';
+import { Keys, useKeyPress } from '../../hooks/keyboard/useKeyPress';
 
-import { OverlayContext } from '@components/overlays/OverlayProvider';
+import { OverlayContext } from '../../components/overlays/OverlayProvider';
 
 const Overlay = () => {
   const { content, close } = useContext(OverlayContext);
@@ -60,7 +60,7 @@ const Overlay = () => {
     if (isKeyEscPress) {
       close && close();
     }
-  }, [isKeyEscPress]);
+  }, [isKeyEscPress, close]);
 
   if (!content) return <></>;
 

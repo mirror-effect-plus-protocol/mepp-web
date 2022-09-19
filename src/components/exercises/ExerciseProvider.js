@@ -22,11 +22,11 @@
 
 import React, { createContext, useEffect, useState } from 'react';
 
-import { useApi } from '@hooks/useApi';
+import { useApi } from '../../hooks/useApi';
 
-import { RequestEndpoint, RequestMethod } from '@utils/constants';
-import { fetchData } from '@utils/fetch';
-import { log } from '@utils/log';
+import { RequestEndpoint, RequestMethod } from '../../utils/constants';
+import { fetchData } from '../../utils/fetch';
+import { log } from '../../utils/log';
 
 /**
  * EXERCISE STEP TYPE
@@ -89,6 +89,7 @@ const ExerciseProvider = ({ children }) => {
   /**
    * Log Step  - API call
    */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const logs = (type) => {
     if (!exercisesData) return;
     if (!exercisesData.id) return;
@@ -244,11 +245,12 @@ const ExerciseProvider = ({ children }) => {
     if (exercisesData && exercisesData.id) {
       logs('START_SESSION');
     }
-  }, [exercisesData]);
+  }, [exercisesData, logs]);
 
   /**
    * Get Exercises data from API
    */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(get, []);
 
   return (

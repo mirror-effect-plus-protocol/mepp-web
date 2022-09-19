@@ -21,17 +21,13 @@
  */
 
 import React from 'react';
-import {
-  List,
-  ReferenceField,
-  TextField,
-} from 'react-admin';
+import { List, ReferenceField, TextField } from 'react-admin';
 import Datagrid from '../shared/Datagrid';
 import ArchivableFilter from '../shared/filters/ArchivableFilter';
 import BulkActionButtons from '../shared/toolbars/BulkActionsToolbar';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
 import PatientListAside from './PatientListAside';
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
+import ListActions from '../shared/toolbars/ListToolbar';
 
 export const PatientList = (props) => {
   return (
@@ -41,12 +37,9 @@ export const PatientList = (props) => {
       filters={<ArchivableFilter />}
       filterDefaultValues={{ archived: false }}
       bulkActionButtons={
-        <BulkActionButtons
-          permissions={props.permissions}
-          showExport={true}
-        />
+        <BulkActionButtons permissions={props.permissions} showExport={true} />
       }
-      aside={<PatientListAside permissions={props.permissions}/>}
+      aside={<PatientListAside permissions={props.permissions} />}
       perPage={25}
       actions={<ListActions showExport={true} />}
     >
@@ -61,7 +54,7 @@ export const PatientList = (props) => {
             <TextField source="full_name" />
           </ReferenceField>
         )}
-        <RowActionToolbar permissions={props.permissions}/>
+        <RowActionToolbar permissions={props.permissions} />
       </Datagrid>
     </List>
   );

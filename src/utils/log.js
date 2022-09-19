@@ -24,8 +24,8 @@ let inited = false;
 let debug = false;
 
 const isProd =
-  process?.env.ENVIRONMENT === 'production' ||
-  process?.env.ENVIRONMENT === 'prod';
+  process.env.REACT_APP_ENVIRONMENT === 'production' ||
+  process.env.REACT_APP_ENVIRONMENT === 'prod';
 
 /**
  * set debug state
@@ -42,7 +42,8 @@ const setDebug = (state) => {
  */
 const log = (...args) => {
   if (inited === false) {
-    process?.env.DEBUG == 'true' && setDebug(true);
+    process.env.REACT_APP_DEBUG === 'true' && setDebug(true);
+    setDebug(true);
   }
   !isProd && debug && console.log(...args);
 };

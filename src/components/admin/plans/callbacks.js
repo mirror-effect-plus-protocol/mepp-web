@@ -22,11 +22,8 @@
 
 import { LANGUAGES } from '../../../locales';
 
-
 export const contextualRedirect = (patientUid) => {
-  return patientUid
-    ? `/patients/${patientUid}/show`
-    : `/plans`;
+  return patientUid ? `/patients/${patientUid}/show` : `/plans`;
 };
 
 export const preSave = (record, locale, patientUid, asTemplate) => {
@@ -43,7 +40,6 @@ export const preSave = (record, locale, patientUid, asTemplate) => {
     localizedDescription = record.i18n.description[locale];
   } catch (e) {}
 
-
   // If no matches found, let's loop through all languages.
   LANGUAGES.forEach((language) => {
     if (!localizedName) {
@@ -55,19 +51,28 @@ export const preSave = (record, locale, patientUid, asTemplate) => {
     if (!localizedDescription) {
       try {
         localizedDescription = record.i18n.description[language];
-      } catch (e) {
-      }
+      } catch (e) {}
     }
   });
 
   // Assign missing translations
   LANGUAGES.forEach((language) => {
-    if (!record.i18n.name.hasOwnProperty(language) || !record.i18n.name[language]) {
-      record.i18n.name[language] = `(${language.toUpperCase()}) - ${localizedName}`;
+    if (
+      !record.i18n.name.hasOwnProperty(language) ||
+      !record.i18n.name[language]
+    ) {
+      record.i18n.name[
+        language
+      ] = `(${language.toUpperCase()}) - ${localizedName}`;
     }
 
-    if (!record.i18n.description.hasOwnProperty(language) || !record.i18n.description[language]) {
-      record.i18n.description[language] = `(${language.toUpperCase()}) - ${localizedDescription}`;
+    if (
+      !record.i18n.description.hasOwnProperty(language) ||
+      !record.i18n.description[language]
+    ) {
+      record.i18n.description[
+        language
+      ] = `(${language.toUpperCase()}) - ${localizedDescription}`;
     }
   });
 

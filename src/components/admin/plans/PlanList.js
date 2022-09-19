@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Fragment, useEffect, useState }  from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import {
   Datagrid,
   FunctionField,
@@ -37,16 +37,16 @@ import { Divider, Tabs, Tab } from '@material-ui/core';
 import Spinner from '../shared/Spinner';
 import ArchivableFilter from '../shared/filters/ArchivableFilter';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
-import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
-import PlanListAside from '@components/admin/plans/PlanListAside';
+import ListActions from '../shared/toolbars/ListToolbar';
+import BulkActionButtons from '../shared/toolbars/BulkActionsToolbar';
+import PlanListAside from '../plans/PlanListAside';
 
 const tabs = [
   { id: 'user', is_system: false },
   { id: 'system', is_system: true },
 ];
 
-const PlanDatagrid = ({permissions, ...props}) => {
+const PlanDatagrid = ({ permissions, ...props }) => {
   const locale = useLocale();
   const t = useTranslate();
 
@@ -60,22 +60,16 @@ const PlanDatagrid = ({permissions, ...props}) => {
         render={(record) => record.exercises.length}
       />
       {permissions === 'admin' && (
-        <ReferenceField
-          source="clinician_uid"
-          reference="clinicians"
-        >
+        <ReferenceField source="clinician_uid" reference="clinicians">
           <TextField source="full_name" />
         </ReferenceField>
       )}
-      <RowActionToolbar
-        permissions={permissions}
-        clonable={true}
-      />
+      <RowActionToolbar permissions={permissions} clonable={true} />
     </Datagrid>
   );
 };
 
-const TabbedDatagrid = ({permissions, ...props}) => {
+const TabbedDatagrid = ({ permissions, ...props }) => {
   const listContext = useListContext();
   const t = useTranslate();
   const { ids, filterValues, setFilters, displayedFilters, loading } =
@@ -95,7 +89,9 @@ const TabbedDatagrid = ({permissions, ...props}) => {
   useEffect(() => {
     if (filterValues.is_system) {
       // reset `value` to `system` when it's out of sync
-      if (value === 'user') { setValue('system'); }
+      if (value === 'user') {
+        setValue('system');
+      }
       setSystemPlanIds(ids);
     } else {
       setUserPlanIds(ids);
@@ -104,22 +100,13 @@ const TabbedDatagrid = ({permissions, ...props}) => {
 
   return (
     <Fragment>
-      <Tabs
-        value={value}
-        indicatorColor="primary"
-        onChange={handleChange}
-      >
+      <Tabs value={value} indicatorColor="primary" onChange={handleChange}>
         {tabs.map((choice) => {
-          const label = permissions === 'admin' && choice.id === 'user'
-            ? t(`resources.${props.resource}.list.labels.admin`)
-            : t(`resources.${props.resource}.list.labels.${choice.id}`);
-          return (
-            <Tab
-              key={choice.id}
-              label={label}
-              value={choice.id}
-            />
-          )
+          const label =
+            permissions === 'admin' && choice.id === 'user'
+              ? t(`resources.${props.resource}.list.labels.admin`)
+              : t(`resources.${props.resource}.list.labels.${choice.id}`);
+          return <Tab key={choice.id} label={label} value={choice.id} />;
         })}
       </Tabs>
       <Divider />
@@ -155,10 +142,10 @@ export const PlanList = (props) => {
       sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
       perPage={25}
       bulkActionButtons={<BulkActionButtons permissions={props.permissions} />}
-      actions={<ListActions/>}
+      actions={<ListActions />}
       aside={<PlanListAside permissions={props.permissions} />}
     >
-      <TabbedDatagrid permissions={props.permissions}/>
+      <TabbedDatagrid permissions={props.permissions} />
     </List>
-  )
+  );
 };

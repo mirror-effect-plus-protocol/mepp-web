@@ -22,9 +22,9 @@
 
 import styled, { css } from 'styled-components';
 
-import { HoverOrActive } from '@styles/utils/HoverOrActive';
+import { HoverOrActive } from '../../../styles/utils/HoverOrActive';
 
-import { theme } from '@themes/index';
+import { theme } from '../../../themes/index';
 
 /**
  * Href style components

@@ -21,12 +21,7 @@
  */
 
 import React from 'react';
-import {
-  Labeled,
-  ReferenceField,
-  TextField,
-  useTranslate,
-} from 'react-admin';
+import { Labeled, ReferenceField, TextField, useTranslate } from 'react-admin';
 
 const ClinicianTextField = ({ show, ...props }) => {
   const t = useTranslate();

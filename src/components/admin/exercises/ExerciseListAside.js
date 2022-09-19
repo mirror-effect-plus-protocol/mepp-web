@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FilterList,
   FilterListItem,
@@ -29,19 +29,15 @@ import {
   useListFilterContext,
 } from 'react-admin';
 import { Card as MuiCard, CardContent, withStyles } from '@material-ui/core';
-import {
-  CategoryIcon,
-  ClinicianIcon,
-  SubCategoryIcon,
-} from '@components/admin/shared/icons';
+import { CategoryIcon, ClinicianIcon, SubCategoryIcon } from '../shared/icons';
 import {
   useGetCategories,
   useGetClinicians,
   useGetSubCategories,
-} from "@components/admin/shared/hook";
-import { ASide } from '@components/admin/shared/cards/ASide';
+} from '../shared/hook';
+import { ASide } from '../shared/cards/ASide';
 
-const ExerciseListAside = ({permissions}) => {
+const ExerciseListAside = ({ permissions }) => {
   const locale = useLocale();
   const [selectedCategory, setSelectedCategory] = useState(-1);
   const { data: clinicians, loaded } = useGetClinicians(permissions);
@@ -56,7 +52,7 @@ const ExerciseListAside = ({permissions}) => {
       if (filterValues && filterValues.sub_category__uid) {
         setFilters({
           ...filterValues,
-          'sub_category__uid': undefined
+          'sub_category__uid': undefined,
         });
       }
     }
@@ -69,35 +65,31 @@ const ExerciseListAside = ({permissions}) => {
 
         <FilterList
           label="resources.exercises.fields.category__uid"
-          icon={<CategoryIcon/>}
+          icon={<CategoryIcon />}
         >
-          {
-            categories.map((category) => (
-              <FilterListItem
-                label={category.name}
-                key={category.id}
-                value={{ category__uid: category.id }}
-              />
-            ))
-          }
+          {categories.map((category) => (
+            <FilterListItem
+              label={category.name}
+              key={category.id}
+              value={{ category__uid: category.id }}
+            />
+          ))}
         </FilterList>
 
-        {subCategories.hasOwnProperty(selectedCategory) &&
+        {subCategories.hasOwnProperty(selectedCategory) && (
           <FilterList
             label="resources.exercises.fields.uid"
-            icon={<SubCategoryIcon/>}
+            icon={<SubCategoryIcon />}
           >
-            {
-              subCategories[selectedCategory].map((sub_category) => (
-                <FilterListItem
-                  label={sub_category.name}
-                  key={sub_category.id}
-                  value={{sub_category__uid: sub_category.id}}
-                />
-              ))
-            }
+            {subCategories[selectedCategory].map((sub_category) => (
+              <FilterListItem
+                label={sub_category.name}
+                key={sub_category.id}
+                value={{ sub_category__uid: sub_category.id }}
+              />
+            ))}
           </FilterList>
-        }
+        )}
 
         {permissions === 'admin' && (
           <FilterList
@@ -111,8 +103,7 @@ const ExerciseListAside = ({permissions}) => {
                   key={clinician.id}
                   value={{ clinician_uid: clinician.id }}
                 />
-              ))
-            }
+              ))}
           </FilterList>
         )}
       </CardContent>

@@ -20,8 +20,8 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import useGetCategories from '@components/admin/shared/hook/useGetCategories';
-import useGetClinicians from '@components/admin/shared/hook/useGetClinicians';
-import useGetSubCategories from '@components/admin/shared/hook/useGetSubCategories';
+import useGetCategories from '../hook/useGetCategories';
+import useGetClinicians from '../hook/useGetClinicians';
+import useGetSubCategories from '../hook/useGetSubCategories';
 
 export { useGetCategories, useGetClinicians, useGetSubCategories };

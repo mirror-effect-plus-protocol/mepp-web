@@ -23,30 +23,32 @@
 import React, { Fragment } from 'react';
 import { BulkDeleteButton } from 'react-admin';
 
-import ExportButton from '@components/admin/shared/buttons/ExportButton';
-import ToggleBulkArchiveButton from '@components/admin/shared/buttons/ToggleBulkArchiveButton';
+import ExportButton from '../buttons/ExportButton';
+import ToggleBulkArchiveButton from '../buttons/ToggleBulkArchiveButton';
 
-const BulkActionsToolbar = ({permissions, showExport, ...props}) => {
+const BulkActionsToolbar = ({ permissions, showExport, ...props }) => {
   const filterValues = props.filterValues;
 
-  if (filterValues.hasOwnProperty('is_system')
-      && filterValues.is_system
-      && permissions !== 'admin') {
+  if (
+    filterValues.hasOwnProperty('is_system') &&
+    filterValues.is_system &&
+    permissions !== 'admin'
+  ) {
     return false;
   } else {
     return (
       <Fragment>
-        {showExport &&
+        {showExport && (
           <ExportButton
             basePath={props.basePath}
             resource={props.resource}
             variant="contained"
             color="primary"
-            style={{marginRight: '10px'}}
+            style={{ marginRight: '10px' }}
             selectedIds={props.selectedIds}
             filterValues={props.filterValues}
           />
-        }
+        )}
         <ToggleBulkArchiveButton
           archivedFilterValue={filterValues.archived}
           variant="contained"
@@ -58,7 +60,7 @@ const BulkActionsToolbar = ({permissions, showExport, ...props}) => {
             {...props}
             variant="outlined"
             undoable={false}
-            style={{marginLeft: '10px', borderColor: 'red'}}
+            style={{ marginLeft: '10px', borderColor: 'red' }}
           />
         )}
       </Fragment>

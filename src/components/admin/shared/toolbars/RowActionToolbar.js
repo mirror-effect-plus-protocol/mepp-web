@@ -34,8 +34,8 @@ import Queue from '@material-ui/icons/Queue';
 
 import ToggleArchiveButton from '../buttons/ToggleArchiveButton';
 import ToggleActiveButton from '../buttons/ToggleActiveButton';
-import CRUDButton from '@components/admin/shared/buttons/CRUDButton';
-import { getPlaceHolder } from '@admin/utils/placeholder';
+import CRUDButton from '../buttons/CRUDButton';
+import { getPlaceHolder } from '../../../../admin/utils/placeholder';
 
 const useRowActionToolbarStyles = makeStyles({
   toolbar: {
@@ -48,13 +48,16 @@ const useRowActionToolbarStyles = makeStyles({
   },
 });
 
-const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
+const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
   const t = useTranslate();
   const locale = useLocale();
   const classes = useRowActionToolbarStyles();
-  const confirmTitle = t('resources.' + props.resource + '.delete.confirmTitle', {
-    placeholder: getPlaceHolder(props.record, locale),
-  });
+  const confirmTitle = t(
+    'resources.' + props.resource + '.delete.confirmTitle',
+    {
+      placeholder: getPlaceHolder(props.record, locale),
+    },
+  );
   const archiveTitle = props.record.archived
     ? 'admin.shared.labels.unarchiveButton'
     : 'admin.shared.labels.archiveButton';
@@ -63,7 +66,8 @@ const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
     : 'admin.shared.labels.activateButton';
 
   // Row is editable by default
-  const isSystem = props.record.hasOwnProperty('is_system') && props.record.is_system;
+  const isSystem =
+    props.record.hasOwnProperty('is_system') && props.record.is_system;
   const editable = !isSystem || permissions === 'admin';
   const context = props.hasOwnProperty('context') && props.context;
 
@@ -82,7 +86,7 @@ const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
           />
         </span>
       </Tooltip>
-      {editable &&
+      {editable && (
         <Tooltip title={t(archiveTitle)} arrow>
           <span>
             <ToggleArchiveButton
@@ -97,7 +101,7 @@ const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
             />
           </span>
         </Tooltip>
-      }
+      )}
       {editable && !props.record.archived && (
         <Tooltip title={t('ra.action.edit')} arrow>
           <span>
@@ -114,7 +118,7 @@ const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
           </span>
         </Tooltip>
       )}
-      {clonable &&
+      {clonable && (
         <Tooltip
           title={
             context
@@ -131,16 +135,12 @@ const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
               resource={props.rowResource || props.resource}
               className={classes.icon_action_button}
               size="small"
-              icon={
-                context
-                  ? <FileCopyIcon />
-                  : <Queue />
-              }
+              icon={context ? <FileCopyIcon /> : <Queue />}
               color="secondary"
             />
           </span>
         </Tooltip>
-      }
+      )}
       {activable && !props.record.archived && (
         <Tooltip title={t(activeTitle)} arrow>
           <span>

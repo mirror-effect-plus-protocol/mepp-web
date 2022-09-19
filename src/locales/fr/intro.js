@@ -25,8 +25,7 @@ export default {
     title: 'Bonjour {{name}}',
     introduction:
       'Prêt(e) à commencer votre séance d’exercices? Concentrez-vous sur les contractions musculaires et tentez de les sentir, même si vous ne voyez rien bouger. Laissez le reste du visage au repos.',
-    instruction:
-      'Faites les exercices lentement en suivant le rythme proposé.',
+    instruction: 'Faites les exercices lentement en suivant le rythme proposé.',
   },
   permission: {
     title: 'Permission',

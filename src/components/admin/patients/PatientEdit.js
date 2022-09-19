@@ -21,7 +21,7 @@
  */
 
 import React from 'react';
-import { Typography } from '@components/admin/shared/dom/sanitize';
+import { Typography } from '../shared/dom/sanitize';
 import { makeStyles } from '@material-ui/core/styles';
 import { CompactForm, RaBox } from 'ra-compact-ui';
 import {
@@ -35,12 +35,8 @@ import {
   useNotify,
 } from 'react-admin';
 
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
-import {
-  validateAudio,
-  validateClinician,
-  validateSide,
-} from './validators';
+import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
+import { validateAudio, validateClinician, validateSide } from './validators';
 import {
   validateEmail,
   validateFirstName,
@@ -48,9 +44,9 @@ import {
   validateLastName,
   validatePasswordOptional as validatePassword,
   validatePasswords,
-} from '@components/admin/shared/validators';
-import Options from '@components/admin/shared/options';
-import TopToolbar from "@components/admin/shared/toolbars/TopToolbar";
+} from '../shared/validators';
+import Options from '../shared/options';
+import TopToolbar from '../shared/toolbars/TopToolbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +68,7 @@ export const PatientEdit = (props) => {
     Object.entries(error.body).forEach(([key, values]) => {
       message += t(`resources.${props.resource}.errors.${key}`);
     });
-    notify(message, {type: 'error'});
+    notify(message, { type: 'error' });
   };
 
   return (
@@ -84,7 +80,7 @@ export const PatientEdit = (props) => {
     >
       <CompactForm
         layoutComponents={[RaBox]}
-        toolbar={<SimpleFormToolBar identity={false}/>}
+        toolbar={<SimpleFormToolBar identity={false} />}
         validate={validatePasswords}
       >
         <Typography variant="h6" gutterBottom>

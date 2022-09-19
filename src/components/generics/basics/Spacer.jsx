@@ -22,7 +22,7 @@
 
 import styled, { css } from 'styled-components';
 
-import { spacings } from '@styles/configs/spacings';
+import { spacings } from '../../../styles/configs/spacings';
 
 /**
  * Spacer

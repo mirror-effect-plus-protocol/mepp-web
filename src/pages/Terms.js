@@ -24,21 +24,20 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { media } from '@styles/configs/breakpoints';
-import { spacings } from '@styles/configs/spacings';
-import {FlexAlignMiddle, Wrapper} from '@styles/tools';
+import { media } from '../styles/configs/breakpoints';
+import { spacings } from '../styles/configs/spacings';
+import { FlexAlignMiddle, Wrapper } from '../styles/tools';
 
-import { useLocale } from '@hooks/locale/useLocale';
-import { useTrackingView } from '@hooks/useTrackingView';
+import { useLocale } from '../hooks/locale/useLocale';
+import { useTrackingView } from '../hooks/useTrackingView';
 
-import { Language } from '@utils/constants';
+import { Language } from '../utils/constants';
 
-import BasicLayout from '@layouts/Basic';
+import BasicLayout from '../layouts/Basic';
 
-import { Footer } from '@components/footer/Footer';
-import {H3, H5, P, UL, LI, Href} from '@components/generics/basics/index';
-import { Header } from '@components/header/Header';
-
+import { Footer } from '../components/footer/Footer';
+import { H3, H5, P, UL, LI, Href } from '../components/generics/basics/index';
+import { Header } from '../components/header/Header';
 
 /**
  * Terms of use page with BasicLayout
@@ -54,7 +53,7 @@ const TermsPage = () => {
       content={
         <ContainerWrapper>
           <ContainerInner>
-            {locale === Language.FR ? <TermFr t={t} /> : <TermEn t={t}/>}
+            {locale === Language.FR ? <TermFr t={t} /> : <TermEn t={t} />}
           </ContainerInner>
         </ContainerWrapper>
       }
@@ -63,7 +62,7 @@ const TermsPage = () => {
   );
 };
 
-const TermFr = ({t}) => {
+const TermFr = ({ t }) => {
   return (
     <>
       <H3>CONDITIONS D’UTILISATION</H3>
@@ -71,10 +70,12 @@ const TermFr = ({t}) => {
 
       <H5>1. Champ d’application</H5>
       <P>
-        Ces conditions générales (ci-après les <b>«&nbsp;Conditions&nbsp;»</b>) constituent une
-        entente légale entre vous (<b>«&nbsp;vous&nbsp;»</b> ou l’<b>«&nbsp;Utilisateur&nbsp;»</b>) et l’équipe du MEPP, faisant également
-        affaires sous le nom MEPP(<b>«&nbsp;MEPP&nbsp;»</b> ou <b>«&nbsp;nous&nbsp;»</b>) et encadrent l’utilisation
-        de la plateforme <b>«&nbsp;MEPP&nbsp;»</b>, comprenant un site web et une application
+        Ces conditions générales (ci-après les <b>«&nbsp;Conditions&nbsp;»</b>)
+        constituent une entente légale entre vous (<b>«&nbsp;vous&nbsp;»</b> ou
+        l’<b>«&nbsp;Utilisateur&nbsp;»</b>) et l’équipe du MEPP, faisant
+        également affaires sous le nom MEPP(<b>«&nbsp;MEPP&nbsp;»</b> ou{' '}
+        <b>«&nbsp;nous&nbsp;»</b>) et encadrent l’utilisation de la plateforme{' '}
+        <b>«&nbsp;MEPP&nbsp;»</b>, comprenant un site web et une application
         mobile (le <b>«&nbsp;Service&nbsp;»</b>).
       </P>
       <P>
@@ -116,12 +117,12 @@ const TermFr = ({t}) => {
       <H5>3. Droits d’auteur</H5>
       <P>
         À l’exclusion des images, photos, fichiers musicaux ou vidéos diffusés à
-        l’aide de l’application mobile associée au Service (le <b>«&nbsp;Contenu
-        audio-visuel&nbsp;»</b>), lesquels demeurent la propriété de leurs ayants-droit
-        respectifs, le Service et ses composantes sont utilisés par MEPP sous
-        licence de tiers et peuvent être protégés par les lois en matière de
-        propriété intellectuelle, dont la Loi sur le droit d’auteur (L.R.C.
-        (1985), ch. C-42).
+        l’aide de l’application mobile associée au Service (le{' '}
+        <b>«&nbsp;Contenu audio-visuel&nbsp;»</b>), lesquels demeurent la
+        propriété de leurs ayants-droit respectifs, le Service et ses
+        composantes sont utilisés par MEPP sous licence de tiers et peuvent être
+        protégés par les lois en matière de propriété intellectuelle, dont la
+        Loi sur le droit d’auteur (L.R.C. (1985), ch. C-42).
       </P>
       <P>
         Outre les droits d’utilisation qui vous sont consentis aux termes des
@@ -190,8 +191,8 @@ const TermFr = ({t}) => {
         Vous reconnaissez que vos commentaires, suggestions, idées ou
         propositions relatifs au Service, à ses fonctionnalités ou aux activités
         commerciales dans lesquelles est engagée MEPP, que vous soumettez à MEPP
-        (les «&nbsp;Suggestions&nbsp;»), ne sont pas confidentiels et peuvent être
-        divulgués, utilisés, adaptés ou appliqués par eValorix sans aucune
+        (les «&nbsp;Suggestions&nbsp;»), ne sont pas confidentiels et peuvent
+        être divulgués, utilisés, adaptés ou appliqués par eValorix sans aucune
         obligation de rémunération ni toute autre forme de rétribution.
       </P>
 
@@ -229,17 +230,18 @@ const TermFr = ({t}) => {
       <H5>8. Limitation de responsabilité</H5>
       <P>
         DANS LA PLEINE MESURE PERMISE PAR LES LOIS APPLICABLES, MEPP, SON
-        CONCÉDANT DE LICENCE, L’UNIVERSITÉ DE MONTRÉAL (<b>«&nbsp;UdeM&nbsp;»</b>) ET LEURS
-        DIRIGEANTS, ADMINISTRATEURS, AGENTS, REPRÉSENTANTS, EMPLOYÉS,
-        CHERCHEURS, ÉTUDIANTS, MANDATAIRES, PARTENAIRES COMMERCIAUX ET LEURS
-        SUCCESSEURS ET AYANTS CAUSE RESPECTIFS, NE SAURAIENT EN AUCUN CAS ÊTRE
-        TENUS RESPONSABLES DE QUELQUE DOMMAGE INDIRECT, DE SOURCE CONTRACTUELLE
-        OU EXTRACONTRACTUELLE (Y COMPRIS LA NÉGLIGENCE) OU AUTREMENT, MÊME SI
-        L’UdeM CONNAISSAIT OU AURAIT DÛ CONNAÎTRE LA POSSIBILITÉ DE TELS
-        DOMMAGES OU PERTES. PAR AILLEURS, MEPP N’A AUCUNE OBLIGATION DE
-        CONSERVER OU DE STOCKER LES DONNÉES QUE VOUS AMASSEZ PAR VOTRE
-        UTILISATION DU SERVICE ET NE SAURAIT ÊTRE TENUE RESPONSABLE DE QUELQUE
-        PERTE OU DOMMAGE RÉSULTANT D’UNE PERTE DE CES DONNÉES.
+        CONCÉDANT DE LICENCE, L’UNIVERSITÉ DE MONTRÉAL (
+        <b>«&nbsp;UdeM&nbsp;»</b>) ET LEURS DIRIGEANTS, ADMINISTRATEURS, AGENTS,
+        REPRÉSENTANTS, EMPLOYÉS, CHERCHEURS, ÉTUDIANTS, MANDATAIRES, PARTENAIRES
+        COMMERCIAUX ET LEURS SUCCESSEURS ET AYANTS CAUSE RESPECTIFS, NE
+        SAURAIENT EN AUCUN CAS ÊTRE TENUS RESPONSABLES DE QUELQUE DOMMAGE
+        INDIRECT, DE SOURCE CONTRACTUELLE OU EXTRACONTRACTUELLE (Y COMPRIS LA
+        NÉGLIGENCE) OU AUTREMENT, MÊME SI L’UdeM CONNAISSAIT OU AURAIT DÛ
+        CONNAÎTRE LA POSSIBILITÉ DE TELS DOMMAGES OU PERTES. PAR AILLEURS, MEPP
+        N’A AUCUNE OBLIGATION DE CONSERVER OU DE STOCKER LES DONNÉES QUE VOUS
+        AMASSEZ PAR VOTRE UTILISATION DU SERVICE ET NE SAURAIT ÊTRE TENUE
+        RESPONSABLE DE QUELQUE PERTE OU DOMMAGE RÉSULTANT D’UNE PERTE DE CES
+        DONNÉES.
       </P>
       <P>
         SI VOUS DÉCIDEZ D’UTILISER LE SERVICE, VOUS LE FAITES ENTIÈREMENT À VOS
@@ -255,7 +257,8 @@ const TermFr = ({t}) => {
       <H5>9. Indemnisation</H5>
       <P>
         MEPP n’est pas responsable des actions que vous posez ou que vous vous
-        abstenez de poser en lien avec le Service (vos <b>«&nbsp;Actes&nbsp;»</b>).
+        abstenez de poser en lien avec le Service (vos{' '}
+        <b>«&nbsp;Actes&nbsp;»</b>).
       </P>
       <P>
         Vous acceptez que vos Actes soient sous votre seule et unique
@@ -352,9 +355,9 @@ const TermFr = ({t}) => {
       <P>
         Le Service est un environnement dynamique sujet à changements. Lorsque
         MEPP, à sa seule discrétion, apportera des changements à ces Conditions,
-        nous modifierons la date de la <b>«&nbsp;Dernière mise à jour&nbsp;»</b> telle que
-        retrouvée ci-dessus. Bien qu’il ne soit pas de notre intention de
-        modifier fréquemment ou substantiellement ces Conditions, il pourrait
+        nous modifierons la date de la <b>«&nbsp;Dernière mise à jour&nbsp;»</b>{' '}
+        telle que retrouvée ci-dessus. Bien qu’il ne soit pas de notre intention
+        de modifier fréquemment ou substantiellement ces Conditions, il pourrait
         arriver que nous le fassions pour mieux vous servir à l’avenir ou pour
         tenir compte de l’évolution de notre offre de services, de la
         technologie ou de la loi. Nous vous invitons à en revoir le contenu
@@ -378,7 +381,9 @@ const TermFr = ({t}) => {
         <LI>
           a) si le destinataire est l’administrateur du MEPP : 5415 Boulevard de
           l’Assomption, Montréal, QC H1T 2M4; courriel&nbsp;:
-          <a href="mailto:info@mirroreffectplus.org">info@mirroreffectplus.org</a>
+          <a href="mailto:info@mirroreffectplus.org">
+            info@mirroreffectplus.org
+          </a>
         </LI>
         <LI>
           b) si le destinataire est l’Utilisateur : à l’adresse courriel fournie
@@ -404,10 +409,15 @@ const TermFr = ({t}) => {
       </P>
 
       <P>
-        <b>Pour toute question ou commentaire concernant ces Conditions, n’hésitez
-          pas à communiquer avec notre service à la clientèle:</b>
+        <b>
+          Pour toute question ou commentaire concernant ces Conditions,
+          n’hésitez pas à communiquer avec notre service à la clientèle:
+        </b>
       </P>
-      <P>Courriel&nbsp;: <a href="mailto:info@mirroreffectplus.org">info@mirroreffectplus.org</a></P>
+      <P>
+        Courriel&nbsp;:{' '}
+        <a href="mailto:info@mirroreffectplus.org">info@mirroreffectplus.org</a>
+      </P>
       <ButtonsWrapper>
         <LoginLink
           href="#"
@@ -423,7 +433,7 @@ const TermFr = ({t}) => {
   );
 };
 
-const TermEn = ({t}) => {
+const TermEn = ({ t }) => {
   return (
     <>
       <H3>TERMS OF USE</H3>
@@ -431,9 +441,12 @@ const TermEn = ({t}) => {
 
       <H5>1. Field of application</H5>
       <P>
-        These general conditions (hereafter the <b>“Conditions”</b>) constitute a legal agreement between you (<b>“you”</b> or the <b>“User”</b>),
-        and the MEPP team, also doing business under the name MEPP (<b>“MEPP”</b> or <b>“we”</b>) and regulate the use of the <b>“MEPP”</b>
-        platform, including a website and a mobile application (the <b>“Service”</b>).
+        These general conditions (hereafter the <b>“Conditions”</b>) constitute
+        a legal agreement between you (<b>“you”</b> or the <b>“User”</b>), and
+        the MEPP team, also doing business under the name MEPP (<b>“MEPP”</b> or{' '}
+        <b>“we”</b>) and regulate the use of the <b>“MEPP”</b>
+        platform, including a website and a mobile application (the{' '}
+        <b>“Service”</b>).
       </P>
       <P>
         PLEASE READ ALL OF THE CONDITIONS IN DETAIL BEFORE USING THE SERVICE.
@@ -441,176 +454,319 @@ const TermEn = ({t}) => {
 
       <H5>2. Acceptation of the Conditions</H5>
       <P>
-        By accepting the Conditions, you accept to be bound, without reserve or restriction, by the terms and stipulations of the Conditions. The access and use of the Service are subject to the full compliance to these Conditions without reserve.
+        By accepting the Conditions, you accept to be bound, without reserve or
+        restriction, by the terms and stipulations of the Conditions. The access
+        and use of the Service are subject to the full compliance to these
+        Conditions without reserve.
       </P>
       <P>
-        If you do not wish to be bound by these Conditions or if you do not fully accept them, you must abstain from accessing or using the Service.
+        If you do not wish to be bound by these Conditions or if you do not
+        fully accept them, you must abstain from accessing or using the Service.
       </P>
       <P>
-        Subject to these terms and Conditions, MEPP grants you, for the duration of the agreement documented by these Conditions:
+        Subject to these terms and Conditions, MEPP grants you, for the duration
+        of the agreement documented by these Conditions:
       </P>
       <UL>
         <LI>
-          The right to access the web components of the Service and to use its functionalities; and
+          The right to access the web components of the Service and to use its
+          functionalities; and
         </LI>
         <LI>
-          A non-transferable, non-exclusive license for (a) personal use, and (b) to copy, for download, installation, execution purposes, the number of copies for which you are authorized by the application download site, on a mobile device that you own or control for your personal use and to use it to access and use the Service;
+          A non-transferable, non-exclusive license for (a) personal use, and
+          (b) to copy, for download, installation, execution purposes, the
+          number of copies for which you are authorized by the application
+          download site, on a mobile device that you own or control for your
+          personal use and to use it to access and use the Service;
         </LI>
       </UL>
 
       <H5>3. Copyright</H5>
       <P>
-        Excluding images, photos, music, or video files broadcast with the mobile application associated to the Service (the “Audiovisual content”), which remain the property of their respective beneficiaries, the Service and its components are used by MEPP under third-party license and may be protected by the laws in matters of intellectual property, including the Copyright law (L.R.C. (1985) ch. C-42).
+        Excluding images, photos, music, or video files broadcast with the
+        mobile application associated to the Service (the “Audiovisual
+        content”), which remain the property of their respective beneficiaries,
+        the Service and its components are used by MEPP under third-party
+        license and may be protected by the laws in matters of intellectual
+        property, including the Copyright law (L.R.C. (1985) ch. C-42).
       </P>
       <P>
-        In addition to the right to use, which are granted to you in the terms of these Conditions, MEPP reserves, in their own name or that of its licensors, all its rights regarding the Service. Consequently, it is forbidden to copy, reproduce, modify, reformulate, reedit, and more generally use the elements composing the Service, both in part and in full, without previously obtaining the written authorization of MEPP.
+        In addition to the right to use, which are granted to you in the terms
+        of these Conditions, MEPP reserves, in their own name or that of its
+        licensors, all its rights regarding the Service. Consequently, it is
+        forbidden to copy, reproduce, modify, reformulate, reedit, and more
+        generally use the elements composing the Service, both in part and in
+        full, without previously obtaining the written authorization of MEPP.
       </P>
 
       <H5>4. Your obligations</H5>
       <P>
-        By using the Service, without limiting the scope of what is otherwise prescribed in the Conditions, you accept to (i) respect all the laws which are applicable in your territory of residence, (ii) to communicate exact information and to update them and (iii) to use the Service in a reasonable and responsible manner.
+        By using the Service, without limiting the scope of what is otherwise
+        prescribed in the Conditions, you accept to (i) respect all the laws
+        which are applicable in your territory of residence, (ii) to communicate
+        exact information and to update them and (iii) to use the Service in a
+        reasonable and responsible manner.
       </P>
       <P>Additionally, you commit to not:</P>
       <UL>
         <LI>a) use the Service for illegal or illicit purposes;</LI>
         <LI>
-          b) breach the intellectual property rights of MEPP or others, including its licensor, notably the patents, trademarks, trade secrets, licenses, copyrights or any other property rights;
+          b) breach the intellectual property rights of MEPP or others,
+          including its licensor, notably the patents, trademarks, trade
+          secrets, licenses, copyrights or any other property rights;
         </LI>
         <LI>
-          c) monitor the availability, performance or functionality of the Service for competition purposes;
+          c) monitor the availability, performance or functionality of the
+          Service for competition purposes;
         </LI>
         <LI>
-          d) use manual coding software, devices, robots or automats or any other means to access, decompose, analyze or index the functionalities of the Service or any related service, data or information;
+          d) use manual coding software, devices, robots or automats or any
+          other means to access, decompose, analyze or index the functionalities
+          of the Service or any related service, data or information;
         </LI>
         <LI>
-          e) transmit destructive code likely to damage, surreptitiously intercept or expropriate a system, data or personal information or to interfere with them in a detrimental manner;
+          e) transmit destructive code likely to damage, surreptitiously
+          intercept or expropriate a system, data or personal information or to
+          interfere with them in a detrimental manner;
         </LI>
         <LI>f) contourner toute fonctionnalité de sécurité du Service;</LI>
         <LI>
-          g) use the Service for a use for which it is not destined, notably for commercial purposes.
+          g) use the Service for a use for which it is not destined, notably for
+          commercial purposes.
         </LI>
       </UL>
 
       <H5>5. Links to third party sites or resources</H5>
       <P>
-        On the Service you may find hyperlinks leading to websites or other resources which are not under the control or responsibility of MEPP. MEPP does not have any means to control these websites and is not accountable for the availability, reliability or legality of such websites nor guarantees them. MEPP does not caution nor approve the contents which these websites give access to and excludes any responsibility and guarantee pertaining to them. The User who accesses the third-party Websites does so at their own risk.
+        On the Service you may find hyperlinks leading to websites or other
+        resources which are not under the control or responsibility of MEPP.
+        MEPP does not have any means to control these websites and is not
+        accountable for the availability, reliability or legality of such
+        websites nor guarantees them. MEPP does not caution nor approve the
+        contents which these websites give access to and excludes any
+        responsibility and guarantee pertaining to them. The User who accesses
+        the third-party Websites does so at their own risk.
       </P>
 
       <H5>6. Ideas submission</H5>
       <P>
-        You acknowledge that your comments, suggestions, ideas or propositions pertaining to the Service, its functionalities or commercial activities in which MEPP is engaged, that you submit to MEPP (the “Suggestions”), are not confidential and may be disclosed, used, adapted or applied by eValorix without the obligation of any remuneration or any other form of retribution.
+        You acknowledge that your comments, suggestions, ideas or propositions
+        pertaining to the Service, its functionalities or commercial activities
+        in which MEPP is engaged, that you submit to MEPP (the “Suggestions”),
+        are not confidential and may be disclosed, used, adapted or applied by
+        eValorix without the obligation of any remuneration or any other form of
+        retribution.
       </P>
 
       <H5>7. Guarantees exemption</H5>
       <P>
-        THE SERVICES ARE PROVIDED AS IS. WHEN YOU USE THE SERVICE, YOU ACKNOWLEDGE AND AGREE THAT YOU DO SO FULLY AT YOUR OWN RISKS AND PERILS. THE SERVICE MAY BE ABANDONED OR ITS ACCESS MAY BE INTERRUPTED AT ANY TIME BY MEPP OR OTHERWISE. MEPP DOES NOT FORMULATE ANY DECLARATION OR GUARANTEE REGARDING THE SERVICES OR THE FUNCTIONALITIES OFFERED ON THE SERVICE, INCLUDING NOTABLY:
+        THE SERVICES ARE PROVIDED AS IS. WHEN YOU USE THE SERVICE, YOU
+        ACKNOWLEDGE AND AGREE THAT YOU DO SO FULLY AT YOUR OWN RISKS AND PERILS.
+        THE SERVICE MAY BE ABANDONED OR ITS ACCESS MAY BE INTERRUPTED AT ANY
+        TIME BY MEPP OR OTHERWISE. MEPP DOES NOT FORMULATE ANY DECLARATION OR
+        GUARANTEE REGARDING THE SERVICES OR THE FUNCTIONALITIES OFFERED ON THE
+        SERVICE, INCLUDING NOTABLY:
       </P>
       <UL>
         <LI>
-          A) PERTAINING TO THE EXACTITUDE, EFFICIENCY, AVAILABILITY, EXHAUSTIVITY, RELIABILITY, OPPORTUNITY OF THE SERVICE;
+          A) PERTAINING TO THE EXACTITUDE, EFFICIENCY, AVAILABILITY,
+          EXHAUSTIVITY, RELIABILITY, OPPORTUNITY OF THE SERVICE;
         </LI>
         <LI>
-          B) PERTAINING TO THE FUNCTIONING OR THE ACCESSIBILITY OF THE SERVICE WITHOUT INTERRUPTION OR ERROR;
+          B) PERTAINING TO THE FUNCTIONING OR THE ACCESSIBILITY OF THE SERVICE
+          WITHOUT INTERRUPTION OR ERROR;
         </LI>
         <LI>
-          C) PERTAINING TO THE CORRECTION OF THE FAULTS OR ERRORS IN THE SERVICE;
+          C) PERTAINING TO THE CORRECTION OF THE FAULTS OR ERRORS IN THE
+          SERVICE;
         </LI>
         <LI>
-          D) PERTAINING TO THE ABSENCE OF VIRUS OR DAMAGEABLE ELEMENTS IN THE SERVICE;
+          D) PERTAINING TO THE ABSENCE OF VIRUS OR DAMAGEABLE ELEMENTS IN THE
+          SERVICE;
         </LI>
         <LI>
-          E) PERTAINING TO THE SAFE TRANSMISSION OF THE COMMUNICATIONS OR WITHOUT INTERCEPTION THROUGH THE SERVICE
+          E) PERTAINING TO THE SAFE TRANSMISSION OF THE COMMUNICATIONS OR
+          WITHOUT INTERCEPTION THROUGH THE SERVICE
         </LI>
       </UL>
 
       <H5>8. Liability limitations</H5>
       <P>
-        TO THE FULL EXTENT PERMITTED BY THE APPLICABLE LAWS, MEPP, ITS LICENSOR, THE UNIVERSITY OF MONTREAL (<b>”UdeM”</b>) AND THEIR DIRECTORS, ADMINISTRATORS, AGENTS, REPRESENTATIVES, EMPLOYEES, RESEARCHERS, STUDENTS, AUTHORIZED REPRESENTATIVES, COMMERCIAL PARTNERS AND THEIR RESPECTIVE SUCCESSORS AND BENEFICIARIES CANNOT IN ANY CASE BE HELD RESPONSIBLE FOR ANY INDIRECT DAMAGE, OF CONTRACTUAL OR EXTRACONTRACTUAL SOURCE (INCLUDING THE NEGLIGENCE) OR OTHERWISE, EVEN IF UdeM KNEW OR SHOULD HAVE KNOWN THE POSSIBILITY OF SUCH DAMAGES OR LOSS. IN ADDITION, MEPP DOES NOT HAVE ANY OBLIGATION TO KEEP OR STORE THE DATA YOU AMASS THROUGH YOUR USE OF THE SERVICE AND CANNOT BE HELD RESPONSIBLE FOR ANY LOSS OR DAMAGE RESULTING FROM A LOSS OF THIS DATA.
+        TO THE FULL EXTENT PERMITTED BY THE APPLICABLE LAWS, MEPP, ITS LICENSOR,
+        THE UNIVERSITY OF MONTREAL (<b>”UdeM”</b>) AND THEIR DIRECTORS,
+        ADMINISTRATORS, AGENTS, REPRESENTATIVES, EMPLOYEES, RESEARCHERS,
+        STUDENTS, AUTHORIZED REPRESENTATIVES, COMMERCIAL PARTNERS AND THEIR
+        RESPECTIVE SUCCESSORS AND BENEFICIARIES CANNOT IN ANY CASE BE HELD
+        RESPONSIBLE FOR ANY INDIRECT DAMAGE, OF CONTRACTUAL OR EXTRACONTRACTUAL
+        SOURCE (INCLUDING THE NEGLIGENCE) OR OTHERWISE, EVEN IF UdeM KNEW OR
+        SHOULD HAVE KNOWN THE POSSIBILITY OF SUCH DAMAGES OR LOSS. IN ADDITION,
+        MEPP DOES NOT HAVE ANY OBLIGATION TO KEEP OR STORE THE DATA YOU AMASS
+        THROUGH YOUR USE OF THE SERVICE AND CANNOT BE HELD RESPONSIBLE FOR ANY
+        LOSS OR DAMAGE RESULTING FROM A LOSS OF THIS DATA.
       </P>
+      <P>IF YOU DECIDE TO USE THE SERVICE, YOU DO SO FULLY AT YOUR OWN RISK.</P>
       <P>
-        IF YOU DECIDE TO USE THE SERVICE, YOU DO SO FULLY AT YOUR OWN RISK.
-      </P>
-      <P>
-        IT IS POSSIBLE FOR THIS ARTICLE TO NOT BE APPLICABLE TO YOU, IN FULL OR IN PART, BECAUSE OF A LAW RULING THE CONSUMERS’ RIGHTS OR ANY OTHER PUBLIC LAW WHICH MAY BE APPLICABLE TO YOUR SITUATION.
+        IT IS POSSIBLE FOR THIS ARTICLE TO NOT BE APPLICABLE TO YOU, IN FULL OR
+        IN PART, BECAUSE OF A LAW RULING THE CONSUMERS’ RIGHTS OR ANY OTHER
+        PUBLIC LAW WHICH MAY BE APPLICABLE TO YOUR SITUATION.
       </P>
 
       <H5>9. Compensation</H5>
       <P>
-        MEPP is not responsible for the actions you take or abstain from taking in relation with the Service (your <b>”Actions”</b>).
+        MEPP is not responsible for the actions you take or abstain from taking
+        in relation with the Service (your <b>”Actions”</b>).
       </P>
       <P>
-        You accept that your Actions are under your sole responsibility and acknowledge having taken them with full knowledge of the facts. MEPP cannot be deemed responsible of any transgression of the Conditions that you have or may have made.
+        You accept that your Actions are under your sole responsibility and
+        acknowledge having taken them with full knowledge of the facts. MEPP
+        cannot be deemed responsible of any transgression of the Conditions that
+        you have or may have made.
       </P>
       <P>
-        Consequently, you accept to compensate and hold harmless MEPP, its licensor, UdeM, their branches and affiliated companies, administrators, directors, agents, representatives, employees, researchers, students, commercial partners, authorized representative and their respective successors and rightful claimants in regard to the losses, obligations, claims, requests, damages, costs and expenses of any type that may be, including the reasonable attorney’s fees, pursuant to your Actions, as well as any breach of the Conditions, of any law or of a third party’s rights.
+        Consequently, you accept to compensate and hold harmless MEPP, its
+        licensor, UdeM, their branches and affiliated companies, administrators,
+        directors, agents, representatives, employees, researchers, students,
+        commercial partners, authorized representative and their respective
+        successors and rightful claimants in regard to the losses, obligations,
+        claims, requests, damages, costs and expenses of any type that may be,
+        including the reasonable attorney’s fees, pursuant to your Actions, as
+        well as any breach of the Conditions, of any law or of a third party’s
+        rights.
       </P>
 
       <H5>10. Duration and cancelation</H5>
       <P>
-        These Conditions take effect on the date on which you accept them (as described in the preamble). Notwithstanding what precedes, if you have used the Service before the date on which you accepted these Conditions (as described in the preamble), you hereby acknowledge and accept that these Conditions entered into effect on the date on which you used the Service for the first time (which is the oldest and which may be anterior to the version date of the Conditions) and will remain in effect for as long as you use the Service, unless an end is put to them earlier in compliance with the Conditions.
+        These Conditions take effect on the date on which you accept them (as
+        described in the preamble). Notwithstanding what precedes, if you have
+        used the Service before the date on which you accepted these Conditions
+        (as described in the preamble), you hereby acknowledge and accept that
+        these Conditions entered into effect on the date on which you used the
+        Service for the first time (which is the oldest and which may be
+        anterior to the version date of the Conditions) and will remain in
+        effect for as long as you use the Service, unless an end is put to them
+        earlier in compliance with the Conditions.
       </P>
       <P>
-        We can (a) suspend your rights to use the Service or (b) cancel the Conditions, at any time, for any reason, at our sole discretion, without or without notice, including if we believe in good faith that you neglected your duties in the terms and Conditions. Without limiting what precedes, MEPP reserves the right to cancel the usage right granted to any user who infringes the copyright of a third party upon notification to MEPP by the holder of the copyright or their legal representative.
+        We can (a) suspend your rights to use the Service or (b) cancel the
+        Conditions, at any time, for any reason, at our sole discretion, without
+        or without notice, including if we believe in good faith that you
+        neglected your duties in the terms and Conditions. Without limiting what
+        precedes, MEPP reserves the right to cancel the usage right granted to
+        any user who infringes the copyright of a third party upon notification
+        to MEPP by the holder of the copyright or their legal representative.
       </P>
       <P>
-        On your side, you may put an end to the agreement which binds you to MEPP by requesting for the administrator to close your account on the Service and by stopping the use of the mobile application and the web components of the Service.
+        On your side, you may put an end to the agreement which binds you to
+        MEPP by requesting for the administrator to close your account on the
+        Service and by stopping the use of the mobile application and the web
+        components of the Service.
       </P>
 
       <H5>11. Minors under 16 years old</H5>
-      <P>
-        If you are under 16 years old, you cannot use the Service.
-      </P>
+      <P>If you are under 16 years old, you cannot use the Service.</P>
 
       <H5>12. Jurisdiction and applicable laws</H5>
       <P>
-        The Conditions are ruled and interpreted by the laws of Quebec and of Canada which are applicable, without regard to the laws conflict principle.
+        The Conditions are ruled and interpreted by the laws of Quebec and of
+        Canada which are applicable, without regard to the laws conflict
+        principle.
       </P>
       <P>
-        This paragraph does not apply to consumer of the province of Quebec (Canada), to whom the <i>Consumer protection</i> law (Quebec) (chapter P-40.1) applies. You irrevocably accept and acknowledge the exclusive competence of the federal and provincial jurisdiction tribunals, sitting in and for the judiciary district of Montreal in relation to any dispute arising from the Conditions or related to them, you elect domicile there and renounce to any objection founded on the absence of territorial competence or any request founded on the <i>non conveniens forum</i> notion.
+        This paragraph does not apply to consumer of the province of Quebec
+        (Canada), to whom the <i>Consumer protection</i> law (Quebec) (chapter
+        P-40.1) applies. You irrevocably accept and acknowledge the exclusive
+        competence of the federal and provincial jurisdiction tribunals, sitting
+        in and for the judiciary district of Montreal in relation to any dispute
+        arising from the Conditions or related to them, you elect domicile there
+        and renounce to any objection founded on the absence of territorial
+        competence or any request founded on the <i>non conveniens forum</i>{' '}
+        notion.
       </P>
 
       <H5>13. Divisibility</H5>
       <P>
-        Each of the provisions of the Conditions is individual and distinct and if, one or the other of the Conditions were deemed invalid, illegal, or inapplicable, the other provisions of the Conditions conserve full applicability and effect.
+        Each of the provisions of the Conditions is individual and distinct and
+        if, one or the other of the Conditions were deemed invalid, illegal, or
+        inapplicable, the other provisions of the Conditions conserve full
+        applicability and effect.
       </P>
 
       <H5>14. Renunciation</H5>
       <P>
-        The fact that MEPP does not insist on the full execution of an obligation prescribed by these Conditions or does not practice a right which is conferred to them will not be considered as a renunciation to the execution of this obligation or right. Any renunciation by MEPP to a right that is conferred to them in the terms of these Conditions will only be applicable if it is established in writing and signed and will only be applicable toward the right or the circumstances expressly targeted by this renunciation.
+        The fact that MEPP does not insist on the full execution of an
+        obligation prescribed by these Conditions or does not practice a right
+        which is conferred to them will not be considered as a renunciation to
+        the execution of this obligation or right. Any renunciation by MEPP to a
+        right that is conferred to them in the terms of these Conditions will
+        only be applicable if it is established in writing and signed and will
+        only be applicable toward the right or the circumstances expressly
+        targeted by this renunciation.
       </P>
 
       <H5>15. Modification</H5>
       <P>
-        The Service is a dynamic environment subject to changes. When MEPP, at its sole discretion, makes changes to these Conditions, we will modify the “Latest update” date as see above. Although it is not our intention to frequently or substantially modify these Conditions, it may happen that we do it to better serve you in the future or to consider the evolution of our services offer, technology and law. We invite you to regularly review its content to be aware of any change to these Conditions. If changes are substantial, we will send you a notification via the Service or any other mean for you to be informed of the modifications before continuing your use of the Service. To continue to use the Service, you will have to accept the updated Conditions, otherwise the Service will no longer be available to you.
+        The Service is a dynamic environment subject to changes. When MEPP, at
+        its sole discretion, makes changes to these Conditions, we will modify
+        the “Latest update” date as see above. Although it is not our intention
+        to frequently or substantially modify these Conditions, it may happen
+        that we do it to better serve you in the future or to consider the
+        evolution of our services offer, technology and law. We invite you to
+        regularly review its content to be aware of any change to these
+        Conditions. If changes are substantial, we will send you a notification
+        via the Service or any other mean for you to be informed of the
+        modifications before continuing your use of the Service. To continue to
+        use the Service, you will have to accept the updated Conditions,
+        otherwise the Service will no longer be available to you.
       </P>
 
       <H5>16. Communications and Customer Service</H5>
       <P>
-        The notices which are required to or allowed to be given pursuant to the Conditions must be sent in writing and will be considered as having been validly given if they are sent by Email or registered mail to the following addresses:
+        The notices which are required to or allowed to be given pursuant to the
+        Conditions must be sent in writing and will be considered as having been
+        validly given if they are sent by Email or registered mail to the
+        following addresses:
       </P>
       <UL>
         <LI>
           a) if the recipient is the MEPP administrator: 5415 Boulevard de
           l’Assomption, Montreal, QC H1T 2M4; E-mail:
-          <a href="mailto:info@mirroreffectplus.org">info@mirroreffectplus.org</a>
+          <a href="mailto:info@mirroreffectplus.org">
+            info@mirroreffectplus.org
+          </a>
         </LI>
         <LI>
-          b) if the recipient is the User: at the Email addresss provided to MEPP. Any communication to the User may also be sent by post when available.
+          b) if the recipient is the User: at the Email addresss provided to
+          MEPP. Any communication to the User may also be sent by post when
+          available.
         </LI>
       </UL>
       <P>
-        The notices and communications will be deemed having been given and received on the day of their remittance or their effective expedition (or if that day is not a business day, the following day), unless it has been remitted or received after 4.30 PM, in which case they will be deemed having been given or received on the following business day.
+        The notices and communications will be deemed having been given and
+        received on the day of their remittance or their effective expedition
+        (or if that day is not a business day, the following day), unless it has
+        been remitted or received after 4.30 PM, in which case they will be
+        deemed having been given or received on the following business day.
       </P>
 
       <H5>17. Survival</H5>
       <P>
-        Articles 6 (Ideas submission), 7 (Guarantees exemption), 8 (Liability limitations), 9 (Compensation), 12 (Jurisdiction and applicable laws), 13 (Divisibility), 14 (Renunciation) and 17 (Survival) will continue to produce their effects upon the cancelation or expiration of these Conditions.
+        Articles 6 (Ideas submission), 7 (Guarantees exemption), 8 (Liability
+        limitations), 9 (Compensation), 12 (Jurisdiction and applicable laws),
+        13 (Divisibility), 14 (Renunciation) and 17 (Survival) will continue to
+        produce their effects upon the cancelation or expiration of these
+        Conditions.
       </P>
 
       <P>
-        <b>For any question or comment regarding these Conditions, please do not hesitate to communicate with our customer service:</b>
+        <b>
+          For any question or comment regarding these Conditions, please do not
+          hesitate to communicate with our customer service:
+        </b>
       </P>
-      <P>E-mail: <a href="mailto:info@mirroreffectplus.org">info@mirroreffectplus.org</a></P>
+      <P>
+        E-mail:{' '}
+        <a href="mailto:info@mirroreffectplus.org">info@mirroreffectplus.org</a>
+      </P>
 
       <ButtonsWrapper>
         <LoginLink

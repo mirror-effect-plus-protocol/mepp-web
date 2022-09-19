@@ -21,7 +21,7 @@
  */
 
 import React from 'react';
-import { Typography } from '@components/admin/shared/dom/sanitize';
+import { Typography } from '../shared/dom/sanitize';
 import { makeStyles } from '@material-ui/core/styles';
 import { CompactForm, RaBox } from 'ra-compact-ui';
 import {
@@ -42,8 +42,8 @@ import {
   validateLastName,
   validatePasswordRequired as validatePassword,
   validatePasswords,
-} from '@components/admin/shared/validators';
-import Options from '@components/admin/shared/options';
+} from '../shared/validators';
+import Options from '../shared/options';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,17 +65,14 @@ export const ClinicianCreate = (props) => {
     Object.entries(error.body).forEach(([key, values]) => {
       message += t(`resources.${props.resource}.errors.${key}`);
     });
-    notify(message, {type: 'error'});
+    notify(message, { type: 'error' });
   };
 
   return (
-    <Create
-      onFailure={onFailure}
-      {...props}
-    >
+    <Create onFailure={onFailure} {...props}>
       <CompactForm
         layoutComponents={[RaBox]}
-        toolbar={<SimpleFormToolBar identity={false}/>}
+        toolbar={<SimpleFormToolBar identity={false} />}
         validate={validatePasswords}
         redirect="list"
       >
@@ -88,33 +85,23 @@ export const ClinicianCreate = (props) => {
             fullWidth
             validate={validateFirstName}
           />
-          <TextInput
-            source="last_name"
-            fullWidth
-            validate={validateLastName}
-          />
+          <TextInput source="last_name" fullWidth validate={validateLastName} />
         </RaBox>
         <RaBox className={classes.root}>
-          <TextInput
-            source="email"
-            fullWidth
-            validate={validateEmail}
-          />
+          <TextInput source="email" fullWidth validate={validateEmail} />
         </RaBox>
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('admin.shared.labels.card.informations')}
         </Typography>
-          <RaBox className={classes.root}>
-            <SelectInput
-              source="language"
-              choices={options.languages}
-              fullWidth
-              validate={validateLanguage}
-            />
-            <BooleanInput
-              source="is_superuser"
-            />
-          </RaBox>
+        <RaBox className={classes.root}>
+          <SelectInput
+            source="language"
+            choices={options.languages}
+            fullWidth
+            validate={validateLanguage}
+          />
+          <BooleanInput source="is_superuser" />
+        </RaBox>
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('admin.shared.labels.card.create_password')}
         </Typography>

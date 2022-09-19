@@ -25,19 +25,19 @@ import { useNotify } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { spacings } from '@styles/configs/spacings';
-import { FlexAlignMiddle, FlexAlignCenter } from '@styles/tools';
+import { spacings } from '../../styles/configs/spacings';
+import { FlexAlignMiddle, FlexAlignCenter } from '../../styles/tools';
 
-import { useApi } from '@hooks/useApi';
+import { useApi } from '../../hooks/useApi';
 
-import { RequestEndpoint } from '@utils/constants';
+import { RequestEndpoint } from '../../utils/constants';
 
-import { LoadingCircle } from '@components/generics/LoadingCircle';
-import { H2, P } from '@components/generics/basics';
-import { Href } from '@components/generics/basics/Href';
-import Button from '@components/generics/buttons/Button';
-import Form from '@components/generics/forms/Form';
-import Input from '@components/generics/forms/Input';
+import { LoadingCircle } from '../../components/generics/LoadingCircle';
+import { H2, P } from '../../components/generics/basics';
+import { Href } from '../../components/generics/basics/Href';
+import Button from '../../components/generics/buttons/Button';
+import Form from '../../components/generics/forms/Form';
+import Input from '../../components/generics/forms/Input';
 
 /**
  * Reset Password Form
@@ -101,14 +101,14 @@ const ResetPasswordForm = () => {
                     required
                     validation={{
                       minLength: {
-                        value: process.env.PASSWORD_MIN_LEN,
+                        value: process.env.REACT_APP_PASSWORD_MIN_LEN,
                         message: t('form:field:error:min_length', {
                           amount: process.env.PASSWORD_MIN_LEN,
                         }),
                       },
                       pattern: {
                         value: new RegExp(
-                          `^${process.env.PASSWORD_REGEX}{${process.env.PASSWORD_MIN_LEN},}$`,
+                          `^${process.env.REACT_APP_PASSWORD_REGEX}{${process.env.REACT_APP_PASSWORD_MIN_LEN},}$`,
                         ),
                         message: t('form:field:error:pwd'),
                       },

@@ -22,7 +22,7 @@
 
 import React, { createContext, useState } from 'react';
 
-import Overlay from '@components/overlays/Overlay';
+import Overlay from '../../components/overlays/Overlay';
 
 const OverlayContext = createContext({
   open: () => {},

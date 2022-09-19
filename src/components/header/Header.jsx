@@ -26,28 +26,25 @@ import { useSetLocale, useLogout } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { temporaryProfil } from '@admin/authProvider';
+import { temporaryProfil } from '../../admin/authProvider';
 
-import IconEarth from '@assets/icons/earth.svg';
-import IconSettings from '@assets/icons/settings.svg';
-import Logo from '@assets/logos/logo.svg';
+import { ReactComponent as IconEarth } from '../../assets/icons/earth.svg';
+import { ReactComponent as IconSettings } from '../../assets/icons/settings.svg';
+import { ReactComponent as Logo } from '../../assets/logos/logo.svg';
 
-import { media } from '@styles/configs/breakpoints';
-import { spacings } from '@styles/configs/spacings';
-import { FlexAlignMiddle, FlexDisplay } from '@styles/tools';
+import { media } from '../../styles/configs/breakpoints';
+import { spacings } from '../../styles/configs/spacings';
+import { FlexAlignMiddle, FlexDisplay } from '../../styles/tools';
 
-import { useLocale } from '@hooks/locale/useLocale';
+import { useLocale } from '../../hooks/locale/useLocale';
 
-import { Language } from '@utils/constants';
+import { Language } from '../../utils/constants';
 
-import {
-  ExerciseStep,
-  ExerciseContext,
-} from '@components/exercises/ExerciseProvider';
-import Button from '@components/generics/buttons/Button';
-import { ButtonSideLabelTypes } from '@components/generics/buttons/Button';
-import { OverlayContext } from '@components/overlays/OverlayProvider';
-import { SettingsOverlay } from '@components/overlays/SettingsOverlay';
+import { ExerciseStep, ExerciseContext } from '../exercises/ExerciseProvider';
+import Button from '../generics/buttons/Button';
+import { ButtonSideLabelTypes } from '../generics/buttons/Button';
+import { OverlayContext } from '../overlays/OverlayProvider';
+import { SettingsOverlay } from '../overlays/SettingsOverlay';
 
 /**
  * Header with Logo and login navigation
@@ -86,15 +83,15 @@ const RightSideWithoutLogout = () => {
   const { setLocale } = useLocale();
 
   const switchLanguage = useCallback(() => {
-    const lang = i18n.language == Language.FR ? Language.EN : Language.FR;
+    const lang = i18n.language === Language.FR ? Language.EN : Language.FR;
     locale(lang);
     setLocale(lang);
-  }, [locale, i18n.language]);
+  }, [setLocale, locale]);
 
   return (
     <RightWrapper>
       <Button.Transparent
-        label={i18n.language == Language.FR ? 'English ' : 'Français'}
+        label={i18n.language === Language.FR ? 'English ' : 'Français'}
         icon={<IconEarth width="100%" height="100%" />}
         sideLabelType={ButtonSideLabelTypes.LEFT}
         onClick={switchLanguage}
@@ -128,7 +125,7 @@ const RightSideWithLogout = () => {
     }
     isSettingsActive ? close() : open(<SettingsOverlay />);
     setIsSettingsActive(!isSettingsActive);
-  }, [exerciseStep, isSettingsActive]);
+  }, [exerciseStep, isSettingsActive, close, open, pause]);
 
   // logout click handler
   const handleLogoutClick = () => {

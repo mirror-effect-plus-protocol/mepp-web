@@ -20,29 +20,28 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {makeStyles} from "@material-ui/core/styles";
-
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useSimpleFormIteratorStyles = makeStyles((theme) => ({
   root: {
     '& li > div:first-child': {
-      display: 'none'
-    }
+      display: 'none',
+    },
   },
   form: {
     display: 'flex',
     justifyContent: 'start',
-    gap: '1em'
+    gap: '1em',
   },
   action: {
     '& .button-remove': {
       'marginLeft': '1em',
       'marginTop': '10px',
-    }
+    },
   },
   line: {
-    borderBottom: 'none'
-  }
+    borderBottom: 'none',
+  },
 }));
 
 export const useNumberStyles = makeStyles((theme) => ({
@@ -53,15 +52,16 @@ export const useNumberStyles = makeStyles((theme) => ({
     gap: '1em',
     '& > div': {
       minWidth: '95px',
-      width: '95px'
+      width: '95px',
     },
-  }
+  },
 }));
 
 export const useTranslatorInputStyles = makeStyles((theme) => ({
   root: {
-    width: 'calc(2*256px + 1em)' /* category + subcategory dropdown + spacing */
-  }
+    width:
+      'calc(2*256px + 1em)' /* category + subcategory dropdown + spacing */,
+  },
 }));
 
 export const useCategoryChipsStyles = makeStyles((theme) => {
@@ -75,8 +75,8 @@ export const useCategoryChipsStyles = makeStyles((theme) => {
         width: '200px',
         '&:first-child': {
           marginRight: theme.spacing(2),
-        }
-      }
-    }
+        },
+      },
+    },
   };
 });

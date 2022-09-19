@@ -22,7 +22,7 @@
 
 import { useEffect } from 'react';
 
-import { trackView } from '@utils/analytics';
+import { trackView } from '../utils/analytics';
 
 /** HOOK TO SEND TRACKING VIEW ON MOUNTING
  */

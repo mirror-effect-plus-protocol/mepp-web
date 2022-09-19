@@ -25,18 +25,22 @@ import { useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { spacings } from '@styles/configs/spacings';
-import { FlexAlignCenter } from '@styles/tools';
+import { spacings } from '../../styles/configs/spacings';
+import { FlexAlignCenter } from '../../styles/tools';
 
-import { useLocale } from '@hooks/locale/useLocale';
+import { useLocale } from '../../hooks/locale/useLocale';
 
-import { Language, RequestEndpoint, RequestMethod } from '@utils/constants';
-import { fetchData } from '@utils/fetch';
+import {
+  Language,
+  RequestEndpoint,
+  RequestMethod,
+} from '../../utils/constants';
+import { fetchData } from '../../utils/fetch';
 
-import { SpacerHorizontal } from '@components/generics/basics/Spacer';
-import Button from '@components/generics/buttons/Button';
-import Input from '@components/generics/forms/Input';
-import { OverlayContext } from '@components/overlays/OverlayProvider';
+import { SpacerHorizontal } from '../../components/generics/basics/Spacer';
+import Button from '../../components/generics/buttons/Button';
+import Input from '../../components/generics/forms/Input';
+import { OverlayContext } from '../../components/overlays/OverlayProvider';
 
 /**
  * Language Form

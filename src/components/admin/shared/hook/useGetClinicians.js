@@ -20,8 +20,8 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, {useMemo, useState, useEffect } from 'react';
-import {fetchJsonWithAuthToken} from "ra-data-django-rest-framework";
+import React, { useMemo, useState, useEffect } from 'react';
+import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 
 const useGetClinicians = (permissions) => {
   const [loaded, setLoaded] = useState(false);
@@ -35,7 +35,7 @@ const useGetClinicians = (permissions) => {
       archived: false,
     };
     const qs = new URLSearchParams(options).toString();
-    const url = `${process.env.API_ENDPOINT}/clinicians/?${qs}`;
+    const url = `${process.env.REACT_APP_API_ENDPOINT}/clinicians/?${qs}`;
     const response = await fetchJsonWithAuthToken(url, {});
     setData(response.json.results);
     setLoading(false);
@@ -52,10 +52,10 @@ const useGetClinicians = (permissions) => {
     return {
       data: Object.values(data).map((clinician) => ({
         name: clinician.full_name,
-        id: clinician.id
+        id: clinician.id,
       })),
       loading: loading,
-      loaded: loaded
+      loaded: loaded,
     };
   }, [data, loading, loaded]);
 };

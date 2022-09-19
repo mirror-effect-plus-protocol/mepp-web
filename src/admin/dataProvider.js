@@ -25,7 +25,7 @@ import djangoRestFrameworkProvider, {
 } from 'ra-data-django-rest-framework';
 
 const dataProvider = djangoRestFrameworkProvider(
-  process.env.API_ENDPOINT,
+  process.env.REACT_APP_API_ENDPOINT,
   fetchJsonWithAuthToken,
 );
 

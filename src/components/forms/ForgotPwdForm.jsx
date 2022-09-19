@@ -25,18 +25,18 @@ import { useNotify } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { spacings } from '@styles/configs/spacings';
-import { FlexAlignCenter, FlexAlignMiddle } from '@styles/tools';
+import { spacings } from '../../styles/configs/spacings';
+import { FlexAlignCenter, FlexAlignMiddle } from '../../styles/tools';
 
-import { useApi } from '@hooks/useApi';
+import { useApi } from '../../hooks/useApi';
 
-import { RequestEndpoint } from '@utils/constants';
+import { RequestEndpoint } from '../../utils/constants';
 
-import { LoadingCircle } from '@components/generics/LoadingCircle';
-import { H2, P, Href } from '@components/generics/basics';
-import Button from '@components/generics/buttons/Button';
-import Form from '@components/generics/forms/Form';
-import Input from '@components/generics/forms/Input';
+import { LoadingCircle } from '../../components/generics/LoadingCircle';
+import { H2, P, Href } from '../../components/generics/basics';
+import Button from '../../components/generics/buttons/Button';
+import Form from '../../components/generics/forms/Form';
+import Input from '../../components/generics/forms/Input';
 
 /**
  * Forgot Password Form

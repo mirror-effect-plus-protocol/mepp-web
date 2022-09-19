@@ -20,8 +20,8 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { RequestEndpoint, RequestMethod } from '@utils/constants';
-import { fetchData } from '@utils/fetch';
+import { RequestEndpoint, RequestMethod } from '../utils/constants';
+import { fetchData } from '../utils/fetch';
 
 // temporary token injected by URL like http://[url]]/?tt=wererrwerwe#/mirror
 let temporaryToken = null;
@@ -90,15 +90,15 @@ const authProvider = {
   getPermissions: async () => {
     if (!permissions) {
       const { data } = await fetchData(RequestEndpoint.PERMISSIONS);
-      if (data.permissions) {
+      if (data && data.permissions) {
         try {
           permissions = data.permissions;
           return Promise.resolve(data.permissions);
         } catch (error) {
-          return Promise.reject();
+          return Promise.resolve('guest');
         }
       } else {
-        return Promise.reject();
+        return Promise.resolve('guest');
       }
     } else {
       return Promise.resolve(permissions);

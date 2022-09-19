@@ -23,13 +23,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Circle from '@assets/graphics/circle.svg';
-import IconThumbup from '@assets/icons/thumbup.svg';
+import { ReactComponent as Circle } from '../../assets/graphics/circle.svg';
+import { ReactComponent as IconThumbup } from '../../assets/icons/thumbup.svg';
 
-import { media } from '@styles/configs/breakpoints';
-import { FlexAlignMiddle } from '@styles/tools/index';
-import { VisibleHidden } from '@styles/utils/VisibleHidden';
-import { rem } from '@styles/utils/rem';
+import { media } from '../../styles/configs/breakpoints';
+import { FlexAlignMiddle } from '../../styles/tools/index';
+import { VisibleHidden } from '../../styles/utils/VisibleHidden';
+import { rem } from '../../styles/utils/rem';
 
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
 
@@ -75,6 +75,7 @@ const Timer = ({ value, showvalue, start, done }) => {
     return () => {
       clearTimeout(timer);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [started, time]);
 
   /**
@@ -101,6 +102,7 @@ const Timer = ({ value, showvalue, start, done }) => {
         setStarted(true);
       }, 1);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [start, exerciseStep]);
 
   /**

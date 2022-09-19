@@ -21,7 +21,7 @@
  */
 
 import React from 'react';
-import { Typography } from '@components/admin/shared/dom/sanitize';
+import { Typography } from '../shared/dom/sanitize';
 import { makeStyles } from '@material-ui/core/styles';
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import {
@@ -33,8 +33,8 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
+import ShowToolBar from '../shared/toolbars/ShowToolbar';
+import TopToolbar from '../shared/toolbars/TopToolbar';
 
 const useRaBoxStyles = makeStyles((theme) => ({
   root: {
@@ -74,10 +74,7 @@ export const ClinicianShow = (props) => {
   const classes = useRaBoxStyles();
 
   return (
-    <Show
-      actions={<TopToolbar/>}
-      {...props}
-    >
+    <Show actions={<TopToolbar />} {...props}>
       <BoxedShowLayout>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}

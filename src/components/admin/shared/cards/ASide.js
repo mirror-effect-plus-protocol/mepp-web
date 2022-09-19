@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Card as MuiCard, withStyles} from "@material-ui/core";
+import { Card as MuiCard, withStyles } from '@material-ui/core';
 
 export const ASide = withStyles((theme) => ({
   root: {
@@ -34,17 +34,17 @@ export const ASide = withStyles((theme) => ({
       display: 'none',
     },
     '& ul .MuiListItem-root': {
-      paddingLeft: theme.spacing(1)
+      paddingLeft: theme.spacing(1),
     },
     '& .MuiBox-root': {
-      color: '#939DAB'
+      color: '#939DAB',
     },
     '& .MuiList-root': {
       paddingBottom: theme.spacing(2),
       borderBottom: 'solid 1px #DDDDDD',
       '&:last-child': {
-        borderBottom: 'none'
-      }
-    }
-  }
+        borderBottom: 'none',
+      },
+    },
+  },
 }))(MuiCard);

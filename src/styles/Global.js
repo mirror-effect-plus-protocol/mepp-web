@@ -25,15 +25,15 @@ import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
 import reset from 'styled-reset';
 
-import { BASE_FONT_SIZE } from '@styles/configs/fontsize';
-import { spacings } from '@styles/configs/spacings';
-import { rem } from '@styles/utils/rem';
+import { BASE_FONT_SIZE } from './configs/fontsize';
+import { spacings } from './configs/spacings';
+import { rem } from './utils/rem';
 
-import { theme } from '@themes/index';
+import { theme } from '../themes/index';
 
-import { HeadingCss } from '@components/generics/basics/Heading';
-import { hrefCss } from '@components/generics/basics/Href';
-import { ParagraphBaseCss } from '@components/generics/basics/Paragraph';
+import { HeadingCss } from '../components/generics/basics/Heading';
+import { hrefCss } from '../components/generics/basics/Href';
+import { ParagraphBaseCss } from '../components/generics/basics/Paragraph';
 
 /**
  * Global style definition (use it with precaution)

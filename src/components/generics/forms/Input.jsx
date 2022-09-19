@@ -24,21 +24,21 @@ import React, { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import IconEyeHide from '@assets/icons/eye-stroke.svg';
-import IconEyeShow from '@assets/icons/eye.svg';
+import { ReactComponent as IconEyeHide } from '../../../assets/icons/eye-stroke.svg';
+import { ReactComponent as IconEyeShow } from '../../../assets/icons/eye.svg';
 
-import { media } from '@styles/configs/breakpoints';
-import { spacings } from '@styles/configs/spacings';
-import { FlexAlignLeft, FlexDisplay } from '@styles/tools';
-import { FlexDirectionColumn } from '@styles/tools/flexs';
-import { rem } from '@styles/utils/rem';
+import { media } from '../../../styles/configs/breakpoints';
+import { spacings } from '../../../styles/configs/spacings';
+import { FlexAlignLeft, FlexDisplay } from '../../../styles/tools';
+import { FlexDirectionColumn } from '../../../styles/tools/flexs';
+import { rem } from '../../../styles/utils/rem';
 
-import { theme } from '@themes/index';
+import { theme } from '../../../themes/index';
 
-import { randomString } from '@utils/string';
+import { randomString } from '../../../utils/string';
 
-import { Label } from '@components/generics/basics/Label';
-import Button from '@components/generics/buttons/Button';
+import { Label } from '../../../components/generics/basics/Label';
+import Button from '../../../components/generics/buttons/Button';
 
 /**
  * Input types

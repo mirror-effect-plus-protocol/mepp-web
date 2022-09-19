@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, {useEffect, useCallback, useState} from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import {
   ArrayInput,
   Edit,
@@ -34,33 +34,26 @@ import {
   useLocale,
   useTranslate,
 } from 'react-admin';
-import { Typography} from '@components/admin/shared/dom/sanitize';
+import { Typography } from '../shared/dom/sanitize';
 
-import {requiredLocalizedField} from '@components/admin/shared/validators';
+import { requiredLocalizedField } from '../shared/validators';
 import {
   useSimpleFormIteratorStyles,
   useTranslatorInputStyles,
-} from '@components/admin/plans/styles';
+} from '../plans/styles';
 
-import { LANGUAGES } from "../../../locales";
-import { validateExercises } from '@components/admin/plans/validators';
-import { validateNumber } from '@components/admin/shared/validators';
+import { LANGUAGES } from '../../../locales';
+import { validateExercises } from '../plans/validators';
+import { validateNumber } from '../shared/validators';
 
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
+import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
 import ExerciseRow from './ExerciseRow';
-import IsSystemInput from '@components/admin/plans/IsSystem';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
-import {
-  useGetCategories,
-  useGetSubCategories,
-} from '@components/admin/shared/hook';
-import {
-  contextualRedirect,
-  preSave
-} from '@components/admin/plans/callbacks';
+import IsSystemInput from '../plans/IsSystem';
+import TopToolbar from '../shared/toolbars/TopToolbar';
+import { useGetCategories, useGetSubCategories } from '../shared/hook';
+import { contextualRedirect, preSave } from '../plans/callbacks';
 
 export const PlanEdit = (props) => {
-
   const t = useTranslate();
   const locale = useLocale();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
@@ -69,22 +62,24 @@ export const PlanEdit = (props) => {
   const [asTemplate, setAsTemplate] = useState(true);
   const validateI18n = (record) => {
     return requiredLocalizedField(record, locale, ['name', 'description']);
-  }
+  };
   const categories = useGetCategories(locale);
   const subCategories = useGetSubCategories(locale);
-  const redirect = useCallback(() => (
-    contextualRedirect(patientUid)
-  ), [patientUid]);
-  const transform = useCallback((record) => (
-    preSave(record, locale, patientUid, asTemplate)
-  ), [patientUid, asTemplate]);
+  const redirect = useCallback(
+    () => contextualRedirect(patientUid),
+    [patientUid],
+  );
+  const transform = useCallback(
+    (record) => preSave(record, locale, patientUid, asTemplate),
+    [patientUid, asTemplate],
+  );
 
   useEffect(() => {
     setPatientUid(props?.history?.location?.state?.patientUid);
   }, [props?.history?.location?.state?.patientUid]);
 
   useEffect(() => {
-    setAsTemplate(patientUid === undefined)
+    setAsTemplate(patientUid === undefined);
   }, [patientUid]);
 
   return (
@@ -115,23 +110,11 @@ export const PlanEdit = (props) => {
           defaultLocale={locale}
           classes={translatorClasses}
         >
-          <TextInput
-            source="i18n.name"
-            fullWidth
-          />
-          <TextInput
-            source="i18n.description"
-            fullWidth
-            multiline
-          />
+          <TextInput source="i18n.name" fullWidth />
+          <TextInput source="i18n.description" fullWidth multiline />
         </TranslatableInputs>
-        {props.permissions === 'admin' && asTemplate &&
-          <IsSystemInput/>
-        }
-        <NumberInput
-          source="daily_repeat"
-          validate={validateNumber}
-        />
+        {props.permissions === 'admin' && asTemplate && <IsSystemInput />}
+        <NumberInput source="daily_repeat" validate={validateNumber} />
 
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('resources.plans.card.labels.exercises')}
@@ -143,9 +126,7 @@ export const PlanEdit = (props) => {
           label=""
           validate={validateExercises}
         >
-          <SimpleFormIterator
-            classes={simpleFormIteratorclasses}
-          >
+          <SimpleFormIterator classes={simpleFormIteratorclasses}>
             <ExerciseRow
               categories={categories}
               subCategories={subCategories}

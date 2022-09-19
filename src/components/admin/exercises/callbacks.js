@@ -30,21 +30,24 @@ export const preSave = (record, locale) => {
     localizedDescription = record.i18n.description[locale];
   } catch (e) {}
 
-
   // If no matches found, let's loop through all languages.
   LANGUAGES.forEach((language) => {
     if (!localizedDescription) {
       try {
         localizedDescription = record.i18n.description[language];
-      } catch (e) {
-      }
+      } catch (e) {}
     }
   });
 
   // Assign missing translations
   LANGUAGES.forEach((language) => {
-    if (!record.i18n.description.hasOwnProperty(language) || !record.i18n.description[language]) {
-      record.i18n.description[language] = `(${language.toUpperCase()}) - ${localizedDescription}`;
+    if (
+      !record.i18n.description.hasOwnProperty(language) ||
+      !record.i18n.description[language]
+    ) {
+      record.i18n.description[
+        language
+      ] = `(${language.toUpperCase()}) - ${localizedDescription}`;
     }
   });
 

@@ -24,13 +24,13 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { spacings } from '@styles/configs/spacings';
-import { FlexAlignCenter } from '@styles/tools/index';
+import { spacings } from '../../styles/configs/spacings';
+import { FlexAlignCenter } from '../../styles/tools/index';
 
-import LanguageForm from '@components/forms/LanguageForm';
-import ProfileForm from '@components/forms/ProfileForm';
-import { H2 } from '@components/generics/basics/Heading';
-import Button from '@components/generics/buttons/Button';
+import LanguageForm from '../../components/forms/LanguageForm';
+import ProfileForm from '../../components/forms/ProfileForm';
+import { H2 } from '../../components/generics/basics/Heading';
+import Button from '../../components/generics/buttons/Button';
 
 /**
  * Settings type

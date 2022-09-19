@@ -24,9 +24,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { zindex } from '@styles/configs/zindex';
-import { FlexAlignCenter } from '@styles/tools';
-import { rem } from '@styles/utils/rem';
+import { zindex } from '../../styles/configs/zindex';
+import { FlexAlignCenter } from '../../styles/tools';
+import { rem } from '../../styles/utils/rem';
 
 /**
  * Header with Logo and login navigation

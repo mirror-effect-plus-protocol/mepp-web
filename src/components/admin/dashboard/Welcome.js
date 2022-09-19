@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, {Fragment, useMemo, useState} from 'react';
+import React, { Fragment, useMemo, useState } from 'react';
 import {
   useGetIdentity,
   useGetList,
@@ -37,16 +37,17 @@ import {
   DialogContent,
   TextField as TextFieldMui,
   CircularProgress,
-  DialogActions, Dialog,
+  DialogActions,
+  Dialog,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { MirrorIcon } from '@components/admin/shared/icons/MirrorIcon';
+import { MirrorIcon } from '../shared/icons/MirrorIcon';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   actions: {
     justifyContent: 'center',
     [theme.breakpoints.down('sm')]: {
@@ -71,8 +72,12 @@ export const Welcome = () => {
   const [confirmDisabled, setConfirmDisabled] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(undefined);
-  const handleOpenDialog = () => { setOpenDialog(true) };
-  const handleCloseDialog = () => { setOpenDialog(false); };
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
   const handleAutocompleteChange = (event, patient) => {
     setSelectedPatient(patient);
     setConfirmDisabled(patient ? false : true);
@@ -80,14 +85,16 @@ export const Welcome = () => {
   const handleConfirmClick = (e) => {
     e.stopPropagation();
     // Wait for the click action to be triggered before reset selectedIds
-    const url = `${process.env.API_ENDPOINT}/token/`;
+    const url = `${process.env.REACT_APP_API_ENDPOINT}/token/`;
 
     fetchJsonWithAuthToken(url, {
       method: 'POST',
       body: `{"type":"mirror", "patient_uid": "${selectedPatient.id}"}`,
     })
       .then((response) => {
-        const qs = new URLSearchParams({tt: response.json['token']}).toString();
+        const qs = new URLSearchParams({
+          tt: response.json['token'],
+        }).toString();
         const mirrorUrl = `/?${qs}#/intro`;
         setOpenDialog(false);
         setSelectedPatient(undefined);
@@ -98,20 +105,24 @@ export const Welcome = () => {
         notify('admin.shared.notifications.mirror.failure', 'error');
       });
   };
-  const {data, loading: patientsLoading, loaded} = useGetList(
+  const {
+    data,
+    loading: patientsLoading,
+    loaded,
+  } = useGetList(
     'patients',
     false,
     { field: 'full_name', order: 'ASC' },
     {
       language: locale,
-      archived: false
-    }
+      archived: false,
+    },
   );
 
   const patients = useMemo(() => {
     return Object.values(data).map((patient) => ({
       name: patient.full_name,
-      id: patient.id
+      id: patient.id,
     }));
   }, [data, loaded]);
 
@@ -130,10 +141,10 @@ export const Welcome = () => {
             >
               {t('admin.dashboard.labels.openMirrorButton')}
             </Button>
-            <Dialog
-              open={openDialog}
-            >
-              <DialogTitle>{t('admin.dashboard.mirror_dialog.title')}</DialogTitle>
+            <Dialog open={openDialog}>
+              <DialogTitle>
+                {t('admin.dashboard.mirror_dialog.title')}
+              </DialogTitle>
               <DialogContent>
                 <Autocomplete
                   options={patients}
@@ -142,14 +153,19 @@ export const Welcome = () => {
                   onChange={handleAutocompleteChange}
                   getOptionLabel={(option) => option.name}
                   renderInput={(params) => (
-                    <TextFieldMui {...params}
-                      label={t('admin.dashboard.mirror_dialog.labels.autocomplete')}
+                    <TextFieldMui
+                      {...params}
+                      label={t(
+                        'admin.dashboard.mirror_dialog.labels.autocomplete',
+                      )}
                       variant="filled"
                       InputProps={{
                         ...params.InputProps,
                         endAdornment: (
                           <Fragment>
-                            {patientsLoading ? <CircularProgress color="inherit" size={20} /> : null}
+                            {patientsLoading ? (
+                              <CircularProgress color="inherit" size={20} />
+                            ) : null}
                             {params.InputProps.endAdornment}
                           </Fragment>
                         ),

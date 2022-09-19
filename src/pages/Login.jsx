@@ -23,16 +23,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { WrapperFullSizeMiddle } from '@styles/tools';
+import { WrapperFullSizeMiddle } from '../styles/tools';
 
-import { useTrackingView } from '@hooks/useTrackingView';
+import { useTrackingView } from '../hooks/useTrackingView';
 
-import BasicLayout from '@layouts/Basic';
+import BasicLayout from '../layouts/Basic';
 
-import { Footer } from '@components/footer/Footer';
-import ForgotPwd from '@components/forms/ForgotPwdForm';
-import LoginForm from '@components/forms/LoginForm';
-import { Header } from '@components/header/Header';
+import { Footer } from '../components/footer/Footer';
+import ForgotPwd from '../components/forms/ForgotPwdForm';
+import LoginForm from '../components/forms/LoginForm';
+import { Header } from '../components/header/Header';
 
 /**
  * Login / ForgotPwd page with BasicLayout

@@ -21,10 +21,7 @@
  */
 
 import React from 'react';
-import {
-  useRedirect,
-  useTranslate,
-} from 'react-admin';
+import { useRedirect, useTranslate } from 'react-admin';
 import Button from '@material-ui/core/Button';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
@@ -41,7 +38,7 @@ const BackButton = ({ patientUid, basePath }) => {
 
   return (
     <Button
-      startIcon={<ArrowBackIosIcon/>}
+      startIcon={<ArrowBackIosIcon />}
       size="small"
       onClick={handleBack}
       color="secondary"

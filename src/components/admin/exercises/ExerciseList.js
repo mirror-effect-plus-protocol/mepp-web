@@ -33,11 +33,11 @@ import {
 } from 'react-admin';
 import { Divider, Tabs, Tab } from '@material-ui/core';
 
-import ArchivableFilter from '@components/admin/shared/filters/ArchivableFilter';
-import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
-import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
-import Spinner from '@components/admin/shared/Spinner';
+import ArchivableFilter from '../shared/filters/ArchivableFilter';
+import BulkActionButtons from '../shared/toolbars/BulkActionsToolbar';
+import ListActions from '../shared/toolbars/ListToolbar';
+import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
+import Spinner from '../shared/Spinner';
 import ExerciseListAside from './ExerciseListAside';
 
 const tabs = [
@@ -45,28 +45,21 @@ const tabs = [
   { id: 'system', is_system: true },
 ];
 
-const ExerciseDatagrid = ({locale, permissions, ...props}) => {
-
+const ExerciseDatagrid = ({ locale, permissions, ...props }) => {
   return (
     <Datagrid {...props}>
       <TextField source={`i18n.description.${locale}`} />
       {permissions === 'admin' && (
-        <ReferenceField
-          source="clinician_uid"
-          reference="clinicians"
-        >
+        <ReferenceField source="clinician_uid" reference="clinicians">
           <TextField source="full_name" />
         </ReferenceField>
       )}
-      <RowActionToolbar
-        permissions={permissions}
-        clonable={true}
-      />
+      <RowActionToolbar permissions={permissions} clonable={true} />
     </Datagrid>
   );
 };
 
-const TabbedDatagrid = ({permissions, ...props}) => {
+const TabbedDatagrid = ({ permissions, ...props }) => {
   const listContext = useListContext();
   const locale = useLocale();
   const t = useTranslate();
@@ -87,7 +80,9 @@ const TabbedDatagrid = ({permissions, ...props}) => {
   useEffect(() => {
     if (filterValues.is_system) {
       // reset `value` to `system` when it's out of sync
-      if (value === 'user') { setValue('system'); }
+      if (value === 'user') {
+        setValue('system');
+      }
       setSystemExerciseIds(ids);
     } else {
       setUserExerciseIds(ids);
@@ -96,11 +91,7 @@ const TabbedDatagrid = ({permissions, ...props}) => {
 
   return (
     <Fragment>
-      <Tabs
-        value={value}
-        indicatorColor="primary"
-        onChange={handleChange}
-      >
+      <Tabs value={value} indicatorColor="primary" onChange={handleChange}>
         {tabs.map((choice) => (
           <Tab
             key={choice.id}
@@ -122,7 +113,9 @@ const TabbedDatagrid = ({permissions, ...props}) => {
           </ListContextProvider>
         )}
         {!loading && filterValues.is_system === true && (
-          <ListContextProvider value={{ ...listContext, ids: systemExerciseIds }}>
+          <ListContextProvider
+            value={{ ...listContext, ids: systemExerciseIds }}
+          >
             <ExerciseDatagrid
               locale={locale}
               permissions={permissions}
@@ -150,9 +143,9 @@ export const ExerciseList = (props) => {
       aside={<ExerciseListAside permissions={props.permissions} />}
       sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
       perPage={25}
-      actions={<ListActions/>}
+      actions={<ListActions />}
     >
-      <TabbedDatagrid permissions={props.permissions}/>
+      <TabbedDatagrid permissions={props.permissions} />
     </List>
-  )
+  );
 };

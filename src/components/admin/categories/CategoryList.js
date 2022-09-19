@@ -34,15 +34,18 @@ import { useTheme } from '@material-ui/core/styles';
 const SubCategoriesRow = ({ record, locale }) => {
   const theme = useTheme();
   return (
-    <div style={{display: 'inline-flex', flexWrap: 'wrap', gap: theme.spacing(1)}}>
+    <div
+      style={{
+        display: 'inline-flex',
+        flexWrap: 'wrap',
+        gap: theme.spacing(1),
+      }}
+    >
       {record.sub_categories.map((subCategory) => (
-        <Chip
-          key={subCategory.id}
-          label={subCategory.i18n.name[locale]}
-        />
+        <Chip key={subCategory.id} label={subCategory.i18n.name[locale]} />
       ))}
     </div>
-  )
+  );
 };
 
 export const CategoryList = (props) => {
@@ -60,7 +63,7 @@ export const CategoryList = (props) => {
       bulkActionButtons={false}
       actions={false}
     >
-      <Datagrid expand={<SubCategoriesRow locale={locale}/>}>
+      <Datagrid expand={<SubCategoriesRow locale={locale} />}>
         <TextField source={`i18n.name.${locale}`} />
       </Datagrid>
     </List>

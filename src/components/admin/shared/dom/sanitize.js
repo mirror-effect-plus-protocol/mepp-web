@@ -21,21 +21,16 @@
  */
 
 import React from 'react';
-import { Typography as MuiTypography} from '@material-ui/core';
-import {sanitizeRestProps} from '@admin/utils/props';
+import { Typography as MuiTypography } from '@material-ui/core';
+import { sanitizeRestProps } from '../../../../admin/utils/props';
 
 export const Div = (props) => {
-  const validProps = [
-    'children',
-    'className',
-  ];
+  const validProps = ['children', 'className'];
   const sanitizedProps = sanitizeRestProps(props, validProps, false);
-  return (
-    <div {...sanitizedProps}>{props.children}</div>
-  );
-}
+  return <div {...sanitizedProps}>{props.children}</div>;
+};
 
-export const Typography = ({gutterTop, ...props}) => {
+export const Typography = ({ gutterTop, ...props }) => {
   const validProps = [
     'children',
     'align',
@@ -49,10 +44,8 @@ export const Typography = ({gutterTop, ...props}) => {
     'style',
   ];
   const sanitizedProps = sanitizeRestProps(props, validProps, false);
-  if (gutterTop) { sanitizedProps['style'] = {marginTop: '10px'}; }
-  return (
-    <MuiTypography {...sanitizedProps}>
-      {props.children}
-    </MuiTypography>
-  );
-}
+  if (gutterTop) {
+    sanitizedProps['style'] = { marginTop: '10px' };
+  }
+  return <MuiTypography {...sanitizedProps}>{props.children}</MuiTypography>;
+};

@@ -22,8 +22,8 @@
 
 import { useState } from 'react';
 
-import { RequestMethod } from '@utils/constants';
-import { fetchData } from '@utils/fetch';
+import { RequestMethod } from '../utils/constants';
+import { fetchData } from '../utils/fetch';
 
 /**
  * HOOK TO USE API CALL WITH FETCH DATA

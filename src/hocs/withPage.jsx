@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /*
  * MEPP - A web application to guide patients and clinicians in the process of
  * facial palsy rehabilitation, with the help of the mirror effect and principles
@@ -21,19 +22,15 @@
  */
 
 import React, { useEffect } from 'react';
-import {
-  Notification,
-  useSetLocale,
-  useLocale,
-} from 'react-admin';
+import { Notification, useSetLocale, useLocale } from 'react-admin';
 import { useLocation } from 'react-router-dom';
 import { LANGUAGES } from '../locales';
-import { temporaryProfil } from '@admin/authProvider';
+import { temporaryProfil } from '../admin/authProvider';
 
-import GlobalStyles from '@styles/Global';
+import GlobalStyles from '../styles/Global';
 
-import { TemporaryProfilBanner } from '@components/header/TemporaryProfilBanner';
-import OverlayProvider from '@components/overlays/OverlayProvider';
+import { TemporaryProfilBanner } from '../components/header/TemporaryProfilBanner';
+import OverlayProvider from '../components/overlays/OverlayProvider';
 
 /**
  * Basic page wrapper
@@ -49,7 +46,6 @@ const withPage = (Component) => {
       window.scrollTo(0, 0);
     }, [location]);
 
-
     useEffect(() => {
       const queries = new URLSearchParams(window.location.search);
       const lang = queries.get('l');
@@ -58,10 +54,10 @@ const withPage = (Component) => {
         setLocale(lang).then(() => {
           // setLocale does not change the language right away.
           // Force reload
-         window.location.reload();
+          window.location.reload();
         });
       }
-    }, []);
+    }, [setLocale, locale]);
 
     return (
       <OverlayProvider>

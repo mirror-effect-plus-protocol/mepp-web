@@ -23,9 +23,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media } from '@styles/configs/breakpoints';
-import { zindex } from '@styles/configs/zindex';
-import { Cell, Grid } from '@styles/tools/index';
+import { media } from '../styles/configs/breakpoints';
+import { zindex } from '../styles/configs/zindex';
+import { Cell, Grid } from '../styles/tools/index';
 
 /**
  * Basic Layout Slots - can receive three slots type

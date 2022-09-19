@@ -22,8 +22,8 @@
 
 import styled from 'styled-components';
 
-import { media } from '@styles/configs/breakpoints';
-import { rem } from '@styles/utils/rem';
+import { media } from '../../../styles/configs/breakpoints';
+import { rem } from '../../../styles/utils/rem';
 
 /**
  * Form Label style components

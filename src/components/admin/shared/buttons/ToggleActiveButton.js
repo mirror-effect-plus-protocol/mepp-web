@@ -32,7 +32,7 @@ import {
 } from 'react-admin';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
-import {sanitizeRestProps} from "@admin/utils/props";
+import { sanitizeRestProps } from '../../../../admin/utils/props';
 
 const ToggleActiveButton = ({
   resource,
@@ -66,7 +66,7 @@ const ToggleActiveButton = ({
   const [updateHandler, { loading }] = useUpdate(
     resource,
     record.id,
-    {'active': !record.active},
+    { 'active': !record.active },
     record,
     {
       onSuccess: () => {
@@ -95,12 +95,11 @@ const ToggleActiveButton = ({
       onClick={handleToggleArchive}
       disabled={loading}
       className={className}
-      {...sanitizeRestProps(rest, [
-        'redirectToBasePath',
-        'showLabel',
-        'context',
-        'showLocation'
-      ], true)}
+      {...sanitizeRestProps(
+        rest,
+        ['redirectToBasePath', 'showLabel', 'context', 'showLocation'],
+        true,
+      )}
     >
       {!record.active ? <PlayCircleFilledIcon /> : <PauseCircleFilledIcon />}
     </Button>

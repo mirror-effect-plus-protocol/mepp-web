@@ -20,10 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {
-  useTranslate,
-  useLocale,
-} from 'react-admin';
+import { useTranslate, useLocale } from 'react-admin';
 import { getPlaceHolder } from '@admin/utils/placeholder';
 
 const CardTitle = ({ resource, record }) => {
@@ -39,7 +36,6 @@ const CardTitle = ({ resource, record }) => {
       placeholder: placeholder,
     });
   }
-
 };
 
 export default CardTitle;

@@ -24,14 +24,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { media } from '@styles/configs/breakpoints';
-import { spacings } from '@styles/configs/spacings';
-import { Cell, Grid } from '@styles/tools';
-import { FlexAlignMiddle } from '@styles/tools/index';
-import { HoverOrActive } from '@styles/utils/HoverOrActive';
-import { rem } from '@styles/utils/rem';
+import { media } from '../../styles/configs/breakpoints';
+import { spacings } from '../../styles/configs/spacings';
+import { Cell, Grid } from '../../styles/tools';
+import { FlexAlignMiddle } from '../../styles/tools/index';
+import { HoverOrActive } from '../../styles/utils/HoverOrActive';
+import { rem } from '../../styles/utils/rem';
 
-import { Href, P, H5 } from '@components/generics/basics';
+import { Href, P, H5 } from '../../components/generics/basics';
 
 /**
  * Footer with Collaborators Logos
@@ -80,7 +80,7 @@ const Footer = () => {
           {items.map((item, key) => (
             <CellLogo key={key} as="li">
               <Href href={item.link} target="_blank">
-                <img src={item.img} width="100%" />
+                <img src={item.img} width="100%" alt=""/>
               </Href>
             </CellLogo>
           ))}
@@ -88,7 +88,10 @@ const Footer = () => {
 
         <CopyrightWrapper>
           <Copyright small>
-            <Href href="https://github.com/mirror-effect-plus-protocol/mepp-web/">MEPP</Href>&nbsp;©&nbsp;2021&nbsp;
+            <Href href="https://github.com/mirror-effect-plus-protocol/mepp-web/">
+              MEPP
+            </Href>
+            &nbsp;©&nbsp;2021&nbsp;
             <Href
               href="https://github.com/mirror-effect-plus-protocol/mepp-web/blob/main/LICENSE"
               target="_blank"
@@ -101,20 +104,35 @@ const Footer = () => {
             >
               <svg width="100" height="20">
                 <linearGradient id="b" x2="0" y2="100%">
-                  <stop offset="0" stopColor="#bbb" stopOpacity=".1"/>
-                  <stop offset="1" stopOpacity=".1"/>
+                  <stop offset="0" stopColor="#bbb" stopOpacity=".1" />
+                  <stop offset="1" stopOpacity=".1" />
                 </linearGradient>
-                <clipPath id="a"><rect width="100" height="20" rx="3" fill="#fff"/></clipPath>
+                <clipPath id="a">
+                  <rect width="100" height="20" rx="3" fill="#fff" />
+                </clipPath>
                 <g clipPath="url(#a)">
-                  <path fill="#555" d="M0 0h51v20H0z"/>
-                  <path fill="#007ec6" d="M51 0h49v20H51z"/>
-                  <path fill="url(#b)" d="M0 0h100v20H0z"/>
+                  <path fill="#555" d="M0 0h51v20H0z" />
+                  <path fill="#007ec6" d="M51 0h49v20H51z" />
+                  <path fill="url(#b)" d="M0 0h100v20H0z" />
                 </g>
-                <g fill="#fff" textAnchor="middle" fontFamily="DejaVu Sans,Verdana,Geneva,sans-serif" fontSize="11">
-                  <text x="25.5" y="15" fill="#010101" fillOpacity=".3">{t('footer:license')}</text>
-                  <text x="25.5" y="14">{t('footer:license')}</text>
-                  <text x="74.5" y="15" fill="#010101" fillOpacity=".3">GPL v3</text>
-                  <text x="74.5" y="14">GPL v3</text>
+                <g
+                  fill="#fff"
+                  textAnchor="middle"
+                  fontFamily="DejaVu Sans,Verdana,Geneva,sans-serif"
+                  fontSize="11"
+                >
+                  <text x="25.5" y="15" fill="#010101" fillOpacity=".3">
+                    {t('footer:license')}
+                  </text>
+                  <text x="25.5" y="14">
+                    {t('footer:license')}
+                  </text>
+                  <text x="74.5" y="15" fill="#010101" fillOpacity=".3">
+                    GPL v3
+                  </text>
+                  <text x="74.5" y="14">
+                    GPL v3
+                  </text>
                 </g>
               </svg>
             </Href>

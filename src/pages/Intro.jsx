@@ -26,22 +26,22 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Warning from '@assets/icons/warning.svg';
+import { ReactComponent as Warning } from '../assets/icons/warning.svg';
 
-import { spacings } from '@styles/configs/spacings';
-import { WrapperFullSizeMiddle } from '@styles/tools';
+import { spacings } from '../styles/configs/spacings';
+import { WrapperFullSizeMiddle } from '../styles/tools';
 
-import withAuth from '@hocs/withAuth';
+import withAuth from '../hocs/withAuth';
 
-import { useLocale } from '@hooks/locale/useLocale';
-import { useTrackingView } from '@hooks/useTrackingView';
+import { useLocale } from '../hooks/locale/useLocale';
+import { useTrackingView } from '../hooks/useTrackingView';
 
-import BasicLayout from '@layouts/Basic';
+import BasicLayout from '../layouts/Basic';
 
-import { Footer } from '@components/footer/Footer';
-import { H2, P } from '@components/generics/basics';
-import Button from '@components/generics/buttons/Button';
-import { Header } from '@components/header/Header';
+import { Footer } from '../components/footer/Footer';
+import { H2, P } from '../components/generics/basics';
+import Button from '../components/generics/buttons/Button';
+import { Header } from '../components/header/Header';
 
 /**
  * Intro page with BasicLayout
@@ -61,7 +61,7 @@ const IntroPage = () => {
     if (identity && identity.language && identity.language !== locale) {
       setLocale(identity.language);
     }
-  }, [identity]);
+  }, [identity, setLocale, locale]);
 
   /**
    * Camera permission validation

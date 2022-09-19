@@ -51,10 +51,17 @@ export const MeppTheme = merge({}, defaultTheme, {
   },
   typography: {
     // Use the system font instead of the default Roboto font.
-    fontFamily: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Helvetica', 'Arial', 'sans-serif'].join(','),
+    fontFamily: [
+      'Inter',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      'Helvetica',
+      'Arial',
+      'sans-serif',
+    ].join(','),
     h6: {
-      fontWeight: 'bold'
-    }
+      fontWeight: 'bold',
+    },
   },
   overrides: {
     MuiButton: {
@@ -68,63 +75,63 @@ export const MeppTheme = merge({}, defaultTheme, {
       },
       label: {
         padding: '5px',
-      }
+      },
     },
     MuiPaper: {
       rounded: {
-        borderRadius: '8px'
-      }
+        borderRadius: '8px',
+      },
     },
     MuiTableHead: {
       root: {
         '& th': {
           height: '40px',
           '&:first-child': {
-            borderTopLeftRadius: '8px'
+            borderTopLeftRadius: '8px',
           },
           '&:last-child': {
-            borderTopRightRadius: '8px'
-          }
-        }
-      }
+            borderTopRightRadius: '8px',
+          },
+        },
+      },
     },
     MuiTableCell: {
       root: {
-        height: '30px'
-      }
+        height: '30px',
+      },
     },
     RaMenuItemLink: {
       active: {
         color: blue,
         '& svg': {
-          color: blue
-        }
+          color: blue,
+        },
       },
       root: {
         color: black,
         '& svg': {
-          color: grayIcon
-        }
-      }
+          color: grayIcon,
+        },
+      },
     },
     RaTranslatableFields: {
       root: {
         '& button': {
           minWidth: '48px',
-          width: '48px'
+          width: '48px',
         },
         '& div[role="tablist"]': {
-          backgroundColor: lighterGray
-        }
-      }
+          backgroundColor: lighterGray,
+        },
+      },
     },
     RaTranslatableInputs: {
       root: {
         '& div[role="tablist"]': {
           backgroundColor: lighterGray,
-          height: '48px'
-        }
-      }
+          height: '48px',
+        },
+      },
     },
     RaBulkActionsToolbar: {
       topToolbar: {
@@ -142,23 +149,23 @@ export const MeppTheme = merge({}, defaultTheme, {
           },
           '&.ra-confirm, &.MuiButton-containedPrimary': {
             color: '#fff',
-            backgroundColor: lightBlue
+            backgroundColor: lightBlue,
           },
           '&.ra-confirm:hover, &.MuiButton-containedPrimary:hover': {
             backgroundColor: blue,
-          }
-        }
-      }
+          },
+        },
+      },
     },
     RaPaginationActions: {
       actions: {
         '& button': {
-          minWidth: 0
-        }
+          minWidth: 0,
+        },
       },
       currentPageButton: {
-        color : black
-      }
-    }
-  }
+        color: black,
+      },
+    },
+  },
 });

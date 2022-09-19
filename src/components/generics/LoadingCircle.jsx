@@ -23,9 +23,9 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import { zindex } from '@styles/configs/zindex';
-import { FlexAlignMiddle } from '@styles/tools';
-import { rem } from '@styles/utils/rem';
+import { zindex } from '../../styles/configs/zindex';
+import { FlexAlignMiddle } from '../../styles/tools';
+import { rem } from '../../styles/utils/rem';
 
 /** LOADING CIRCLE
  */

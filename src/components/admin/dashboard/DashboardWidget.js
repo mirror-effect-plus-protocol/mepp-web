@@ -21,12 +21,9 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import {
-  useTranslate,
-  useVersion,
-} from 'react-admin';
+import { useTranslate, useVersion } from 'react-admin';
 import { Card, CardContent } from '@material-ui/core';
-import { Typography } from '@components/admin/shared/dom/sanitize';
+import { Typography } from '../shared/dom/sanitize';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import {
   BarChart,
@@ -35,9 +32,9 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from 'recharts';
-import Spinner from "@components/admin/shared/Spinner";
+import Spinner from '../shared/Spinner';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
@@ -46,7 +43,7 @@ const useStyles = makeStyles((theme) => {
   return {
     formControl: {
       margin: theme.spacing(1),
-        minWidth: 120,
+      minWidth: 120,
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -54,19 +51,19 @@ const useStyles = makeStyles((theme) => {
     widget: {
       '& header': {
         paddingLeft: '15px',
-          '& > span': {
-          fontFamily: theme.typography.fontFamily
+        '& > span': {
+          fontFamily: theme.typography.fontFamily,
         },
         '& > div': {
           display: 'inline-flex',
-            marginTop: '-30px'
-        }
-      }
-    }
+          marginTop: '-30px',
+        },
+      },
+    },
   };
 });
 
-export const DashboardWidget = ({widget}) => {
+export const DashboardWidget = ({ widget }) => {
   const t = useTranslate();
   const version = useVersion();
   const classes = useStyles();
@@ -81,7 +78,7 @@ export const DashboardWidget = ({widget}) => {
       week_range: weekRange,
     };
     const qs = new URLSearchParams(options).toString();
-    const url = `${process.env.API_ENDPOINT}/patients/widgets/${widget}/?${qs}`;
+    const url = `${process.env.REACT_APP_API_ENDPOINT}/patients/widgets/${widget}/?${qs}`;
     const response = await fetchJsonWithAuthToken(url, {});
     setData(response.json);
     setLoading(false);
@@ -127,7 +124,7 @@ export const DashboardWidget = ({widget}) => {
       <CardContent>
         <div style={{ width: '100%', height: 400 }}>
           {loading && <Spinner />}
-          {!loading &&
+          {!loading && (
             <ResponsiveContainer width="99%" height={400}>
               <BarChart
                 data={data}
@@ -141,7 +138,7 @@ export const DashboardWidget = ({widget}) => {
               >
                 <XAxis
                   type="number"
-                  domain={[0, dataMax => (dataMax >= 4 ? dataMax : 4)]}
+                  domain={[0, (dataMax) => (dataMax >= 4 ? dataMax : 4)]}
                   style={{ fontFamily: 'Inter' }}
                 />
                 <YAxis
@@ -155,20 +152,21 @@ export const DashboardWidget = ({widget}) => {
                   dataKey="completed"
                   fill="#078EE4"
                 />
-                {widget === 'sessions' &&
+                {widget === 'sessions' && (
                   <Bar
                     name={t('admin.dashboard.widgets.labels.uncompleted')}
                     dataKey="uncompleted"
                     fill="#939DAB"
                   />
-                }
-                {widget === 'sessions' && <Legend style={{ fontFamily: 'Inter' }}/> }
-
+                )}
+                {widget === 'sessions' && (
+                  <Legend style={{ fontFamily: 'Inter' }} />
+                )}
               </BarChart>
             </ResponsiveContainer>
-          }
+          )}
         </div>
       </CardContent>
     </Card>
-  )
+  );
 };

@@ -24,21 +24,21 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { media } from '@styles/configs/breakpoints';
-import { spacings } from '@styles/configs/spacings';
+import { media } from '../../styles/configs/breakpoints';
+import { spacings } from '../../styles/configs/spacings';
 import {
   FlexAlignCenter,
   FlexAlignMiddle,
   FlexDisplay,
-} from '@styles/tools/index';
-import { rem } from '@styles/utils/rem';
+} from '../../styles/tools/index';
+import { rem } from '../../styles/utils/rem';
 
-import { useLocale } from '@hooks/locale/useLocale';
+import { useLocale } from '../../hooks/locale/useLocale';
 
-import { LoadingCircle } from '@components/generics/LoadingCircle';
-import { P } from '@components/generics/basics';
-import { SpacerHorizontal } from '@components/generics/basics/Spacer';
-import Button from '@components/generics/buttons/Button';
+import { LoadingCircle } from '../../components/generics/LoadingCircle';
+import { P } from '../../components/generics/basics';
+import { SpacerHorizontal } from '../../components/generics/basics/Spacer';
+import Button from '../../components/generics/buttons/Button';
 
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
 import { Timer } from './Timer';

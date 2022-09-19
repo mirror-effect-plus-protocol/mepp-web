@@ -32,7 +32,7 @@ import {
 } from 'react-admin';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import UnarchiveIcon from '@material-ui/icons/Unarchive';
-import { sanitizeRestProps } from '@admin/utils/props';
+import { sanitizeRestProps } from '../../../../admin/utils/props';
 
 const ToggleArchiveButton = ({
   resource,
@@ -95,11 +95,11 @@ const ToggleArchiveButton = ({
       onClick={handleToggleArchive}
       disabled={loading}
       className={className}
-      {...sanitizeRestProps(rest, [
-        'redirectToBasePath',
-        'showLabel',
-        'showLocation'
-      ], true)}
+      {...sanitizeRestProps(
+        rest,
+        ['redirectToBasePath', 'showLabel', 'showLocation'],
+        true,
+      )}
       variant={rest.variant}
       color={rest.color}
     >

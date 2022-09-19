@@ -2,7 +2,7 @@
  * MEPP - A web application to guide patients and clinicians in the process of
  * facial palsy rehabilitation, with the help of the mirror effect and principles
  * of motor learning
- * Copyright (C) 2021 MEPP <info@mirroreffectplus.org>
+ * Copyright (C) 2021 MEPP <info../../../mirroreffectplus.org>
  *
  * This file is part of MEPP.
  *
@@ -23,9 +23,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { media } from '@styles/configs/breakpoints';
-import { HoverOrActive } from '@styles/utils/HoverOrActive';
-import { rem } from '@styles/utils/rem';
+import { media } from '../../../styles/configs/breakpoints';
+import { HoverOrActive } from '../../../styles/utils/HoverOrActive';
+import { rem } from '../../../styles/utils/rem';
 
 /**
  * BUTTON SIDE LABEL TYPES ALLOWED

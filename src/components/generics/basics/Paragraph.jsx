@@ -22,7 +22,7 @@
 
 import styled, { css } from 'styled-components';
 
-import { rem } from '@styles/utils/rem';
+import { rem } from '../../../styles/utils/rem';
 
 export const ParagraphBaseCss = css`
   -webkit-font-smoothing: antialiased;
@@ -32,8 +32,12 @@ export const ParagraphBaseCss = css`
   &:not(:last-of-type) {
     margin-bottom: 1.5em;
   }
-  b {font-weight: 700;}
-  i {font-style: italic;}
+  b {
+    font-weight: 700;
+  }
+  i {
+    font-style: italic;
+  }
 `;
 
 /**

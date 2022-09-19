@@ -21,35 +21,26 @@
  */
 
 import React, { Fragment, useState } from 'react';
-import {
-  NumberInput,
-  TextInput,
-  useLocale,
-  useTranslate,
-} from 'react-admin';
-import {
-  useAutocompleteStyles,
-  useNumberStyles
-} from '@components/admin/plans/styles';
+import { NumberInput, TextInput, useLocale, useTranslate } from 'react-admin';
+import { useAutocompleteStyles, useNumberStyles } from '../plans/styles';
 import { useForm } from 'react-final-form';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import {
   Button,
   CircularProgress,
-  Dialog, DialogActions,
+  Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
-  TextField as TextFieldMui
+  TextField as TextFieldMui,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import CheckCircle from '@material-ui/icons/CheckCircle';
-import { validateNumber } from '@components/admin/shared/validators';
-import DropDown from '@components/admin/shared/inputs/Dropdown';
-
+import { validateNumber } from '../shared/validators';
+import DropDown from '../shared/inputs/Dropdown';
 
 const ExerciseRow = (props) => {
-
   const t = useTranslate();
   const locale = useLocale();
   const numberClasses = useNumberStyles();
@@ -65,7 +56,7 @@ const ExerciseRow = (props) => {
   const [exerciseOptions, setExerciseOptions] = useState([]);
   const form = useForm();
   const getExercises = async (categoryUid, subCategoryUid) => {
-    let url = `${process.env.API_ENDPOINT}/exercises/?archived=false&language=${locale}&ordering=i18n__name`;
+    let url = `${process.env.REACT_APP_API_ENDPOINT}/exercises/?archived=false&language=${locale}&ordering=i18n__name`;
     if (categoryUid) {
       url += `&category__uid=${categoryUid}`;
     }
@@ -91,16 +82,15 @@ const ExerciseRow = (props) => {
   const handleSubCategoryChange = (event) => {
     const subCategoryUid = event.target.value;
     getExercises(null, subCategoryUid);
-  }
+  };
   const handleExerciseChange = (event, exercise) => {
     setDescription(exercise.i18n.description[locale]);
     setUid(exercise.id);
     setMovementDuration(exercise.movement_duration);
     setPause(exercise.pause);
     setRepeat(exercise.repeat);
-  }
+  };
   const handleSelectExercise = () => {
-
     form.change(`${props.source}.i18n.description.${locale}`, description);
     form.change(`${props.source}.movement_duration`, movementDuration);
     form.change(`${props.source}.pause`, pause);
@@ -115,7 +105,7 @@ const ExerciseRow = (props) => {
         type="hidden"
         label=""
         source={`${props.source}.id`}
-        style={{display: 'none'}}
+        style={{ display: 'none' }}
       />
       <TextInput
         source={`${props.source}.i18n.description.${locale}`}
@@ -141,22 +131,28 @@ const ExerciseRow = (props) => {
           label={t('resources.plans.fields.exercise.repeat')}
         />
       </div>
-      <Dialog
-        open={openDialog}
-      >
-        <DialogTitle>{t('resources.plans.card.exercise_dialog.title')}</DialogTitle>
+      <Dialog open={openDialog}>
+        <DialogTitle>
+          {t('resources.plans.card.exercise_dialog.title')}
+        </DialogTitle>
         <DialogContent>
           <div>
             <DropDown
               choices={props.categories}
               onChange={handleCategoryChange}
-              label={t('resources.plans.card.exercise_dialog.labels.autocomplete.category')}
+              label={t(
+                'resources.plans.card.exercise_dialog.labels.autocomplete.category',
+              )}
             />
             <DropDown
               choices={subCategories}
               onChange={handleSubCategoryChange}
-              label={t('resources.plans.card.exercise_dialog.labels.autocomplete.sub_category')}
-              emptyLabel={t('resources.plans.card.exercise_dialog.labels.autocomplete.sub_category_empty_label')}
+              label={t(
+                'resources.plans.card.exercise_dialog.labels.autocomplete.sub_category',
+              )}
+              emptyLabel={t(
+                'resources.plans.card.exercise_dialog.labels.autocomplete.sub_category_empty_label',
+              )}
             />
             <Autocomplete
               classes={autocompleteClasses}
@@ -166,14 +162,19 @@ const ExerciseRow = (props) => {
               onChange={handleExerciseChange}
               getOptionLabel={(option) => option.i18n.description[locale]}
               renderInput={(params) => (
-                <TextFieldMui {...params}
-                  label={t('resources.plans.card.exercise_dialog.labels.autocomplete.exercise')}
+                <TextFieldMui
+                  {...params}
+                  label={t(
+                    'resources.plans.card.exercise_dialog.labels.autocomplete.exercise',
+                  )}
                   variant="filled"
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: (
                       <Fragment>
-                        {loadingExercises ? <CircularProgress color="inherit" size={20} /> : null}
+                        {loadingExercises ? (
+                          <CircularProgress color="inherit" size={20} />
+                        ) : null}
                         {params.InputProps.endAdornment}
                       </Fragment>
                     ),

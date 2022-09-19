@@ -28,13 +28,13 @@ import {
   UserMenu,
   MenuItemLink,
   useTranslate,
-  useGetIdentity
+  useGetIdentity,
 } from 'react-admin';
 import { Box } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { LocaleSwitcher } from './buttons/LocaleSwitcher';
-import { Logo } from '@components/admin/shared/icons/Logo';
-import  { makeStyles } from '@material-ui/core/styles';
+import { Logo } from './icons/Logo';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   'mepp-layout': {
@@ -48,18 +48,14 @@ const useStyles = makeStyles((theme) => ({
     },
     '& header': {
       backgroundColor: '#fff',
-      color: '#232525'
-    }
+      color: '#232525',
+    },
   },
 }));
 
 const MeppAdminAppBar = (props) => {
   return (
-    <AppBar
-        {...props}
-        elevation={1}
-        userMenu={<CustomUserMenu />}
-      >
+    <AppBar {...props} elevation={1} userMenu={<CustomUserMenu />}>
       <Box flex="1">
         <Logo />
       </Box>
@@ -91,7 +87,7 @@ const CustomUserMenu = (props) => {
 
   return (
     <UserMenu {...props}>
-      <SettingsMenu identityUid={identity.uid}/>
+      <SettingsMenu identityUid={identity.uid} />
     </UserMenu>
   );
 };

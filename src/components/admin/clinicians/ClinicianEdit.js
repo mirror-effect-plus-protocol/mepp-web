@@ -21,7 +21,7 @@
  */
 
 import React from 'react';
-import { Typography } from '@components/admin/shared/dom/sanitize';
+import { Typography } from '../shared/dom/sanitize';
 import { makeStyles } from '@material-ui/core/styles';
 import { CompactForm, RaBox } from 'ra-compact-ui';
 import {
@@ -43,9 +43,9 @@ import {
   validateLastName,
   validatePasswordOptional as validatePassword,
   validatePasswords,
-} from '@components/admin/shared/validators';
-import Options from '@components/admin/shared/options';
-import TopToolbar from "@components/admin/shared/toolbars/TopToolbar";
+} from '../shared/validators';
+import Options from '../shared/options';
+import TopToolbar from '../shared/toolbars/TopToolbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfileRow = ({identity, identityLoaded, ...props}) => {
+const ProfileRow = ({ identity, identityLoaded, ...props }) => {
   if (!identityLoaded || identity?.uid === props?.record?.id) {
     return false;
   } else {
@@ -76,7 +76,7 @@ export const ClinicianEdit = (props) => {
     Object.entries(error.body).forEach(([key, values]) => {
       message += t(`resources.${props.resource}.errors.${key}`);
     });
-    notify(message, {type: 'error'});
+    notify(message, { type: 'error' });
   };
 
   return (
@@ -100,18 +100,10 @@ export const ClinicianEdit = (props) => {
             fullWidth
             validate={validateFirstName}
           />
-          <TextInput
-            source="last_name"
-            fullWidth
-            validate={validateLastName}
-          />
+          <TextInput source="last_name" fullWidth validate={validateLastName} />
         </RaBox>
         <RaBox className={classes.root}>
-          <TextInput
-            source="email"
-            fullWidth
-            validate={validateEmail}
-          />
+          <TextInput source="email" fullWidth validate={validateEmail} />
         </RaBox>
         <ProfileRow identity={identity} identityLoaded={identityLoaded}>
           <Typography variant="h6" gutterBottom gutterTop={true}>

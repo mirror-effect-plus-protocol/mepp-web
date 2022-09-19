@@ -21,17 +21,13 @@
  */
 
 import React from 'react';
-import {
-  FilterList,
-  FilterListItem,
-  FilterLiveSearch,
-} from 'react-admin';
+import { FilterList, FilterListItem, FilterLiveSearch } from 'react-admin';
 import { CardContent, withStyles } from '@material-ui/core';
-import { ClinicianIcon } from '@components/admin/shared/icons/ClinicianIcon';
-import useGetClinicians from '@components/admin/shared/hook/useGetClinicians';
-import { ASide } from '@components/admin/shared/cards/ASide';
+import { ClinicianIcon } from '../shared/icons/ClinicianIcon';
+import useGetClinicians from '../shared/hook/useGetClinicians';
+import { ASide } from '../shared/cards/ASide';
 
-const PlanListAside = ({permissions}) => {
+const PlanListAside = ({ permissions }) => {
   const { data: clinicians, loaded } = useGetClinicians(permissions);
   return (
     <ASide>
@@ -50,8 +46,7 @@ const PlanListAside = ({permissions}) => {
                   key={clinician.id}
                   value={{ clinician_uid: clinician.id }}
                 />
-              ))
-            }
+              ))}
           </FilterList>
         )}
       </CardContent>

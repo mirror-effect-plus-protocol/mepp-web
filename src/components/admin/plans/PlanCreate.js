@@ -32,27 +32,21 @@ import {
   useLocale,
   useTranslate,
 } from 'react-admin';
-import { Typography } from '@components/admin/shared/dom/sanitize';
+import { Typography } from '../shared/dom/sanitize';
 
-import {requiredLocalizedField} from '@components/admin/shared/validators';
+import { requiredLocalizedField } from '../shared/validators';
 import {
   useSimpleFormIteratorStyles,
   useTranslatorInputStyles,
-} from '@components/admin/plans/styles';
-import { validateExercises } from '@components/admin/plans/validators';
-import { validateNumber } from '@components/admin/shared/validators';
-import IsSystemInput from '@components/admin/plans/IsSystem';
-import ExerciseRow from '@components/admin/plans/ExerciseRow';
+} from '../plans/styles';
+import { validateExercises } from '../plans/validators';
+import { validateNumber } from '../shared/validators';
+import IsSystemInput from '../plans/IsSystem';
+import ExerciseRow from '../plans/ExerciseRow';
 import { LANGUAGES } from '../../../locales';
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
-import {
-  useGetCategories,
-  useGetSubCategories,
-} from '@components/admin/shared/hook';
-import {
-  contextualRedirect,
-  preSave
-} from '@components/admin/plans/callbacks';
+import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
+import { useGetCategories, useGetSubCategories } from '../shared/hook';
+import { contextualRedirect, preSave } from '../plans/callbacks';
 
 export const PlanCreate = (props) => {
   const t = useTranslate();
@@ -63,15 +57,17 @@ export const PlanCreate = (props) => {
   const [asTemplate, setAsTemplate] = useState(true);
   const validateI18n = (record) => {
     return requiredLocalizedField(record, locale, ['name', 'description']);
-  }
+  };
   const categories = useGetCategories(locale);
   const subCategories = useGetSubCategories(locale);
-  const redirect = useCallback(() => (
-    contextualRedirect(patientUid)
-  ), [patientUid]);
-  const transform = useCallback((record) => (
-    preSave(record, locale, patientUid, asTemplate)
-  ), [patientUid, asTemplate]);
+  const redirect = useCallback(
+    () => contextualRedirect(patientUid),
+    [patientUid],
+  );
+  const transform = useCallback(
+    (record) => preSave(record, locale, patientUid, asTemplate),
+    [patientUid, asTemplate],
+  );
 
   useEffect(() => {
     setPatientUid(props?.history?.location?.state?.patientUid);
@@ -85,13 +81,11 @@ export const PlanCreate = (props) => {
   }, [patientUid]);
 
   return (
-    <Create
-      {...props}
-    >
+    <Create {...props}>
       <SimpleForm
         validate={validateI18n}
         redirect={redirect}
-        toolbar={<SimpleFormToolBar identity={false} transform={transform}/>}
+        toolbar={<SimpleFormToolBar identity={false} transform={transform} />}
       >
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}
@@ -101,23 +95,11 @@ export const PlanCreate = (props) => {
           defaultLocale={locale}
           classes={translatorClasses}
         >
-          <TextInput
-            source="i18n.name"
-            fullWidth
-          />
-          <TextInput
-            source="i18n.description"
-            fullWidth
-            multiline
-          />
+          <TextInput source="i18n.name" fullWidth />
+          <TextInput source="i18n.description" fullWidth multiline />
         </TranslatableInputs>
-        {props.permissions === 'admin' && asTemplate &&
-          <IsSystemInput/>
-        }
-        <NumberInput
-          source="daily_repeat"
-          validate={validateNumber}
-        />
+        {props.permissions === 'admin' && asTemplate && <IsSystemInput />}
+        <NumberInput source="daily_repeat" validate={validateNumber} />
 
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('resources.plans.card.labels.exercises')}
@@ -129,9 +111,7 @@ export const PlanCreate = (props) => {
           label=""
           validate={validateExercises}
         >
-          <SimpleFormIterator
-            classes={simpleFormIteratorclasses}
-          >
+          <SimpleFormIterator classes={simpleFormIteratorclasses}>
             <ExerciseRow
               categories={categories}
               subCategories={subCategories}

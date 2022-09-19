@@ -32,7 +32,6 @@ import DownloadIcon from '@material-ui/icons/GetApp';
 
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 
-
 const ExportButton = (props) => {
   const {
     basePath = '',
@@ -51,32 +50,33 @@ const ExportButton = (props) => {
   const locale = useLocale();
   const notify = useNotify();
   const unselectAll = useUnselectAll();
-  const label = showLabel
-    ? t('admin.shared.labels.exportButton')
-    : '';
-  const exportEndpoint = useCallback((token) => {
-    const data = {
-      ...filterValues,
-      ...{selectedIds: selectedIds},
-      ...{language: locale},
-      ...{t: token},
-    };
+  const label = showLabel ? t('admin.shared.labels.exportButton') : '';
+  const exportEndpoint = useCallback(
+    (token) => {
+      const data = {
+        ...filterValues,
+        ...{ selectedIds: selectedIds },
+        ...{ language: locale },
+        ...{ t: token },
+      };
 
-    const qs = new URLSearchParams(data).toString();
-    return `${process.env.API_ENDPOINT}${basePath}/export/?${qs}`;
-  }, [selectedIds, filterValues, locale]);
+      const qs = new URLSearchParams(data).toString();
+      return `${process.env.REACT_APP_API_ENDPOINT}${basePath}/export/?${qs}`;
+    },
+    [selectedIds, filterValues, locale],
+  );
 
   const handleClick = (e) => {
     e.stopPropagation();
     // Wait for the click action to be triggered before reset selectedIds
-    const url = `${process.env.API_ENDPOINT}/token/`;
+    const url = `${process.env.REACT_APP_API_ENDPOINT}/token/`;
 
     fetchJsonWithAuthToken(url, {
       method: 'POST',
-      body: '{"type":"export"}'
+      body: '{"type":"export"}',
     })
       .then((response) => {
-        notify('admin.shared.notifications.export.start','info');
+        notify('admin.shared.notifications.export.start', 'info');
         window.location.href = exportEndpoint(response.json['token']);
       })
       .catch(() => {

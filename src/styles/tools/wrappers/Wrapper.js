@@ -22,9 +22,9 @@
 
 import styled from 'styled-components';
 
-import { media } from '@styles/configs/breakpoints';
-import { spacings } from '@styles/configs/spacings';
-import { FlexAlignMiddle } from '@styles/tools/flexs';
+import { media } from '../../configs/breakpoints';
+import { spacings } from '../../configs/spacings';
+import { FlexAlignMiddle } from '../../tools/flexs';
 
 /**
  * WRAPPER SETTINGS

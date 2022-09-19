@@ -20,15 +20,11 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {
-  email,
-  minLength,
-  required
-} from 'react-admin';
+import { email, minLength, required } from 'react-admin';
 
 const securePasswordOptional = (new_password) => {
-  const passwordMinLen = process.env.PASSWORD_MIN_LEN;
-  const passwordRegex = process.env.PASSWORD_REGEX;
+  const passwordMinLen = process.env.REACT_APP_PASSWORD_MIN_LEN;
+  const passwordRegex = process.env.REACT_APP_PASSWORD_REGEX;
   const regex = new RegExp(`^${passwordRegex}{${passwordMinLen},}$`);
 
   if (!new_password) {
@@ -67,19 +63,19 @@ export const requiredLocalizedField = (record, locale, fields) => {
   const errors = {};
 
   if (!record.hasOwnProperty('i18n')) {
-    errors.i18n = {}
+    errors.i18n = {};
     if (Array.isArray(fields)) {
       fields.forEach((field) => {
         errors.i18n[`${field}`] = {
-          [`${locale}`] : ['admin.shared.errors.field_required']
-        }
+          [`${locale}`]: ['admin.shared.errors.field_required'],
+        };
       });
     } else {
       errors.i18n = {
         [`${fields}`]: {
-          [`${locale}`] : ['admin.shared.errors.field_required']
-        }
-      }
+          [`${locale}`]: ['admin.shared.errors.field_required'],
+        },
+      };
     }
   } else {
     if (Array.isArray(fields)) {
@@ -87,9 +83,9 @@ export const requiredLocalizedField = (record, locale, fields) => {
         if (!record.i18n.hasOwnProperty(field)) {
           errors.i18n = {
             [`${field}`]: {
-              [`${locale}`] : ['admin.shared.errors.field_required']
-            }
-          }
+              [`${locale}`]: ['admin.shared.errors.field_required'],
+            },
+          };
         }
       });
     }
@@ -111,4 +107,3 @@ export const validatePasswords = ({ new_password, confirm_password }) => {
   }
   return errors;
 };
-

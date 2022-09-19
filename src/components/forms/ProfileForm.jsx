@@ -25,22 +25,22 @@ import { useNotify, useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { media } from '@styles/configs/breakpoints';
-import { spacings } from '@styles/configs/spacings';
-import { FlexAlignCenter } from '@styles/tools';
-import { rem } from '@styles/utils/rem';
+import { media } from '../../styles/configs/breakpoints';
+import { spacings } from '../../styles/configs/spacings';
+import { FlexAlignCenter } from '../../styles/tools';
+import { rem } from '../../styles/utils/rem';
 
-import { useApi } from '@hooks/useApi';
+import { useApi } from '../../hooks/useApi';
 
-import { RequestEndpoint } from '@utils/constants';
+import { RequestEndpoint } from '../../utils/constants';
 
-import { LoadingCircle } from '@components/generics/LoadingCircle';
-import { P } from '@components/generics/basics';
-import { SpacerHorizontal } from '@components/generics/basics/Spacer';
-import Button from '@components/generics/buttons/Button';
-import Form from '@components/generics/forms/Form';
-import Input from '@components/generics/forms/Input';
-import { OverlayContext } from '@components/overlays/OverlayProvider';
+import { LoadingCircle } from '../../components/generics/LoadingCircle';
+import { P } from '../../components/generics/basics';
+import { SpacerHorizontal } from '../../components/generics/basics/Spacer';
+import Button from '../../components/generics/buttons/Button';
+import Form from '../../components/generics/forms/Form';
+import Input from '../../components/generics/forms/Input';
+import { OverlayContext } from '../../components/overlays/OverlayProvider';
 
 /**
  * Profile Form
@@ -152,14 +152,14 @@ const ProfileForm = () => {
                   validation={
                     !hidePassword && {
                       minLength: {
-                        value: process.env.PASSWORD_MIN_LEN,
+                        value: process.env.REACT_APP_PASSWORD_MIN_LEN,
                         message: t('form:field:error:min_length', {
                           amount: process.env.PASSWORD_MIN_LEN,
                         }),
                       },
                       pattern: {
                         value: new RegExp(
-                          `^${process.env.PASSWORD_REGEX}{${process.env.PASSWORD_MIN_LEN},}$`,
+                          `^${process.env.REACT_APP_PASSWORD_REGEX}{${process.env.REACT_APP_PASSWORD_MIN_LEN},}$`,
                         ),
                         message: t('form:field:error:pwd'),
                       },

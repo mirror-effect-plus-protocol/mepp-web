@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /*
  * MEPP - A web application to guide patients and clinicians in the process of
  * facial palsy rehabilitation, with the help of the mirror effect and principles
@@ -46,7 +47,7 @@ const Player = () => {
     const side = identity.side === 0 ? 'left' : 'right';
 
     const AR = DeepAR({
-      licenseKey: process.env.DEEPAR_LICENSE_KEY,
+      licenseKey: process.env.REACT_APP_DEEPAR_LICENSE_KEY,
       canvas: canvas.current,
       canvasWidth: window.innerWidth,
       canvasHeight: window.outerHeight,
@@ -61,7 +62,7 @@ const Player = () => {
     });
     AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
     deepAR.current = AR;
-  }, [deepAR, canvas, identity, exercise]);
+  }, [deepAR, canvas, identity, exercise, ready]);
 
   /**
    * Resize browser event

@@ -27,8 +27,7 @@ export default {
     },
     error: {
       generic: 'An error has occurred',
-      token_invalid:
-        'Your request is invalid or has expired',
+      token_invalid: 'Your request is invalid or has expired',
       pwd_invalid: 'Your password is invalid',
     },
   },

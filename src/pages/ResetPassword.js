@@ -23,15 +23,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { WrapperFullSizeMiddle } from '@styles/tools';
+import { WrapperFullSizeMiddle } from '../styles/tools';
 
-import { useTrackingView } from '@hooks/useTrackingView';
+import { useTrackingView } from '../hooks/useTrackingView';
 
-import BasicLayout from '@layouts/Basic';
+import BasicLayout from '../layouts/Basic';
 
-import { Footer } from '@components/footer/Footer';
-import ResetPasswordForm from '@components/forms/ResetPasswordForm';
-import { Header } from '@components/header/Header';
+import { Footer } from '../components/footer/Footer';
+import ResetPasswordForm from '../components/forms/ResetPasswordForm';
+import { Header } from '../components/header/Header';
 
 /**
  * Reset password page with BasicLayout

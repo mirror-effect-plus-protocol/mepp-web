@@ -22,9 +22,9 @@
 
 import styled, { css } from 'styled-components';
 
-import { media } from '@styles/configs/breakpoints';
-import { spacings } from '@styles/configs/spacings';
-import { rem } from '@styles/utils/rem';
+import { media } from '../../../styles/configs/breakpoints';
+import { spacings } from '../../../styles/configs/spacings';
+import { rem } from '../../../styles/utils/rem';
 
 const hBaseStyle = css`
   color: ${({ theme }) => theme.colors.text};

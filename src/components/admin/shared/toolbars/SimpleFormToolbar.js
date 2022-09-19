@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import {
   SaveButton,
   Toolbar,
@@ -44,7 +44,7 @@ import CheckCircle from '@material-ui/icons/CheckCircle';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 import ToggleArchiveButton from '../buttons/ToggleArchiveButton';
-import { Div } from '@components/admin/shared/dom/sanitize';
+import { Div } from '../dom/sanitize';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const SimpleFormToolBar = ({identity, ...props}) => {
+const SimpleFormToolBar = ({ identity, ...props }) => {
   const t = useTranslate();
   const theme = useTheme();
   const classes = useStyles();
@@ -68,11 +68,12 @@ const SimpleFormToolBar = ({identity, ...props}) => {
   const location = useLocation();
   const [confirm, setConfirm] = React.useState(false);
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const redirectLocation = typeof props.redirect === 'function'
-    ? props.redirect()
-    : props.basePath;
+  const redirectLocation =
+    typeof props.redirect === 'function' ? props.redirect() : props.basePath;
   const showEditButtons = useMemo(() => {
-    if (identity === false) { return true; }
+    if (identity === false) {
+      return true;
+    }
     return identity?.uid !== props?.record?.id;
   }, [identity, props.record]);
   const handleBackClick = (e) => {
@@ -109,8 +110,10 @@ const SimpleFormToolBar = ({identity, ...props}) => {
     // Update profile
     const profile = JSON.parse(localStorage.getItem('profile'));
     let reload = false;
-    if (profile.first_name !== args.data.first_name ||
-        profile.last_name !== args.data.last_name) {
+    if (
+      profile.first_name !== args.data.first_name ||
+      profile.last_name !== args.data.last_name
+    ) {
       reload = true;
     }
     profile.first_name = args.data.first_name;
@@ -118,7 +121,7 @@ const SimpleFormToolBar = ({identity, ...props}) => {
     profile.full_name = `${profile.first_name} ${profile.last_name}`;
     profile.email = args.data.email;
     localStorage.setItem('profile', JSON.stringify(profile));
-    notify('admin.shared.notifications.profile.success', {type: 'info'});
+    notify('admin.shared.notifications.profile.success', { type: 'info' });
     // force window reload if full name has changed.
     // React-Admin Appbar does not reload itself when identity has changed.
     // ToDo find a way to refresh the component without loading the whole app
@@ -154,7 +157,11 @@ const SimpleFormToolBar = ({identity, ...props}) => {
       resource: props.resource,
       undoable: props.undoable,
     };
-    if (props.resource === 'clinicians' && identity && identity?.uid === props?.record?.id) {
+    if (
+      props.resource === 'clinicians' &&
+      identity &&
+      identity?.uid === props?.record?.id
+    ) {
       defaultProps.onSuccess = onProfileSaveSuccess;
     }
     return defaultProps;
@@ -172,14 +179,8 @@ const SimpleFormToolBar = ({identity, ...props}) => {
         >
           {t('admin.shared.labels.cancelButton')}
         </Button>
-        <Dialog
-          fullScreen={fullScreen}
-          open={confirm}
-          onClose={handleClose}
-        >
-          <DialogTitle>
-            {t('admin.shared.text.cancelDialog.title')}
-          </DialogTitle>
+        <Dialog fullScreen={fullScreen} open={confirm} onClose={handleClose}>
+          <DialogTitle>{t('admin.shared.text.cancelDialog.title')}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               {t('admin.shared.text.cancelDialog.body')}
@@ -206,11 +207,7 @@ const SimpleFormToolBar = ({identity, ...props}) => {
             </Button>
           </DialogActions>
         </Dialog>
-        <SaveButton
-          redirect={formRedirect}
-          size="small"
-          {...saveButtonProps}
-        />
+        <SaveButton redirect={formRedirect} size="small" {...saveButtonProps} />
       </Div>
       {showEditButtons && props.record && props.record.id && (
         <ToggleArchiveButton

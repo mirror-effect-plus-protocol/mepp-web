@@ -52,8 +52,8 @@ based from https://styled-css-grid.js.org/
 */
 import styled from 'styled-components';
 
-import { media } from '@styles/configs/breakpoints';
-import { spacings } from '@styles/configs/spacings';
+import { media } from '../../configs/breakpoints';
+import { spacings } from '../../configs/spacings';
 
 /**
  * Format Area

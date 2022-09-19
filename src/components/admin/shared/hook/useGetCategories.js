@@ -20,21 +20,20 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import { useGetList } from 'react-admin';
 
 const useGetCategories = (locale) => {
-
-  const {data, loaded} = useGetList(
+  const { data, loaded } = useGetList(
     'categories',
     false,
     { field: 'i18n__name', order: 'ASC' },
-    { language: locale }
+    { language: locale },
   );
   return useMemo(() => {
     return Object.values(data).map((category) => ({
       name: category.i18n.name[locale],
-      id: category.id
+      id: category.id,
     }));
   }, [data, loaded]);
 };

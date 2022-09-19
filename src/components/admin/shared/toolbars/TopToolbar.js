@@ -21,12 +21,9 @@
  */
 
 import React from 'react';
-import {
-  TopToolbar as RaTopToolbar,
-  useTranslate,
-} from 'react-admin';
-import CRUDButton from '@components/admin/shared/buttons/CRUDButton';
-import ExportButton from '@components/admin/shared/buttons/ExportButton';
+import { TopToolbar as RaTopToolbar, useTranslate } from 'react-admin';
+import CRUDButton from '../buttons/CRUDButton';
+import ExportButton from '../buttons/ExportButton';
 
 const TopToolbar = ({ basePath, data, resource, ...rest }) => {
   const t = useTranslate();
@@ -35,21 +32,21 @@ const TopToolbar = ({ basePath, data, resource, ...rest }) => {
     context = { patientUid: rest.patientUid };
   }
 
-  if (!data?.id || (rest?.identity?.uid === data?.id)) {
+  if (!data?.id || rest?.identity?.uid === data?.id) {
     return <></>;
   }
 
   return (
     <RaTopToolbar>
-      {rest.showExport &&
+      {rest.showExport && (
         <ExportButton
           basePath={basePath}
           selectedIds={[data.id]}
           variant="outlined"
-          style={{marginRight: '10px'}}
+          style={{ marginRight: '10px' }}
         />
-      }
-      {rest.hasEdit &&
+      )}
+      {rest.hasEdit && (
         <CRUDButton
           basePath={basePath}
           record={data}
@@ -59,8 +56,8 @@ const TopToolbar = ({ basePath, data, resource, ...rest }) => {
           size="small"
           variant="outlined"
         />
-      }
-      {rest.hasShow &&
+      )}
+      {rest.hasShow && (
         <CRUDButton
           basePath={basePath}
           record={data}
@@ -70,10 +67,9 @@ const TopToolbar = ({ basePath, data, resource, ...rest }) => {
           size="small"
           variant="outlined"
         />
-      }
+      )}
     </RaTopToolbar>
   );
-
 };
 
 export default TopToolbar;

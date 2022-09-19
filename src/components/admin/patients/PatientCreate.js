@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Typography } from '@components/admin/shared/dom/sanitize';
+import { Typography } from '../shared/dom/sanitize';
 import { makeStyles } from '@material-ui/core/styles';
 import { CompactForm, RaBox } from 'ra-compact-ui';
 import React from 'react';
@@ -34,11 +34,7 @@ import {
   useNotify,
 } from 'react-admin';
 import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
-import {
-  validateAudio,
-  validateClinician,
-  validateSide,
-} from './validators';
+import { validateAudio, validateClinician, validateSide } from './validators';
 import {
   validateEmail,
   validateFirstName,
@@ -46,8 +42,8 @@ import {
   validateLastName,
   validatePasswordRequired as validatePassword,
   validatePasswords,
-} from '@components/admin/shared/validators';
-import Options from '@components/admin/shared/options';
+} from '../shared/validators';
+import Options from '../shared/options';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,18 +65,15 @@ export const PatientCreate = (props) => {
     Object.entries(error.body).forEach(([key, values]) => {
       message += t(`resources.${props.resource}.errors.${key}`);
     });
-    notify(message, {type: 'error'});
+    notify(message, { type: 'error' });
   };
 
   return (
-    <Create
-      onFailure={onFailure}
-      {...props}
-    >
+    <Create onFailure={onFailure} {...props}>
       <CompactForm
         layoutComponents={[RaBox]}
         redirect="show"
-        toolbar={<SimpleFormToolBar identity={false}/>}
+        toolbar={<SimpleFormToolBar identity={false} />}
         validate={validatePasswords}
       >
         <Typography variant="h6" gutterBottom>

@@ -20,9 +20,9 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import i18n from 'locales';
-import en from 'locales/en';
-import fr from 'locales/fr';
+import i18n from '../locales';
+import en from '../locales/en';
+import fr from '../locales/fr';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 
 export default polyglotI18nProvider((locale) => {

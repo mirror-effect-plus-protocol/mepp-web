@@ -22,7 +22,7 @@
 
 import styled, { css } from 'styled-components';
 
-import { rem } from '@styles/utils/rem';
+import { rem } from '../../../styles/utils/rem';
 
 /**
  *

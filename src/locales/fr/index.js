@@ -35,7 +35,8 @@ import settings from './settings';
 const reactAdminFrOverride = { ...ReactAdminFr };
 reactAdminFrOverride.ra.action.show = 'Voir';
 reactAdminFrOverride.ra.action.edit = 'Modifier';
-reactAdminFrOverride.ra.notification.updated = 'Élément mis à jour avec succès |||| %{smart_count} élements mis à jour avec succès';
+reactAdminFrOverride.ra.notification.updated =
+  'Élément mis à jour avec succès |||| %{smart_count} élements mis à jour avec succès';
 reactAdminFrOverride.ra.notification.created = 'Élément créé avec succès';
 
 export default {

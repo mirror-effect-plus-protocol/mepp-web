@@ -24,7 +24,7 @@ import i18n from 'i18next';
 import { useMemo, useCallback } from 'react';
 import { useSetLocale } from 'react-admin';
 
-import { Language } from '@utils/constants';
+import { Language } from '../../utils/constants';
 
 /** HOOK TO GET/SET LOCALE
  * - set a new locale
@@ -35,6 +35,7 @@ const useLocale = () => {
   // current locale
   const locale = useMemo(() => {
     return i18n.language;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
 
   // set new locale
@@ -48,6 +49,7 @@ const useLocale = () => {
       i18n.changeLanguage(lang);
       document.documentElement.lang = lang;
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [i18n.language],
   );
 

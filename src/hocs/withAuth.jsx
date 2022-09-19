@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /*
  * MEPP - A web application to guide patients and clinicians in the process of
  * facial palsy rehabilitation, with the help of the mirror effect and principles
@@ -24,7 +25,7 @@ import React, { useEffect } from 'react';
 import { Authenticated } from 'react-admin';
 import { WithPermissions } from 'react-admin';
 
-import { authTemporaryToken } from '@admin/authProvider';
+import { authTemporaryToken } from '../admin/authProvider';
 
 /**
  * Protect pages that need authenticated users like /mirror page

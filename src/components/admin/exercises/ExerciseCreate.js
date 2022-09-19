@@ -39,24 +39,21 @@ import {
   validateCategory,
   validateSubCategory,
   validateSubCategories,
-} from '@components/admin/exercises/validators';
-import { validateNumber } from '@components/admin/shared/validators';
+} from '../exercises/validators';
+import { validateNumber } from '../shared/validators';
 import {
   useNumberStyles,
   useSimpleFormIteratorStyles,
   useTranslatorInputStyles,
-} from '@components/admin/exercises/styles';
-import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
+} from '../exercises/styles';
+import SubCategoryInput from '../exercises/SubCategoryInput';
 import { LANGUAGES } from '../../../locales';
-import {requiredLocalizedField} from '@components/admin/shared/validators';
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
-import {
-  preSave
-} from '@components/admin/exercises/callbacks';
-import { Typography, Div } from '@components/admin/shared/dom/sanitize';
+import { requiredLocalizedField } from '../shared/validators';
+import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
+import { preSave } from '../exercises/callbacks';
+import { Typography, Div } from '../shared/dom/sanitize';
 
 export const ExerciseCreate = (props) => {
-
   const t = useTranslate();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const numberClasses = useNumberStyles();
@@ -65,16 +62,16 @@ export const ExerciseCreate = (props) => {
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
   let categories = [];
   let subCategories = {};
-  const {data, ids, loaded} = useGetList(
+  const { data, ids, loaded } = useGetList(
     'categories',
     false,
     { field: 'i18n__name', order: 'ASC' },
-    { language: locale }
+    { language: locale },
   );
 
   const validateI18n = (record) => {
     return requiredLocalizedField(record, locale, 'description');
-  }
+  };
   /* Update description translations if empty */
   const transform = (record) => {
     return preSave(record, locale);
@@ -88,25 +85,30 @@ export const ExerciseCreate = (props) => {
     updates[categoryInput.name.replace('category__', '')] = categoryInput.value;
     setUpdatedSubCategoryInputs({
       ...updatedSubCategoryInputs,
-      ...updates
+      ...updates,
     });
   };
 
   // ToDo refactor
   if (loaded) {
     ids.forEach((categoryUid) => {
-      categories.push({'id': categoryUid, 'name': data[categoryUid].i18n.name[locale]});
-      subCategories[categoryUid] = data[categoryUid]['sub_categories'].map((subCategory) => {
-        return {'id': subCategory.id, 'name': subCategory.i18n.name[locale]};
+      categories.push({
+        'id': categoryUid,
+        'name': data[categoryUid].i18n.name[locale],
       });
+      subCategories[categoryUid] = data[categoryUid]['sub_categories'].map(
+        (subCategory) => {
+          return {
+            'id': subCategory.id,
+            'name': subCategory.i18n.name[locale],
+          };
+        },
+      );
     });
   }
 
   return (
-    <Create
-      transform={transform}
-      {...props}
-    >
+    <Create transform={transform} {...props}>
       <SimpleForm
         redirect="show"
         validate={validateI18n}
@@ -126,11 +128,7 @@ export const ExerciseCreate = (props) => {
             fullWidth={true}
           />
         </TranslatableInputs>
-        {props.permissions === 'admin' &&
-          <BooleanInput
-            source="is_system"
-          />
-        }
+        {props.permissions === 'admin' && <BooleanInput source="is_system" />}
         <Div className={numberClasses.numbers}>
           <NumberInput
             source="movement_duration"
