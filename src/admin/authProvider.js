@@ -95,10 +95,10 @@ const authProvider = {
           permissions = data.permissions;
           return Promise.resolve(data.permissions);
         } catch (error) {
-          return Promise.reject();
+          return Promise.resolve('guest');
         }
       } else {
-        return Promise.reject();
+        return Promise.resolve('guest');
       }
     } else {
       return Promise.resolve(permissions);
