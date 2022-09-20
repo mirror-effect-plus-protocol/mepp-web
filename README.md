@@ -39,7 +39,7 @@ with the MEPP website.
 ```shell
 computer:mepp user$ npm install --legacy-peer-deps
 or
-computer:mepp user$ npm run install
+computer:mepp user$ npm run setup
 
 ```
 
