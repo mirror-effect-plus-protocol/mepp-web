@@ -25,7 +25,6 @@ with the MEPP website.
 **Front end:**
 
 - nodejs 15.x
-- yarn
 
 **DeepAR.ai**
 
@@ -36,6 +35,13 @@ with the MEPP website.
 - docker-compose
 
 ## Run the application
+
+```shell
+computer:mepp user$ npm install --legacy-peer-deps
+or
+computer:mepp user$ npm run setup
+
+```
 
 The easiest way to run the application is to clone [`mepp-docker`](https://github.com/mirror-effect-plus-protocol/mepp-docker) repository 
 and use `docker-compose` to run `docker` containers.
