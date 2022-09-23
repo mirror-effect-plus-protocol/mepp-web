@@ -112,11 +112,11 @@ export const PlanShow = (props) => {
               label={t('resources.plans.fields.exercise.movement_duration')}
             />
             <NumberField
-              source="repeat"
+              source="pause"
               label={t('resources.plans.fields.exercise.pause')}
             />
             <NumberField
-              source="pause"
+              source="repeat"
               label={t('resources.plans.fields.exercise.repeat')}
             />
           </Datagrid>
