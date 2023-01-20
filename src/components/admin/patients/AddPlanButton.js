@@ -119,7 +119,7 @@ const AddPlanButton = ({patientUid}) => {
 
   const {data, loading, loaded} = useGetList(
     'plans',
-    false,
+    { page: 1, perPage: 9999},
     { field: 'i18n__name', order: 'ASC' },
     {
       language: locale,

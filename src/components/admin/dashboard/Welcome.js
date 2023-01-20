@@ -100,7 +100,7 @@ export const Welcome = () => {
   };
   const {data, loading: patientsLoading, loaded} = useGetList(
     'patients',
-    false,
+    { page: 1, perPage: 9999},
     { field: 'full_name', order: 'ASC' },
     {
       language: locale,

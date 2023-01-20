@@ -111,7 +111,7 @@ export const PatientShow = (props) => {
   const [archives, setArchives] = useState(false);
   const {data, ids, total, loaded} = useGetList(
     'plans',
-    false,
+    { page: 1, perPage: 9999},
     { field: 'start_date', order: 'DESC' },
     { language: locale, patient_id: props.id, archived: archives}
   );
