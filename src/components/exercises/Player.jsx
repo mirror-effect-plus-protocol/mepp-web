@@ -45,19 +45,21 @@ const Player = () => {
 
     const side = identity.side === 0 ? 'left' : 'right';
 
-    const AR = DeepAR({
+    const AR = new DeepAR({
       licenseKey: process.env.DEEPAR_LICENSE_KEY,
       canvas: canvas.current,
-      canvasWidth: window.innerWidth,
-      canvasHeight: window.outerHeight,
       numberOfFaces: 1,
-      libPath: './assets/deepar/',
-      segmentationInfoZip: 'segmentation.zip',
-      onInitialize: () => {
-        AR.startVideo(true);
-        AR.switchEffect(0, side, `./assets/deepar/effects/${side}`);
+      segmentationConfig: {
+        modelPath: "./assets/deepar/segmentation-160x160-opt.bin"
       },
-      onVideoStarted: () => ready(true),
+      callbacks: {
+        onInitialize: () => {
+          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
+          AR.startVideo(true);
+          AR.switchEffect(0, side, `./assets/deepar/effects/${side}`);
+        },
+        onVideoStarted: () => ready(true),
+      }
     });
     AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
     deepAR.current = AR;
@@ -70,7 +72,7 @@ const Player = () => {
   useEffect(() => {
     const onResize = () => {
       if (deepAR.current) {
-        deepAR.current.setCanvasSize(window.innerWidth, window.outerHeight);
+       deepAR.current.module.setCanvasSize(window.innerWidth, window.outerHeight);
       }
     };
 

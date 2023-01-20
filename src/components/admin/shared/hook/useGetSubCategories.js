@@ -27,7 +27,7 @@ import { useGetList } from 'react-admin';
 const useGetSubCategories = (locale) => {
   const {data, loaded} = useGetList(
     'categories',
-    false,
+    { page: 1, perPage: 9999},
     { field: 'i18n__name', order: 'ASC' },
     { language: locale }
   );

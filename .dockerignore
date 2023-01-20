@@ -36,4 +36,3 @@ src
 .vscode
 webpack
 webpack.config.js
-yarn.lock
