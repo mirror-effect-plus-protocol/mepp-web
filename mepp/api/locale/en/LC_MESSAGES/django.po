@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-05 00:06+0000\n"
-"PO-Revision-Date: 2021-12-05 18:44-0500\n"
+"PO-Revision-Date: 2023-01-23 17:04-0500\n"
 "Last-Translator: Olivier Leger\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: mepp/api/authentication.py:28
 msgid "Invalid token."
@@ -87,10 +87,10 @@ msgid ""
 "text-decoration: underline;\">%(mepp_host)s</a> and click on <b>Forgot&nbsp;"
 "your&nbsp;password?</b> to reset and create your own your password."
 msgstr ""
-"Before you begin your therapy, please visit <a href=\"%(mepp_host)s\" style="
-"\"color: #008EDE; text-decoration: underline;\">%(mepp_host)s</a> and click "
-"on <b>Forgot&nbsp;your&nbsp;password?</b> to reset and create your own your "
-"password."
+"Before you begin your therapy, please visit <a href=\"%(mepp_host)s\" "
+"style=\"color: #008EDE; text-decoration: underline;\">%(mepp_host)s</a> and "
+"click on <b>Forgot&nbsp;your&nbsp;password?</b> to reset and create your own "
+"your password."
 
 #: mepp/api/templates/email/staff_registration.html:132
 #: mepp/api/templates/email/staff_registration.source.html:366
@@ -104,7 +104,7 @@ msgstr ""
 #: mepp/api/templates/email/staff_registration.html:133
 #: mepp/api/templates/email/staff_registration.source.html:367
 msgid "staff_introduction_video"
-msgstr ""
+msgstr "https://www.youtube.com/watch?v=Tux2tV9GvyI"
 
 #: mepp/api/templates/email/staff_registration.html:135
 #: mepp/api/templates/email/staff_registration.source.html:369
@@ -155,7 +155,7 @@ msgstr ""
 #: mepp/api/templates/email/staff_registration.html:144
 #: mepp/api/templates/email/staff_registration.source.html:378
 msgid "staff_training_video"
-msgstr ""
+msgstr "https://www.youtube.com/watch?v=RLrTRneHCic"
 
 #: mepp/api/templates/email/staff_registration.html:146
 #: mepp/api/templates/email/staff_registration.source.html:380
@@ -213,12 +213,12 @@ msgstr ""
 #: mepp/api/templates/email/user_registration.source.html:374
 msgid ""
 "In case of technical problems with the website or application, please "
-"contact us at <a href=\"mailto:info@mirroreffectplus.org"
-"\">info@mirroreffectplus.org</a>."
+"contact us at <a href=\"mailto:info@mirroreffectplus."
+"org\">info@mirroreffectplus.org</a>."
 msgstr ""
 "In case of technical problems with the website or the application, please "
-"contact us at <a href=\"mailto:info@mirroreffectplus.org"
-"\">info@mirroreffectplus.org</a>."
+"contact us at <a href=\"mailto:info@mirroreffectplus."
+"org\">info@mirroreffectplus.org</a>."
 
 #: mepp/api/templates/email/staff_registration.txt:8
 #: mepp/api/templates/email/user_registration.txt:8
@@ -334,7 +334,7 @@ msgstr ""
 #: mepp/api/templates/email/user_registration.html:138
 #: mepp/api/templates/email/user_registration.source.html:372
 msgid "user_intro_video"
-msgstr ""
+msgstr "https://youtu.be/bLpt1BnjkEA"
 
 #: mepp/api/templates/email/user_registration.html:139
 #: mepp/api/templates/email/user_registration.source.html:373
@@ -464,9 +464,9 @@ msgstr ""
 
 #~ msgid ""
 #~ "We invite you to visit <a href=\"%(mepp_host)s\" style=\"color: #008EDE; "
-#~ "text-decoration: underline;\">%(mepp_host)s</a> and click on <b>"
-#~ "\"Forgot&nbsp;your&nbsp;password?\"</b> to reset and create your own your "
-#~ "password."
+#~ "text-decoration: underline;\">%(mepp_host)s</a> and click on "
+#~ "<b>\"Forgot&nbsp;your&nbsp;password?\"</b> to reset and create your own "
+#~ "your password."
 #~ msgstr ""
 #~ "Before you begin your therapy, please visit <a href=\"%(mepp_host)s\" "
 #~ "style=\"color: #008EDE; text-decoration: underline;\">%(mepp_host)s</a> "
