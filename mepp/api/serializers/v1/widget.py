@@ -34,12 +34,14 @@ class DashboardWidgetSerializer(serializers.ModelSerializer):
 
     full_name = serializers.SerializerMethodField()
     completed = serializers.SerializerMethodField()
+    y_axis = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = [
             'full_name',
             'completed',
+            'y_axis'
         ]
 
     def create(self, validated_data):
@@ -50,6 +52,9 @@ class DashboardWidgetSerializer(serializers.ModelSerializer):
 
     def get_full_name(self, user):
         return user.get_full_name()
+
+    def get_y_axis(self, user):
+        return f'{user.first_name} {user.last_name[0].upper()}'
 
     def update(self, validated_data):
         raise NotImplementedError
@@ -102,6 +107,7 @@ class SessionsWidgetSerializer(DashboardWidgetSerializer):
     class Meta(DashboardWidgetSerializer.Meta):
         fields = [
             'full_name',
+            'y_axis',
             'completed',
             'uncompleted'
         ]
