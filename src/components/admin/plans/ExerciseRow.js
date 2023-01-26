@@ -60,6 +60,7 @@ const ExerciseRow = (props) => {
   const [repeat, setRepeat] = useState(5);
   const [description, setDescription] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
+  const [category, setCategory] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
   const [loadingExercises, setLoadingExercises] = useState(undefined);
   const [exerciseOptions, setExerciseOptions] = useState([]);
@@ -85,13 +86,18 @@ const ExerciseRow = (props) => {
   };
   const handleCategoryChange = (event) => {
     const categoryUid = event.target.value;
+    setCategory(categoryUid);
     setSubCategories(props.subCategories[categoryUid]);
     getExercises(categoryUid);
   };
   const handleSubCategoryChange = (event) => {
     const subCategoryUid = event.target.value;
-    getExercises(null, subCategoryUid);
-  }
+    if (subCategoryUid) {
+      getExercises(null, subCategoryUid);
+    } else {
+      getExercises(category);
+    }
+  };
   const handleExerciseChange = (event, exercise) => {
     setDescription(exercise.i18n.description[locale]);
     setUid(exercise.id);
