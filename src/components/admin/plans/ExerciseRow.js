@@ -65,7 +65,7 @@ const ExerciseRow = (props) => {
   const [exerciseOptions, setExerciseOptions] = useState([]);
   const form = useForm();
   const getExercises = async (categoryUid, subCategoryUid) => {
-    let url = `${process.env.API_ENDPOINT}/exercises/?archived=false&language=${locale}&ordering=i18n__name`;
+    let url = `${process.env.API_ENDPOINT}/exercises/?page=1&page_size=9999&archived=false&language=${locale}&ordering=i18n__name`;
     if (categoryUid) {
       url += `&category__uid=${categoryUid}`;
     }
