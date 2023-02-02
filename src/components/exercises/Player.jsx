@@ -58,7 +58,10 @@ const Player = () => {
           AR.startVideo(true);
           AR.switchEffect(0, side, `./assets/deepar/effects/${side}`);
         },
-        onVideoStarted: () => ready(true),
+        onVideoStarted: () => {
+          ready(true);
+          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
+        },
       }
     });
     AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
