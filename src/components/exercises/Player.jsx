@@ -59,7 +59,7 @@ const Player = () => {
           AR.switchEffect(0, side, `./assets/deepar/effects/${side}`);
         },
         onVideoStarted: () => {
-          ready(true)
+          ready(true);
           AR.module.setCanvasSize(window.innerWidth, window.innerHeight);
         }
       }
