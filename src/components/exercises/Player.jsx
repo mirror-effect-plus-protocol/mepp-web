@@ -54,14 +54,14 @@ const Player = () => {
       },
       callbacks: {
         onInitialize: () => {
-          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
+          AR.module.setCanvasSize(window.innerWidth, window.innerHeight);
           AR.startVideo(true);
           AR.switchEffect(0, side, `./assets/deepar/effects/${side}`);
         },
         onVideoStarted: () => {
-          ready(true);
-          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
-        },
+          ready(true)
+          AR.module.setCanvasSize(window.innerWidth, window.innerHeight);
+        }
       }
     });
     AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
@@ -75,7 +75,7 @@ const Player = () => {
   useEffect(() => {
     const onResize = () => {
       if (deepAR.current) {
-       deepAR.current.module.setCanvasSize(window.innerWidth, window.outerHeight);
+       deepAR.current.module.setCanvasSize(window.innerWidth, window.innerHeight);
       }
     };
 
