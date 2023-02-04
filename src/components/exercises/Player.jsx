@@ -75,7 +75,7 @@ const Player = () => {
       },
       callbacks: {
         onInitialize: () => {
-          AR.module.setCanvasSize(window.innerWidth, window.innerHeight);
+          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
           AR.setVideoElement(video.current, true);
           AR.switchEffect(0, side, `./assets/deepar/effects/${side}`);
           ready(true);
@@ -98,7 +98,7 @@ const Player = () => {
         if (deepAR.current) {
           deepAR.current.module.setCanvasSize(
             window.innerWidth,
-            window.innerHeight,
+            window.outerHeight,
           );
         }
       }, 100);

@@ -92,12 +92,9 @@ const Player = () => {
       },
       callbacks: {
         onInitialize: () => {
-          AR.module.setCanvasSize(window.innerWidth, window.innerHeight);
+          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
           AR.setVideoElement(video.current, true);
           AR.switchEffect(0, 'right', `./assets/deepar/effects/right`);
-        },
-        onVideoStarted: () => {
-          AR.module.setCanvasSize(window.innerWidth, window.innerHeight);
         },
       },
     });
@@ -117,7 +114,7 @@ const Player = () => {
         if (deepAR.current) {
           deepAR.current.module.setCanvasSize(
             window.innerWidth,
-            window.innerHeight,
+            window.outerHeight,
           );
         }
       }, 200);
