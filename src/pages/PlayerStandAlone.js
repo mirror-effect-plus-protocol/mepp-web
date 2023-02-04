@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import { DeepAR } from 'deepar';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { DisabledBodyScrollGlogalStyle } from '@styles/utils/DisabledBodyScroll';
@@ -52,36 +52,10 @@ const PlayerStandalonePage = () => {
  * Player Standalone
  */
 const Player = () => {
-  const [deniedPermission, setDeniedPermission] = useState(true);
   const deepAR = useRef(null);
   const canvas = useRef(null);
-  const video = useRef(null);
-
-  const grantCameraPermission = async () => {
-    const hasAutorize =
-      navigator.mediaDevices && navigator.mediaDevices.getUserMedia
-        ? await navigator.mediaDevices
-            .getUserMedia({ video: true })
-            .then((stream) => {
-              video.current.srcObject = stream;
-              video.current.onloadedmetadata = () => {
-                video.current.play();
-              };
-              return true;
-            })
-            .catch(() => {
-              setDeniedPermission(true);
-              return false;
-            })
-        : false;
-
-    if (hasAutorize) setDeniedPermission(false);
-    else setDeniedPermission(true);
-  };
 
   useEffect(() => {
-    if (deniedPermission) return;
-
     const AR = new DeepAR({
       licenseKey: process.env.DEEPAR_LICENSE_KEY,
       canvas: canvas.current,
@@ -93,14 +67,17 @@ const Player = () => {
       callbacks: {
         onInitialize: () => {
           AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
-          AR.setVideoElement(video.current, true);
+          AR.startVideo(true);
           AR.switchEffect(0, 'right', `./assets/deepar/effects/right`);
+        },
+        onVideoStarted: () => {
+          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
         },
       },
     });
     AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
     deepAR.current = AR;
-  }, [deepAR, canvas, deniedPermission]);
+  }, [deepAR, canvas]);
 
   /**
    * Resize browser event
@@ -136,15 +113,9 @@ const Player = () => {
     };
   }, [deepAR]);
 
-  /**
-   * Call grant permission on mounting
-   */
-  useEffect(() => grantCameraPermission(), []);
-
   return (
     <Container>
       <Canvas ref={canvas}></Canvas>
-      <Video ref={video} playsInline autoPlay muted></Video>
     </Container>
   );
 };
@@ -161,10 +132,5 @@ const Container = styled.div`
 `;
 
 const Canvas = styled.canvas``;
-const Video = styled.video`
-  position: absolute;
-  top: -100000px;
-  left: -100000px;
-`;
 
 export default PlayerStandalonePage;

@@ -106,7 +106,7 @@ const IntroPage = () => {
                 <Instruction medium>{t('intro:instruction')}</Instruction>
                 <ButtonStart
                   label={t('cta:start')}
-                  onClick={onCheckCameraPermission}
+                  onClick={() => { history.push('/mirror') }}
                 />
               </>
             ) : (
@@ -161,7 +161,7 @@ const Permission = () => {
       ) : (
         <ButtonPermission
           label={t('cta:authorize')}
-          onClick={onGrantCameraPermission}
+            onClick={() => { history.push('/mirror')}}
         />
       )}
     </>

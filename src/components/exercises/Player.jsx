@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import { DeepAR } from 'deepar';
-import React, { useRef, useEffect, useContext, useState } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import { useGetIdentity } from 'react-admin';
 import styled from 'styled-components';
 
@@ -32,26 +32,9 @@ import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
 const Player = () => {
   const { exercise, exerciseStep, ready } = useContext(ExerciseContext);
   const { identity, loading: identityLoading } = useGetIdentity();
-  const [streamReady, setStreamReady] = useState(false);
   const deepAR = useRef(null);
   const canvas = useRef(null);
-  const video = useRef(null);
 
-  const initVideoStream = async () => {
-    return navigator.mediaDevices && navigator.mediaDevices.getUserMedia
-      ? await navigator.mediaDevices
-          .getUserMedia({ video: true })
-          .then((stream) => {
-            video.current.srcObject = stream;
-            video.current.onloadedmetadata = () => video.current.play();
-            setStreamReady(true);
-            return true;
-          })
-          .catch(() => {
-            return false;
-          })
-      : false;
-  };
 
   /**
    * Init Deep AR
@@ -60,8 +43,6 @@ const Player = () => {
   useEffect(() => {
     if (!identity) return;
     if (deepAR.current) return;
-    if (!video.current) return;
-    if (!streamReady) return;
 
     const side = identity.side === 0 ? 'left' : 'right';
 
@@ -76,15 +57,18 @@ const Player = () => {
       callbacks: {
         onInitialize: () => {
           AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
-          AR.setVideoElement(video.current, true);
+          AR.startVideo(true);
           AR.switchEffect(0, side, `./assets/deepar/effects/${side}`);
+        },
+        onVideoStarted: () => {
           ready(true);
+          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
         },
       },
     });
     AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
     deepAR.current = AR;
-  }, [deepAR, canvas, identity, exercise, streamReady]);
+  }, [deepAR, canvas, identity, exercise]);
 
   /**
    * Resize browser event
@@ -148,11 +132,6 @@ const Player = () => {
     }
   }, [deepAR, exerciseStep]);
 
-  /**
-   * Init camera stream into video tag
-   */
-  useEffect(() => initVideoStream(), []);
-
   if (identityLoading) return <></>;
 
   return (
@@ -160,7 +139,6 @@ const Player = () => {
       {exerciseStep !== ExerciseStep.ENDED && (
         <>
           <Canvas ref={canvas}></Canvas>
-          <Video ref={video} playsInline autoPlay muted></Video>
           <GradientTop />
           <GradientBottom />
         </>
@@ -179,12 +157,6 @@ const Container = styled.div`
 const Canvas = styled.canvas`
   width: 100%;
   height: 100%;
-`;
-
-const Video = styled.video`
-  position: absolute;
-  top: -100000px;
-  left: -100000px;
 `;
 
 const Gradient = styled.div`
