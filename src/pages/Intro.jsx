@@ -67,25 +67,15 @@ const IntroPage = () => {
    * Camera permission validation
    */
   const onCheckCameraPermission = async () => {
-    const hasPermission = navigator.permissions
-      ? await navigator.permissions
-          .query({ name: 'camera' })
-          .then((permission) => {
-            if (permission.state === 'granted') return true;
-            else return false;
-          })
-          .catch(() => {
-            return false;
-          })
-      : navigator.mediaDevices &&
-        (await navigator.mediaDevices
-          .getUserMedia({ video: true })
-          .then(() => {
-            return true;
-          })
-          .catch(() => {
-            return false;
-          }));
+    const hasPermission = navigator.permissions && await navigator.permissions
+      .query({ name: 'camera' })
+      .then((permission) => {
+        if (permission.state === 'granted') return true;
+        else return false;
+      })
+      .catch(() => {
+        return false;
+      });
 
     if (hasPermission) history.push('/mirror');
     else setShowPermission(true);
@@ -106,7 +96,7 @@ const IntroPage = () => {
                 <Instruction medium>{t('intro:instruction')}</Instruction>
                 <ButtonStart
                   label={t('cta:start')}
-                  onClick={() => { history.push('/mirror') }}
+                  onClick={onCheckCameraPermission}
                 />
               </>
             ) : (
@@ -126,44 +116,17 @@ const IntroPage = () => {
  */
 const Permission = () => {
   const { t } = useTranslation();
-  const [deniedPermission, setDeniedPermission] = useState(false);
   const history = useHistory();
-
-  /**
-   * Show Camera permission
-   * @returns boolean
-   */
-  const onGrantCameraPermission = async () => {
-    const hasAutorize =
-      navigator.mediaDevices && navigator.mediaDevices.getUserMedia
-        ? await navigator.mediaDevices
-            .getUserMedia({ video: true })
-            .then(() => {
-              return true;
-            })
-            .catch(() => {
-              setDeniedPermission(true);
-              return false;
-            })
-        : false;
-
-    if (hasAutorize) history.push('/mirror');
-    else setDeniedPermission(true);
-  };
 
   return (
     <>
       <IconWarning width="48" height="48" />
       <Title>{t('permission:title')}</Title>
       <Introduction xlarge>{t('permission:introduction')}</Introduction>
-      {deniedPermission ? (
-        <Instruction medium>{t('permission:instruction')}</Instruction>
-      ) : (
-        <ButtonPermission
-          label={t('cta:authorize')}
-            onClick={() => { history.push('/mirror')}}
-        />
-      )}
+      <ButtonPermission
+        label={t('cta:authorize')}
+          onClick={() => { history.push('/mirror')}}
+      />
     </>
   );
 };
