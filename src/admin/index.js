@@ -104,12 +104,6 @@ export default () => {
       customRoutes={[
         <Route
           exact
-          path="/playerstandalone"
-          component={(props) => <PlayerAlone {...props} />}
-          noLayout
-        />,
-        <Route
-          exact
           path="/privacy"
           component={(props) => <PrivacyPage {...props} />}
           noLayout
@@ -138,6 +132,14 @@ export default () => {
           component={(props) => <MirrorPage {...props} />}
           noLayout
         />,
+        ... process.env.ENVIRONMENT !== 'production'
+          ? [<Route
+              exact
+              path="/playerstandalone"
+              component={(props) => <PlayerAlone {...props} />}
+              noLayout
+           />]
+          : []
       ]}
       dashboard={Dashboard}
     >
