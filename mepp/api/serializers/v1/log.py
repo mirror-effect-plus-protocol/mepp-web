@@ -79,7 +79,7 @@ class UserLogSerializer(serializers.ModelSerializer):
             ua_string = request.META.get('HTTP_USER_AGENT', '')
             user_agent = parse(ua_string)
         except Exception as e:
-            logging.error(f'CurrentUserViewSet.user_session_view(): {str(e)}')
+            logging.error(f'UserLogSerializer.create(): {str(e)}')
             user_agent = ''
 
         log = Log.objects.create(

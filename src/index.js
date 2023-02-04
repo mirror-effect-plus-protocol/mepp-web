@@ -43,6 +43,7 @@ const App = hot(() => {
     log(`project name: ${process.env.PROJECT_NAME}`);
     log(`project version: ${process.env.PROJECT_VERSION}`);
     log(`project environment: ${process.env.ENVIRONMENT}`);
+    log(`commit id: ${process.env.COMMIT_ID}`);
   }, []);
 
   return (

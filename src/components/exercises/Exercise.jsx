@@ -224,10 +224,6 @@ const Container = styled.div`
   top: 0;
   width: 100vw;
   height: 100%;
-  height: -moz-available;
-  height: -webkit-fill-available;
-  height: fill-available;
-  height: stretch;
 `;
 
 const Background = styled.div`
@@ -250,10 +246,6 @@ const ExerciseWrapper = styled(FlexAlignMiddle.Component)`
   position: absolute;
   width: 100%;
   height: 100%;
-  height: -moz-available;
-  height: -webkit-fill-available;
-  height: fill-available;
-  height: stretch;
   z-index: 1;
 `;
 
