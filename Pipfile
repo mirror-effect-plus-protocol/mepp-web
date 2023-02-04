@@ -21,6 +21,9 @@ django-rest-passwordreset = "*"
 unidecode = "*"
 xlsxwriter = "*"
 dj-database-url = "*"
+pyyaml = "*"
+ua-parser = "*"
+user-agents = "*"
 
 [requires]
 python_version = "3.8"

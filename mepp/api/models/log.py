@@ -40,6 +40,8 @@ class Log(BaseModel):
     )
     exercise_index = models.PositiveSmallIntegerField(null=True)
 
+    user_agent = models.CharField(max_length=1000, default='')
+
     CONNECTION_ACTIONS = [
         ActionEnum.LOGIN.name,
         ActionEnum.LOGOUT.name,
