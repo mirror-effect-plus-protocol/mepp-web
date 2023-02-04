@@ -15,8 +15,3 @@ __pycache__
 .pytest_cache
 .vscode
 .vols
-
-# develop branch only
-build
-requirements.txt
-.well-known
