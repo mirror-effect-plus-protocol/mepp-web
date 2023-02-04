@@ -19,6 +19,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
+import logging
 
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
@@ -30,11 +31,11 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_201_CREATED
+from user_agents import parse
 
 from mepp.api.enums.action import ActionEnum
 from mepp.api.enums.role import RoleEnum
 from mepp.api.models import (
-    ExpiringToken,
     Log,
     Session,
 )
@@ -103,7 +104,19 @@ class CurrentUserViewSet(
         user_session = request.user.active_session
         if not user_session:
             raise Http404
-        Log.objects.create(session=user_session, action=ActionEnum.LOGIN.value)
+
+        try:
+            ua_string = request.META.get('HTTP_USER_AGENT', '')
+            user_agent = parse(ua_string)
+        except Exception as e:
+            logging.error(f'CurrentUserViewSet.user_session_view(): {str(e)}')
+            user_agent = ''
+
+        Log.objects.create(
+            session=user_session,
+            action=ActionEnum.LOGIN.value,
+            user_agent=user_agent,
+        )
         serializer = UserSessionSerializer(user_session)
         return Response(serializer.data)
 

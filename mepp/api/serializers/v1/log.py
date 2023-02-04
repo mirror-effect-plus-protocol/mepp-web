@@ -20,8 +20,11 @@
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
+
 from rest_framework import serializers
 from rest_framework.reverse import reverse
+from user_agents import parse
 
 from mepp.api.enums.action import ActionEnum
 from mepp.api.models.log import Log
@@ -69,10 +72,21 @@ class UserLogSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
+
+        request = self.context['request']
+
+        try:
+            ua_string = request.META.get('HTTP_USER_AGENT', '')
+            user_agent = parse(ua_string)
+        except Exception as e:
+            logging.error(f'CurrentUserViewSet.user_session_view(): {str(e)}')
+            user_agent = ''
+
         log = Log.objects.create(
             session=self.context['user_session'],
             action=ActionEnum[validated_data['action']].value,
             exercise_index=validated_data['exercise_index'],
+            user_agent=user_agent
         )
         return log
 
