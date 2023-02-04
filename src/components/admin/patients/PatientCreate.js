@@ -120,6 +120,8 @@ export const PatientCreate = (props) => {
               source="clinician_uid"
               reference="clinicians"
               validate={validateClinician}
+              perPage={9999}
+              sort={{ field: 'full_name', order: 'ASC' }}
             >
               <SelectInput optionText="full_name" style={{ width: '100%' }} />
             </ReferenceInput>

@@ -28,4 +28,3 @@ from rest_framework.pagination import (
 class PageNumberWithPageSizePagination(PageNumberPagination):
 
     page_size_query_param = 'page_size'
-

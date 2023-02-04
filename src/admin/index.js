@@ -33,6 +33,7 @@ import Mirror from '@pages/Mirror';
 import Privacy from '@pages/Privacy';
 import ResetPassword from '@pages/ResetPassword';
 import Terms from '@pages/Terms';
+import PlayerStandalonePage from '@pages/PlayerStandAlone';
 
 import withPage from '@hocs/withPage';
 
@@ -89,6 +90,7 @@ export default () => {
   const PrivacyPage = withPage(Privacy);
   const TermsPage = withPage(Terms);
   const ResetPasswordPage = withPage(ResetPassword);
+  const PlayerAlone = withPage(PlayerStandalonePage);
 
   return (
     <Admin
@@ -130,6 +132,14 @@ export default () => {
           component={(props) => <MirrorPage {...props} />}
           noLayout
         />,
+        ... process.env.ENVIRONMENT !== 'production'
+          ? [<Route
+              exact
+              path="/playerstandalone"
+              component={(props) => <PlayerAlone {...props} />}
+              noLayout
+           />]
+          : []
       ]}
       dashboard={Dashboard}
     >

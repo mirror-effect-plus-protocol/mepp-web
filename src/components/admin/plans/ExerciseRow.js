@@ -60,12 +60,13 @@ const ExerciseRow = (props) => {
   const [repeat, setRepeat] = useState(5);
   const [description, setDescription] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
+  const [category, setCategory] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
   const [loadingExercises, setLoadingExercises] = useState(undefined);
   const [exerciseOptions, setExerciseOptions] = useState([]);
   const form = useForm();
   const getExercises = async (categoryUid, subCategoryUid) => {
-    let url = `${process.env.API_ENDPOINT}/exercises/?archived=false&language=${locale}&ordering=i18n__name`;
+    let url = `${process.env.API_ENDPOINT}/exercises/?page=1&page_size=9999&archived=false&language=${locale}&ordering=i18n__name`;
     if (categoryUid) {
       url += `&category__uid=${categoryUid}`;
     }
@@ -85,13 +86,18 @@ const ExerciseRow = (props) => {
   };
   const handleCategoryChange = (event) => {
     const categoryUid = event.target.value;
+    setCategory(categoryUid);
     setSubCategories(props.subCategories[categoryUid]);
     getExercises(categoryUid);
   };
   const handleSubCategoryChange = (event) => {
     const subCategoryUid = event.target.value;
-    getExercises(null, subCategoryUid);
-  }
+    if (subCategoryUid) {
+      getExercises(null, subCategoryUid);
+    } else {
+      getExercises(category);
+    }
+  };
   const handleExerciseChange = (event, exercise) => {
     setDescription(exercise.i18n.description[locale]);
     setUid(exercise.id);

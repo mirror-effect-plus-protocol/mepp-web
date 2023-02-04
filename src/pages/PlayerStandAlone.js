@@ -20,35 +20,44 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import { DeepAR } from 'deepar';
-import React, { useRef, useEffect, useContext } from 'react';
-import { useGetIdentity } from 'react-admin';
-import { useHistory } from 'react-router-dom';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
+import { DisabledBodyScrollGlogalStyle } from '@styles/utils/DisabledBodyScroll';
+
+import BasicLayout from '@layouts/Basic';
 
 /**
- * DeepAP.ai player
+ * Player Standalone page with BasicLayout
+ */
+const PlayerStandalonePage = () => {
+  return (
+    <>
+      <DisabledBodyScrollGlogalStyle />
+      <BasicLayout
+        header={<></>}
+        content={
+          <ContainerWrapper>
+            <ContainerInner>
+              <Player />
+            </ContainerInner>
+          </ContainerWrapper>
+        }
+      />
+    </>
+  );
+};
+
+/**
+ * Player Standalone
  */
 const Player = () => {
-  const { exercise, exerciseStep, ready } = useContext(ExerciseContext);
-  const { identity, loading: identityLoading } = useGetIdentity();
   const deepAR = useRef(null);
   const canvas = useRef(null);
-  const history = useHistory();
 
-  /**
-   * Init Deep AR
-   * doc: https://help.deepar.ai/en/articles/3545295-api-reference
-   */
   useEffect(() => {
-    if (!identity) return;
-    if (deepAR.current) return;
-
     canvas.current.width = window.innerWidth;
     canvas.current.height = window.innerHeight;
-
-    const side = identity.side === 0 ? 'left' : 'right';
 
     const AR = new DeepAR({
       licenseKey: process.env.DEEPAR_LICENSE_KEY,
@@ -61,15 +70,13 @@ const Player = () => {
       callbacks: {
         onInitialize: () => {
           AR.startVideo(true);
-          AR.switchEffect(0, side, `./assets/deepar/effects/${side}`);
+          AR.switchEffect(0, 'right', `./assets/deepar/effects/right`);
         },
-        onVideoStarted: () => ready(true),
       },
     });
     AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
-    AR.callbacks.onCameraPermissionDenied = () => history.push('/intro');
     deepAR.current = AR;
-  }, [deepAR, canvas, identity, exercise]);
+  }, [deepAR, canvas]);
 
   /**
    * Resize browser event
@@ -104,48 +111,16 @@ const Player = () => {
     };
   }, [deepAR]);
 
-  /**
-   * Ending
-   * Destroy DeepAR
-   */
-  useEffect(() => {
-    if (exerciseStep === ExerciseStep.ENDED && deepAR.current) {
-      deepAR.current.shutdown();
-      deepAR.current = null;
-    }
-  }, [deepAR, exerciseStep]);
-
-  /**
-   * Empty
-   * Destroy DeepAR
-   */
-  useEffect(() => {
-    if (exerciseStep === ExerciseStep.EMPTY) {
-      // weird settimeout because DeepAR seems not to be fully initialized to this state
-      // can't be destroy without this settimeout
-      setTimeout(() => {
-        if (deepAR.current) {
-          deepAR.current.shutdown();
-          deepAR.current = null;
-        }
-      }, 2000);
-    }
-  }, [deepAR, exerciseStep]);
-
-  if (identityLoading) return <></>;
-
   return (
     <Container>
-      {exerciseStep !== ExerciseStep.ENDED && (
-        <>
-          <Canvas ref={canvas}></Canvas>
-          <GradientTop />
-          <GradientBottom />
-        </>
-      )}
+      <Canvas ref={canvas}></Canvas>
     </Container>
   );
 };
+
+const ContainerWrapper = styled.div``;
+
+const ContainerInner = styled.div``;
 
 const Container = styled.div`
   position: absolute;
@@ -160,24 +135,4 @@ const Container = styled.div`
 
 const Canvas = styled.canvas``;
 
-const Gradient = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 300px;
-  opacity: 0.9;
-
-  ${({ theme }) =>
-    theme &&
-    `background: linear-gradient(0deg, ${theme.colors.black}00, ${theme.colors.black})`};
-`;
-
-const GradientTop = styled(Gradient)`
-  top: 0;
-`;
-
-const GradientBottom = styled(Gradient)`
-  bottom: 0;
-  transform: rotate(180deg);
-`;
-
-export default Player;
+export default PlayerStandalonePage;

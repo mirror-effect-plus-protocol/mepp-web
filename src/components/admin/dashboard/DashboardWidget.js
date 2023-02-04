@@ -62,9 +62,23 @@ const useStyles = makeStyles((theme) => {
             marginTop: '-30px'
         }
       }
+    },
+    widgetTooltipInner: {
+      '& > p:first-child': { fontWeight: 'bold', fontSize: '0.9em' },
+      '& > p:not(:first-child)': { padding: 0, fontSize: '0.8em' }
     }
   };
 });
+
+const widgetTooptipWrapperStyle = {
+  backgroundColor: '#FFF',
+  border: 'solid 2px #078EE4',
+  padding: '0 10px',
+  fontFamily: 'Inter',
+  outlineColor: null,
+  outlineWidth: 0,
+};
+
 
 export const DashboardWidget = ({widget}) => {
   const t = useTranslate();
@@ -73,6 +87,7 @@ export const DashboardWidget = ({widget}) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [weekRange, setWeekRange] = useState('one_week');
+  const [widgetHeight, setWidgetHeight] = useState(400);
   const fetchData = async () => {
     setLoading(true);
     const options = {
@@ -83,8 +98,10 @@ export const DashboardWidget = ({widget}) => {
     const qs = new URLSearchParams(options).toString();
     const url = `${process.env.API_ENDPOINT}/patients/widgets/${widget}/?${qs}`;
     const response = await fetchJsonWithAuthToken(url, {});
-    setData(response.json);
+    const data = response.json;
+    setData(data);
     setLoading(false);
+    setWidgetHeight(Math.max(data.length * 40, 400));
   };
   const handleChange = (event) => {
     setWeekRange(event.target.value);
@@ -92,6 +109,22 @@ export const DashboardWidget = ({widget}) => {
   useEffect(() => {
     fetchData();
   }, [version, weekRange]);
+
+  const CustomTooltip = ({widget, active, payload}) => {
+    if (active) {
+      return (
+        <div className={classes.widgetTooltipInner}>
+          <p>{payload[0].payload.full_name}</p>
+          <p>{`${payload[0].name} : ${payload[0].value}`}
+          {widget === 'sessions' &&
+            <span><br />{`${payload[1].name} : ${payload[1].value}`}</span>
+          }
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <Card className={classes.widget}>
@@ -125,10 +158,10 @@ export const DashboardWidget = ({widget}) => {
       </header>
 
       <CardContent>
-        <div style={{ width: '100%', height: 400 }}>
+        <div style={{ width: '100%', height: widgetHeight }}>
           {loading && <Spinner />}
           {!loading &&
-            <ResponsiveContainer width="99%" height={400}>
+            <ResponsiveContainer width="99%" height={widgetHeight}>
               <BarChart
                 data={data}
                 margin={{
@@ -146,10 +179,17 @@ export const DashboardWidget = ({widget}) => {
                 />
                 <YAxis
                   type="category"
-                  dataKey="full_name"
+                  dataKey="y_axis"
                   style={{ fontFamily: 'Inter' }}
+                  width={100}
                 />
-                {widget === 'sessions' && <Tooltip />}
+                <Tooltip
+                  isAnimationActive={false}
+                  wrapperStyle={widgetTooptipWrapperStyle}
+                  contentStyle={{backgroundColor: 'green'}}
+                  itemStyle={{backgroundColor: 'purple'}}
+                  content={<CustomTooltip widget={widget} />}
+                />
                 <Bar
                   name={t('admin.dashboard.widgets.labels.completed')}
                   dataKey="completed"
@@ -162,7 +202,11 @@ export const DashboardWidget = ({widget}) => {
                     fill="#939DAB"
                   />
                 }
-                {widget === 'sessions' && <Legend style={{ fontFamily: 'Inter' }}/> }
+                {widget === 'sessions' &&
+                  <Legend
+                    wrapperStyle={{ fontFamily: 'Inter', fontSize: '0.8em'}}
+                  />
+                }
 
               </BarChart>
             </ResponsiveContainer>
