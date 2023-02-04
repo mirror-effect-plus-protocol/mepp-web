@@ -22,6 +22,7 @@
 import { DeepAR } from 'deepar';
 import React, { useRef, useEffect, useContext } from 'react';
 import { useGetIdentity } from 'react-admin';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
@@ -34,7 +35,7 @@ const Player = () => {
   const { identity, loading: identityLoading } = useGetIdentity();
   const deepAR = useRef(null);
   const canvas = useRef(null);
-
+  const history = useHistory();
 
   /**
    * Init Deep AR
@@ -43,6 +44,9 @@ const Player = () => {
   useEffect(() => {
     if (!identity) return;
     if (deepAR.current) return;
+
+    canvas.current.width = window.innerWidth;
+    canvas.current.height = window.innerHeight;
 
     const side = identity.side === 0 ? 'left' : 'right';
 
@@ -56,17 +60,14 @@ const Player = () => {
       },
       callbacks: {
         onInitialize: () => {
-          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
           AR.startVideo(true);
           AR.switchEffect(0, side, `./assets/deepar/effects/${side}`);
         },
-        onVideoStarted: () => {
-          ready(true);
-          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
-        },
+        onVideoStarted: () => ready(true),
       },
     });
     AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
+    AR.callbacks.onCameraPermissionDenied = () => history.push('/intro');
     deepAR.current = AR;
   }, [deepAR, canvas, identity, exercise]);
 
@@ -79,12 +80,8 @@ const Player = () => {
     const onResize = () => {
       clearTimeout(time);
       time = setTimeout(() => {
-        if (deepAR.current) {
-          deepAR.current.module.setCanvasSize(
-            window.innerWidth,
-            window.outerHeight,
-          );
-        }
+        canvas.current.width = window.innerWidth;
+        canvas.current.height = window.innerHeight;
       }, 100);
     };
 
@@ -98,8 +95,11 @@ const Player = () => {
       screen.removeEventListener('change', onResize);
 
       if (deepAR.current) {
-        deepAR.current.shutdown();
-        deepAR.current = null;
+        try {
+          deepAR.current.shutdown();
+          deepAR.current = null;
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
       }
     };
   }, [deepAR]);
@@ -152,12 +152,13 @@ const Container = styled.div`
   top: 0;
   width: 100vw;
   height: 100%;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+  height: stretch;
 `;
 
-const Canvas = styled.canvas`
-  width: 100%;
-  height: 100%;
-`;
+const Canvas = styled.canvas``;
 
 const Gradient = styled.div`
   position: absolute;

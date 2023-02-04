@@ -56,6 +56,9 @@ const Player = () => {
   const canvas = useRef(null);
 
   useEffect(() => {
+    canvas.current.width = window.innerWidth;
+    canvas.current.height = window.innerHeight;
+
     const AR = new DeepAR({
       licenseKey: process.env.DEEPAR_LICENSE_KEY,
       canvas: canvas.current,
@@ -66,12 +69,8 @@ const Player = () => {
       },
       callbacks: {
         onInitialize: () => {
-          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
           AR.startVideo(true);
           AR.switchEffect(0, 'right', `./assets/deepar/effects/right`);
-        },
-        onVideoStarted: () => {
-          AR.module.setCanvasSize(window.innerWidth, window.outerHeight);
         },
       },
     });
@@ -88,13 +87,9 @@ const Player = () => {
     const onResize = () => {
       clearTimeout(time);
       time = setTimeout(() => {
-        if (deepAR.current) {
-          deepAR.current.module.setCanvasSize(
-            window.innerWidth,
-            window.outerHeight,
-          );
-        }
-      }, 200);
+        canvas.current.width = window.innerWidth;
+        canvas.current.height = window.innerHeight;
+      }, 100);
     };
 
     window.addEventListener('resize', onResize);
@@ -107,8 +102,11 @@ const Player = () => {
       screen.removeEventListener('change', onResize);
 
       if (deepAR.current) {
-        deepAR.current.shutdown();
-        deepAR.current = null;
+        try {
+          deepAR.current.shutdown();
+          deepAR.current = null;
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
       }
     };
   }, [deepAR]);
@@ -129,6 +127,10 @@ const Container = styled.div`
   top: 0;
   width: 100vw;
   height: 100%;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+  height: stretch;
 `;
 
 const Canvas = styled.canvas``;

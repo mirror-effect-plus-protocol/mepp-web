@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -223,9 +222,12 @@ const EmptyExercise = () => {
 const Container = styled.div`
   position: absolute;
   top: 0;
-
   width: 100vw;
-  height: 100vh;
+  height: 100%;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+  height: stretch;
 `;
 
 const Background = styled.div`
@@ -248,6 +250,10 @@ const ExerciseWrapper = styled(FlexAlignMiddle.Component)`
   position: absolute;
   width: 100%;
   height: 100%;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+  height: stretch;
   z-index: 1;
 `;
 

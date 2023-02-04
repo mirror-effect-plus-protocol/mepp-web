@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useEffect, useState } from 'react';
 import { useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
@@ -51,7 +50,8 @@ const IntroPage = () => {
   const { identity, loading: identityLoading } = useGetIdentity();
   const history = useHistory();
   const { locale, setLocale } = useLocale();
-  const [showPermission, setShowPermission] = useState(false);
+  const [permissionAuthorize, setPermissionAuthorize] = useState(false);
+  const [permissionDenied, setPermissionDenied] = useState(false);
   useTrackingView('/introduction');
 
   const name = (identity && identity.first_name) || '';
@@ -67,18 +67,22 @@ const IntroPage = () => {
    * Camera permission validation
    */
   const onCheckCameraPermission = async () => {
-    const hasPermission = navigator.permissions && await navigator.permissions
-      .query({ name: 'camera' })
-      .then((permission) => {
-        if (permission.state === 'granted') return true;
-        else return false;
-      })
-      .catch(() => {
-        return false;
-      });
+    const permission =
+      navigator.permissions &&
+      (await navigator.permissions
+        .query({ name: 'camera' })
+        .then((permission) => {
+          return permission;
+        })
+        .catch(() => {
+          return false;
+        }));
 
-    if (hasPermission) history.push('/mirror');
-    else setShowPermission(true);
+    if (permission) {
+      if (permission.state === 'granted') history.push('/mirror');
+      else if (permission.state === 'denied') setPermissionDenied(true);
+      else setPermissionAuthorize(true);
+    } else setPermissionAuthorize(true);
   };
 
   if (identityLoading) return <></>;
@@ -89,7 +93,7 @@ const IntroPage = () => {
       content={
         <ContainerWrapper>
           <ContainerInner>
-            {!showPermission ? (
+            {!permissionDenied && !permissionAuthorize && (
               <>
                 <Title>{t('intro:title', { name })}</Title>
                 <Introduction xlarge>{t('intro:introduction')}</Introduction>
@@ -99,9 +103,9 @@ const IntroPage = () => {
                   onClick={onCheckCameraPermission}
                 />
               </>
-            ) : (
-              <Permission />
             )}
+            {permissionAuthorize && <PermissionAuthorize />}
+            {permissionDenied && <PermissionDenied />}
           </ContainerInner>
         </ContainerWrapper>
       }
@@ -114,7 +118,24 @@ const IntroPage = () => {
  * Permission step
  * @returns JSX
  */
-const Permission = () => {
+const PermissionDenied = () => {
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <IconWarning width="48" height="48" />
+      <Title>{t('permission:title')}</Title>
+      <Introduction xlarge>{t('permission:introduction')}</Introduction>
+      <Instruction medium>{t('permission:instruction')}</Instruction>
+    </>
+  );
+};
+
+/**
+ * Permission step
+ * @returns JSX
+ */
+const PermissionAuthorize = () => {
   const { t } = useTranslation();
   const history = useHistory();
 
@@ -125,7 +146,7 @@ const Permission = () => {
       <Introduction xlarge>{t('permission:introduction')}</Introduction>
       <ButtonPermission
         label={t('cta:authorize')}
-          onClick={() => { history.push('/mirror')}}
+        onClick={() => history.push('/mirror')}
       />
     </>
   );
