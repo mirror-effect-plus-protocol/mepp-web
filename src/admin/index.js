@@ -33,6 +33,7 @@ import Mirror from '@pages/Mirror';
 import Privacy from '@pages/Privacy';
 import ResetPassword from '@pages/ResetPassword';
 import Terms from '@pages/Terms';
+import PlayerStandalonePage from '@pages/PlayerStandAlone';
 
 import withPage from '@hocs/withPage';
 
@@ -89,6 +90,7 @@ export default () => {
   const PrivacyPage = withPage(Privacy);
   const TermsPage = withPage(Terms);
   const ResetPasswordPage = withPage(ResetPassword);
+  const PlayerAlone = withPage(PlayerStandalonePage);
 
   return (
     <Admin
@@ -100,6 +102,12 @@ export default () => {
       i18nProvider={i18nProvider}
       loginPage={LoginPage}
       customRoutes={[
+        <Route
+          exact
+          path="/playerstandalone"
+          component={(props) => <PlayerAlone {...props} />}
+          noLayout
+        />,
         <Route
           exact
           path="/privacy"
