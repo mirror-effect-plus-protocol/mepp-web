@@ -41,11 +41,7 @@ module.exports = {
         parallel: true,
         cache: true,
         sourceMap: true,
-        terserOptions: {
-          compress: {
-            drop_console: process.env.ENV === 'staging' ? false : true,
-          },
-        },
+        terserOptions: {},
       }),
     ],
 
