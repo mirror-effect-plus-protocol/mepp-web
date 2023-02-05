@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import styled from 'styled-components';
 
@@ -76,7 +75,7 @@ const CellHeader = styled(Cell)`
 
 const CellContent = styled(Cell)`
   width: 100vw;
-  min-height: calc(100vh - 90px);
+  min-height: calc(100vh - 155px);
 
   ${media.xsOnly`
     min-height: calc(100vh - 210px);
