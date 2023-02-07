@@ -88,7 +88,7 @@ const Footer = () => {
 
         <CopyrightWrapper>
           <Copyright small>
-            <Href href="https://github.com/mirror-effect-plus-protocol/mepp-web/">MEPP</Href>&nbsp;©&nbsp;2021&nbsp;
+            <Href href="https://github.com/mirror-effect-plus-protocol/mepp-web/">MEPP v{process.env.PROJECT_VERSION}</Href>&nbsp;©&nbsp;2021&nbsp;
             <Href
               href="https://github.com/mirror-effect-plus-protocol/mepp-web/blob/main/LICENSE"
               target="_blank"
