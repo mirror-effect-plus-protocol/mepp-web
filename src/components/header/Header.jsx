@@ -130,6 +130,11 @@ const RightSideWithLogout = () => {
     setIsSettingsActive(!isSettingsActive);
   }, [exerciseStep, isSettingsActive]);
 
+  const handleSupportClick = (e) => {
+    e.preventDefault();
+    window.location.href = '#/support';
+  };
+
   // logout click handler
   const handleLogoutClick = () => {
     if (logs) {
@@ -144,6 +149,11 @@ const RightSideWithLogout = () => {
 
   return (
     <RightWrapper>
+      <Button.Rounded
+        aria-label={t('a11y:support')}
+        label="?"
+        onClick={handleSupportClick}
+      />
       <Button.Transparent
         aria-label={t('a11y:settings')}
         icon={<IconSettings width="100%" height="100%" />}
@@ -179,10 +189,19 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
   margin-left: auto;
 
   button {
-    &:first-child:not(:last-child) {
-      margin: 0 ${spacings.default}px;
+    margin: 0 ${spacings.default}px;
+    &:first-child, &:last-child {
+      margin-right: 0;
     }
+    &:last-child {
+      margin-left: 0;
+    }
+
+    ${media.xsOnly`
+      margin: 0 ${spacings.default / 2 }px;
+    `}
   }
+
 `;
 
 export { Header };

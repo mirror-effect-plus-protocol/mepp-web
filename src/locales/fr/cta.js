@@ -41,5 +41,6 @@ export default {
     cancel: 'Annuler',
     save: 'Sauvegarder',
     modify: 'Modifier',
+    back: 'Retour',
   },
 };

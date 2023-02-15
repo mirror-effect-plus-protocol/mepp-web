@@ -104,10 +104,10 @@ const HelpFr = ({t}) => {
           href="#"
           onClick={(e) => {
             e.preventDefault();
-            window.location.href = '#/login';
+            history.back();
           }}
         >
-          {t('cta:goto_login')}
+          {t('cta:back')}
         </LoginLink>
       </ButtonsWrapper>
 
@@ -155,10 +155,10 @@ const HelpEn = ({t}) => {
           href="#"
           onClick={(e) => {
             e.preventDefault();
-            window.location.href = '#/login';
+            history.back();
           }}
         >
-          {t('cta:goto_login')}
+          {t('cta:back')}
         </LoginLink>
       </ButtonsWrapper>
 
