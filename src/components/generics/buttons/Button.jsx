@@ -156,6 +156,14 @@ const Outline = styled.button`
   `}
 `;
 
+const Rounded = styled(Outline)`
+  border-radius: 50%;
+  padding: 0 20px;
+  ${media.xsOnly`
+    padding: 0 15px;
+  `}
+`;
+
 /**
  * Button style components
  */
@@ -241,4 +249,5 @@ export default {
   Outline: ButtonFactory(Outline),
   Transparent: ButtonFactory(Transparent),
   Liner: ButtonFactory(Liner),
+  Rounded: ButtonFactory(Rounded),
 };

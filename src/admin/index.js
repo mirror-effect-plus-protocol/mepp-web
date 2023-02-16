@@ -27,6 +27,7 @@ import { Route } from 'react-router-dom';
 
 import UserIcon from '@material-ui/icons/People';
 
+import Help from '@pages/Help';
 import Intro from '@pages/Intro';
 import Login from '@pages/Login';
 import Mirror from '@pages/Mirror';
@@ -89,8 +90,10 @@ export default () => {
   const LoginPage = withPage(Login);
   const PrivacyPage = withPage(Privacy);
   const TermsPage = withPage(Terms);
+  const HelpPage = withPage(Help);
   const ResetPasswordPage = withPage(ResetPassword);
   const PlayerAlone = withPage(PlayerStandalonePage);
+
 
   return (
     <Admin
@@ -112,6 +115,12 @@ export default () => {
           exact
           path="/termsofuse"
           component={(props) => <TermsPage {...props} />}
+          noLayout
+        />,
+        <Route
+          exact
+          path="/support"
+          component={(props) => <HelpPage {...props} />}
           noLayout
         />,
         <Route
