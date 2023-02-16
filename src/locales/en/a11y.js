@@ -24,5 +24,6 @@ export default {
   a11y: {
     show_password: 'View your password',
     settings: 'Go to settings',
+    support: 'Go to support page',
   },
 };

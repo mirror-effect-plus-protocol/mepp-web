@@ -42,5 +42,6 @@ export default {
     cancel: 'Cancel',
     save: 'Save',
     modify: 'Modify',
+    back: 'Back',
   },
 };
