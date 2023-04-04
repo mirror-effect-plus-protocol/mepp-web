@@ -46,7 +46,7 @@ import { LANGUAGES } from "../../../locales";
 import { validateExercises } from '@components/admin/plans/validators';
 import { validateNumber } from '@components/admin/shared/validators';
 
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolBar';
+import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import ExerciseRow from './ExerciseRow';
 import IsSystemInput from '@components/admin/plans/IsSystem';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';

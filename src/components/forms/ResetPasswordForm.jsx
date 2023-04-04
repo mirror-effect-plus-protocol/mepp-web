@@ -28,7 +28,7 @@ import styled from 'styled-components';
 import { spacings } from '@styles/configs/spacings';
 import { FlexAlignMiddle, FlexAlignCenter } from '@styles/tools';
 
-import { useApi } from '@hooks/useAPI';
+import { useApi } from '@hooks/useApi';
 
 import { RequestEndpoint } from '@utils/constants';
 

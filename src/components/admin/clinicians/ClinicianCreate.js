@@ -34,7 +34,7 @@ import {
   useNotify,
 } from 'react-admin';
 
-import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolBar';
+import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
 import {
   validateEmail,
   validateFirstName,

@@ -44,7 +44,7 @@ import { validateNumber } from '@components/admin/shared/validators';
 import IsSystemInput from '@components/admin/plans/IsSystem';
 import ExerciseRow from '@components/admin/plans/ExerciseRow';
 import { LANGUAGES } from '../../../locales';
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolBar';
+import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import {
   useGetCategories,
   useGetSubCategories,
