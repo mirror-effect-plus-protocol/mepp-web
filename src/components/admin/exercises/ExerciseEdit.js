@@ -60,7 +60,7 @@ import { LANGUAGES } from '../../../locales';
 
 export const ExerciseEdit = (props) => {
   const t = useTranslate();
-  const { permissions } = usePermissions() 
+  const { permissions } = usePermissions();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const numberClasses = useNumberStyles();
   const translatorClasses = useTranslatorInputStyles();
@@ -68,14 +68,11 @@ export const ExerciseEdit = (props) => {
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
   let categories = [];
   let subCategories = {};
-  const { data, isLoading } = useGetList(
-    'categories',
-    {
-      pagination: { page: 1, perPage: 9999 },
-      sort: { field: 'i18n__name', order: 'ASC' },
-    },
-    { language: locale },
-  );
+  const { data, isLoading } = useGetList('categories', {
+    pagination: { page: 1, perPage: 9999 },
+    sort: { field: 'i18n__name', order: 'ASC' },
+    filter: { language: locale },
+  });
 
   const validateI18n = (record) => {
     return requiredLocalizedField(record, locale, 'description');

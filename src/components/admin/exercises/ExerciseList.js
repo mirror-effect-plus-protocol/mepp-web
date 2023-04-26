@@ -20,13 +20,20 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { Fragment, useEffect, useState } from 'react';
-import { Datagrid, List, ListContextProvider, ReferenceField, TextField, useListContext, useLocale, usePermissions, useResourceContext, useTranslate } from 'react-admin';
-
-
+import {
+  Datagrid,
+  List,
+  ListContextProvider,
+  ReferenceField,
+  TextField,
+  useListContext,
+  useLocale,
+  usePermissions,
+  useResourceContext,
+  useTranslate,
+} from 'react-admin';
 
 import { Divider, Tabs, Tab } from '@mui/material';
-
-
 
 import Spinner from '@components/admin/shared/Spinner';
 import ArchivableFilter from '@components/admin/shared/filters/ArchivableFilter';
@@ -34,38 +41,28 @@ import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsTool
 import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
 
-
-
 import ExerciseListAside from './ExerciseListAside';
-
 
 const tabs = [
   { id: 'user', is_system: false },
   { id: 'system', is_system: true },
 ];
 
-const ExerciseDatagrid = ({locale, permissions, ...props}) => {
-
+const ExerciseDatagrid = ({ locale, permissions, ...props }) => {
   return (
     <Datagrid {...props}>
       <TextField source={`i18n.description.${locale}`} />
       {permissions === 'admin' && (
-        <ReferenceField
-          source="clinician_uid"
-          reference="clinicians"
-        >
+        <ReferenceField source="clinician_uid" reference="clinicians">
           <TextField source="full_name" />
         </ReferenceField>
       )}
-      <RowActionToolbar
-        permissions={permissions}
-        clonable={true}
-      />
+      <RowActionToolbar permissions={permissions} clonable={true} />
     </Datagrid>
   );
 };
 
-const TabbedDatagrid = ({permissions, ...props}) => {
+const TabbedDatagrid = ({ permissions, ...props }) => {
   const listContext = useListContext();
   const locale = useLocale();
   const t = useTranslate();
@@ -87,7 +84,9 @@ const TabbedDatagrid = ({permissions, ...props}) => {
   useEffect(() => {
     if (filterValues.is_system) {
       // reset `value` to `system` when it's out of sync
-      if (value === 'user') { setValue('system'); }
+      if (value === 'user') {
+        setValue('system');
+      }
       if (data) {
         let ids = data.map((exercise) => exercise.id);
         setSystemExerciseIds(ids);
@@ -102,11 +101,7 @@ const TabbedDatagrid = ({permissions, ...props}) => {
 
   return (
     <Fragment>
-      <Tabs
-        value={value}
-        indicatorColor="primary"
-        onChange={handleChange}
-      >
+      <Tabs value={value} indicatorColor="primary" onChange={handleChange}>
         {tabs.map((choice) => (
           <Tab
             key={choice.id}
@@ -128,7 +123,9 @@ const TabbedDatagrid = ({permissions, ...props}) => {
           </ListContextProvider>
         )}
         {!isLoading && filterValues.is_system === true && (
-          <ListContextProvider value={{ ...listContext, ids: systemExerciseIds }}>
+          <ListContextProvider
+            value={{ ...listContext, ids: systemExerciseIds }}
+          >
             <ExerciseDatagrid
               locale={locale}
               permissions={permissions}
@@ -157,9 +154,9 @@ export const ExerciseList = (props) => {
       aside={<ExerciseListAside permissions={permissions} />}
       sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
       perPage={25}
-      actions={<ListActions/>}
+      actions={<ListActions />}
     >
-      <TabbedDatagrid permissions={permissions}/>
+      <TabbedDatagrid permissions={permissions} />
     </List>
-  )
+  );
 };
