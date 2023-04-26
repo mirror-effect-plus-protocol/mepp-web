@@ -28,7 +28,7 @@ import {
   useLocale,
   useListFilterContext,
 } from 'react-admin';
-import { Card as MuiCard, CardContent, withStyles } from '@material-ui/core';
+import { Card as MuiCard, CardContent } from '@mui/material';
 import {
   CategoryIcon,
   ClinicianIcon,

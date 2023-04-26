@@ -19,24 +19,25 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import { useGetList } from 'react-admin';
 
 const useGetCategories = (locale) => {
-
-  const {data, loaded} = useGetList(
-    'categories',
-    { page: 1, perPage: 9999},
-    { field: 'i18n__name', order: 'ASC' },
-    { language: locale }
-  );
+  const { data, isLoading } = useGetList('categories', {
+    pagination: { page: 1, perPage: 9999 },
+    sort: { field: 'i18n__name', order: 'ASC' },
+    filter: { language: locale },
+  });
   return useMemo(() => {
-    return Object.values(data).map((category) => ({
-      name: category.i18n.name[locale],
-      id: category.id
-    }));
-  }, [data, loaded]);
+    if (data) {
+      return Object.values(data).map((category) => ({
+        name: category.i18n.name[locale],
+        id: category.id,
+      }));
+    } else {
+      return [];
+    }
+  }, [data, isLoading]);
 };
 
 export default useGetCategories;

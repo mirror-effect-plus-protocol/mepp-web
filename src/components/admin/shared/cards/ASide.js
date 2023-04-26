@@ -20,7 +20,9 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Card as MuiCard, withStyles} from "@material-ui/core";
+import { Card as MuiCard } from "@mui/material";
+
+import withStyles from '@mui/styles/withStyles';
 
 export const ASide = withStyles((theme) => ({
   root: {
@@ -30,7 +32,7 @@ export const ASide = withStyles((theme) => ({
       width: '15em',
       marginRight: '1em',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none',
     },
     '& ul .MuiListItem-root': {

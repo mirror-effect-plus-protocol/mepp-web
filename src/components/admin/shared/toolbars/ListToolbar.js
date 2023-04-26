@@ -33,7 +33,6 @@ const ListActions = ({showExport, ...props}) => (
     {cloneElement(props.filters, { context: 'button' })}
     {showExport &&
       <ExportButton
-        basePath={props.basePath}
         resource={props.resource}
         variant="outlined"
         style={{marginRight: '0.8em'}}

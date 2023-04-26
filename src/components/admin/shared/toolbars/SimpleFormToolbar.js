@@ -38,10 +38,11 @@ import {
   DialogContentText,
   DialogTitle,
   useMediaQuery,
-} from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import CheckCircle from '@material-ui/icons/CheckCircle';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 import ToggleArchiveButton from '../buttons/ToggleArchiveButton';
 import { Div } from '@components/admin/shared/dom/sanitize';
@@ -67,7 +68,7 @@ const SimpleFormToolBar = ({identity, ...props}) => {
   const notify = useNotify();
   const location = useLocation();
   const [confirm, setConfirm] = React.useState(false);
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const redirectLocation = typeof props.redirect === 'function'
     ? props.redirect()
     : props.basePath;
@@ -135,10 +136,6 @@ const SimpleFormToolBar = ({identity, ...props}) => {
     const defaultProps = {
       classes: props.classes,
       className: props.className,
-      handleSubmitWithRedirect: props.handleSubmitWithRedirect,
-      onSave: props.onSave,
-      onSuccess: props.onSuccess,
-      onFailure: props.onFailure,
       transform: props.transform,
       icon: props.icon,
       invalid: props.invalid,
@@ -146,10 +143,7 @@ const SimpleFormToolBar = ({identity, ...props}) => {
       onClick: props.onClick,
       disabled: props.pristine,
       saving: props.saving,
-      submitOnEnter: props.submitOnEnter,
       variant: props.variant,
-      basePath: props.basePath,
-      handleSubmit: props.handleSubmit,
       record: props.record,
       resource: props.resource,
       undoable: props.undoable,
@@ -207,6 +201,7 @@ const SimpleFormToolBar = ({identity, ...props}) => {
           </DialogActions>
         </Dialog>
         <SaveButton
+          type="button"
           redirect={formRedirect}
           size="small"
           {...saveButtonProps}

@@ -22,7 +22,7 @@
 import { DeepAR } from 'deepar';
 import React, { useRef, useEffect, useContext } from 'react';
 import { useGetIdentity } from 'react-admin';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
@@ -32,10 +32,10 @@ import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
  */
 const Player = () => {
   const { exercise, exerciseStep, ready } = useContext(ExerciseContext);
-  const { identity, loading: identityLoading } = useGetIdentity();
+  const { identity, isLoading: identityLoading } = useGetIdentity();
   const deepAR = useRef(null);
   const canvas = useRef(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   /**
    * Init Deep AR
@@ -67,7 +67,7 @@ const Player = () => {
       },
     });
     AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
-    AR.callbacks.onCameraPermissionDenied = () => history.push('/intro');
+    AR.callbacks.onCameraPermissionDenied = () => navigate('/intro');
     deepAR.current = AR;
   }, [deepAR, canvas, identity, exercise]);
 

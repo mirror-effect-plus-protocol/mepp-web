@@ -36,7 +36,6 @@ const ClinicianTextField = ({ show, ...props }) => {
       <ReferenceField
         record={props.record}
         resource={props.resource}
-        basePath={props.basePath}
         source="clinician_uid"
         reference="clinicians"
         link="show"
@@ -44,14 +43,12 @@ const ClinicianTextField = ({ show, ...props }) => {
         <Labeled
           record={props.record}
           resource={props.resource}
-          basePath={props.basePath}
           label={t('resources.patients.fields.clinician_uid')}
           disabled={false}
         >
           <TextField
             record={props.record}
             resource={props.resource}
-            basePath={props.basePath}
             source="full_name"
           />
         </Labeled>

@@ -19,26 +19,25 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { Fragment, useEffect, useState } from 'react';
-import {
-  Datagrid,
-  List,
-  ListContextProvider,
-  ReferenceField,
-  TextField,
-  useListContext,
-  useLocale,
-  useTranslate,
-} from 'react-admin';
-import { Divider, Tabs, Tab } from '@material-ui/core';
+import { Datagrid, List, ListContextProvider, ReferenceField, TextField, useListContext, useLocale, usePermissions, useResourceContext, useTranslate } from 'react-admin';
 
+
+
+import { Divider, Tabs, Tab } from '@mui/material';
+
+
+
+import Spinner from '@components/admin/shared/Spinner';
 import ArchivableFilter from '@components/admin/shared/filters/ArchivableFilter';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
-import Spinner from '@components/admin/shared/Spinner';
+
+
+
 import ExerciseListAside from './ExerciseListAside';
+
 
 const tabs = [
   { id: 'user', is_system: false },
@@ -70,7 +69,8 @@ const TabbedDatagrid = ({permissions, ...props}) => {
   const listContext = useListContext();
   const locale = useLocale();
   const t = useTranslate();
-  const { ids, filterValues, setFilters, displayedFilters, loading } =
+  const resource = useResourceContext();
+  const { data, filterValues, setFilters, displayedFilters, isLoading } =
     listContext;
   const [userExerciseIds, setUserExerciseIds] = useState([]);
   const [systemExerciseIds, setSystemExerciseIds] = useState([]);
@@ -88,11 +88,17 @@ const TabbedDatagrid = ({permissions, ...props}) => {
     if (filterValues.is_system) {
       // reset `value` to `system` when it's out of sync
       if (value === 'user') { setValue('system'); }
-      setSystemExerciseIds(ids);
+      if (data) {
+        let ids = data.map((exercise) => exercise.id);
+        setSystemExerciseIds(ids);
+      }
     } else {
-      setUserExerciseIds(ids);
+      if (data) {
+        let ids = data.map((exercise) => exercise.id);
+        setUserExerciseIds(ids);
+      }
     }
-  }, [ids, filterValues.is_system]);
+  }, [data, filterValues.is_system]);
 
   return (
     <Fragment>
@@ -104,15 +110,15 @@ const TabbedDatagrid = ({permissions, ...props}) => {
         {tabs.map((choice) => (
           <Tab
             key={choice.id}
-            label={t(`resources.${props.resource}.list.labels.${choice.id}`)}
+            label={t(`resources.${resource}.list.labels.${choice.id}`)}
             value={choice.id}
           />
         ))}
       </Tabs>
       <Divider />
       <div>
-        {loading && <Spinner />}
-        {!loading && filterValues.is_system === false && (
+        {isLoading && <Spinner />}
+        {!isLoading && filterValues.is_system === false && (
           <ListContextProvider value={{ ...listContext, ids: userExerciseIds }}>
             <ExerciseDatagrid
               locale={locale}
@@ -121,7 +127,7 @@ const TabbedDatagrid = ({permissions, ...props}) => {
             />
           </ListContextProvider>
         )}
-        {!loading && filterValues.is_system === true && (
+        {!isLoading && filterValues.is_system === true && (
           <ListContextProvider value={{ ...listContext, ids: systemExerciseIds }}>
             <ExerciseDatagrid
               locale={locale}
@@ -136,6 +142,7 @@ const TabbedDatagrid = ({permissions, ...props}) => {
 };
 
 export const ExerciseList = (props) => {
+  const { permissions } = usePermissions();
   const locale = useLocale();
   return (
     <List
@@ -146,13 +153,13 @@ export const ExerciseList = (props) => {
         language: locale,
       }}
       filters={<ArchivableFilter />}
-      bulkActionButtons={<BulkActionButtons permissions={props.permissions} />}
-      aside={<ExerciseListAside permissions={props.permissions} />}
+      bulkActionButtons={<BulkActionButtons permissions={permissions} />}
+      aside={<ExerciseListAside permissions={permissions} />}
       sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
       perPage={25}
       actions={<ListActions/>}
     >
-      <TabbedDatagrid permissions={props.permissions}/>
+      <TabbedDatagrid permissions={permissions}/>
     </List>
   )
 };

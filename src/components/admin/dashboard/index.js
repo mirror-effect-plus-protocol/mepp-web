@@ -22,13 +22,13 @@
 
 import React from 'react';
 import { usePermissions } from 'react-admin';
-import { useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from '@mui/material';
 
 import { DashboardWidget } from './DashboardWidget';
 import { Welcome } from './Welcome';
 
 const Dashboard = () => {
-  const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));
+  const isSmall = useMediaQuery((theme) => theme.breakpoints.down('lg'));
   // We cannot use `props.permissions` since it does not seem to be refreshed
   // until the <Admin> component has been unmount
   const { permissions } = usePermissions();

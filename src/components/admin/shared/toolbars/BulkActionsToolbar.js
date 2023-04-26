@@ -38,7 +38,6 @@ const BulkActionsToolbar = ({permissions, showExport, ...props}) => {
       <Fragment>
         {showExport &&
           <ExportButton
-            basePath={props.basePath}
             resource={props.resource}
             variant="contained"
             color="primary"

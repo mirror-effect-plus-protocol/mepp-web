@@ -27,13 +27,13 @@ import {
   useTranslate,
   useNotify,
 } from 'react-admin';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import LanguageIcon from '@material-ui/icons/Language';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { makeStyles } from '@mui/styles';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LanguageIcon from '@mui/icons-material/Language';
 
 import { LANGUAGES } from '../../../../locales';
 import {fetchJsonWithAuthToken} from "ra-data-django-rest-framework";
@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     color: '#232525',
     textTransform: 'none',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
         display: 'none'
     },
   },

@@ -25,8 +25,8 @@ import {
   BooleanInput,
   useTranslate,
 } from 'react-admin';
-import { makeStyles } from '@material-ui/core/styles';
-import Alert from '@material-ui/lab/Alert';
+import { makeStyles } from '@mui/styles';
+import Alert from '@mui/material/Alert';
 
 
 const useStyles = makeStyles((theme) => {
@@ -50,7 +50,6 @@ const IsSystemInput = (props) => {
   return (
     <>
       <BooleanInput
-        basePath={props.basePath}
         resource={props.resource}
         record={props.record}
         source="is_system"

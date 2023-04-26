@@ -22,12 +22,13 @@
 
 import React from 'react';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import { makeStyles } from '@material-ui/core/styles';
-import { CompactForm, RaBox } from 'ra-compact-ui';
+import { makeStyles } from '@mui/styles';
+import { RaBox } from 'ra-compact-ui';
 import {
   BooleanInput,
   Edit,
   SelectInput,
+  SimpleForm,
   PasswordInput,
   TextInput,
   useGetIdentity,
@@ -57,8 +58,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfileRow = ({identity, identityLoaded, ...props}) => {
-  if (!identityLoaded || identity?.uid === props?.record?.id) {
+const ProfileRow = ({identity, identityLoading, ...props}) => {
+  if (identityLoading || identity?.uid === props?.record?.id) {
     return false;
   } else {
     return props.children;
@@ -67,7 +68,7 @@ const ProfileRow = ({identity, identityLoaded, ...props}) => {
 
 export const ClinicianEdit = (props) => {
   const t = useTranslate();
-  const { identity, loaded: identityLoaded } = useGetIdentity();
+  const { identity, isLoading: identityLoading } = useGetIdentity();
   const classes = useStyles();
   const notify = useNotify();
   const options = Options();
@@ -86,7 +87,7 @@ export const ClinicianEdit = (props) => {
       actions={<TopToolbar identity={identity} />}
       {...props}
     >
-      <CompactForm
+      <SimpleForm
         layoutComponents={[RaBox]}
         toolbar={<SimpleFormToolBar identity={identity} />}
         validate={validatePasswords}
@@ -113,7 +114,7 @@ export const ClinicianEdit = (props) => {
             validate={validateEmail}
           />
         </RaBox>
-        <ProfileRow identity={identity} identityLoaded={identityLoaded}>
+        <ProfileRow identity={identity} identityLoading={identityLoading}>
           <Typography variant="h6" gutterBottom gutterTop={true}>
             {t('admin.shared.labels.card.informations')}
           </Typography>
@@ -147,7 +148,7 @@ export const ClinicianEdit = (props) => {
             fullWidth
           />
         </RaBox>
-      </CompactForm>
+      </SimpleForm>
     </Edit>
   );
 };

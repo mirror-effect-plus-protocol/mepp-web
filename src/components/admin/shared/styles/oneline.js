@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 
 export const useOnelineStyles = makeStyles((theme) => ({
@@ -29,7 +29,7 @@ export const useOnelineStyles = makeStyles((theme) => ({
       'flex-direction': 'row',
       '& > label': {
         whiteSpace: 'nowrap',
-        transform: `translate(0, ${theme.spacing(3) / 2 }px) scale(0.75)`
+        transform: `translate(0, calc(${theme.spacing(3)} / 2)) scale(0.75)`
       }
     }
   },

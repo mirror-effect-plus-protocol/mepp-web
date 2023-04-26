@@ -19,21 +19,19 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
-import {
-  List,
-  ReferenceField,
-  TextField,
-} from 'react-admin';
+import { List, ReferenceField, TextField, usePermissions } from 'react-admin';
+
+import ListActions from '@components/admin/shared/toolbars/ListToolbar';
+
 import Datagrid from '../shared/Datagrid';
 import ArchivableFilter from '../shared/filters/ArchivableFilter';
 import BulkActionButtons from '../shared/toolbars/BulkActionsToolbar';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
 import PatientListAside from './PatientListAside';
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 
 export const PatientList = (props) => {
+  const { permissions } = usePermissions();
   return (
     <List
       {...props}
@@ -41,18 +39,15 @@ export const PatientList = (props) => {
       filters={<ArchivableFilter />}
       filterDefaultValues={{ archived: false }}
       bulkActionButtons={
-        <BulkActionButtons
-          permissions={props.permissions}
-          showExport={true}
-        />
+        <BulkActionButtons permissions={permissions} showExport={true} />
       }
-      aside={<PatientListAside permissions={props.permissions}/>}
+      aside={<PatientListAside permissions={permissions} />}
       perPage={25}
       actions={<ListActions showExport={true} />}
     >
       <Datagrid>
         <TextField source="full_name" />
-        {props.permissions === 'admin' && (
+        {permissions === 'admin' && (
           <ReferenceField
             source="clinician_uid"
             reference="clinicians"
@@ -61,7 +56,7 @@ export const PatientList = (props) => {
             <TextField source="full_name" />
           </ReferenceField>
         )}
-        <RowActionToolbar permissions={props.permissions}/>
+        <RowActionToolbar permissions={permissions} />
       </Datagrid>
     </List>
   );

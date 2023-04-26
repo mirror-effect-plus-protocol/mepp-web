@@ -22,7 +22,7 @@
 import React, { useEffect, useState } from 'react';
 import { useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Warning from '@assets/icons/warning.svg';
@@ -47,8 +47,8 @@ import { Header } from '@components/header/Header';
  */
 const IntroPage = () => {
   const { t } = useTranslation();
-  const { identity, loading: identityLoading } = useGetIdentity();
-  const history = useHistory();
+  const { identity, isLoading: identityLoading } = useGetIdentity();
+  const navigate = useNavigate();
   const { locale, setLocale } = useLocale();
   const [permissionAuthorize, setPermissionAuthorize] = useState(false);
   const [permissionDenied, setPermissionDenied] = useState(false);
@@ -79,7 +79,7 @@ const IntroPage = () => {
         }));
 
     if (permission) {
-      if (permission.state === 'granted') history.push('/mirror');
+      if (permission.state === 'granted') navigate('/mirror');
       else if (permission.state === 'denied') setPermissionDenied(true);
       else setPermissionAuthorize(true);
     } else setPermissionAuthorize(true);
@@ -137,7 +137,7 @@ const PermissionDenied = () => {
  */
 const PermissionAuthorize = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -146,7 +146,7 @@ const PermissionAuthorize = () => {
       <Introduction xlarge>{t('permission:introduction')}</Introduction>
       <ButtonPermission
         label={t('cta:authorize')}
-        onClick={() => history.push('/mirror')}
+        onClick={() => navigate('/mirror')}
       />
     </>
   );

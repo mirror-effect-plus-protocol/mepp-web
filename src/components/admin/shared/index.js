@@ -30,11 +30,11 @@ import {
   useTranslate,
   useGetIdentity
 } from 'react-admin';
-import { Box } from '@material-ui/core';
-import SettingsIcon from '@material-ui/icons/Settings';
+import { Box } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { LocaleSwitcher } from './buttons/LocaleSwitcher';
 import { Logo } from '@components/admin/shared/icons/Logo';
-import  { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
   'mepp-layout': {
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.up('xs')]: {
         marginTop: theme.spacing(4),
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         marginTop: theme.spacing(5),
       },
     },
@@ -86,8 +86,8 @@ const SettingsMenu = forwardRef((props, ref) => {
 });
 
 const CustomUserMenu = (props) => {
-  const { identity, loaded: identityLoaded } = useGetIdentity();
-  if (!identityLoaded || !identity) return <></>;
+  const { identity, isLoading: identityLoading } = useGetIdentity();
+  if (identityLoading || !identity) return <></>;
 
   return (
     <UserMenu {...props}>

@@ -47,7 +47,7 @@ import { OverlayContext } from '@components/overlays/OverlayProvider';
  */
 const ProfileForm = () => {
   const { t } = useTranslation();
-  const { identity, loading: identityLoading } = useGetIdentity();
+  const { identity, isLoading: identityLoading } = useGetIdentity();
   const { close } = useContext(OverlayContext);
   const notify = useNotify();
   const newpassword = useRef();

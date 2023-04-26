@@ -27,8 +27,8 @@ import {
   useLocale,
   useTranslate,
 } from 'react-admin';
-import Button from '@material-ui/core/Button';
-import DownloadIcon from '@material-ui/icons/GetApp';
+import Button from '@mui/material/Button';
+import DownloadIcon from '@mui/icons-material/GetApp';
 
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 

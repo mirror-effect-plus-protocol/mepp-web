@@ -22,11 +22,12 @@
 
 import React from 'react';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import { makeStyles } from '@material-ui/core/styles';
-import { CompactForm, RaBox } from 'ra-compact-ui';
+import { makeStyles } from '@mui/styles';
+import { RaBox } from 'ra-compact-ui';
 import {
   Create,
   SelectInput,
+  SimpleForm,
   PasswordInput,
   TextInput,
   BooleanInput,
@@ -73,7 +74,7 @@ export const ClinicianCreate = (props) => {
       onFailure={onFailure}
       {...props}
     >
-      <CompactForm
+      <SimpleForm
         layoutComponents={[RaBox]}
         toolbar={<SimpleFormToolBar identity={false}/>}
         validate={validatePasswords}
@@ -131,7 +132,7 @@ export const ClinicianCreate = (props) => {
             fullWidth
           />
         </RaBox>
-      </CompactForm>
+      </SimpleForm>
     </Create>
   );
 };
