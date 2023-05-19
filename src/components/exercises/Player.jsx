@@ -25,7 +25,10 @@ import { useGetIdentity } from 'react-admin';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+
+
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
+
 
 /**
  * DeepAP.ai player
@@ -44,7 +47,6 @@ const Player = () => {
   useEffect(() => {
     if (!identity) return;
     if (deepAR.current) return;
-
     canvas.current.width = window.innerWidth;
     canvas.current.height = window.innerHeight;
 

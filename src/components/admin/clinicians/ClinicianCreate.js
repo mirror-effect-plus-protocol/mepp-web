@@ -19,11 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React from 'react';
-import { Typography } from '@components/admin/shared/dom/sanitize';
-import { makeStyles } from '@mui/styles';
 import { RaBox } from 'ra-compact-ui';
+import React from 'react';
 import {
   Create,
   SelectInput,
@@ -31,11 +28,15 @@ import {
   PasswordInput,
   TextInput,
   BooleanInput,
+  useResourceContext,
   useTranslate,
   useNotify,
 } from 'react-admin';
 
-import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
+import { makeStyles } from '@mui/styles';
+
+import { Typography } from '@components/admin/shared/dom/sanitize';
+import Options from '@components/admin/shared/options';
 import {
   validateEmail,
   validateFirstName,
@@ -44,7 +45,8 @@ import {
   validatePasswordRequired as validatePassword,
   validatePasswords,
 } from '@components/admin/shared/validators';
-import Options from '@components/admin/shared/options';
+
+import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ClinicianCreate = (props) => {
+  const resourceName = useResourceContext();
   const t = useTranslate();
   const classes = useStyles();
   const options = Options();
@@ -64,19 +67,15 @@ export const ClinicianCreate = (props) => {
   const onFailure = (error) => {
     let message = '';
     Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${props.resource}.errors.${key}`);
+      message += t(`resources.${resourceName}.errors.${key}`);
     });
-    notify(message, {type: 'error'});
+    notify(message, { type: 'error' });
   };
 
   return (
-    <Create
-      onFailure={onFailure}
-      {...props}
-    >
+    <Create queryOptions={{ onError: onFailure }} {...props}>
       <SimpleForm
-        layoutComponents={[RaBox]}
-        toolbar={<SimpleFormToolBar identity={false}/>}
+        toolbar={<SimpleFormToolBar identity={false} />}
         validate={validatePasswords}
         redirect="list"
       >
@@ -89,33 +88,23 @@ export const ClinicianCreate = (props) => {
             fullWidth
             validate={validateFirstName}
           />
-          <TextInput
-            source="last_name"
-            fullWidth
-            validate={validateLastName}
-          />
+          <TextInput source="last_name" fullWidth validate={validateLastName} />
         </RaBox>
         <RaBox className={classes.root}>
-          <TextInput
-            source="email"
-            fullWidth
-            validate={validateEmail}
-          />
+          <TextInput source="email" fullWidth validate={validateEmail} />
         </RaBox>
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('admin.shared.labels.card.informations')}
         </Typography>
-          <RaBox className={classes.root}>
-            <SelectInput
-              source="language"
-              choices={options.languages}
-              fullWidth
-              validate={validateLanguage}
-            />
-            <BooleanInput
-              source="is_superuser"
-            />
-          </RaBox>
+        <RaBox className={classes.root}>
+          <SelectInput
+            source="language"
+            choices={options.languages}
+            fullWidth
+            validate={validateLanguage}
+          />
+          <BooleanInput source="is_superuser" />
+        </RaBox>
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('admin.shared.labels.card.create_password')}
         </Typography>

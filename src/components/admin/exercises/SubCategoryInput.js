@@ -19,24 +19,22 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import { SelectInput } from 'react-admin';
 
-
-const SubCategoryInput = ({updatedSubCategoryInputs, subCategories, ...props}) => {
+const SubCategoryInput = ({
+  updatedSubCategoryInputs,
+  subCategories,
+  data,
+  ...props
+}) => {
   let choices = [];
   if (updatedSubCategoryInputs.hasOwnProperty(props.source)) {
     choices = subCategories[updatedSubCategoryInputs[props.source]];
-  } else if (props.hasOwnProperty('record') && props.record.hasOwnProperty('category__uid')) {
-    choices = subCategories[props.record['category__uid']];
+  } else if (data['category__uid']) {
+    choices = subCategories[data['category__uid']];
   }
-  return (
-    <SelectInput
-        choices={choices}
-        {...props}
-    />
-  );
+  return <SelectInput choices={choices} {...props} />;
 };
 
 export default SubCategoryInput;

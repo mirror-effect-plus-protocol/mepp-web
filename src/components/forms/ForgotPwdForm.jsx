@@ -53,7 +53,7 @@ const ForgotPwdForm = ({ onSwitch }) => {
     const { data } = await post({ email });
     // always success message even if email is not found
     if (data) setSuccess(true);
-    else notify('api.error.generic', 'error');
+    else notify('api.error.generic', {type: 'error'});
   };
 
   return (

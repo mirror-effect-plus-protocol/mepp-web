@@ -59,16 +59,13 @@ const DatagridBody = ({ data, total, ...rest }) => {
 };
 
 const Datagrid = (props) => {
+  const { bulkActionButtons, filterValues, data, ...rest } = props;
   return (
     <RaDatagrid
-      {...props}
-      body={
-        <DatagridBody
-          filterValues={props.filterValues}
-          data={props.data}
-          bulkActionButtons={props.bulkActionButtons}
-        />
-      }
+      {...rest}
+      filterValues={filterValues}
+      bulkActionButtons={bulkActionButtons}
+      body={<DatagridBody data={data} />}
     />
   );
 };

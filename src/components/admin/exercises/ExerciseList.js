@@ -50,7 +50,10 @@ const tabs = [
 
 const ExerciseDatagrid = ({ locale, permissions, ...props }) => {
   return (
-    <Datagrid {...props}>
+    <Datagrid
+      {...props}
+      bulkActionButtons={<BulkActionButtons permissions={permissions} />}
+    >
       <TextField source={`i18n.description.${locale}`} />
       {permissions === 'admin' && (
         <ReferenceField source="clinician_uid" reference="clinicians">
@@ -150,7 +153,6 @@ export const ExerciseList = (props) => {
         language: locale,
       }}
       filters={<ArchivableFilter />}
-      bulkActionButtons={<BulkActionButtons permissions={permissions} />}
       aside={<ExerciseListAside permissions={permissions} />}
       sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
       perPage={25}

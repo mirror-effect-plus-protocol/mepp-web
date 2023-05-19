@@ -54,7 +54,10 @@ const PlanDatagrid = ({ permissions, ...props }) => {
   const t = useTranslate();
 
   return (
-    <Datagrid {...props}>
+    <Datagrid
+      {...props}
+      bulkActionButtons={<BulkActionButtons permissions={permissions} />}
+    >
       <TextField source={`i18n.name.${locale}`} />
       <TextField textAlign="center" source="daily_repeat" />
       <FunctionField
@@ -132,7 +135,7 @@ const TabbedDatagrid = ({ permissions, ...props }) => {
 };
 
 export const PlanList = (props) => {
-  const { permissions } = usePermissions()
+  const { permissions } = usePermissions();
   const locale = useLocale();
   return (
     <List
@@ -146,7 +149,6 @@ export const PlanList = (props) => {
       filters={<ArchivableFilter />}
       sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
       perPage={25}
-      bulkActionButtons={<BulkActionButtons permissions={permissions} />}
       actions={<ListActions />}
       aside={<PlanListAside permissions={permissions} />}
     >

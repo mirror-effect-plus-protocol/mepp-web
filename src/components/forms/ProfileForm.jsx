@@ -81,8 +81,8 @@ const ProfileForm = () => {
 
       notify('api.success.profile_update', 'success');
     } else {
-      if (data && data.password) notify('api.error.pwd_invalid', 'error');
-      else notify('api.error.generic', 'error');
+      if (data && data.password) notify('api.error.pwd_invalid', {type: 'error'});
+      else notify('api.error.generic', {type: 'error'});
     }
   };
 

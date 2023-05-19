@@ -19,22 +19,26 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { forwardRef } from 'react';
-import { useLocation } from 'react-router-dom';
 import {
   AppBar,
   Layout,
+  Logout,
   UserMenu,
+  useUserMenu,
   MenuItemLink,
   useTranslate,
-  useGetIdentity
+  useGetIdentity,
 } from 'react-admin';
-import { Box } from '@mui/material';
+import { useLocation } from 'react-router-dom';
+
 import SettingsIcon from '@mui/icons-material/Settings';
-import { LocaleSwitcher } from './buttons/LocaleSwitcher';
-import { Logo } from '@components/admin/shared/icons/Logo';
+import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+
+import { Logo } from '@components/admin/shared/icons/Logo';
+
+import { LocaleSwitcher } from './buttons/LocaleSwitcher';
 
 const useStyles = makeStyles((theme) => ({
   'mepp-layout': {
@@ -48,18 +52,14 @@ const useStyles = makeStyles((theme) => ({
     },
     '& header': {
       backgroundColor: '#fff',
-      color: '#232525'
-    }
+      color: '#232525',
+    },
   },
 }));
 
 const MeppAdminAppBar = (props) => {
   return (
-    <AppBar
-        {...props}
-        elevation={1}
-        userMenu={<CustomUserMenu />}
-      >
+    <AppBar {...props} elevation={1} userMenu={<CustomUserMenu />}>
       <Box flex="1">
         <Logo />
       </Box>
@@ -91,7 +91,8 @@ const CustomUserMenu = (props) => {
 
   return (
     <UserMenu {...props}>
-      <SettingsMenu identityUid={identity.uid}/>
+      <SettingsMenu identityUid={identity.uid} />
+      <Logout />
     </UserMenu>
   );
 };

@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { RaBox } from 'ra-compact-ui'
+import { RaBox } from 'ra-compact-ui';
 import React from 'react';
 import {
   Create,
@@ -29,6 +29,7 @@ import {
   SimpleForm,
   TextInput,
   usePermissions,
+  useResourceContext,
   useTranslate,
   useNotify,
 } from 'react-admin';
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const PatientCreate = (props) => {
+  const resourceName = useResourceContext();
   const t = useTranslate();
   const classes = useStyles();
   const options = Options();
@@ -68,7 +70,7 @@ export const PatientCreate = (props) => {
   const handleFailure = (error) => {
     let message = '';
     Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${props.resource}.errors.${key}`);
+      message += t(`resources.${resourceName}.errors.${key}`);
     });
     notify(message, { type: 'error' });
   };

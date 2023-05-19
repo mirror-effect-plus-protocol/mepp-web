@@ -22,7 +22,6 @@
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import React, { Fragment, useMemo, useState } from 'react';
 import {
-  useDataProvider,
   useGetIdentity,
   useGetList,
   useLocale,
@@ -70,7 +69,6 @@ export const Welcome = () => {
   const t = useTranslate();
   const locale = useLocale();
   const notify = useNotify();
-  const dataProvider = useDataProvider();
   const { isLoading: identityLoading } = useGetIdentity();
   const [confirmDisabled, setConfirmDisabled] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
@@ -108,17 +106,14 @@ export const Welcome = () => {
         notify('admin.shared.notifications.mirror.failure', 'error');
       });
   };
-  const { data, isLoading: patientsLoading } = dataProvider.getList(
-    'patients',
-    {
-      pagination: { page: 1, perPage: 9999 },
-      sort: { field: 'full_name', order: 'ASC' },
-      filter: {
-        language: locale,
-        archived: false,
-      },
+  const { data, isLoading: patientsLoading } = useGetList('patients', {
+    pagination: { page: 1, perPage: 9999 },
+    sort: { field: 'full_name', order: 'ASC' },
+    filter: {
+      language: locale,
+      archived: false,
     },
-  );
+  });
 
   const patients = useMemo(() => {
     if (data) {

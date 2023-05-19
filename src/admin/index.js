@@ -100,50 +100,15 @@ export default () => {
       loginPage={LoginPage}
       dashboard={Dashboard}
     >
-      <CustomRoutes>
-        <Route
-          exact
-          path="/privacy"
-          element={(props) => <PrivacyPage {...props} />}
-          noLayout
-        />
-        <Route
-          exact
-          path="/termsofuse"
-          element={(props) => <TermsPage {...props} />}
-          noLayout
-        />
-        <Route
-          exact
-          path="/support"
-          element={(props) => <HelpPage {...props} />}
-          noLayout
-        />
-        <Route
-          exact
-          path="/reset-password"
-          element={(props) => <ResetPasswordPage {...props} />}
-          noLayout
-        />
-        <Route
-          exact
-          path="/intro"
-          element={(props) => <IntroPage {...props} />}
-          noLayout
-        />
-        <Route
-          exact
-          path="/mirror"
-          element={(props) => <MirrorPage {...props} />}
-          noLayout
-        />
+      <CustomRoutes noLayout>
+        <Route exact path="/privacy" element={<PrivacyPage />} />
+        <Route exact path="/termsofuse" element={<TermsPage />} />
+        <Route exact path="/support" element={<HelpPage />} />
+        <Route exact path="/reset-password" element={<ResetPasswordPage />} />
+        <Route exact path="/intro" element={<IntroPage />} />
+        <Route exact path="/mirror" element={<MirrorPage />} />
         {process.env.ENVIRONMENT !== 'production' ? (
-          <Route
-            exact
-            path="/playerstandalone"
-            component={(props) => <PlayerAlone {...props} />}
-            noLayout
-          />
+          <Route exact path="/playerstandalone" component={<PlayerAlone />} />
         ) : null}
       </CustomRoutes>
       {(permissions) => (
@@ -157,7 +122,8 @@ export default () => {
               show={PatientShow}
               icon={UserIcon}
             />
-          )},
+          )}
+          ,
           {['admin', 'staff'].includes(permissions) && (
             <Resource
               name="exercises"
@@ -167,7 +133,8 @@ export default () => {
               show={ExerciseShow}
               icon={ExerciseIcon}
             />
-          )},
+          )}
+          ,
           {['admin', 'staff'].includes(permissions) && (
             <Resource
               name="plans"
@@ -177,7 +144,8 @@ export default () => {
               show={PlanShow}
               icon={TreatmentPlanIcon}
             />
-          )},
+          )}
+          ,
           {['admin', 'staff'].includes(permissions) && (
             <Resource
               name="clinicians"
@@ -187,15 +155,16 @@ export default () => {
               show={ClinicianShow}
               icon={ClinicianIcon}
             />
-          )},
+          )}
+          ,
           {permissions !== 'user' && (
             <Resource
               name="categories"
               list={CategoryList}
               icon={CategoryIcon}
             />
-          )},
-          {permissions === 'user' && <Navigate to="/intro" />}
+          )}
+          ,{permissions === 'user' && <Navigate to="/intro" />}
         </>
       )}
     </Admin>

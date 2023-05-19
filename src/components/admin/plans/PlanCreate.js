@@ -23,6 +23,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   ArrayInput,
   Create,
+  FormDataConsumer,
   NumberInput,
   SimpleForm,
   SimpleFormIterator,
@@ -30,6 +31,7 @@ import {
   TranslatableInputs,
   useLocale,
   usePermissions,
+  useRecordContext,
   useTranslate,
 } from 'react-admin';
 
@@ -53,6 +55,7 @@ import { validateNumber } from '@components/admin/shared/validators';
 import { LANGUAGES } from '../../../locales';
 
 export const PlanCreate = (props) => {
+  const record = useRecordContext();
   const t = useTranslate();
   const { permissions } = usePermissions();
   const locale = useLocale();
@@ -103,7 +106,11 @@ export const PlanCreate = (props) => {
           <TextInput source="i18n.name" fullWidth />
           <TextInput source="i18n.description" fullWidth multiline />
         </TranslatableInputs>
-        {permissions === 'admin' && asTemplate && <IsSystemInput />}
+        {permissions === 'admin' && asTemplate && (
+          <FormDataConsumer>
+            {({ formData, ...rest }) => <IsSystemInput data={formData} />}
+          </FormDataConsumer>
+        )}
         <NumberInput source="daily_repeat" validate={validateNumber} />
 
         <Typography variant="h6" gutterBottom gutterTop={true}>

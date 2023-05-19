@@ -161,10 +161,14 @@ export const PatientShowLayout = ({ record, props }) => {
       body: JSON.stringify({ 'confirm': true }),
     })
       .then(() => {
-        notify('resources.patients.notifications.email.send.success', 'info');
+        notify('resources.patients.notifications.email.send.success', {
+          type: 'info',
+        });
       })
       .catch((e) => {
-        notify('resources.patients.notifications.email.send.failure', 'error');
+        notify('resources.patients.notifications.email.send.failure', {
+          type: 'error',
+        });
       })
       .finally(() => {});
   };

@@ -19,11 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React from 'react';
-import { Typography } from '@components/admin/shared/dom/sanitize';
-import { makeStyles } from '@mui/styles';
 import { RaBox } from 'ra-compact-ui';
+import React from 'react';
 import {
   BooleanInput,
   Edit,
@@ -32,11 +29,16 @@ import {
   PasswordInput,
   TextInput,
   useGetIdentity,
+  useResourceContext,
   useTranslate,
   useNotify,
 } from 'react-admin';
 
-import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
+import { makeStyles } from '@mui/styles';
+
+import { Typography } from '@components/admin/shared/dom/sanitize';
+import Options from '@components/admin/shared/options';
+import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import {
   validateEmail,
   validateFirstName,
@@ -45,8 +47,8 @@ import {
   validatePasswordOptional as validatePassword,
   validatePasswords,
 } from '@components/admin/shared/validators';
-import Options from '@components/admin/shared/options';
-import TopToolbar from "@components/admin/shared/toolbars/TopToolbar";
+
+import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfileRow = ({identity, identityLoading, ...props}) => {
+const ProfileRow = ({ identity, identityLoading, ...props }) => {
   if (identityLoading || identity?.uid === props?.record?.id) {
     return false;
   } else {
@@ -69,26 +71,25 @@ const ProfileRow = ({identity, identityLoading, ...props}) => {
 export const ClinicianEdit = (props) => {
   const t = useTranslate();
   const { identity, isLoading: identityLoading } = useGetIdentity();
+  const resourceName = useResourceContext();
   const classes = useStyles();
   const notify = useNotify();
   const options = Options();
   const onFailure = (error) => {
     let message = '';
     Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${props.resource}.errors.${key}`);
+      message += t(`resources.${resourceName}.errors.${key}`);
     });
-    notify(message, {type: 'error'});
+    notify(message, { type: 'error' });
   };
 
   return (
     <Edit
-      onFailure={onFailure}
-      undoable={false}
+      queryOptions={{ onError: onFailure }}
       actions={<TopToolbar identity={identity} />}
       {...props}
     >
       <SimpleForm
-        layoutComponents={[RaBox]}
         toolbar={<SimpleFormToolBar identity={identity} />}
         validate={validatePasswords}
       >
@@ -101,18 +102,10 @@ export const ClinicianEdit = (props) => {
             fullWidth
             validate={validateFirstName}
           />
-          <TextInput
-            source="last_name"
-            fullWidth
-            validate={validateLastName}
-          />
+          <TextInput source="last_name" fullWidth validate={validateLastName} />
         </RaBox>
         <RaBox className={classes.root}>
-          <TextInput
-            source="email"
-            fullWidth
-            validate={validateEmail}
-          />
+          <TextInput source="email" fullWidth validate={validateEmail} />
         </RaBox>
         <ProfileRow identity={identity} identityLoading={identityLoading}>
           <Typography variant="h6" gutterBottom gutterTop={true}>

@@ -22,7 +22,7 @@
 import React from 'react';
 import {
   CloneButton,
-  DeleteButton,
+  DeleteWithConfirmButton,
   useTranslate,
   useLocale,
   useRecordContext,
@@ -158,9 +158,8 @@ const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
       {permissions === 'admin' && record.archived && (
         <Tooltip title={t('ra.action.delete')} arrow>
           <span>
-            <DeleteButton
+            <DeleteWithConfirmButton
               confirmTitle={confirmTitle}
-              undoable={false}
               resource={props.rowResource || resource}
               label=""
               record={record}

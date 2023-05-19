@@ -24,6 +24,7 @@ import {
   ArrayInput,
   BooleanInput,
   Edit,
+  FormDataConsumer,
   NumberInput,
   ReferenceField,
   SelectInput,
@@ -112,12 +113,7 @@ export const ExerciseEdit = (props) => {
   }
 
   return (
-    <Edit
-      transform={transform}
-      undoable={false}
-      actions={<TopToolbar />}
-      {...props}
-    >
+    <Edit transform={transform} actions={<TopToolbar />} {...props}>
       <SimpleForm
         toolbar={<SimpleFormToolBar identity={false} />}
         validate={validateI18n}
@@ -177,17 +173,26 @@ export const ExerciseEdit = (props) => {
               disableReordering={true}
             >
               <SelectInput
+                label="Category"
                 source="category__uid"
                 choices={categories}
                 onChange={handleChange}
                 validate={validateCategory}
               />
-              <SubCategoryInput
-                source="uid"
-                updatedSubCategoryInputs={updatedSubCategoryInputs}
-                subCategories={subCategories}
-                validate={validateSubCategory}
-              />
+              <FormDataConsumer>
+                {({ scopedFormData, getSource, ...rest }) =>
+                  scopedFormData ? (
+                    <SubCategoryInput
+                      label="Sub-category"
+                      source={getSource('uid')}
+                      data={scopedFormData}
+                      updatedSubCategoryInputs={updatedSubCategoryInputs}
+                      subCategories={subCategories}
+                      validate={validateSubCategory}
+                    />
+                  ) : null
+                }
+              </FormDataConsumer>
             </SimpleFormIterator>
           </ArrayInput>
         )}

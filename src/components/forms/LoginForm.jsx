@@ -47,7 +47,7 @@ const LoginForm = ({ onSwitch }) => {
     setLoading(true);
     login(data).catch(() => {
       setLoading(false);
-      notify('form.field.error.login_invalid', 'error');
+      notify('form.field.error.login_invalid', {type: 'error'});
     });
   };
 

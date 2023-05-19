@@ -38,14 +38,15 @@ export const PatientList = (props) => {
       sort={{ field: 'full_name', order: 'ASC' }}
       filters={<ArchivableFilter />}
       filterDefaultValues={{ archived: false }}
-      bulkActionButtons={
-        <BulkActionButtons permissions={permissions} showExport={true} />
-      }
       aside={<PatientListAside permissions={permissions} />}
       perPage={25}
       actions={<ListActions showExport={true} />}
     >
-      <Datagrid>
+      <Datagrid
+        bulkActionButtons={
+          <BulkActionButtons permissions={permissions} showExport={true} />
+        }
+      >
         <TextField source="full_name" />
         {permissions === 'admin' && (
           <ReferenceField

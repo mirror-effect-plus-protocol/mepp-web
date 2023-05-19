@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme) => {
 
 export const PlanShow = (props) => {
   const { permissions } = usePermissions();
-  console.log(permissions)
   const t = useTranslate();
   const locale = useLocale();
   const translatorClasses = useTranslatorInputStyles();

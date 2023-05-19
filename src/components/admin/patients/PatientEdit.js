@@ -29,6 +29,7 @@ import {
   TextInput,
   usePermissions,
   useRefresh,
+  useResourceContext,
   useTranslate,
   useNotify,
 } from 'react-admin';
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const PatientEdit = (props) => {
+  const resourceName = useResourceContext();
   const t = useTranslate();
   const classes = useStyles();
   const options = Options();
@@ -70,7 +72,7 @@ export const PatientEdit = (props) => {
   const handleFailure = (error) => {
     let message = '';
     Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${props.resource}.errors.${key}`);
+      message += t(`resources.${resourceName}.errors.${key}`);
     });
     notify(message, { type: 'error' });
   };
@@ -79,7 +81,6 @@ export const PatientEdit = (props) => {
     <Edit
       mutationOptions={{ onError: handleFailure }}
       actions={<TopToolbar />}
-      undoable={false}
       {...props}
     >
       <SimpleForm

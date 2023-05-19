@@ -24,6 +24,7 @@ import {
   ArrayInput,
   BooleanInput,
   Create,
+  FormDataConsumer,
   NumberInput,
   SelectInput,
   SimpleForm,
@@ -56,7 +57,7 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { LANGUAGES } from '../../../locales';
 
 export const ExerciseCreate = (props) => {
-  const { permissions } = usePermissions()
+  const { permissions } = usePermissions();
   const t = useTranslate();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const numberClasses = useNumberStyles();
@@ -165,17 +166,26 @@ export const ExerciseCreate = (props) => {
               disableReordering={true}
             >
               <SelectInput
+                label="Category"
                 source="category__uid"
                 choices={categories}
                 onChange={handleChange}
                 validate={validateCategory}
               />
-              <SubCategoryInput
-                source="uid"
-                updatedSubCategoryInputs={updatedSubCategoryInputs}
-                subCategories={subCategories}
-                validate={validateSubCategory}
-              />
+              <FormDataConsumer>
+                {({ scopedFormData, getSource, ...rest }) =>
+                  scopedFormData ? (
+                    <SubCategoryInput
+                      label="Sub-category"
+                      source={getSource('uid')}
+                      data={scopedFormData}
+                      updatedSubCategoryInputs={updatedSubCategoryInputs}
+                      subCategories={subCategories}
+                      validate={validateSubCategory}
+                    />
+                  ) : null
+                }
+              </FormDataConsumer>
             </SimpleFormIterator>
           </ArrayInput>
         )}

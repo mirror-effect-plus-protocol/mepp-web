@@ -23,6 +23,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import {
   ArrayInput,
   Edit,
+  FormDataConsumer,
   NumberInput,
   ReferenceField,
   SimpleForm,
@@ -86,11 +87,7 @@ export const PlanEdit = (props) => {
   }, [patientUid]);
 
   return (
-    <Edit
-      actions={<TopToolbar patientUid={patientUid} />}
-      undoable={false}
-      {...props}
-    >
+    <Edit actions={<TopToolbar patientUid={patientUid} />} {...props}>
       <SimpleForm
         redirect={redirect}
         validate={validateI18n}
@@ -116,7 +113,11 @@ export const PlanEdit = (props) => {
           <TextInput source="i18n.name" fullWidth />
           <TextInput source="i18n.description" fullWidth multiline />
         </TranslatableInputs>
-        {permissions === 'admin' && asTemplate && <IsSystemInput />}
+        {permissions === 'admin' && asTemplate && (
+          <FormDataConsumer>
+            {({ formData, ...rest }) => <IsSystemInput data={formData} />}
+          </FormDataConsumer>
+        )}
         <NumberInput source="daily_repeat" validate={validateNumber} />
 
         <Typography variant="h6" gutterBottom gutterTop={true}>

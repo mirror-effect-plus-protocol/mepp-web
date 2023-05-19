@@ -68,11 +68,11 @@ const ToggleBulkArchiveButton = ({
     },
     {
       onSuccess: () => {
-        notify(context.notifications.success, 'info');
+        notify(context.notifications.success, { type: 'info' });
         refresh();
       },
-      onFailure: (error) => {
-        notify(context.notifications.failure, 'error');
+      onError: (error) => {
+        notify(context.notifications.failure, { type: 'error' });
       },
     },
   );

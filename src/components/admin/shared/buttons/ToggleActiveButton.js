@@ -80,13 +80,13 @@ const ToggleActiveButton = ({
           redirect(redirectionRef.current);
         }
         refresh();
-        notify(translatedText, 'info');
+        notify(translatedText, { type: 'info' });
       },
-      onFailure: (error) => {
+      onError: (error) => {
         const translatedText = record.active
           ? 'admin.shared.notifications.deactivate.failure'
           : 'admin.shared.notifications.activate.failure';
-        notify(translatedText, 'error');
+        notify(translatedText, { type: 'error' });
       },
     },
   );
