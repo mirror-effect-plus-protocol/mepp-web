@@ -91,7 +91,6 @@ export const ClinicianEdit = (props) => {
     >
       <SimpleForm
         toolbar={<SimpleFormToolBar identity={identity} />}
-        validate={validatePasswords}
       >
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
@@ -138,6 +137,7 @@ export const ClinicianEdit = (props) => {
           <PasswordInput
             label={t('resources.clinicians.fields.confirm_password')}
             source="confirm_password"
+            validate={validatePasswords}
             fullWidth
           />
         </RaBox>

@@ -60,7 +60,7 @@ const Main = (props) => {
         setChildren(props.children);
       } else setChildren(props.children);
     }
-    handleTokens()
+    handleTokens();
   }, []);
 
   return <div>{children}</div>;

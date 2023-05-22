@@ -85,7 +85,6 @@ export const PatientEdit = (props) => {
     >
       <SimpleForm
         toolbar={<SimpleFormToolBar identity={false} />}
-        validate={validatePasswords}
       >
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
@@ -161,6 +160,7 @@ export const PatientEdit = (props) => {
             label={t('resources.patients.fields.confirm_password')}
             source="confirm_password"
             fullWidth
+            validate={validatePasswords}
           />
         </Box>
       </SimpleForm>

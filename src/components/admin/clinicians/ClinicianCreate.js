@@ -76,7 +76,6 @@ export const ClinicianCreate = (props) => {
     <Create queryOptions={{ onError: onFailure }} {...props}>
       <SimpleForm
         toolbar={<SimpleFormToolBar identity={false} />}
-        validate={validatePasswords}
         redirect="list"
       >
         <Typography variant="h6" gutterBottom>
@@ -118,6 +117,7 @@ export const ClinicianCreate = (props) => {
           <PasswordInput
             label={t('resources.clinicians.fields.confirm_password')}
             source="confirm_password"
+            validate={validatePasswords}
             fullWidth
           />
         </RaBox>

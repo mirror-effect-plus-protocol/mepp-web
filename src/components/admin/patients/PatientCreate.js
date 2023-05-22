@@ -80,7 +80,6 @@ export const PatientCreate = (props) => {
       <SimpleForm
         redirect="show"
         toolbar={<SimpleFormToolBar identity={false} />}
-        validate={validatePasswords}
       >
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
@@ -155,6 +154,7 @@ export const PatientCreate = (props) => {
           <PasswordInput
             label={t('resources.patients.fields.confirm_password')}
             source="confirm_password"
+            validate={validatePasswords}
             fullWidth
           />
         </RaBox>

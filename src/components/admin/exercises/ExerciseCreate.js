@@ -75,9 +75,10 @@ export const ExerciseCreate = (props) => {
     { language: locale },
   );
 
-  const validateI18n = (record) => {
-    return requiredLocalizedField(record, locale, 'description');
+  const validateI18n = (value, record) => {
+    return requiredLocalizedField(value, record, locale, 'description');
   };
+
   /* Update description translations if empty */
   const transform = (record) => {
     return preSave(record, locale);
@@ -117,7 +118,6 @@ export const ExerciseCreate = (props) => {
     <Create transform={transform} {...props}>
       <SimpleForm
         redirect="show"
-        validate={validateI18n}
         toolbar={<SimpleFormToolBar identity={false} />}
       >
         <Typography variant="h6" gutterBottom>
@@ -132,6 +132,7 @@ export const ExerciseCreate = (props) => {
             source="i18n.description"
             multiline={true}
             fullWidth={true}
+            validate={validateI18n}
           />
         </TranslatableInputs>
         {permissions === 'admin' && <BooleanInput source="is_system" />}

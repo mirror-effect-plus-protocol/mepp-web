@@ -75,8 +75,8 @@ export const ExerciseEdit = (props) => {
     filter: { language: locale },
   });
 
-  const validateI18n = (record) => {
-    return requiredLocalizedField(record, locale, 'description');
+  const validateI18n = (value, record) => {
+    return requiredLocalizedField(value, record, locale, 'description');
   };
   /* Update description translations if empty */
   const transform = (record) => {
@@ -116,7 +116,6 @@ export const ExerciseEdit = (props) => {
     <Edit transform={transform} actions={<TopToolbar />} {...props}>
       <SimpleForm
         toolbar={<SimpleFormToolBar identity={false} />}
-        validate={validateI18n}
       >
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}
@@ -139,6 +138,7 @@ export const ExerciseEdit = (props) => {
             source="i18n.description"
             multiline={true}
             fullWidth={true}
+            validate={validateI18n}
           />
         </TranslatableInputs>
         {permissions === 'admin' && <BooleanInput source="is_system" />}

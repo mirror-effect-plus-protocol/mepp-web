@@ -63,8 +63,8 @@ export const PlanCreate = (props) => {
   const translatorClasses = useTranslatorInputStyles();
   const [patientUid, setPatientUid] = useState(undefined);
   const [asTemplate, setAsTemplate] = useState(true);
-  const validateI18n = (record) => {
-    return requiredLocalizedField(record, locale, ['name', 'description']);
+  const validateI18n = (value, record) => {
+    return requiredLocalizedField(value, record, locale, 'description');
   };
   const categories = useGetCategories(locale);
   const subCategories = useGetSubCategories(locale);
@@ -91,7 +91,6 @@ export const PlanCreate = (props) => {
   return (
     <Create {...props}>
       <SimpleForm
-        validate={validateI18n}
         redirect={redirect}
         toolbar={<SimpleFormToolBar identity={false} transform={transform} />}
       >
@@ -103,8 +102,13 @@ export const PlanCreate = (props) => {
           defaultLocale={locale}
           classes={translatorClasses}
         >
-          <TextInput source="i18n.name" fullWidth />
-          <TextInput source="i18n.description" fullWidth multiline />
+          <TextInput source="i18n.name" validate={validateI18n} fullWidth />
+          <TextInput
+            source="i18n.description"
+            validate={validateI18n}
+            fullWidth
+            multiline
+          />
         </TranslatableInputs>
         {permissions === 'admin' && asTemplate && (
           <FormDataConsumer>
