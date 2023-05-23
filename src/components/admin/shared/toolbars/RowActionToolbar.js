@@ -19,23 +19,27 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
-import Tooltip from '@material-ui/core/Tooltip';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   CloneButton,
-  DeleteButton,
+  DeleteWithConfirmButton,
   useTranslate,
   useLocale,
+  useRecordContext,
+  useResourceContext,
 } from 'react-admin';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import Queue from '@material-ui/icons/Queue';
 
-import ToggleArchiveButton from '../buttons/ToggleArchiveButton';
-import ToggleActiveButton from '../buttons/ToggleActiveButton';
-import CRUDButton from '@components/admin/shared/buttons/CRUDButton';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import Queue from '@mui/icons-material/Queue';
+import Tooltip from '@mui/material/Tooltip';
+import { makeStyles } from '@mui/styles';
+
 import { getPlaceHolder } from '@admin/utils/placeholder';
+
+import CRUDButton from '@components/admin/shared/buttons/CRUDButton';
+
+import ToggleActiveButton from '../buttons/ToggleActiveButton';
+import ToggleArchiveButton from '../buttons/ToggleArchiveButton';
 
 const useRowActionToolbarStyles = makeStyles({
   toolbar: {
@@ -48,22 +52,24 @@ const useRowActionToolbarStyles = makeStyles({
   },
 });
 
-const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
+const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
   const t = useTranslate();
+  const record = useRecordContext();
+  const resource = useResourceContext();
   const locale = useLocale();
   const classes = useRowActionToolbarStyles();
-  const confirmTitle = t('resources.' + props.resource + '.delete.confirmTitle', {
-    placeholder: getPlaceHolder(props.record, locale),
+  const confirmTitle = t('resources.' + resource + '.delete.confirmTitle', {
+    placeholder: getPlaceHolder(record, locale),
   });
-  const archiveTitle = props.record.archived
+  const archiveTitle = record.archived
     ? 'admin.shared.labels.unarchiveButton'
     : 'admin.shared.labels.archiveButton';
-  const activeTitle = props.record.active
+  const activeTitle = record.active
     ? 'admin.shared.labels.deactivateButton'
     : 'admin.shared.labels.activateButton';
 
   // Row is editable by default
-  const isSystem = props.record.hasOwnProperty('is_system') && props.record.is_system;
+  const isSystem = record.hasOwnProperty('is_system') && record.is_system;
   const editable = !isSystem || permissions === 'admin';
   const context = props.hasOwnProperty('context') && props.context;
 
@@ -72,8 +78,8 @@ const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
       <Tooltip title={t('ra.action.show')} arrow>
         <span>
           <CRUDButton
-            basePath={props.basePath}
-            record={props.record}
+            resource={props.rowResource || resource}
+            record={record}
             className={classes.icon_action_button}
             type="show"
             size="small"
@@ -82,13 +88,12 @@ const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
           />
         </span>
       </Tooltip>
-      {editable &&
+      {editable && (
         <Tooltip title={t(archiveTitle)} arrow>
           <span>
             <ToggleArchiveButton
-              resource={props.rowResource || props.resource}
-              basePath={props.basePath}
-              record={props.record}
+              resource={props.rowResource || resource}
+              record={record}
               className={classes.icon_action_button}
               showLabel={false}
               redirectToBasePath={false}
@@ -97,14 +102,13 @@ const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
             />
           </span>
         </Tooltip>
-      }
-      {editable && !props.record.archived && (
+      )}
+      {editable && !record.archived && (
         <Tooltip title={t('ra.action.edit')} arrow>
           <span>
             <CRUDButton
-              basePath={props.basePath}
-              resource={props.rowResource || props.resource}
-              record={props.record}
+              resource={props.rowResource || resource}
+              record={record}
               className={classes.icon_action_button}
               type="edit"
               context={context}
@@ -114,7 +118,7 @@ const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
           </span>
         </Tooltip>
       )}
-      {clonable &&
+      {clonable && (
         <Tooltip
           title={
             context
@@ -126,28 +130,22 @@ const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
           <span>
             <CloneButton
               label=""
-              basePath={props.basePath}
-              record={props.record}
-              resource={props.rowResource || props.resource}
+              record={record}
+              resource={props.rowResource || resource}
               className={classes.icon_action_button}
               size="small"
-              icon={
-                context
-                  ? <FileCopyIcon />
-                  : <Queue />
-              }
+              icon={context ? <FileCopyIcon /> : <Queue />}
               color="secondary"
             />
           </span>
         </Tooltip>
-      }
-      {activable && !props.record.archived && (
+      )}
+      {activable && !record.archived && (
         <Tooltip title={t(activeTitle)} arrow>
           <span>
             <ToggleActiveButton
-              resource={props.rowResource || props.resource}
-              basePath={props.basePath}
-              record={props.record}
+              resource={props.rowResource || resource}
+              record={record}
               className={classes.icon_action_button}
               showLabel={false}
               redirectToBasePath={false}
@@ -157,16 +155,14 @@ const RowActionToolbar = ({clonable, activable, permissions, ...props}) => {
           </span>
         </Tooltip>
       )}
-      {permissions === 'admin' && props.record.archived && (
+      {permissions === 'admin' && record.archived && (
         <Tooltip title={t('ra.action.delete')} arrow>
           <span>
-            <DeleteButton
+            <DeleteWithConfirmButton
               confirmTitle={confirmTitle}
-              undoable={false}
-              basePath={props.basePath}
-              resource={props.rowResource || props.resource}
+              resource={props.rowResource || resource}
               label=""
-              record={props.record}
+              record={record}
               className={classes.icon_action_button}
               color="secondary"
             />

@@ -28,7 +28,7 @@ import styled from 'styled-components';
 import { spacings } from '@styles/configs/spacings';
 import { FlexAlignCenter, FlexAlignMiddle } from '@styles/tools';
 
-import { useApi } from '@hooks/useAPI';
+import { useApi } from '@hooks/useApi';
 
 import { RequestEndpoint } from '@utils/constants';
 
@@ -53,7 +53,7 @@ const ForgotPwdForm = ({ onSwitch }) => {
     const { data } = await post({ email });
     // always success message even if email is not found
     if (data) setSuccess(true);
-    else notify('api.error.generic', 'error');
+    else notify('api.error.generic', {type: 'error'});
   };
 
   return (

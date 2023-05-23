@@ -19,28 +19,28 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
-import { Typography } from '@components/admin/shared/dom/sanitize';
-import { makeStyles } from '@material-ui/core/styles';
-import { CompactForm, RaBox } from 'ra-compact-ui';
 import {
   Edit,
   SelectInput,
+  SimpleForm,
   PasswordInput,
   ReferenceInput,
   TextInput,
+  usePermissions,
   useRefresh,
+  useResourceContext,
   useTranslate,
   useNotify,
 } from 'react-admin';
 
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolBar';
-import {
-  validateAudio,
-  validateClinician,
-  validateSide,
-} from './validators';
+import Box from '@mui/material/Box';
+import { makeStyles } from '@mui/styles';
+
+import { Typography } from '@components/admin/shared/dom/sanitize';
+import Options from '@components/admin/shared/options';
+import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
+import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import {
   validateEmail,
   validateFirstName,
@@ -49,8 +49,8 @@ import {
   validatePasswordOptional as validatePassword,
   validatePasswords,
 } from '@components/admin/shared/validators';
-import Options from '@components/admin/shared/options';
-import TopToolbar from "@components/admin/shared/toolbars/TopToolbar";
+
+import { validateAudio, validateClinician, validateSide } from './validators';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,48 +63,47 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const PatientEdit = (props) => {
+  const resourceName = useResourceContext();
   const t = useTranslate();
   const classes = useStyles();
   const options = Options();
   const notify = useNotify();
-  const onFailure = (error) => {
+  const { permissions } = usePermissions();
+  const handleFailure = (error) => {
     let message = '';
     Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${props.resource}.errors.${key}`);
+      message += t(`resources.${resourceName}.errors.${key}`);
     });
-    notify(message, {type: 'error'});
+    notify(message, { type: 'error' });
   };
 
   return (
     <Edit
-      onFailure={onFailure}
+      mutationOptions={{ onError: handleFailure }}
       actions={<TopToolbar />}
-      undoable={false}
       {...props}
     >
-      <CompactForm
-        layoutComponents={[RaBox]}
-        toolbar={<SimpleFormToolBar identity={false}/>}
-        validate={validatePasswords}
+      <SimpleForm
+        toolbar={<SimpleFormToolBar identity={false} />}
       >
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>
-        <RaBox className={classes.root}>
+        <Box className={classes.root}>
           <TextInput
             source="first_name"
             fullWidth
             validate={validateFirstName}
           />
           <TextInput source="last_name" fullWidth validate={validateLastName} />
-        </RaBox>
-        <RaBox className={classes.root}>
+        </Box>
+        <Box className={classes.root}>
           <TextInput source="email" fullWidth validate={validateEmail} />
-        </RaBox>
+        </Box>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.informations')}
         </Typography>
-        <RaBox className={classes.root}>
+        <Box className={classes.root}>
           <SelectInput
             source="use_audio"
             choices={options.audio}
@@ -117,9 +116,9 @@ export const PatientEdit = (props) => {
             fullWidth
             validate={validateSide}
           />
-        </RaBox>
-        {props.permissions === 'admin' && (
-          <RaBox className={classes.root}>
+        </Box>
+        {permissions === 'admin' && (
+          <Box className={classes.root}>
             <ReferenceInput
               source="clinician_uid"
               reference="clinicians"
@@ -135,22 +134,22 @@ export const PatientEdit = (props) => {
               fullWidth
               validate={validateLanguage}
             />
-          </RaBox>
+          </Box>
         )}
-        {props.permissions !== 'admin' && (
-          <RaBox className={classes.root}>
+        {permissions !== 'admin' && (
+          <Box className={classes.root}>
             <SelectInput
               source="language"
               choices={options.languages}
               fullWidth
               validate={validateLanguage}
             />
-          </RaBox>
+          </Box>
         )}
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('admin.shared.labels.card.reset_password')}
         </Typography>
-        <RaBox className={classes.root}>
+        <Box className={classes.root}>
           <PasswordInput
             label={t('resources.patients.fields.password')}
             source="new_password"
@@ -161,9 +160,10 @@ export const PatientEdit = (props) => {
             label={t('resources.patients.fields.confirm_password')}
             source="confirm_password"
             fullWidth
+            validate={validatePasswords}
           />
-        </RaBox>
-      </CompactForm>
+        </Box>
+      </SimpleForm>
     </Edit>
   );
 };

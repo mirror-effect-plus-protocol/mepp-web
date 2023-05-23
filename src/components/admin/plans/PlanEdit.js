@@ -19,11 +19,11 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {useEffect, useCallback, useState} from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import {
   ArrayInput,
   Edit,
+  FormDataConsumer,
   NumberInput,
   ReferenceField,
   SimpleForm,
@@ -32,76 +32,70 @@ import {
   TextInput,
   TranslatableInputs,
   useLocale,
+  usePermissions,
   useTranslate,
 } from 'react-admin';
-import { Typography} from '@components/admin/shared/dom/sanitize';
 
-import {requiredLocalizedField} from '@components/admin/shared/validators';
+import IsSystemInput from '@components/admin/plans/IsSystem';
+import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
 import {
   useSimpleFormIteratorStyles,
   useTranslatorInputStyles,
 } from '@components/admin/plans/styles';
-
-import { LANGUAGES } from "../../../locales";
 import { validateExercises } from '@components/admin/plans/validators';
-import { validateNumber } from '@components/admin/shared/validators';
-
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolBar';
-import ExerciseRow from './ExerciseRow';
-import IsSystemInput from '@components/admin/plans/IsSystem';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
+import { Typography } from '@components/admin/shared/dom/sanitize';
 import {
   useGetCategories,
   useGetSubCategories,
 } from '@components/admin/shared/hook';
-import {
-  contextualRedirect,
-  preSave
-} from '@components/admin/plans/callbacks';
+import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
+import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
+import { requiredLocalizedField } from '@components/admin/shared/validators';
+import { validateNumber } from '@components/admin/shared/validators';
+
+import { LANGUAGES } from '../../../locales';
+import ExerciseRow from './ExerciseRow';
 
 export const PlanEdit = (props) => {
-
+  const { permissions } = usePermissions();
   const t = useTranslate();
   const locale = useLocale();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const translatorClasses = useTranslatorInputStyles();
   const [patientUid, setPatientUid] = useState(undefined);
   const [asTemplate, setAsTemplate] = useState(true);
-  const validateI18n = (record) => {
-    return requiredLocalizedField(record, locale, ['name', 'description']);
-  }
+  const validateI18n = (value, record) => {
+    return requiredLocalizedField(value, record, locale, 'description');
+  };
   const categories = useGetCategories(locale);
   const subCategories = useGetSubCategories(locale);
-  const redirect = useCallback(() => (
-    contextualRedirect(patientUid)
-  ), [patientUid]);
-  const transform = useCallback((record) => (
-    preSave(record, locale, patientUid, asTemplate)
-  ), [patientUid, asTemplate]);
+  const redirect = useCallback(
+    () => contextualRedirect(patientUid),
+    [patientUid],
+  );
+  const transform = useCallback(
+    (record) => preSave(record, locale, patientUid, asTemplate),
+    [patientUid, asTemplate],
+  );
 
   useEffect(() => {
     setPatientUid(props?.history?.location?.state?.patientUid);
   }, [props?.history?.location?.state?.patientUid]);
 
   useEffect(() => {
-    setAsTemplate(patientUid === undefined)
+    setAsTemplate(patientUid === undefined);
   }, [patientUid]);
 
   return (
-    <Edit
-      actions={<TopToolbar patientUid={patientUid} />}
-      undoable={false}
-      {...props}
-    >
+    <Edit actions={<TopToolbar patientUid={patientUid} />} {...props}>
       <SimpleForm
         redirect={redirect}
-        validate={validateI18n}
         toolbar={<SimpleFormToolBar identity={false} transform={transform} />}
       >
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}
         </Typography>
-        {props.permissions === 'admin' && (
+        {permissions === 'admin' && (
           <ReferenceField
             source="clinician_uid"
             reference="clinicians"
@@ -115,23 +109,20 @@ export const PlanEdit = (props) => {
           defaultLocale={locale}
           classes={translatorClasses}
         >
-          <TextInput
-            source="i18n.name"
-            fullWidth
-          />
+          <TextInput source="i18n.name" validate={validateI18n} fullWidth />
           <TextInput
             source="i18n.description"
+            validate={validateI18n}
             fullWidth
             multiline
           />
         </TranslatableInputs>
-        {props.permissions === 'admin' && asTemplate &&
-          <IsSystemInput/>
-        }
-        <NumberInput
-          source="daily_repeat"
-          validate={validateNumber}
-        />
+        {permissions === 'admin' && asTemplate && (
+          <FormDataConsumer>
+            {({ formData, ...rest }) => <IsSystemInput data={formData} />}
+          </FormDataConsumer>
+        )}
+        <NumberInput source="daily_repeat" validate={validateNumber} />
 
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('resources.plans.card.labels.exercises')}
@@ -143,9 +134,7 @@ export const PlanEdit = (props) => {
           label=""
           validate={validateExercises}
         >
-          <SimpleFormIterator
-            classes={simpleFormIteratorclasses}
-          >
+          <SimpleFormIterator classes={simpleFormIteratorclasses}>
             <ExerciseRow
               categories={categories}
               subCategories={subCategories}

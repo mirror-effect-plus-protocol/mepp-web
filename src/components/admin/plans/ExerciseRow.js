@@ -31,7 +31,7 @@ import {
   useAutocompleteStyles,
   useNumberStyles
 } from '@components/admin/plans/styles';
-import { useForm } from 'react-final-form';
+import { useForm } from 'react-hook-form';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import {
   Button,
@@ -40,10 +40,10 @@ import {
   DialogContent,
   DialogTitle,
   TextField as TextFieldMui
-} from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import CheckCircle from '@material-ui/icons/CheckCircle';
+} from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CheckCircle from '@mui/icons-material/CheckCircle';
 import { validateNumber } from '@components/admin/shared/validators';
 import DropDown from '@components/admin/shared/inputs/Dropdown';
 

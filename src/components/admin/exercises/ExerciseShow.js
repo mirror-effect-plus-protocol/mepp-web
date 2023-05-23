@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import React from 'react';
 import {
   BooleanField,
@@ -29,28 +29,35 @@ import {
   TranslatableFields,
   useGetList,
   useLocale,
+  usePermissions,
+  useRecordContext,
   useTranslate,
 } from 'react-admin';
-import { Chip } from '@material-ui/core';
-import { Typography} from '@components/admin/shared/dom/sanitize';
-import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 
-import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
+import { Chip } from '@mui/material';
+
+import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
 import {
   useCategoryChipsStyles,
   useTranslatorInputStyles,
 } from '@components/admin/exercises/styles';
-import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
-import { LANGUAGES } from '../../../locales';
-import {useOnelineStyles} from "@components/admin/shared/styles/oneline";
-import TopToolbar from "@components/admin/shared/toolbars/TopToolbar";
+import { Typography } from '@components/admin/shared/dom/sanitize';
+import { useOnelineStyles } from '@components/admin/shared/styles/oneline';
+import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
+import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
+import { LANGUAGES } from '../../../locales';
 
 const CategoryChips = (props) => {
   const classes = useCategoryChipsStyles();
-
-  return props.record.sub_categories.map((subCategory) => (
-    <div key={`${subCategory.uid}.${subCategory.category__uid}`} data-name="chip-row" className={classes.root}>
+  const record = useRecordContext();
+  if (!record) return null;
+  return record.sub_categories.map((subCategory) => (
+    <div
+      key={`${subCategory.uid}.${subCategory.category__uid}`}
+      data-name="chip-row"
+      className={classes.root}
+    >
       <Chip
         color="secondary"
         label={props.categories[subCategory.category__uid]}
@@ -61,74 +68,60 @@ const CategoryChips = (props) => {
         variant="outlined"
       />
     </div>
-    )
-  )
+  ));
 };
 
 export const ExerciseShow = (props) => {
-
+  const { permissions } = usePermissions();
   const t = useTranslate();
   const locale = useLocale();
   const translatorClasses = useTranslatorInputStyles();
   const onelineClasses = useOnelineStyles();
   const categories = {};
   const subCategories = {};
-  const {data, ids, loaded} = useGetList(
-    'categories',
-    { page: 1, perPage: 9999},
-    { field: 'i18n__name', order: 'ASC' },
-    {language: locale}
-  );
+  const { data, isLoading } = useGetList('categories', {
+    pagination: { page: 1, perPage: 9999 },
+    sort: { field: 'i18n__name', order: 'ASC' },
+    filter: { language: locale },
+  });
 
-  if (loaded) {
-    ids.forEach((catId) => {
-      categories[catId] = data[catId].i18n.name[locale];
-      data[catId]['sub_categories'].forEach((subCategory) => {
+  if (!isLoading) {
+    data.forEach((category) => {
+      categories[category.id] = category.i18n.name[locale];
+      category.sub_categories.forEach((subCategory) => {
         subCategories[subCategory.id] = subCategory.i18n.name[locale];
       });
     });
   }
-
   return (
-    <Show
-      {...props}
-      actions={<TopToolbar />}
-    >
+    <Show {...props} actions={<TopToolbar />}>
       <BoxedShowLayout>
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}
         </Typography>
-        <ClinicianTextField show={props.permissions === 'admin'} />
+        <ClinicianTextField show={permissions === 'admin'} />
         <TranslatableFields
           locales={LANGUAGES}
           defaultLocale={locale}
           classes={translatorClasses}
         >
-          <TextField
-            source="i18n.description"
-            fullWidth={true}
-          />
+          <TextField source="i18n.description" fullWidth={true} />
         </TranslatableFields>
         <RaBox>
-          <NumberField source="movement_duration" className={onelineClasses.oneline} />
+          <NumberField
+            source="movement_duration"
+            className={onelineClasses.oneline}
+          />
           <NumberField source="pause" className={onelineClasses.oneline} />
           <NumberField source="repeat" className={onelineClasses.oneline} />
         </RaBox>
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
-        <CategoryChips
-          categories={categories}
-          subCategories={subCategories}
-          record={props.record}
-        />
-        <BooleanField source="is_system" className={onelineClasses.oneline}/>
+        <CategoryChips categories={categories} subCategories={subCategories} />
+        <BooleanField source="is_system" className={onelineClasses.oneline} />
 
-        <ShowToolBar
-          resource={props.resource}
-          record={props.record}
-          basePath={props.basePath}
-        />
+        <ShowToolBar basePath="/exercises" />
       </BoxedShowLayout>
     </Show>
   );

@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import React, { useCallback } from 'react';
 import {
   useNotify,
@@ -27,11 +27,9 @@ import {
   useLocale,
   useTranslate,
 } from 'react-admin';
-import Button from '@material-ui/core/Button';
-import DownloadIcon from '@material-ui/icons/GetApp';
 
-import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
-
+import DownloadIcon from '@mui/icons-material/GetApp';
+import Button from '@mui/material/Button';
 
 const ExportButton = (props) => {
   const {
@@ -51,20 +49,21 @@ const ExportButton = (props) => {
   const locale = useLocale();
   const notify = useNotify();
   const unselectAll = useUnselectAll();
-  const label = showLabel
-    ? t('admin.shared.labels.exportButton')
-    : '';
-  const exportEndpoint = useCallback((token) => {
-    const data = {
-      ...filterValues,
-      ...{selectedIds: selectedIds},
-      ...{language: locale},
-      ...{t: token},
-    };
+  const label = showLabel ? t('admin.shared.labels.exportButton') : '';
+  const exportEndpoint = useCallback(
+    (token) => {
+      const data = {
+        ...filterValues,
+        ...{ selectedIds: selectedIds },
+        ...{ language: locale },
+        ...{ t: token },
+      };
 
-    const qs = new URLSearchParams(data).toString();
-    return `${process.env.API_ENDPOINT}${basePath}/export/?${qs}`;
-  }, [selectedIds, filterValues, locale]);
+      const qs = new URLSearchParams(data).toString();
+      return `${process.env.API_ENDPOINT}/${resource}/export/?${qs}`;
+    },
+    [selectedIds, filterValues, locale],
+  );
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -73,14 +72,14 @@ const ExportButton = (props) => {
 
     fetchJsonWithAuthToken(url, {
       method: 'POST',
-      body: '{"type":"export"}'
+      body: '{"type":"export"}',
     })
       .then((response) => {
-        notify('admin.shared.notifications.export.start','info');
+        notify('admin.shared.notifications.export.start', { type: 'info' });
         window.location.href = exportEndpoint(response.json['token']);
       })
       .catch(() => {
-        notify('admin.shared.notifications.export.failure', 'error');
+        notify('admin.shared.notifications.export.failure', { type: 'error' });
       })
       .finally(() => {
         setTimeout(() => {

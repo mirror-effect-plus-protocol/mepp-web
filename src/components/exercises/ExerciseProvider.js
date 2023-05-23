@@ -22,7 +22,7 @@
 
 import React, { createContext, useEffect, useState } from 'react';
 
-import { useApi } from '@hooks/useAPI';
+import { useApi } from '@hooks/useApi';
 
 import { RequestEndpoint, RequestMethod } from '@utils/constants';
 import { fetchData } from '@utils/fetch';

@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useEffect, useState } from 'react';
 import { Authenticated } from 'react-admin';
 import { WithPermissions } from 'react-admin';
@@ -52,16 +51,19 @@ const withAuth = (Component) => {
 const Main = (props) => {
   const [children, setChildren] = useState();
 
-  useEffect(async () => {
-    const queries = new URLSearchParams(window.location.search);
-    const token = queries.get('tt');
-    if (token) {
-      await authTemporaryToken(token);
-      setChildren(props.children);
-    } else setChildren(props.children);
+  useEffect(() => {
+    async function handleTokens() {
+      const queries = new URLSearchParams(window.location.search);
+      const token = queries.get('tt');
+      if (token) {
+        await authTemporaryToken(token);
+        setChildren(props.children);
+      } else setChildren(props.children);
+    }
+    handleTokens();
   }, []);
 
-  return <div>{children}</div>
-}
+  return <div>{children}</div>;
+};
 
 export default withAuth;

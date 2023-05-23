@@ -19,12 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import {
-  email,
-  minLength,
-  required
-} from 'react-admin';
+import { email, minLength, required } from 'react-admin';
 
 const securePasswordOptional = (new_password) => {
   const passwordMinLen = process.env.PASSWORD_MIN_LEN;
@@ -63,38 +58,13 @@ const greaterThanZero = (value) => {
   return undefined;
 };
 
-export const requiredLocalizedField = (record, locale, fields) => {
-  const errors = {};
-
-  if (!record.hasOwnProperty('i18n')) {
-    errors.i18n = {}
-    if (Array.isArray(fields)) {
-      fields.forEach((field) => {
-        errors.i18n[`${field}`] = {
-          [`${locale}`] : ['admin.shared.errors.field_required']
-        }
-      });
-    } else {
-      errors.i18n = {
-        [`${fields}`]: {
-          [`${locale}`] : ['admin.shared.errors.field_required']
-        }
-      }
-    }
-  } else {
-    if (Array.isArray(fields)) {
-      fields.forEach((field) => {
-        if (!record.i18n.hasOwnProperty(field)) {
-          errors.i18n = {
-            [`${field}`]: {
-              [`${locale}`] : ['admin.shared.errors.field_required']
-            }
-          }
-        }
-      });
+export const requiredLocalizedField = (value, record, locale, field) => {
+  if (!value) {
+    if (!record.i18n[field][locale]) {
+      return 'admin.shared.errors.field_required';
     }
   }
-  return errors;
+  return undefined;
 };
 
 export const validateEmail = [required(), email()];
@@ -104,11 +74,9 @@ export const validateLastName = [required(), minLength(2)];
 export const validateNumber = [required(), greaterThanZero];
 export const validatePasswordOptional = [securePasswordOptional];
 export const validatePasswordRequired = [securePasswordRequired];
-export const validatePasswords = ({ new_password, confirm_password }) => {
-  const errors = {};
-  if ((new_password || confirm_password) && new_password !== confirm_password) {
-    errors.confirm_password = ['admin.shared.errors.password_mismatch'];
+export const validatePasswords = (confirm_password, record) => {
+  if ((record.new_password || confirm_password) && record.new_password !== confirm_password) {
+    return 'admin.shared.errors.password_mismatch';
   }
-  return errors;
+  return undefined;
 };
-

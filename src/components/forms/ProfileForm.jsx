@@ -30,7 +30,7 @@ import { spacings } from '@styles/configs/spacings';
 import { FlexAlignCenter } from '@styles/tools';
 import { rem } from '@styles/utils/rem';
 
-import { useApi } from '@hooks/useAPI';
+import { useApi } from '@hooks/useApi';
 
 import { RequestEndpoint } from '@utils/constants';
 
@@ -47,7 +47,7 @@ import { OverlayContext } from '@components/overlays/OverlayProvider';
  */
 const ProfileForm = () => {
   const { t } = useTranslation();
-  const { identity, loading: identityLoading } = useGetIdentity();
+  const { identity, isLoading: identityLoading } = useGetIdentity();
   const { close } = useContext(OverlayContext);
   const notify = useNotify();
   const newpassword = useRef();
@@ -81,8 +81,8 @@ const ProfileForm = () => {
 
       notify('api.success.profile_update', 'success');
     } else {
-      if (data && data.password) notify('api.error.pwd_invalid', 'error');
-      else notify('api.error.generic', 'error');
+      if (data && data.password) notify('api.error.pwd_invalid', {type: 'error'});
+      else notify('api.error.generic', {type: 'error'});
     }
   };
 

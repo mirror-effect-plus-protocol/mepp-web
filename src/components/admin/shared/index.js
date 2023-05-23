@@ -19,22 +19,26 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { forwardRef } from 'react';
-import { useLocation } from 'react-router-dom';
 import {
   AppBar,
   Layout,
+  Logout,
   UserMenu,
+  useUserMenu,
   MenuItemLink,
   useTranslate,
-  useGetIdentity
+  useGetIdentity,
 } from 'react-admin';
-import { Box } from '@material-ui/core';
-import SettingsIcon from '@material-ui/icons/Settings';
-import { LocaleSwitcher } from './buttons/LocaleSwitcher';
+import { useLocation } from 'react-router-dom';
+
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Box } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+
 import { Logo } from '@components/admin/shared/icons/Logo';
-import  { makeStyles } from '@material-ui/core/styles';
+
+import { LocaleSwitcher } from './buttons/LocaleSwitcher';
 
 const useStyles = makeStyles((theme) => ({
   'mepp-layout': {
@@ -42,24 +46,20 @@ const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.up('xs')]: {
         marginTop: theme.spacing(4),
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         marginTop: theme.spacing(5),
       },
     },
     '& header': {
       backgroundColor: '#fff',
-      color: '#232525'
-    }
+      color: '#232525',
+    },
   },
 }));
 
 const MeppAdminAppBar = (props) => {
   return (
-    <AppBar
-        {...props}
-        elevation={1}
-        userMenu={<CustomUserMenu />}
-      >
+    <AppBar {...props} elevation={1} userMenu={<CustomUserMenu />}>
       <Box flex="1">
         <Logo />
       </Box>
@@ -86,12 +86,13 @@ const SettingsMenu = forwardRef((props, ref) => {
 });
 
 const CustomUserMenu = (props) => {
-  const { identity, loaded: identityLoaded } = useGetIdentity();
-  if (!identityLoaded || !identity) return <></>;
+  const { identity, isLoading: identityLoading } = useGetIdentity();
+  if (identityLoading || !identity) return <></>;
 
   return (
     <UserMenu {...props}>
-      <SettingsMenu identityUid={identity.uid}/>
+      <SettingsMenu identityUid={identity.uid} />
+      <Logout />
     </UserMenu>
   );
 };

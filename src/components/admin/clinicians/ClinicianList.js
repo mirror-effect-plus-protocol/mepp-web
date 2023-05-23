@@ -26,6 +26,7 @@ import {
   List,
   TextField,
   FunctionField,
+  usePermissions,
   useTranslate,
 } from 'react-admin';
 
@@ -37,6 +38,7 @@ import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 
 export const ClinicianList = (props) => {
+  const permissions = usePermissions();
   const t = useTranslate();
 
   return (
@@ -47,9 +49,8 @@ export const ClinicianList = (props) => {
       filterDefaultValues={{ archived: false, me: false }}
       perPage={25}
       actions={<ListActions/>}
-      bulkActionButtons={<BulkActionButtons permissions={props.permissions} />}
     >
-      <Datagrid>
+      <Datagrid bulkActionButtons={<BulkActionButtons permissions={permissions} />}>
         <TextField source="full_name" />
         <BooleanField
           textAlign="center"
@@ -61,7 +62,7 @@ export const ClinicianList = (props) => {
           render={(record) => record.patients.length}
           textAlign="center"
         />
-        <RowActionToolbar permissions={props.permissions} />
+        <RowActionToolbar permissions={permissions} />
       </Datagrid>
     </List>
   );

@@ -19,9 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import ArchiveIcon from '@material-ui/icons/Archive';
-import UnarchiveIcon from '@material-ui/icons/Unarchive';
 import React from 'react';
 import {
   Button,
@@ -32,6 +29,9 @@ import {
   useUpdateMany,
   useTranslate,
 } from 'react-admin';
+
+import ArchiveIcon from '@mui/icons-material/Archive';
+import UnarchiveIcon from '@mui/icons-material/Unarchive';
 
 const getContext = (archivedFilterValue) => {
   return {
@@ -60,17 +60,19 @@ const ToggleBulkArchiveButton = ({
 }) => {
   const t = useTranslate();
   const context = getContext(archivedFilterValue);
-  const [updateMany, { loading }] = useUpdateMany(
+  const [updateMany, { isLoading }] = useUpdateMany(
     resource,
-    selectedIds,
-    { archived: context.newValue },
+    {
+      ids: selectedIds,
+      data: { archived: context.newValue },
+    },
     {
       onSuccess: () => {
-        notify(context.notifications.success, 'info');
+        notify(context.notifications.success, { type: 'info' });
         refresh();
       },
-      onFailure: (error) => {
-        notify(context.notifications.failure, 'error');
+      onError: (error) => {
+        notify(context.notifications.failure, { type: 'error' });
       },
     },
   );
@@ -85,13 +87,14 @@ const ToggleBulkArchiveButton = ({
     refresh();
   };
   const updateRecords = (value) => {
-    data[value].archived = context.newValue;
+    const recordIndex = data.findIndex((record) => record.id === value);
+    data[recordIndex].archived = context.newValue;
   };
 
   return (
     <Button
       label={t(context.buttonLabel)}
-      disabled={loading}
+      disabled={isLoading}
       onClick={handleClick}
       variant={rest.variant}
       color={rest.color}

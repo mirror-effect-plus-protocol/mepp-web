@@ -22,7 +22,7 @@
 
 import React from 'react';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import {
   BooleanField,
@@ -111,9 +111,7 @@ export const ClinicianShow = (props) => {
         </RaBox>
 
         <ShowToolBar
-          resource={props.resource}
-          record={props.record}
-          basePath={props.basePath}
+          basePath="/clinicians"
         />
       </BoxedShowLayout>
     </Show>

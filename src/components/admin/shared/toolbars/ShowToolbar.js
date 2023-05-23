@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 
 import BackButton from '../buttons/BackButton';

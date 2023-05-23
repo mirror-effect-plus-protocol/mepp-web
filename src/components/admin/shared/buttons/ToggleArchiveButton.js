@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useRef } from 'react';
 import {
   Button,
@@ -30,8 +29,10 @@ import {
   useRecordSelection,
   useTranslate,
 } from 'react-admin';
-import ArchiveIcon from '@material-ui/icons/Archive';
-import UnarchiveIcon from '@material-ui/icons/Unarchive';
+
+import ArchiveIcon from '@mui/icons-material/Archive';
+import UnarchiveIcon from '@mui/icons-material/Unarchive';
+
 import { sanitizeRestProps } from '@admin/utils/props';
 
 const ToggleArchiveButton = ({
@@ -63,11 +64,13 @@ const ToggleArchiveButton = ({
     // Update data
     updateHandler();
   };
-  const [updateHandler, { loading }] = useUpdate(
+  const [updateHandler, { isLoading }] = useUpdate(
     resource,
-    record.id,
-    { 'archived': !record.archived },
-    record,
+    {
+      id: record.id,
+      data: { archived: !record.archived },
+      previousData: record,
+    },
     {
       onSuccess: () => {
         const translatedText = record.archived
@@ -77,13 +80,14 @@ const ToggleArchiveButton = ({
           redirect(redirectionRef.current);
         }
         refresh();
-        notify(translatedText, 'info');
+        notify(translatedText, { type: 'info' });
+        select([])
       },
       onFailure: (error) => {
         const translatedText = record.archived
           ? 'admin.shared.notifications.unarchive.failure'
           : 'admin.shared.notifications.archive.failure';
-        notify(translatedText, 'error');
+        notify(translatedText, { type: 'error' });
       },
     },
   );
@@ -93,13 +97,13 @@ const ToggleArchiveButton = ({
     <Button
       label={t(label)}
       onClick={handleToggleArchive}
-      disabled={loading}
+      disabled={isLoading}
       className={className}
-      {...sanitizeRestProps(rest, [
-        'redirectToBasePath',
-        'showLabel',
-        'showLocation'
-      ], true)}
+      {...sanitizeRestProps(
+        rest,
+        ['redirectToBasePath', 'showLabel', 'showLocation'],
+        true,
+      )}
       variant={rest.variant}
       color={rest.color}
     >

@@ -19,34 +19,35 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { Fragment } from 'react';
-import { BulkDeleteButton } from 'react-admin';
+import { BulkDeleteButton, useResourceContext } from 'react-admin';
 
 import ExportButton from '@components/admin/shared/buttons/ExportButton';
 import ToggleBulkArchiveButton from '@components/admin/shared/buttons/ToggleBulkArchiveButton';
 
-const BulkActionsToolbar = ({permissions, showExport, ...props}) => {
+const BulkActionsToolbar = ({ permissions, showExport, ...props }) => {
   const filterValues = props.filterValues;
+  const resourceName = useResourceContext();
 
-  if (filterValues.hasOwnProperty('is_system')
-      && filterValues.is_system
-      && permissions !== 'admin') {
+  if (
+    filterValues.hasOwnProperty('is_system') &&
+    filterValues.is_system &&
+    permissions !== 'admin'
+  ) {
     return false;
   } else {
     return (
       <Fragment>
-        {showExport &&
+        {showExport && (
           <ExportButton
-            basePath={props.basePath}
-            resource={props.resource}
+            resource={resourceName}
             variant="contained"
             color="primary"
-            style={{marginRight: '10px'}}
+            style={{ marginRight: '10px' }}
             selectedIds={props.selectedIds}
             filterValues={props.filterValues}
           />
-        }
+        )}
         <ToggleBulkArchiveButton
           archivedFilterValue={filterValues.archived}
           variant="contained"
@@ -57,8 +58,7 @@ const BulkActionsToolbar = ({permissions, showExport, ...props}) => {
           <BulkDeleteButton
             {...props}
             variant="outlined"
-            undoable={false}
-            style={{marginLeft: '10px', borderColor: 'red'}}
+            style={{ marginLeft: '10px', borderColor: 'red' }}
           />
         )}
       </Fragment>

@@ -19,12 +19,12 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ArrayInput,
   BooleanInput,
   Edit,
+  FormDataConsumer,
   NumberInput,
   ReferenceField,
   SelectInput,
@@ -35,31 +35,33 @@ import {
   TranslatableInputs,
   useGetList,
   useLocale,
+  usePermissions,
   useTranslate,
 } from 'react-admin';
 
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolBar';
-import {
-  validateCategory,
-  validateSubCategory,
-  validateSubCategories,
-} from '@components/admin/exercises/validators';
-import { validateNumber } from '@components/admin/shared/validators';
+import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
+import { preSave } from '@components/admin/exercises/callbacks';
 import {
   useNumberStyles,
   useSimpleFormIteratorStyles,
   useTranslatorInputStyles,
 } from '@components/admin/exercises/styles';
-import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
-import {requiredLocalizedField} from '@components/admin/shared/validators';
-import { LANGUAGES } from '../../../locales';
-import {preSave} from '@components/admin/exercises/callbacks';
+import {
+  validateCategory,
+  validateSubCategory,
+  validateSubCategories,
+} from '@components/admin/exercises/validators';
 import { Typography, Div } from '@components/admin/shared/dom/sanitize';
+import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
+import { validateNumber } from '@components/admin/shared/validators';
+import { requiredLocalizedField } from '@components/admin/shared/validators';
+
+import { LANGUAGES } from '../../../locales';
 
 export const ExerciseEdit = (props) => {
-
   const t = useTranslate();
+  const { permissions } = usePermissions();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const numberClasses = useNumberStyles();
   const translatorClasses = useTranslatorInputStyles();
@@ -67,16 +69,15 @@ export const ExerciseEdit = (props) => {
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
   let categories = [];
   let subCategories = {};
-  const {data, ids, loaded} = useGetList(
-    'categories',
-    { page: 1, perPage: 9999},
-    { field: 'i18n__name', order: 'ASC' },
-    { language: locale }
-  );
+  const { data, isLoading } = useGetList('categories', {
+    pagination: { page: 1, perPage: 9999 },
+    sort: { field: 'i18n__name', order: 'ASC' },
+    filter: { language: locale },
+  });
 
-  const validateI18n = (record) => {
-    return requiredLocalizedField(record, locale, 'description');
-  }
+  const validateI18n = (value, record) => {
+    return requiredLocalizedField(value, record, locale, 'description');
+  };
   /* Update description translations if empty */
   const transform = (record) => {
     return preSave(record, locale);
@@ -90,34 +91,36 @@ export const ExerciseEdit = (props) => {
     updates[categoryInput.name.replace('category__', '')] = categoryInput.value;
     setUpdatedSubCategoryInputs({
       ...updatedSubCategoryInputs,
-      ...updates
+      ...updates,
     });
   };
   // ToDo refactor
-  if (loaded) {
-    ids.forEach((categoryUid) => {
-      categories.push({'id': categoryUid, 'name': data[categoryUid].i18n.name[locale]});
-      subCategories[categoryUid] = data[categoryUid]['sub_categories'].map((subCategory) => {
-        return {'id': subCategory.id, 'name': subCategory.i18n.name[locale]};
+  if (!isLoading) {
+    data.forEach((category) => {
+      categories.push({
+        'id': category.id,
+        'name': category.i18n.name[locale],
       });
+      subCategories[category.id] = category.sub_categories.map(
+        (subCategory) => {
+          return {
+            'id': subCategory.id,
+            'name': subCategory.i18n.name[locale],
+          };
+        },
+      );
     });
   }
 
   return (
-    <Edit
-      transform={transform}
-      undoable={false}
-      actions={<TopToolbar />}
-      {...props}
-    >
+    <Edit transform={transform} actions={<TopToolbar />} {...props}>
       <SimpleForm
-        toolbar={<SimpleFormToolBar identity={false}/>}
-        validate={validateI18n}
+        toolbar={<SimpleFormToolBar identity={false} />}
       >
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}
         </Typography>
-        {props.permissions === 'admin' && (
+        {permissions === 'admin' && (
           <ReferenceField
             source="clinician_uid"
             reference="clinicians"
@@ -135,13 +138,10 @@ export const ExerciseEdit = (props) => {
             source="i18n.description"
             multiline={true}
             fullWidth={true}
+            validate={validateI18n}
           />
         </TranslatableInputs>
-        {props.permissions === 'admin' &&
-          <BooleanInput
-            source="is_system"
-          />
-        }
+        {permissions === 'admin' && <BooleanInput source="is_system" />}
         <Div className={numberClasses.numbers}>
           <NumberInput
             source="movement_duration"
@@ -162,25 +162,37 @@ export const ExerciseEdit = (props) => {
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
-        {loaded && (
+        {!isLoading && (
           <ArrayInput
             source="sub_categories"
             validate={validateSubCategories}
             fullWidth={false}
           >
-            <SimpleFormIterator classes={simpleFormIteratorclasses} disableReordering={true}>
+            <SimpleFormIterator
+              classes={simpleFormIteratorclasses}
+              disableReordering={true}
+            >
               <SelectInput
+                label="Category"
                 source="category__uid"
                 choices={categories}
                 onChange={handleChange}
                 validate={validateCategory}
               />
-              <SubCategoryInput
-                source="uid"
-                updatedSubCategoryInputs={updatedSubCategoryInputs}
-                subCategories={subCategories}
-                validate={validateSubCategory}
-              />
+              <FormDataConsumer>
+                {({ scopedFormData, getSource, ...rest }) =>
+                  scopedFormData ? (
+                    <SubCategoryInput
+                      label="Sub-category"
+                      source={getSource('uid')}
+                      data={scopedFormData}
+                      updatedSubCategoryInputs={updatedSubCategoryInputs}
+                      subCategories={subCategories}
+                      validate={validateSubCategory}
+                    />
+                  ) : null
+                }
+              </FormDataConsumer>
             </SimpleFormIterator>
           </ArrayInput>
         )}

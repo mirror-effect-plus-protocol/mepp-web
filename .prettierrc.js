@@ -26,7 +26,7 @@ module.exports = {
   quoteProps: 'preserve',
   experimentalBabelParserPluginsList: ['jsx'],
   importOrder: [
-    '^@material-ui/(.*)$',
+    '^@mui/(.*)$',
     '^@admin/(.*)$',
     '^@assets/(.*)$',
     '^@styles/(.*)$',

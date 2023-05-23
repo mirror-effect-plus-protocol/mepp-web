@@ -19,39 +19,37 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import {
   Labeled,
   ReferenceField,
   TextField,
+  useResourceContext,
   useTranslate,
 } from 'react-admin';
 
 const ClinicianTextField = ({ show, ...props }) => {
+  const resourceName = useResourceContext();
   const t = useTranslate();
 
   if (show) {
     return (
       <ReferenceField
         record={props.record}
-        resource={props.resource}
-        basePath={props.basePath}
+        resource={resourceName}
         source="clinician_uid"
         reference="clinicians"
         link="show"
       >
         <Labeled
           record={props.record}
-          resource={props.resource}
-          basePath={props.basePath}
+          resource={resourceName}
           label={t('resources.patients.fields.clinician_uid')}
           disabled={false}
         >
           <TextField
             record={props.record}
-            resource={props.resource}
-            basePath={props.basePath}
+            resource={resourceName}
             source="full_name"
           />
         </Labeled>

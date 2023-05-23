@@ -19,25 +19,21 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import React, { useState } from 'react';
-import {
-  useLocale,
-  useSetLocale,
-  useTranslate,
-  useNotify,
-} from 'react-admin';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import LanguageIcon from '@material-ui/icons/Language';
+import { useLocale, useSetLocale, useTranslate, useNotify } from 'react-admin';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LanguageIcon from '@mui/icons-material/Language';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { makeStyles } from '@mui/styles';
+
+import { RequestEndpoint } from '@utils/constants';
 
 import { LANGUAGES } from '../../../../locales';
-import {fetchJsonWithAuthToken} from "ra-data-django-rest-framework";
-import  {RequestEndpoint } from "@utils/constants";
 
 const LocaleSwitcher = () => {
   const t = useTranslate();
@@ -57,17 +53,19 @@ const LocaleSwitcher = () => {
 
   const handleChange = (event) => {
     const newLanguage = event.target.value;
-    const url = `${process.env.API_ENDPOINT}${RequestEndpoint.PROFILE}`
+    const url = `${process.env.API_ENDPOINT}${RequestEndpoint.PROFILE}`;
     fetchJsonWithAuthToken(url, {
-        method: 'PATCH',
-        body: `{"language": "${newLanguage}"}`,
+      method: 'PATCH',
+      body: `{"language": "${newLanguage}"}`,
+    })
+      .then((response) => {
+        notify('admin.shared.notifications.language.success', { type: 'info' });
       })
-        .then((response) => {
-          notify('admin.shared.notifications.language.success', 'info');
-        })
-        .catch(() => {
-          notify('admin.shared.notifications.language.failure', 'error');
+      .catch(() => {
+        notify('admin.shared.notifications.language.failure', {
+          type: 'error',
         });
+      });
 
     return setLocale(newLanguage);
   };
@@ -109,8 +107,8 @@ const useStyles = makeStyles((theme) => ({
   button: {
     color: '#232525',
     textTransform: 'none',
-    [theme.breakpoints.down('xs')]: {
-        display: 'none'
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
     },
   },
   formControl: {
