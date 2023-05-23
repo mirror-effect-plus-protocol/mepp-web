@@ -182,7 +182,8 @@ class Session(BaseModel):
         """
         exercises_through = TreatmentPlanExerciseM2M.objects.filter(
             treatment_plan=self.patient.active_treatment_plan
-        ).order_by('index')
+        ).order_by('?')
+
         exercises = []
         for exercise_through in exercises_through:
             exercise = {
