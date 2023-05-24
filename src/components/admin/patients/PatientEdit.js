@@ -81,6 +81,7 @@ export const PatientEdit = (props) => {
     <Edit
       mutationOptions={{ onError: handleFailure }}
       actions={<TopToolbar />}
+      mutationMode="optimistic"
       {...props}
     >
       <SimpleForm

@@ -85,6 +85,7 @@ export const ClinicianEdit = (props) => {
 
   return (
     <Edit
+      mutationMode="optimistic"
       queryOptions={{ onError: onFailure }}
       actions={<TopToolbar identity={identity} />}
       {...props}

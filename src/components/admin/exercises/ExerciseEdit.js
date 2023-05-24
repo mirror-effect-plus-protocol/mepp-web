@@ -113,7 +113,12 @@ export const ExerciseEdit = (props) => {
   }
 
   return (
-    <Edit transform={transform} actions={<TopToolbar />} {...props}>
+    <Edit
+      transform={transform}
+      actions={<TopToolbar />}
+      mutationMode="optimistic"
+      {...props}
+    >
       <SimpleForm
         toolbar={<SimpleFormToolBar identity={false} />}
       >

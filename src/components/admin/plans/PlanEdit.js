@@ -87,7 +87,11 @@ export const PlanEdit = (props) => {
   }, [patientUid]);
 
   return (
-    <Edit actions={<TopToolbar patientUid={patientUid} />} {...props}>
+    <Edit
+      actions={<TopToolbar patientUid={patientUid} />}
+      {...props}
+      mutationMode="optimistic"
+    >
       <SimpleForm
         redirect={redirect}
         toolbar={<SimpleFormToolBar identity={false} transform={transform} />}

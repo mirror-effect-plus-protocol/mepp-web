@@ -154,6 +154,7 @@ const SimpleFormToolBar = ({ identity, ...props }) => {
       disabled: pristine,
       saving: props.saving,
       variant: props.variant,
+      mutationMode: props.mutationMode,
       record: record,
       resource: resourceName,
     };
