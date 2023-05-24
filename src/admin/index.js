@@ -164,7 +164,11 @@ export default () => {
               icon={CategoryIcon}
             />
           )}
-          ,{permissions === 'user' && <Navigate to="/intro" />}
+          ,{permissions === 'user' && (
+            <CustomRoutes noLayout>
+              <Route path="*" element={<Navigate to="/intro" />} />
+            </CustomRoutes>
+          )}
         </>
       )}
     </Admin>
