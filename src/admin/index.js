@@ -70,7 +70,7 @@ import {
   ExerciseIcon,
   TreatmentPlanIcon,
 } from '@components/admin/shared/icons';
-import { MeppTheme } from '@components/admin/shared/styles/theme';
+import { meppTheme } from '@components/admin/shared/styles/theme';
 
 import AuthProvider from './authProvider';
 import DataProvider from './dataProvider';
@@ -91,7 +91,7 @@ export default () => {
 
   return (
     <Admin
-      theme={MeppTheme}
+      theme={meppTheme}
       layout={MeppAdminLayout}
       disableTelemetry
       dataProvider={DataProvider}

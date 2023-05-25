@@ -21,7 +21,6 @@
  */
 
 import { defaultTheme } from 'react-admin';
-import merge from 'lodash/merge';
 
 const lightBlue = '#33a4e4';
 const blue = '#078EE4';
@@ -32,8 +31,10 @@ const lightGray = '#a8b0bb';
 const gray = '#939DAB';
 const black = '#232525';
 
-export const MeppTheme = merge({}, defaultTheme, {
+export const meppTheme = {
+  ...defaultTheme,
   palette: {
+    ...defaultTheme.palette,
     primary: {
       light: lightBlue,
       main: blue,
@@ -50,115 +51,138 @@ export const MeppTheme = merge({}, defaultTheme, {
     tonalOffset: 0.2,
   },
   typography: {
+    ...defaultTheme.typography,
     // Use the system font instead of the default Roboto font.
     fontFamily: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Helvetica', 'Arial', 'sans-serif'].join(','),
     h6: {
       fontWeight: 'bold'
     }
   },
-  overrides: {
+  components: {
+    ...defaultTheme.components,
     MuiButton: {
-      root: {
-        color: 'white',
-        borderRadius: '35px',
-      },
-      text: {
-        paddingLeft: '20px',
-        paddingRight: '20px',
-      },
-      label: {
-        padding: '5px',
+      styleOverrides: {
+        root: {
+          color: 'white',
+          borderRadius: '35px',
+          padding: '10px 20px'
+        },
+        text: {
+          paddingLeft: '20px',
+          paddingRight: '20px',
+        },
+        label: {
+          padding: '5px',
+        }
       }
     },
     MuiPaper: {
-      rounded: {
-        borderRadius: '8px'
+      styleOverrides: {
+        rounded: {
+          borderRadius: '8px'
+        }
       }
     },
     MuiTableHead: {
-      root: {
-        '& th': {
-          height: '40px',
-          '&:first-child': {
-            borderTopLeftRadius: '8px'
-          },
-          '&:last-child': {
-            borderTopRightRadius: '8px'
+      styleOverrides: {
+        root: {
+          '& th': {
+            height: '40px',
+            '&:first-child': {
+              borderTopLeftRadius: '8px'
+            },
+            '&:last-child': {
+              borderTopRightRadius: '8px'
+            }
           }
         }
       }
     },
     MuiTableCell: {
-      root: {
-        height: '30px'
+      styleOverrides: {
+        root: {
+          height: '30px'
+        }
       }
     },
     RaMenuItemLink: {
-      active: {
-        color: blue,
-        '& svg': {
-          color: blue
-        }
-      },
-      root: {
-        color: black,
-        '& svg': {
-          color: grayIcon
+      styleOverrides: {
+        root: {
+          color: black,
+          '& svg': {
+            color: grayIcon
+          },
+          '&.RaMenuItemLink-active': {
+            color: blue,
+            '& svg': {
+              color: blue
+            }
+          }
         }
       }
     },
     RaTranslatableFields: {
-      root: {
-        '& button': {
-          minWidth: '48px',
-          width: '48px'
-        },
-        '& div[role="tablist"]': {
-          backgroundColor: lighterGray
+      styleOverrides: {
+        root: {
+          '& button': {
+            minWidth: '48px',
+            width: '48px'
+          },
+          '& div[role="tablist"]': {
+            backgroundColor: lighterGray
+          }
         }
       }
     },
     RaTranslatableInputs: {
-      root: {
-        '& div[role="tablist"]': {
-          backgroundColor: lighterGray,
-          height: '48px'
+      styleOverrides: {
+        root: {
+          '& div[role="tablist"]': {
+            backgroundColor: lighterGray,
+            height: '48px'
+          }
         }
       }
     },
     RaBulkActionsToolbar: {
-      topToolbar: {
-        paddingTop: '10px',
-      },
+      styleOverrides: {
+        topToolbar: {
+          paddingTop: '10px',
+        },
+      }
     },
     MuiDialogActions: {
-      root: {
-        '& button': {
-          backgroundColor: '#a8b0bb',
-          padding: '4px 10px',
-          fontSize: '0.8125rem',
-          '&:hover': {
-            backgroundColor: gray,
-          },
-          '&.ra-confirm, &.MuiButton-containedPrimary': {
-            color: '#fff',
-            backgroundColor: lightBlue
-          },
-          '&.ra-confirm:hover, &.MuiButton-containedPrimary:hover': {
-            backgroundColor: blue,
+      styleOverrides: {
+        root: {
+          '& button': {
+            backgroundColor: '#a8b0bb',
+            padding: '4px 10px',
+            fontSize: '0.8125rem',
+            '&:hover': {
+              backgroundColor: gray,
+            },
+            '&.ra-confirm, &.MuiButton-containedPrimary': {
+              color: '#fff',
+              backgroundColor: lightBlue
+            },
+            '&.ra-confirm:hover, &.MuiButton-containedPrimary:hover': {
+              backgroundColor: blue,
+            }
           }
         }
       }
     },
     RaPaginationActions: {
-      actions: {
-        '& button': {
-          minWidth: 0
+      styleOverrides: {
+        actions: {
+          '& button': {
+            minWidth: 0
+          }
+        },
+        currentPageButton: {
+          color: black
         }
-      },
-      currentPageButton: {
-        color : black
       }
     }
   }
-});
+};
