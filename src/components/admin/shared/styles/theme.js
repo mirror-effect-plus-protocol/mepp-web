@@ -87,13 +87,7 @@ export const meppTheme = {
       styleOverrides: {
         root: {
           '& th': {
-            height: '40px',
-            '&:first-child': {
-              borderTopLeftRadius: '8px'
-            },
-            '&:last-child': {
-              borderTopRightRadius: '8px'
-            }
+            height: '50px',
           }
         }
       }
@@ -102,6 +96,18 @@ export const meppTheme = {
       styleOverrides: {
         root: {
           height: '30px'
+        }
+      }
+    },
+    RaDatagrid: {
+      styleOverrides: {
+        root: {
+          '.RaDatagrid-headerCell:first-of-type': {
+            borderTopLeftRadius: '8px'
+          },
+          '.RaDatagrid-headerCell:last-of-type': {
+            borderTopLeftRadius: '8px'
+          }
         }
       }
     },
