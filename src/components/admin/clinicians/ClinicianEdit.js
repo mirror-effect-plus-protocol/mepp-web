@@ -29,9 +29,11 @@ import {
   PasswordInput,
   TextInput,
   useGetIdentity,
+  useRecordContext,
   useResourceContext,
   useTranslate,
-  useNotify, useResourceDefinition,
+  useNotify,
+  useResourceDefinition,
 } from 'react-admin';
 
 import { makeStyles } from '@mui/styles';
@@ -61,7 +63,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProfileRow = ({ identity, identityLoading, ...props }) => {
-  if (identityLoading || identity?.uid === props?.record?.id) {
+  const record = useRecordContext();
+  if (identityLoading || identity?.uid === record?.id) {
     return false;
   } else {
     return props.children;
@@ -71,7 +74,7 @@ const ProfileRow = ({ identity, identityLoading, ...props }) => {
 export const ClinicianEdit = (props) => {
   const t = useTranslate();
   const { hasShow } = useResourceDefinition();
-  const { identity, isLoading: identityLoading } = useGetIdentity();
+  const { identity, isLoading: identityLoading, refetch } = useGetIdentity();
   const resourceName = useResourceContext();
   const classes = useStyles();
   const notify = useNotify();
@@ -83,17 +86,28 @@ export const ClinicianEdit = (props) => {
     });
     notify(message, { type: 'error' });
   };
+  const onUpdate = (data) => {
+    if (identity?.uid === data.id) {
+      const profile = JSON.parse(localStorage.getItem('profile'));
+      profile.first_name = data.first_name;
+      profile.last_name = data.last_name;
+      profile.full_name = `${profile.first_name} ${profile.last_name}`;
+      profile.email = data.email;
+      localStorage.setItem('profile', JSON.stringify(profile));
+      refetch();
+      notify('admin.shared.notifications.profile.success', { type: 'info' });
+    }
+  };
 
   return (
     <Edit
       mutationMode="optimistic"
+      mutationOptions={{ onSuccess: onUpdate }}
       queryOptions={{ onError: onFailure }}
       actions={<TopToolbar hasShow={hasShow} identity={identity} />}
       {...props}
     >
-      <SimpleForm
-        toolbar={<SimpleFormToolBar identity={identity} />}
-      >
+      <SimpleForm toolbar={<SimpleFormToolBar identity={identity} />}>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>

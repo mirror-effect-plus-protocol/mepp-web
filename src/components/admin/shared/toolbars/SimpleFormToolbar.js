@@ -23,10 +23,8 @@ import React, { useMemo } from 'react';
 import {
   SaveButton,
   Toolbar,
-  useNotify,
   useRecordContext,
   useRedirect,
-  useRefresh,
   useResourceContext,
   useTranslate,
 } from 'react-admin';
@@ -69,11 +67,9 @@ const SimpleFormToolBar = ({ identity, ...props }) => {
   const classes = useStyles();
   const record = useRecordContext();
   const redirect = useRedirect();
-  const refresh = useRefresh();
   const resourceName = useResourceContext();
   const { invalid, pristine } = useFormState();
   const basePath = `/${resourceName}`;
-  const notify = useNotify();
   const location = useLocation();
   const [confirm, setConfirm] = React.useState(false);
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -114,34 +110,6 @@ const SimpleFormToolBar = ({ identity, ...props }) => {
     }
   }, [showEditButtons, redirectLocation]);
 
-  const onProfileSaveSuccess = (data) => {
-    // Update profile
-    const profile = JSON.parse(localStorage.getItem('profile'));
-    let reload = false;
-    if (
-      profile.first_name !== data.first_name ||
-      profile.last_name !== data.last_name
-    ) {
-      reload = true;
-    }
-    profile.first_name = data.first_name;
-    profile.last_name = data.last_name;
-    profile.full_name = `${profile.first_name} ${profile.last_name}`;
-    profile.email = data.email;
-    localStorage.setItem('profile', JSON.stringify(profile));
-    notify('admin.shared.notifications.profile.success', { type: 'info' });
-    // force window reload if full name has changed.
-    // React-Admin Appbar does not reload itself when identity has changed.
-    // ToDo find a way to refresh the component without loading the whole app
-    if (reload) {
-      window.location.href = `#${formRedirect}`;
-      window.location.reload();
-    } else {
-      redirect(formRedirect);
-      refresh();
-    }
-  };
-
   const saveButtonProps = useMemo(() => {
     const defaultProps = {
       classes: props.classes,
@@ -158,13 +126,6 @@ const SimpleFormToolBar = ({ identity, ...props }) => {
       record: record,
       resource: resourceName,
     };
-    if (
-      resourceName === 'clinicians' &&
-      identity &&
-      identity?.uid === record?.id
-    ) {
-      defaultProps.mutationOptions = { onSuccess: onProfileSaveSuccess };
-    }
     return defaultProps;
   }, [showEditButtons, redirectLocation, props]);
 
@@ -208,11 +169,7 @@ const SimpleFormToolBar = ({ identity, ...props }) => {
             </Button>
           </DialogActions>
         </Dialog>
-        <SaveButton
-          redirect={formRedirect}
-          size="small"
-          {...saveButtonProps}
-        />
+        <SaveButton redirect={formRedirect} size="small" {...saveButtonProps} />
       </Div>
       {showEditButtons && record && record?.id && (
         <ToggleArchiveButton
