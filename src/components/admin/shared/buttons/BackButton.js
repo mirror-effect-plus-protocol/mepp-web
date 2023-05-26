@@ -50,7 +50,7 @@ const BackButton = ({ patientUid }) => {
       color="secondary"
       variant="contained"
     >
-      {t('admin.shared.labels.backButton!')}
+      {t('admin.shared.labels.backButton')}
     </Button>
   );
 };

@@ -65,7 +65,10 @@ export const meppTheme = {
         root: {
           borderRadius: '35px',
           padding: '8px 15px',
-          fontWeight: 500
+          fontWeight: 500,
+          '&.RaCreateButton-root': {
+            padding: '10px 17px'
+          }
         },
         // text: {
         //   paddingLeft: '20px',
@@ -107,6 +110,17 @@ export const meppTheme = {
           },
           '.RaDatagrid-headerCell:last-of-type': {
             borderTopLeftRadius: '8px'
+          }
+        }
+      }
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          '&.RaTopToolbar-root': {
+            backgroundColor: 'blue !important',
+            paddingBottom: '7px',
+            paddingRight: 0
           }
         }
       }
@@ -163,7 +177,7 @@ export const meppTheme = {
         root: {
           '& button': {
             backgroundColor: '#a8b0bb',
-            padding: '4px 10px',
+            padding: '10px 17px',
             fontSize: '0.8125rem',
             '&:hover': {
               backgroundColor: gray,
