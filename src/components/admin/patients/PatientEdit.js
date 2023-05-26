@@ -31,7 +31,7 @@ import {
   useRefresh,
   useResourceContext,
   useTranslate,
-  useNotify,
+  useNotify, useResourceDefinition,
 } from 'react-admin';
 
 import Box from '@mui/material/Box';
@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const PatientEdit = (props) => {
   const resourceName = useResourceContext();
+  const { hasShow } = useResourceDefinition();
   const t = useTranslate();
   const classes = useStyles();
   const options = Options();
@@ -80,7 +81,7 @@ export const PatientEdit = (props) => {
   return (
     <Edit
       mutationOptions={{ onError: handleFailure }}
-      actions={<TopToolbar />}
+      actions={<TopToolbar hasShow={hasShow}/>}
       mutationMode="optimistic"
       {...props}
     >

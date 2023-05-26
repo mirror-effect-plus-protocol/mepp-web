@@ -21,7 +21,8 @@
  */
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
-import React, { Fragment, useState } from 'react';
+import { useResourceDefinition } from 'react-admin';
+import React, { useState } from 'react';
 import {
   Datagrid,
   Show,
@@ -108,8 +109,16 @@ const useArchivesStyles = makeStyles((theme) => ({
 }));
 
 export const PatientShow = (props) => {
+  const { hasEdit } = useResourceDefinition();
   return (
-    <Show actions={<TopToolbar showExport={true} {...props} />}>
+    <Show
+      actions={
+        <TopToolbar showExport={true}
+          hasEdit={hasEdit}
+          hasShow={false}
+        />
+      }
+    >
       <PatientShowRecord {...props}></PatientShowRecord>
     </Show>
   );
@@ -327,7 +336,7 @@ export const PatientShowLayout = ({ record, props }) => {
         )}
       </div>
 
-      <ShowToolBar basePath="/patients" />
+      <ShowToolBar />
     </>
   );
 };

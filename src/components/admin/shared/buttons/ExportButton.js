@@ -26,6 +26,7 @@ import {
   useUnselectAll,
   useLocale,
   useTranslate,
+  useResourceContext,
 } from 'react-admin';
 
 import DownloadIcon from '@mui/icons-material/GetApp';
@@ -33,8 +34,6 @@ import Button from '@mui/material/Button';
 
 const ExportButton = (props) => {
   const {
-    basePath = '',
-    resource = '',
     selectedIds = [],
     scrollToTop = true,
     showLabel = true,
@@ -45,6 +44,7 @@ const ExportButton = (props) => {
     ...rest
   } = props;
 
+  const resource = rest.resource || useResourceContext();
   const t = useTranslate();
   const locale = useLocale();
   const notify = useNotify();

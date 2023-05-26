@@ -30,7 +30,7 @@ import {
   TextField,
   EmailField,
   FunctionField,
-  useTranslate,
+  useTranslate, useResourceDefinition,
 } from 'react-admin';
 
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
@@ -71,11 +71,12 @@ const useRaBoxStyles = makeStyles((theme) => ({
 
 export const ClinicianShow = (props) => {
   const t = useTranslate();
+  const { hasEdit } = useResourceDefinition();
   const classes = useRaBoxStyles();
 
   return (
     <Show
-      actions={<TopToolbar/>}
+      actions={<TopToolbar hasEdit={hasEdit}/>}
       {...props}
     >
       <BoxedShowLayout>
@@ -110,9 +111,7 @@ export const ClinicianShow = (props) => {
           </RaBox>
         </RaBox>
 
-        <ShowToolBar
-          basePath="/clinicians"
-        />
+        <ShowToolBar />
       </BoxedShowLayout>
     </Show>
   );

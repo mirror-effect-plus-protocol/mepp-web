@@ -31,7 +31,7 @@ import {
   useGetIdentity,
   useResourceContext,
   useTranslate,
-  useNotify,
+  useNotify, useResourceDefinition,
 } from 'react-admin';
 
 import { makeStyles } from '@mui/styles';
@@ -70,6 +70,7 @@ const ProfileRow = ({ identity, identityLoading, ...props }) => {
 
 export const ClinicianEdit = (props) => {
   const t = useTranslate();
+  const { hasShow } = useResourceDefinition();
   const { identity, isLoading: identityLoading } = useGetIdentity();
   const resourceName = useResourceContext();
   const classes = useStyles();
@@ -87,7 +88,7 @@ export const ClinicianEdit = (props) => {
     <Edit
       mutationMode="optimistic"
       queryOptions={{ onError: onFailure }}
-      actions={<TopToolbar identity={identity} />}
+      actions={<TopToolbar hasShow={hasShow} identity={identity} />}
       {...props}
     >
       <SimpleForm

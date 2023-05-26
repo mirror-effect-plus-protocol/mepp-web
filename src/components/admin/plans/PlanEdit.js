@@ -32,7 +32,7 @@ import {
   TextInput,
   TranslatableInputs,
   useLocale,
-  usePermissions,
+  usePermissions, useResourceDefinition,
   useTranslate,
 } from 'react-admin';
 
@@ -58,6 +58,7 @@ import ExerciseRow from './ExerciseRow';
 
 export const PlanEdit = (props) => {
   const { permissions } = usePermissions();
+  const { hasShow } = useResourceDefinition();
   const t = useTranslate();
   const locale = useLocale();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
@@ -88,7 +89,7 @@ export const PlanEdit = (props) => {
 
   return (
     <Edit
-      actions={<TopToolbar patientUid={patientUid} />}
+      actions={<TopToolbar hasShow={hasShow} patientUid={patientUid} />}
       {...props}
       mutationMode="optimistic"
     >

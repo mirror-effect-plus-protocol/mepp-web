@@ -35,7 +35,7 @@ import {
   TranslatableInputs,
   useGetList,
   useLocale,
-  usePermissions,
+  usePermissions, useResourceDefinition,
   useTranslate,
 } from 'react-admin';
 
@@ -62,6 +62,7 @@ import { LANGUAGES } from '../../../locales';
 export const ExerciseEdit = (props) => {
   const t = useTranslate();
   const { permissions } = usePermissions();
+  const { hasShow } = useResourceDefinition();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const numberClasses = useNumberStyles();
   const translatorClasses = useTranslatorInputStyles();
@@ -115,7 +116,7 @@ export const ExerciseEdit = (props) => {
   return (
     <Edit
       transform={transform}
-      actions={<TopToolbar />}
+      actions={<TopToolbar hasShow={hasShow} />}
       mutationMode="optimistic"
       {...props}
     >

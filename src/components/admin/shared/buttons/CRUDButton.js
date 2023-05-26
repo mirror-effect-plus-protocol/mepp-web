@@ -34,9 +34,7 @@ const stopPropagation = (e) => e.stopPropagation();
 
 const CRUDButton = (props) => {
   const {
-    basePath = '',
     label = false,
-    resource,
     record,
     scrollToTop = true,
     type = 'edit',
@@ -44,9 +42,8 @@ const CRUDButton = (props) => {
     variant = undefined,
     ...rest
   } = props;
-  if (!props.resource) {
-    const resource = useResourceContext();
-  }
+
+  const resource = rest.resource || useResourceContext();
 
   let icon = <ContentCreate />;
   let endpoint = '';
@@ -68,10 +65,7 @@ const CRUDButton = (props) => {
   const location = rest.hasOwnProperty('location')
     ? props.location
     : record
-    ? `${linkToRecord(
-        basePath || `/${props.resource || resource}`,
-        record.id,
-      )}${endpoint}`
+    ? `${linkToRecord(`/${resource}`, record.id)}${endpoint}`
     : '';
 
   return (

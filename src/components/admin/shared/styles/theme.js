@@ -63,17 +63,17 @@ export const meppTheme = {
     MuiButton: {
       styleOverrides: {
         root: {
-          color: 'white',
           borderRadius: '35px',
-          padding: '10px 20px'
+          padding: '8px 15px',
+          fontWeight: 500
         },
-        text: {
-          paddingLeft: '20px',
-          paddingRight: '20px',
-        },
-        label: {
-          padding: '5px',
-        }
+        // text: {
+        //   paddingLeft: '20px',
+        //   paddingRight: '20px',
+        // },
+        // label: {
+        //   padding: '5px',
+        // }
       }
     },
     MuiPaper: {
@@ -114,6 +114,7 @@ export const meppTheme = {
           },
           '&.RaMenuItemLink-active': {
             color: blue,
+            fontWeight: 500,
             '& svg': {
               color: blue
             }

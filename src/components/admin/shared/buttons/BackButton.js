@@ -23,14 +23,17 @@
 import React from 'react';
 import {
   useRedirect,
+  useResourceContext,
   useTranslate,
 } from 'react-admin';
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-const BackButton = ({ patientUid, basePath }) => {
+const BackButton = ({ patientUid }) => {
   const redirect = useRedirect();
   const t = useTranslate();
+  const resource = useResourceContext();
+  const basePath = `/${resource}`;
   const handleBack = (e) => {
     if (patientUid) {
       redirect(`/patients/${patientUid}/show`);
@@ -47,7 +50,7 @@ const BackButton = ({ patientUid, basePath }) => {
       color="secondary"
       variant="contained"
     >
-      {t('admin.shared.labels.backButton')}
+      {t('admin.shared.labels.backButton!')}
     </Button>
   );
 };

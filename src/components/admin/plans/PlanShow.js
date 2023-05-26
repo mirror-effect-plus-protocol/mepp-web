@@ -31,7 +31,7 @@ import {
   TextField,
   TranslatableFields,
   useLocale,
-  usePermissions,
+  usePermissions, useResourceDefinition,
   useTranslate,
 } from 'react-admin';
 
@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => {
 
 export const PlanShow = (props) => {
   const { permissions } = usePermissions();
+  const { hasEdit } = useResourceDefinition();
   const t = useTranslate();
   const locale = useLocale();
   const translatorClasses = useTranslatorInputStyles();
@@ -77,7 +78,7 @@ export const PlanShow = (props) => {
   return (
     <Show
       {...props}
-      actions={<TopToolbar patientUid={patientUid} />}
+      actions={<TopToolbar hasEdit={hasEdit} patientUid={patientUid} />}
       className={planShowClasses.root}
     >
       <BoxedShowLayout>
@@ -121,7 +122,7 @@ export const PlanShow = (props) => {
           </Datagrid>
         </ArrayField>
 
-        <ShowToolBar basePath="/plans" patientUid={patientUid} />
+        <ShowToolBar patientUid={patientUid} />
       </BoxedShowLayout>
     </Show>
   );

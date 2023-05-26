@@ -31,7 +31,7 @@ import {
   useLocale,
   usePermissions,
   useRecordContext,
-  useTranslate,
+  useTranslate, useResourceDefinition,
 } from 'react-admin';
 
 import { Chip } from '@mui/material';
@@ -73,6 +73,7 @@ const CategoryChips = (props) => {
 
 export const ExerciseShow = (props) => {
   const { permissions } = usePermissions();
+  const { hasEdit } = useResourceDefinition();
   const t = useTranslate();
   const locale = useLocale();
   const translatorClasses = useTranslatorInputStyles();
@@ -94,7 +95,7 @@ export const ExerciseShow = (props) => {
     });
   }
   return (
-    <Show {...props} actions={<TopToolbar />}>
+    <Show {...props} actions={<TopToolbar hasEdit={hasEdit} />}>
       <BoxedShowLayout>
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}
@@ -121,7 +122,7 @@ export const ExerciseShow = (props) => {
         <CategoryChips categories={categories} subCategories={subCategories} />
         <BooleanField source="is_system" className={onelineClasses.oneline} />
 
-        <ShowToolBar basePath="/exercises" />
+        <ShowToolBar />
       </BoxedShowLayout>
     </Show>
   );
