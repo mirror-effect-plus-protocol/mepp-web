@@ -29,7 +29,7 @@ import {
   useListContext,
   useLocale,
   usePermissions,
-  useResourceContext,
+  useResourceContext, useStore,
   useTranslate,
 } from 'react-admin';
 
@@ -144,6 +144,13 @@ const TabbedDatagrid = ({ permissions, ...props }) => {
 export const ExerciseList = (props) => {
   const { permissions } = usePermissions();
   const locale = useLocale();
+
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  useEffect(() => {
+    setPatientUid(false);
+  }, []);
+
+
   return (
     <List
       {...props}

@@ -35,14 +35,11 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const ShowToolBar = (props) => {
-  const {
-    patientUid = false,
-  } = props;
+const ShowToolBar = () => {
   const classes = useStyles();
   return (
     <div className={classes.toolbar}>
-      <BackButton patientUid={patientUid} />
+      <BackButton />
     </div>
   );
 };

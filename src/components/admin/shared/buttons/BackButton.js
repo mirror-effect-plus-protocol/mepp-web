@@ -28,18 +28,21 @@ import {
 } from 'react-admin';
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useStore } from 'react-admin';
 
-const BackButton = ({ patientUid }) => {
+const BackButton = () => {
   const redirect = useRedirect();
   const t = useTranslate();
   const resource = useResourceContext();
-  const basePath = `/${resource}`;
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+
   const handleBack = (e) => {
-    if (patientUid) {
-      redirect(`/patients/${patientUid}/show`);
-    } else {
-      redirect(basePath);
+    let redirectUrl = `/${resource}`;
+    if (patientUid && resource !== 'patients') {
+      redirectUrl = `/patients/${patientUid}/show`;
+      setPatientUid(false);
     }
+    redirect(redirectUrl);
   };
 
   return (

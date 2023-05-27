@@ -21,8 +21,8 @@
  */
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
-import { useResourceDefinition } from 'react-admin';
-import React, { useState } from 'react';
+import {useResourceDefinition, useStore} from 'react-admin';
+import React, {useEffect, useState} from 'react';
 import {
   Datagrid,
   Show,
@@ -108,7 +108,7 @@ const useArchivesStyles = makeStyles((theme) => ({
   },
 }));
 
-export const PatientShow = (props) => {
+export const PatientShow = () => {
   const { hasEdit } = useResourceDefinition();
   return (
     <Show
@@ -119,7 +119,7 @@ export const PatientShow = (props) => {
         />
       }
     >
-      <PatientShowRecord {...props}></PatientShowRecord>
+      <PatientShowRecord />
     </Show>
   );
 };
@@ -127,14 +127,21 @@ export const PatientShow = (props) => {
 export const PatientShowRecord = (props) => {
   const record = useRecordContext();
   if (!record) return null;
+  const [patientUid, setPatientUid] = useStore('patient.uid', record.id);
+
+  useEffect(() => {
+    console.log('SET RECORD', record.id);
+    setPatientUid(record.id);
+  }, [record]);
+
   return (
     <BoxedShowLayout>
-      <PatientShowLayout record={record} {...props}></PatientShowLayout>
+      <PatientShowLayout record={record}></PatientShowLayout>
     </BoxedShowLayout>
   );
 };
 
-export const PatientShowLayout = ({ record, props }) => {
+export const PatientShowLayout = ({ record }) => {
   const t = useTranslate();
   const locale = useLocale();
   const notify = useNotify();
@@ -296,7 +303,6 @@ export const PatientShowLayout = ({ record, props }) => {
               resource: resource,
               selectedIds: [],
             }}
-            {...sanitizeRestProps(props, ['label'], true)}
           >
             <Datagrid bulkActionButtons={false}>
               <TextField
