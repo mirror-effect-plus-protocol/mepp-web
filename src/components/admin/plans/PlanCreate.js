@@ -20,6 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   ArrayInput,
   Create,
@@ -31,7 +32,7 @@ import {
   TranslatableInputs,
   useLocale,
   usePermissions,
-  useRecordContext,
+  useRecordContext, useStore,
   useTranslate,
 } from 'react-admin';
 
@@ -61,8 +62,9 @@ export const PlanCreate = (props) => {
   const locale = useLocale();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const translatorClasses = useTranslatorInputStyles();
-  const [patientUid, setPatientUid] = useState(undefined);
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'description');
   };
@@ -70,30 +72,23 @@ export const PlanCreate = (props) => {
   const subCategories = useGetSubCategories(locale);
   const redirect = useCallback(
     () => contextualRedirect(patientUid),
-    [patientUid],
+    [patientUid]
   );
   const transform = useCallback(
     (record) => preSave(record, locale, patientUid, asTemplate),
-    [patientUid, asTemplate],
+    [patientUid, asTemplate]
   );
 
   useEffect(() => {
-    setPatientUid(props?.history?.location?.state?.patientUid);
-  }, [props?.history?.location?.state?.patientUid]);
-
-  useEffect(() => {
-    const search = props?.location?.search || '';
+    const createTemplate = searchParams.get('source') ? true : false;
     if (patientUid) {
-      setAsTemplate(search.indexOf('?source=') > -1);
+      setAsTemplate(createTemplate);
     }
   }, [patientUid]);
 
   return (
-    <Create {...props}>
-      <SimpleForm
-        redirect={redirect}
-        toolbar={<SimpleFormToolBar identity={false} transform={transform} />}
-      >
+    <Create {...props} transform={transform} redirect={redirect}>
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}
         </Typography>

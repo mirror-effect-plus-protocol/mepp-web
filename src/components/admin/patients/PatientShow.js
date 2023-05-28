@@ -130,7 +130,6 @@ export const PatientShowRecord = (props) => {
   const [patientUid, setPatientUid] = useStore('patient.uid', record.id);
 
   useEffect(() => {
-    console.log('SET RECORD', record.id);
     setPatientUid(record.id);
   }, [record]);
 

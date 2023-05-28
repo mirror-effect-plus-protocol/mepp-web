@@ -25,8 +25,8 @@ import { LANGUAGES } from '../../../locales';
 
 export const contextualRedirect = (patientUid) => {
   return patientUid
-    ? `/patients/${patientUid}/show`
-    : `/plans`;
+    ? `patients/${patientUid}/show`
+    : `plans`;
 };
 
 export const preSave = (record, locale, patientUid, asTemplate) => {

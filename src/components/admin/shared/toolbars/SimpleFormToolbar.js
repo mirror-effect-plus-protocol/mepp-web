@@ -80,6 +80,7 @@ const SimpleFormToolBar = ({ identity, ...props }) => {
     }
     return identity?.uid !== record?.id;
   }, [identity, record]);
+
   const handleBackClick = (e) => {
     e.preventDefault();
     if (pristine) {
