@@ -36,7 +36,7 @@ import {
   useResourceDefinition,
   useRedirect
 } from 'react-admin';
-
+import { useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 
 import { Typography } from '@components/admin/shared/dom/sanitize';
@@ -78,6 +78,7 @@ export const ClinicianEdit = () => {
   const { identity, isLoading: identityLoading, refetch } = useGetIdentity();
   const resource = useResourceContext();
   const redirect = useRedirect();
+  const [searchParams, setSearchParams] = useSearchParams();
   const classes = useStyles();
   const notify = useNotify();
   const options = Options();
@@ -90,13 +91,16 @@ export const ClinicianEdit = () => {
   };
   const onUpdate = (data) => {
     if (identity?.uid === data.id) {
+      const backUrl = decodeURIComponent(searchParams.get('back'));
       const profile = JSON.parse(localStorage.getItem('profile'));
+
       profile.first_name = data.first_name;
       profile.last_name = data.last_name;
       profile.full_name = `${profile.first_name} ${profile.last_name}`;
       profile.email = data.email;
       localStorage.setItem('profile', JSON.stringify(profile));
       refetch();
+      redirect(backUrl);
       notify('admin.shared.notifications.profile.success', { type: 'info' });
     } else {
       redirect(`/${resource}`);

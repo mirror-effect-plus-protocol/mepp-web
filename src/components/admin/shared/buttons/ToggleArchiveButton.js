@@ -40,7 +40,6 @@ const ToggleArchiveButton = ({
   record,
   className,
   showLabel,
-  redirectLocation,
   ...rest
 }) => {
   const notify = useNotify();
@@ -91,7 +90,7 @@ const ToggleArchiveButton = ({
       },
     },
   );
-  redirectionRef.current = redirectLocation;
+  redirectionRef.current = `/${resource}`;
 
   return (
     <Button

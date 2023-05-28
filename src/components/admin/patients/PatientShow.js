@@ -327,7 +327,6 @@ export const PatientShowLayout = ({ record }) => {
                 source="end_date"
               />
               <RowActionToolbar
-                basePath="/plans"
                 rowResource="plans"
                 record={record}
                 context={{ patientUid: record.id }}
