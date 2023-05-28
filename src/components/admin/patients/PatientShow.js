@@ -58,8 +58,6 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
-import { sanitizeRestProps } from '@admin/utils/props';
-
 import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
 import AddPlanButton from '@components/admin/patients/AddPlanButton';
 import Spinner from '@components/admin/shared/Spinner';
@@ -124,7 +122,7 @@ export const PatientShow = () => {
   );
 };
 
-export const PatientShowRecord = (props) => {
+export const PatientShowRecord = () => {
   const record = useRecordContext();
   if (!record) return null;
   const [patientUid, setPatientUid] = useStore('patient.uid', record.id);

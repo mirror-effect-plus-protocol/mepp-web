@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const PatientEdit = (props) => {
+export const PatientEdit = () => {
   const resourceName = useResourceContext();
   const { hasShow } = useResourceDefinition();
   const t = useTranslate();
@@ -83,7 +83,6 @@ export const PatientEdit = (props) => {
       mutationOptions={{ onError: handleFailure }}
       actions={<TopToolbar hasShow={hasShow}/>}
       mutationMode="optimistic"
-      {...props}
     >
       <SimpleForm
         toolbar={<SimpleFormToolBar identity={false} />}

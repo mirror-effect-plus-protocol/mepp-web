@@ -55,7 +55,7 @@ import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
 
-export const PlanCreate = (props) => {
+export const PlanCreate = () => {
   const record = useRecordContext();
   const t = useTranslate();
   const { permissions } = usePermissions();
@@ -87,7 +87,7 @@ export const PlanCreate = (props) => {
   }, [patientUid]);
 
   return (
-    <Create {...props} transform={transform} redirect={redirect}>
+    <Create transform={transform} redirect={redirect}>
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}

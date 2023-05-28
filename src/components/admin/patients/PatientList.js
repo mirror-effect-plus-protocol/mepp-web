@@ -30,7 +30,7 @@ import BulkActionButtons from '../shared/toolbars/BulkActionsToolbar';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
 import PatientListAside from './PatientListAside';
 
-export const PatientList = (props) => {
+export const PatientList = () => {
   const { permissions } = usePermissions();
 
   const [patientUid, setPatientUid] = useStore('patient.uid', false);
@@ -40,7 +40,6 @@ export const PatientList = (props) => {
 
   return (
     <List
-      {...props}
       sort={{ field: 'full_name', order: 'ASC' }}
       filters={<ArchivableFilter />}
       filterDefaultValues={{ archived: false }}

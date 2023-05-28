@@ -34,6 +34,7 @@ import {
   useTranslate,
   useNotify,
   useResourceDefinition,
+  useRedirect
 } from 'react-admin';
 
 import { makeStyles } from '@mui/styles';
@@ -71,18 +72,19 @@ const ProfileRow = ({ identity, identityLoading, ...props }) => {
   }
 };
 
-export const ClinicianEdit = (props) => {
+export const ClinicianEdit = () => {
   const t = useTranslate();
   const { hasShow } = useResourceDefinition();
   const { identity, isLoading: identityLoading, refetch } = useGetIdentity();
-  const resourceName = useResourceContext();
+  const resource = useResourceContext();
+  const redirect = useRedirect();
   const classes = useStyles();
   const notify = useNotify();
   const options = Options();
   const onFailure = (error) => {
     let message = '';
     Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${resourceName}.errors.${key}`);
+      message += t(`resources.${resource}.errors.${key}`);
     });
     notify(message, { type: 'error' });
   };
@@ -96,6 +98,9 @@ export const ClinicianEdit = (props) => {
       localStorage.setItem('profile', JSON.stringify(profile));
       refetch();
       notify('admin.shared.notifications.profile.success', { type: 'info' });
+    } else {
+      redirect(`/${resource}`);
+      notify('ra.notification.updated', { type: 'info', messageArgs: { smart_count: 1 }});
     }
   };
 
@@ -105,7 +110,6 @@ export const ClinicianEdit = (props) => {
       mutationOptions={{ onSuccess: onUpdate }}
       queryOptions={{ onError: onFailure }}
       actions={<TopToolbar hasShow={hasShow} identity={identity} />}
-      {...props}
     >
       <SimpleForm toolbar={<SimpleFormToolBar identity={identity} />}>
         <Typography variant="h6" gutterBottom>

@@ -58,7 +58,7 @@ import { validateNumber } from '@components/admin/shared/validators';
 import { LANGUAGES } from '../../../locales';
 import ExerciseRow from './ExerciseRow';
 
-export const PlanEdit = (props) => {
+export const PlanEdit = () => {
   const { permissions } = usePermissions();
   const { hasShow } = useResourceDefinition();
   const t = useTranslate();
@@ -88,7 +88,6 @@ export const PlanEdit = (props) => {
   return (
     <Edit
       actions={<TopToolbar hasShow={hasShow} patientUid={patientUid} />}
-      {...props}
       mutationMode="optimistic"
       redirect={redirect}
       transform={transform}

@@ -49,13 +49,13 @@ const tabs = [
   { id: 'system', is_system: true },
 ];
 
-const PlanDatagrid = ({ permissions, ...props }) => {
+const PlanDatagrid = ({ permissions }) => {
+
   const locale = useLocale();
   const t = useTranslate();
 
   return (
     <Datagrid
-      {...props}
       bulkActionButtons={<BulkActionButtons permissions={permissions} />}
     >
       <TextField source={`i18n.name.${locale}`} />
@@ -75,7 +75,7 @@ const PlanDatagrid = ({ permissions, ...props }) => {
   );
 };
 
-const TabbedDatagrid = ({ permissions, ...props }) => {
+const TabbedDatagrid = ({ permissions }) => {
   const listContext = useListContext();
   const t = useTranslate();
   const { ids, filterValues, setFilters, displayedFilters, loading } =
@@ -121,12 +121,12 @@ const TabbedDatagrid = ({ permissions, ...props }) => {
         {loading && <Spinner />}
         {!loading && filterValues.is_system === false && (
           <ListContextProvider value={{ ...listContext, ids: userPlanIds }}>
-            <PlanDatagrid permissions={permissions} {...props} />
+            <PlanDatagrid permissions={permissions} />
           </ListContextProvider>
         )}
         {!loading && filterValues.is_system === true && (
           <ListContextProvider value={{ ...listContext, ids: systemPlanIds }}>
-            <PlanDatagrid permissions={permissions} {...props} />
+            <PlanDatagrid permissions={permissions} />
           </ListContextProvider>
         )}
       </div>
@@ -134,7 +134,7 @@ const TabbedDatagrid = ({ permissions, ...props }) => {
   );
 };
 
-export const PlanList = (props) => {
+export const PlanList = () => {
   const { permissions } = usePermissions();
   const locale = useLocale();
 
@@ -145,7 +145,6 @@ export const PlanList = (props) => {
 
   return (
     <List
-      {...props}
       filterDefaultValues={{
         archived: false,
         is_system: false,

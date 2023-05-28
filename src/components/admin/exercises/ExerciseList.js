@@ -141,7 +141,7 @@ const TabbedDatagrid = ({ permissions, ...props }) => {
   );
 };
 
-export const ExerciseList = (props) => {
+export const ExerciseList = () => {
   const { permissions } = usePermissions();
   const locale = useLocale();
 
@@ -153,7 +153,6 @@ export const ExerciseList = (props) => {
 
   return (
     <List
-      {...props}
       filterDefaultValues={{
         archived: false,
         is_system: false,

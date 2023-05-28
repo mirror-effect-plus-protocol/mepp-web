@@ -59,7 +59,7 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
 
-export const ExerciseEdit = (props) => {
+export const ExerciseEdit = () => {
   const t = useTranslate();
   const { permissions } = usePermissions();
   const { hasShow } = useResourceDefinition();
@@ -118,7 +118,6 @@ export const ExerciseEdit = (props) => {
       transform={transform}
       actions={<TopToolbar hasShow={hasShow} />}
       mutationMode="optimistic"
-      {...props}
     >
       <SimpleForm
         toolbar={<SimpleFormToolBar identity={false} />}

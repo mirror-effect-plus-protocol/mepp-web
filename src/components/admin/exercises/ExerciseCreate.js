@@ -56,7 +56,7 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
 
-export const ExerciseCreate = (props) => {
+export const ExerciseCreate = () => {
   const { permissions } = usePermissions();
   const t = useTranslate();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
@@ -115,7 +115,7 @@ export const ExerciseCreate = (props) => {
   }
 
   return (
-    <Create transform={transform} {...props}>
+    <Create transform={transform}>
       <SimpleForm
         redirect="show"
         toolbar={<SimpleFormToolBar identity={false} />}

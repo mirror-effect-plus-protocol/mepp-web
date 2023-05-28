@@ -37,7 +37,7 @@ import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar
 import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 
-export const ClinicianList = (props) => {
+export const ClinicianList = () => {
   const permissions = usePermissions();
   const t = useTranslate();
 
@@ -48,7 +48,6 @@ export const ClinicianList = (props) => {
 
   return (
     <List
-      {...props}
       sort={{ field: 'first_name', order: 'ASC' }}
       filters={<ArchivableFilter />}
       filterDefaultValues={{ archived: false, me: false }}
