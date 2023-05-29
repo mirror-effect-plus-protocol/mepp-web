@@ -101,7 +101,7 @@ export const meppTheme = {
     MuiTableCell: {
       styleOverrides: {
         root: {
-          height: '30px'
+          height: '50px'
         }
       }
     },
