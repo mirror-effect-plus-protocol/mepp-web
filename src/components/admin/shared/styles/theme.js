@@ -20,6 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { createTheme } from '@mui/material/styles';
 import { defaultTheme } from 'react-admin';
 
 const lightBlue = '#33a4e4';
@@ -30,6 +31,8 @@ const lighterGray = '#E8E8E8';
 const lightGray = '#a8b0bb';
 const gray = '#939DAB';
 const black = '#232525';
+
+let theme = createTheme({});
 
 export const meppTheme = {
   ...defaultTheme,
@@ -102,6 +105,40 @@ export const meppTheme = {
         }
       }
     },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          '& button': {
+            backgroundColor: '#a8b0bb',
+            padding: '10px 17px',
+            fontSize: '0.8125rem',
+            '&:hover': {
+              backgroundColor: gray,
+            },
+            '&.ra-confirm, &.MuiButton-containedPrimary': {
+              color: '#fff',
+              backgroundColor: lightBlue
+            },
+            '&.ra-confirm:hover, &.MuiButton-containedPrimary:hover': {
+              backgroundColor: blue,
+            }
+          }
+        }
+      }
+    },
+    RaListToolbar:{
+      styleOverrides: {
+        root: {
+          [theme.breakpoints.up('xs')]: {
+            paddingRight: 0,
+            flexWrap: 'nowrap'
+          },
+          [theme.breakpoints.up('sm')]: {
+            paddingBottom: '4px !important' /* need to override React-Admin `!important` */
+          },
+        }
+      }
+    },
     RaDatagrid: {
       styleOverrides: {
         root: {
@@ -110,17 +147,6 @@ export const meppTheme = {
           },
           '.RaDatagrid-headerCell:last-of-type': {
             borderTopLeftRadius: '8px'
-          }
-        }
-      }
-    },
-    MuiToolbar: {
-      styleOverrides: {
-        root: {
-          '&.RaTopToolbar-root': {
-            backgroundColor: 'blue !important',
-            paddingBottom: '7px',
-            paddingRight: 0
           }
         }
       }
@@ -172,27 +198,6 @@ export const meppTheme = {
         },
       }
     },
-    MuiDialogActions: {
-      styleOverrides: {
-        root: {
-          '& button': {
-            backgroundColor: '#a8b0bb',
-            padding: '10px 17px',
-            fontSize: '0.8125rem',
-            '&:hover': {
-              backgroundColor: gray,
-            },
-            '&.ra-confirm, &.MuiButton-containedPrimary': {
-              color: '#fff',
-              backgroundColor: lightBlue
-            },
-            '&.ra-confirm:hover, &.MuiButton-containedPrimary:hover': {
-              backgroundColor: blue,
-            }
-          }
-        }
-      }
-    },
     RaPaginationActions: {
       styleOverrides: {
         actions: {
@@ -202,6 +207,33 @@ export const meppTheme = {
         },
         currentPageButton: {
           color: black
+        }
+      }
+    },
+    RaFilterFormInput: {
+      styleOverrides: {
+        root: {
+          [theme.breakpoints.up('xs')]: {
+            paddingLeft: '15px',
+            paddingBottom: '6px',
+          },
+          [theme.breakpoints.up('sm')]: {
+            paddingLeft: '1px',
+            paddingBottom: '3px'
+          },
+
+        }
+      }
+    },
+    RaTopToolbar: {
+      styleOverrides: {
+        root: {
+          [theme.breakpoints.up('xs')]: {
+            paddingRight: 0
+          },
+          [theme.breakpoints.up('sm')]: {
+            paddingRight: 0
+          },
         }
       }
     }

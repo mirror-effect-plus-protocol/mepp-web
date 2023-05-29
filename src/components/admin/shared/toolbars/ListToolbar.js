@@ -32,7 +32,12 @@ const ListActions = ({ showExport, ...props }) => {
         <ExportButton
           resource={resourceName}
           variant="outlined"
-          style={{ marginRight: '0.8em' }}
+          sx={{
+            marginRight: {
+              xs: '5px', // theme.breakpoints.up('xs')
+              md: 0, // theme.breakpoints.up('md')
+            }
+          }}
           filterValues={props.filterValues}
         />
       )}
