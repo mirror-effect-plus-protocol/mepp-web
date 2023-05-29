@@ -48,7 +48,9 @@ const useRowActionToolbarStyles = makeStyles({
   },
   icon_action_button: {
     minWidth: '40px;',
-    '& svg': { fontSize: '1.35rem' },
+    padding: '4px 5px',
+    '& svg': { fontSize: '1.35rem !important' },
+    '& .MuiButton-startIcon': { marginRight: 0 }
   },
 });
 
