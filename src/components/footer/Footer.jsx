@@ -121,9 +121,9 @@ const Footer = () => {
           </Copyright>
 
           <CopyrightLinks>
-            <Href href="#privacy">{t('footer:privacy')}</Href>
+            <Href href="#/privacy">{t('footer:privacy')}</Href>
             &nbsp;|&nbsp;
-            <Href href="#termsofuse">{t('footer:termsofuse')}</Href>
+            <Href href="#/termsofuse">{t('footer:termsofuse')}</Href>
           </CopyrightLinks>
         </CopyrightWrapper>
       </ContainerInter>
