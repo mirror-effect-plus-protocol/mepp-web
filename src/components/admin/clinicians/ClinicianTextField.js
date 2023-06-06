@@ -34,26 +34,22 @@ const ClinicianTextField = ({ show, ...props }) => {
 
   if (show) {
     return (
-      <ReferenceField
-        record={props.record}
-        resource={resourceName}
-        source="clinician_uid"
-        reference="clinicians"
-        link="show"
-      >
-        <Labeled
+      <Labeled>
+        <ReferenceField
           record={props.record}
           resource={resourceName}
           label={t('resources.patients.fields.clinician_uid')}
-          disabled={false}
+          source="clinician_uid"
+          reference="clinicians"
+          link="show"
         >
           <TextField
             record={props.record}
             resource={resourceName}
             source="full_name"
           />
-        </Labeled>
-      </ReferenceField>
+        </ReferenceField>
+      </Labeled>
     );
   } else {
     return <></>;
