@@ -21,8 +21,8 @@
  */
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
-import { useResourceDefinition } from 'react-admin';
 import React, { useState } from 'react';
+import { useResourceDefinition } from 'react-admin';
 import {
   Datagrid,
   Show,
@@ -31,6 +31,7 @@ import {
   DateField,
   EmailField,
   FunctionField,
+  Labeled,
   ListContextProvider,
   useLocale,
   useGetList,
@@ -71,6 +72,7 @@ import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 const useRaBoxStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    width: '100%',
   },
   leftColumn: {
     flexDirection: 'column',
@@ -99,6 +101,14 @@ const useRaBoxStyles = makeStyles((theme) => ({
   innerChild: {
     width: '50%',
   },
+  buttonLine: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  buttonLineLeft: {
+    display: 'flex',
+  },
 }));
 
 const useArchivesStyles = makeStyles((theme) => ({
@@ -113,10 +123,7 @@ export const PatientShow = (props) => {
   return (
     <Show
       actions={
-        <TopToolbar showExport={true}
-          hasEdit={hasEdit}
-          hasShow={false}
-        />
+        <TopToolbar showExport={true} hasEdit={hasEdit} hasShow={false} />
       }
     >
       <PatientShowRecord {...props}></PatientShowRecord>
@@ -127,11 +134,7 @@ export const PatientShow = (props) => {
 export const PatientShowRecord = (props) => {
   const record = useRecordContext();
   if (!record) return null;
-  return (
-    <BoxedShowLayout>
-      <PatientShowLayout record={record} {...props}></PatientShowLayout>
-    </BoxedShowLayout>
-  );
+  return <PatientShowLayout record={record} {...props}></PatientShowLayout>;
 };
 
 export const PatientShowLayout = ({ record, props }) => {
@@ -183,7 +186,7 @@ export const PatientShowLayout = ({ record, props }) => {
   };
 
   return (
-    <>
+    <BoxedShowLayout>
       <RaBox className={classes.root}>
         <RaBox className={classes.leftColumn}>
           <Typography variant="h6" gutterBottom>
@@ -191,7 +194,9 @@ export const PatientShowLayout = ({ record, props }) => {
           </Typography>
           <RaBox className={classes.columnChild}>
             <RaBox className={classes.innerChild}>
-              <TextField source="first_name" />
+              <Labeled>
+                <TextField source="first_name" />
+              </Labeled>
               <div>
                 <EmailField source="email" />
                 <IconButton
@@ -234,7 +239,9 @@ export const PatientShowLayout = ({ record, props }) => {
               </div>
             </RaBox>
             <RaBox className={classes.innerChild}>
-              <TextField source="last_name" />
+              <Labeled>
+                <TextField source="last_name" />
+              </Labeled>
             </RaBox>
           </RaBox>
         </RaBox>
@@ -245,46 +252,56 @@ export const PatientShowLayout = ({ record, props }) => {
           </Typography>
           <RaBox className={classes.columnChild}>
             <RaBox className={classes.innerChild}>
-              <FunctionField
-                label={t('resources.patients.fields.use_audio')}
-                render={(record) =>
-                  t(`resources.patients.shared.audio.${record.use_audio}`)
-                }
-              />
-              <FunctionField
-                label={t('resources.patients.fields.language')}
-                render={(record) => t(`languages.${record.language}`)}
-              />
+              <Labeled>
+                <FunctionField
+                  label={t('resources.patients.fields.use_audio')}
+                  render={(record) =>
+                    t(`resources.patients.shared.audio.${record.use_audio}`)
+                  }
+                />
+              </Labeled>
+              <Labeled>
+                <FunctionField
+                  label={t('resources.patients.fields.language')}
+                  render={(record) => t(`languages.${record.language}`)}
+                />
+              </Labeled>
             </RaBox>
             <RaBox className={classes.innerChild}>
-              <FunctionField
-                label={t('resources.patients.fields.side')}
-                render={(record) =>
-                  t(`resources.patients.shared.side.${record.side}`)
-                }
-              />
+              <Labeled>
+                <FunctionField
+                  label={t('resources.patients.fields.side')}
+                  render={(record) =>
+                    t(`resources.patients.shared.side.${record.side}`)
+                  }
+                />
+              </Labeled>
               <ClinicianTextField show={permissions === 'admin'} />
             </RaBox>
           </RaBox>
         </RaBox>
       </RaBox>
 
-      <Typography variant="h6" gutterBottom gutterTop={true}>
-        {t('resources.patients.card.labels.plans')}
-        <FormGroup classes={archivesToggleClasses}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={archives}
-                onChange={handleArchivesChange}
-                color="primary"
-              />
-            }
-            label={t('resources.plans.fields.archived')}
-          />
-        </FormGroup>
+      <RaBox className={classes.buttonLine}>
+        <RaBox className={classes.buttonLineLeft}>
+          <Typography variant="h6" gutterBottom>
+            {t('resources.patients.card.labels.plans')}
+          </Typography>
+          <FormGroup classes={archivesToggleClasses}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={archives}
+                  onChange={handleArchivesChange}
+                  color="primary"
+                />
+              }
+              label={t('resources.plans.fields.archived')}
+            />
+          </FormGroup>
+        </RaBox>
         <AddPlanButton patientUid={record.id} />
-      </Typography>
+      </RaBox>
       <div>
         {isLoading && <Spinner />}
         {!isLoading && (
@@ -337,6 +354,6 @@ export const PatientShowLayout = ({ record, props }) => {
       </div>
 
       <ShowToolBar />
-    </>
+    </BoxedShowLayout>
   );
 };
