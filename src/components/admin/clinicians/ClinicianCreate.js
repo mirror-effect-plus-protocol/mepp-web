@@ -50,6 +50,7 @@ import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
     '& > div': {
