@@ -72,14 +72,7 @@ export const meppTheme = {
           '&.RaCreateButton-root': {
             padding: '10px 17px'
           }
-        },
-        // text: {
-        //   paddingLeft: '20px',
-        //   paddingRight: '20px',
-        // },
-        // label: {
-        //   padding: '5px',
-        // }
+        }
       }
     },
     MuiPaper: {
