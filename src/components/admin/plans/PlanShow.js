@@ -19,8 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { BoxedShowLayout } from 'ra-compact-ui';
 import React, { useEffect, useState } from 'react';
+import { BoxedShowLayout } from 'ra-compact-ui';
+import { useNavigate } from 'react-router-dom';
 import {
   ArrayField,
   BooleanField,
@@ -68,6 +69,7 @@ export const PlanShow = (props) => {
   const [patientUid, setPatientUid] = useState(undefined);
   const onelineClasses = useOnelineStyles();
   const planShowClasses = useStyles();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (props.history?.location?.state?.patientUid) {
@@ -122,7 +124,7 @@ export const PlanShow = (props) => {
           </Datagrid>
         </ArrayField>
 
-        <ShowToolBar patientUid={patientUid} />
+        <ShowToolBar />
       </BoxedShowLayout>
     </Show>
   );

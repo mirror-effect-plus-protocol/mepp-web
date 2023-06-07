@@ -48,13 +48,12 @@ const SubCategoriesRow = ({ record, locale }) => {
   );
 };
 
-export const CategoryList = (props) => {
+export const CategoryList = () => {
   const t = useTranslate();
   const locale = useLocale();
 
   return (
     <List
-      {...props}
       pagination={false}
       sort={{ field: `i18n.name.${locale}`, order: 'ASC' }}
       filterDefaultValues={{

@@ -29,7 +29,7 @@ import {
   useTranslate,
 } from 'react-admin';
 import { useFormState } from 'react-hook-form';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -61,31 +61,30 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const SimpleFormToolBar = ({ identity, ...props }) => {
+const SimpleFormToolBar = ({ identity }) => {
   const t = useTranslate();
   const theme = useTheme();
   const classes = useStyles();
   const record = useRecordContext();
   const redirect = useRedirect();
-  const resourceName = useResourceContext();
-  const { invalid, pristine } = useFormState();
-  const basePath = `/${resourceName}`;
-  const location = useLocation();
+  const resource = useResourceContext();
+  const { isDirty } = useFormState();
   const [confirm, setConfirm] = React.useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const redirectLocation = basePath;
   const showEditButtons = useMemo(() => {
     if (identity === false) {
       return true;
     }
     return identity?.uid !== record?.id;
   }, [identity, record]);
+
   const handleBackClick = (e) => {
     e.preventDefault();
-    if (pristine) {
-      redirect(formRedirect);
-    } else {
+    if (isDirty) {
       setConfirm(true);
+    } else {
+      redirect(formRedirect);
     }
   };
   const handleClose = () => {
@@ -97,37 +96,16 @@ const SimpleFormToolBar = ({ identity, ...props }) => {
   };
 
   const formRedirect = useMemo(() => {
-    const search = location.search;
-    const params = new URLSearchParams(search);
     if (!showEditButtons) {
-      if (params.has('back')) {
-        return decodeURIComponent(params.get('back'));
+      if (searchParams.get('back')) {
+        return decodeURIComponent(searchParams.get('back'));
       } else {
         return '/';
       }
     } else {
-      return redirectLocation;
+      return `/${resource}`;
     }
-  }, [showEditButtons, redirectLocation]);
-
-  const saveButtonProps = useMemo(() => {
-    const defaultProps = {
-      classes: props.classes,
-      className: props.className,
-      transform: props.transform,
-      icon: props.icon,
-      invalid: invalid,
-      label: props.label,
-      onClick: props.onClick,
-      disabled: pristine,
-      saving: props.saving,
-      variant: props.variant,
-      mutationMode: props.mutationMode,
-      record: record,
-      resource: resourceName,
-    };
-    return defaultProps;
-  }, [showEditButtons, redirectLocation, props]);
+  }, [showEditButtons]);
 
   return (
     <Toolbar className={classes.toolbar}>
@@ -169,16 +147,15 @@ const SimpleFormToolBar = ({ identity, ...props }) => {
             </Button>
           </DialogActions>
         </Dialog>
-        <SaveButton redirect={formRedirect} size="small" {...saveButtonProps} />
+        <SaveButton size="small" />
       </Div>
       {showEditButtons && record && record?.id && (
         <ToggleArchiveButton
-          resource={resourceName}
+          resource={resource}
           record={record}
           className=""
           showLabel={true}
           showLocation={true}
-          redirectLocation={redirectLocation}
           variant="outlined"
         />
       )}

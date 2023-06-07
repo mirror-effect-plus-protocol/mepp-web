@@ -19,8 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
-import { List, ReferenceField, TextField, usePermissions } from 'react-admin';
+import React, {useEffect} from 'react';
+import {List, ReferenceField, TextField, usePermissions, useStore} from 'react-admin';
 
 import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 
@@ -30,11 +30,16 @@ import BulkActionButtons from '../shared/toolbars/BulkActionsToolbar';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
 import PatientListAside from './PatientListAside';
 
-export const PatientList = (props) => {
+export const PatientList = () => {
   const { permissions } = usePermissions();
+
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  useEffect(() => {
+    setPatientUid(false);
+  }, []);
+
   return (
     <List
-      {...props}
       sort={{ field: 'full_name', order: 'ASC' }}
       filters={<ArchivableFilter />}
       filterDefaultValues={{ archived: false }}

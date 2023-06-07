@@ -19,10 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import React, { useEffect, useState } from 'react';
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
-import React, { useState } from 'react';
-import { useResourceDefinition } from 'react-admin';
 import {
   Datagrid,
   Show,
@@ -39,6 +38,8 @@ import {
   usePermissions,
   useRecordContext,
   useResourceContext,
+  useResourceDefinition,
+  useStore,
   useTranslate,
 } from 'react-admin';
 
@@ -58,8 +59,6 @@ import {
   DialogContentText,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-
-import { sanitizeRestProps } from '@admin/utils/props';
 
 import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
 import AddPlanButton from '@components/admin/patients/AddPlanButton';
@@ -118,7 +117,7 @@ const useArchivesStyles = makeStyles((theme) => ({
   },
 }));
 
-export const PatientShow = (props) => {
+export const PatientShow = () => {
   const { hasEdit } = useResourceDefinition();
   return (
     <Show
@@ -126,18 +125,28 @@ export const PatientShow = (props) => {
         <TopToolbar showExport={true} hasEdit={hasEdit} hasShow={false} />
       }
     >
-      <PatientShowRecord {...props}></PatientShowRecord>
+      <PatientShowRecord />
     </Show>
   );
 };
 
-export const PatientShowRecord = (props) => {
+export const PatientShowRecord = () => {
   const record = useRecordContext();
   if (!record) return null;
-  return <PatientShowLayout record={record} {...props}></PatientShowLayout>;
+  const [patientUid, setPatientUid] = useStore('patient.uid', record.id);
+
+  useEffect(() => {
+    setPatientUid(record.id);
+  }, [record]);
+
+  return (
+    <BoxedShowLayout>
+      <PatientShowLayout record={record}></PatientShowLayout>
+    </BoxedShowLayout>
+  );
 };
 
-export const PatientShowLayout = ({ record, props }) => {
+export const PatientShowLayout = ({ record }) => {
   const t = useTranslate();
   const locale = useLocale();
   const notify = useNotify();
@@ -313,7 +322,6 @@ export const PatientShowLayout = ({ record, props }) => {
               resource: resource,
               selectedIds: [],
             }}
-            {...sanitizeRestProps(props, ['label'], true)}
           >
             <Datagrid bulkActionButtons={false}>
               <TextField
@@ -341,7 +349,6 @@ export const PatientShowLayout = ({ record, props }) => {
                 source="end_date"
               />
               <RowActionToolbar
-                basePath="/plans"
                 rowResource="plans"
                 record={record}
                 context={{ patientUid: record.id }}

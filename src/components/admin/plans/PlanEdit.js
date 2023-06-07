@@ -32,7 +32,9 @@ import {
   TextInput,
   TranslatableInputs,
   useLocale,
-  usePermissions, useResourceDefinition,
+  usePermissions,
+  useResourceDefinition,
+  useStore,
   useTranslate,
 } from 'react-admin';
 
@@ -56,15 +58,15 @@ import { validateNumber } from '@components/admin/shared/validators';
 import { LANGUAGES } from '../../../locales';
 import ExerciseRow from './ExerciseRow';
 
-export const PlanEdit = (props) => {
+export const PlanEdit = () => {
   const { permissions } = usePermissions();
   const { hasShow } = useResourceDefinition();
   const t = useTranslate();
   const locale = useLocale();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const translatorClasses = useTranslatorInputStyles();
-  const [patientUid, setPatientUid] = useState(undefined);
   const [asTemplate, setAsTemplate] = useState(true);
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'description');
   };
@@ -72,31 +74,25 @@ export const PlanEdit = (props) => {
   const subCategories = useGetSubCategories(locale);
   const redirect = useCallback(
     () => contextualRedirect(patientUid),
-    [patientUid],
+    [patientUid]
   );
   const transform = useCallback(
     (record) => preSave(record, locale, patientUid, asTemplate),
-    [patientUid, asTemplate],
+    [patientUid, asTemplate]
   );
 
   useEffect(() => {
-    setPatientUid(props?.history?.location?.state?.patientUid);
-  }, [props?.history?.location?.state?.patientUid]);
-
-  useEffect(() => {
-    setAsTemplate(patientUid === undefined);
+    setAsTemplate(patientUid === false);
   }, [patientUid]);
 
   return (
     <Edit
       actions={<TopToolbar hasShow={hasShow} patientUid={patientUid} />}
-      {...props}
       mutationMode="optimistic"
+      redirect={redirect}
+      transform={transform}
     >
-      <SimpleForm
-        redirect={redirect}
-        toolbar={<SimpleFormToolBar identity={false} transform={transform} />}
-      >
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}
         </Typography>

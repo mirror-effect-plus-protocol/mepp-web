@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const PatientCreate = (props) => {
+export const PatientCreate = () => {
   const resourceName = useResourceContext();
   const t = useTranslate();
   const classes = useStyles();
@@ -77,7 +77,7 @@ export const PatientCreate = (props) => {
   };
 
   return (
-    <Create mutationOptions={{ onError: handleFailure }} {...props}>
+    <Create mutationOptions={{ onError: handleFailure }}>
       <SimpleForm
         redirect="show"
         toolbar={<SimpleFormToolBar identity={false} />}

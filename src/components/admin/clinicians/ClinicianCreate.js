@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ClinicianCreate = (props) => {
+export const ClinicianCreate = () => {
   const resourceName = useResourceContext();
   const t = useTranslate();
   const classes = useStyles();
@@ -74,7 +74,7 @@ export const ClinicianCreate = (props) => {
   };
 
   return (
-    <Create queryOptions={{ onError: onFailure }} {...props}>
+    <Create queryOptions={{ onError: onFailure }}>
       <SimpleForm
         toolbar={<SimpleFormToolBar identity={false} />}
         redirect="list"

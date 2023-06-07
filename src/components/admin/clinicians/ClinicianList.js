@@ -20,14 +20,14 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   BooleanField,
   List,
   TextField,
   FunctionField,
   usePermissions,
-  useTranslate,
+  useTranslate, useStore,
 } from 'react-admin';
 
 
@@ -37,13 +37,17 @@ import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar
 import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 
-export const ClinicianList = (props) => {
+export const ClinicianList = () => {
   const permissions = usePermissions();
   const t = useTranslate();
 
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  useEffect(() => {
+    setPatientUid(false);
+  }, []);
+
   return (
     <List
-      {...props}
       sort={{ field: 'first_name', order: 'ASC' }}
       filters={<ArchivableFilter />}
       filterDefaultValues={{ archived: false, me: false }}

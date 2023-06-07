@@ -71,7 +71,7 @@ const CategoryChips = (props) => {
   ));
 };
 
-export const ExerciseShow = (props) => {
+export const ExerciseShow = () => {
   const { permissions } = usePermissions();
   const { hasEdit } = useResourceDefinition();
   const t = useTranslate();
@@ -95,7 +95,7 @@ export const ExerciseShow = (props) => {
     });
   }
   return (
-    <Show {...props} actions={<TopToolbar hasEdit={hasEdit} />}>
+    <Show actions={<TopToolbar hasEdit={hasEdit} />}>
       <BoxedShowLayout>
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}

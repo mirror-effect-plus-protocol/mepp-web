@@ -69,7 +69,7 @@ const useRaBoxStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ClinicianShow = (props) => {
+export const ClinicianShow = () => {
   const t = useTranslate();
   const { hasEdit } = useResourceDefinition();
   const classes = useRaBoxStyles();
@@ -77,7 +77,6 @@ export const ClinicianShow = (props) => {
   return (
     <Show
       actions={<TopToolbar hasEdit={hasEdit}/>}
-      {...props}
     >
       <BoxedShowLayout>
         <Typography variant="h6" gutterBottom>

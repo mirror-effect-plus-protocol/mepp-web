@@ -34,8 +34,9 @@ import {
   useTranslate,
   useNotify,
   useResourceDefinition,
+  useRedirect
 } from 'react-admin';
-
+import { useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 
 import { Typography } from '@components/admin/shared/dom/sanitize';
@@ -72,31 +73,39 @@ const ProfileRow = ({ identity, identityLoading, ...props }) => {
   }
 };
 
-export const ClinicianEdit = (props) => {
+export const ClinicianEdit = () => {
   const t = useTranslate();
   const { hasShow } = useResourceDefinition();
   const { identity, isLoading: identityLoading, refetch } = useGetIdentity();
-  const resourceName = useResourceContext();
+  const resource = useResourceContext();
+  const redirect = useRedirect();
+  const [searchParams, setSearchParams] = useSearchParams();
   const classes = useStyles();
   const notify = useNotify();
   const options = Options();
   const onFailure = (error) => {
     let message = '';
     Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${resourceName}.errors.${key}`);
+      message += t(`resources.${resource}.errors.${key}`);
     });
     notify(message, { type: 'error' });
   };
   const onUpdate = (data) => {
     if (identity?.uid === data.id) {
+      const backUrl = decodeURIComponent(searchParams.get('back'));
       const profile = JSON.parse(localStorage.getItem('profile'));
+
       profile.first_name = data.first_name;
       profile.last_name = data.last_name;
       profile.full_name = `${profile.first_name} ${profile.last_name}`;
       profile.email = data.email;
       localStorage.setItem('profile', JSON.stringify(profile));
       refetch();
+      redirect(backUrl);
       notify('admin.shared.notifications.profile.success', { type: 'info' });
+    } else {
+      redirect(`/${resource}`);
+      notify('ra.notification.updated', { type: 'info', messageArgs: { smart_count: 1 }});
     }
   };
 
@@ -106,7 +115,6 @@ export const ClinicianEdit = (props) => {
       mutationOptions={{ onSuccess: onUpdate }}
       queryOptions={{ onError: onFailure }}
       actions={<TopToolbar hasShow={hasShow} identity={identity} />}
-      {...props}
     >
       <SimpleForm toolbar={<SimpleFormToolBar identity={identity} />}>
         <Typography variant="h6" gutterBottom>
