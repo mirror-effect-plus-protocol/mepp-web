@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { DeepAR } from 'deepar';
+import * as deepar from 'deepar';
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -55,27 +55,27 @@ const Player = () => {
   const deepAR = useRef(null);
   const canvas = useRef(null);
 
+  /**
+   * Init DeepAR
+   */
   useEffect(() => {
     canvas.current.width = window.innerWidth;
     canvas.current.height = window.innerHeight;
+    let AR;
 
-    const AR = new DeepAR({
-      licenseKey: process.env.DEEPAR_LICENSE_KEY,
-      canvas: canvas.current,
-      numberOfFaces: 1,
-      deeparWasmPath: './assets/deepar/deepar.wasm',
-      segmentationConfig: {
-        modelPath: './assets/deepar/segmentation-160x160-opt.bin',
-      },
-      callbacks: {
-        onInitialize: () => {
-          AR.startVideo(true);
-          AR.switchEffect(0, 'right', `./assets/deepar/effects/right`);
-        },
-      },
-    });
-    AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
-    deepAR.current = AR;
+    const init = async () => {
+      AR = await deepar.initialize({
+        licenseKey: process.env.DEEPAR_LICENSE_KEY,
+        canvas: canvas.current,
+        effect: './assets/effects/right',
+      });
+      deepAR.current = AR;
+    };
+    init();
+
+    return () => {
+      AR && AR.shutdown();
+    };
   }, [deepAR, canvas]);
 
   /**
@@ -135,4 +135,4 @@ const Container = styled.div`
 
 const Canvas = styled.canvas``;
 
-export default PlayerStandalonePage;
+export default React.memo(PlayerStandalonePage);
