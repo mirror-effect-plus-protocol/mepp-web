@@ -27,6 +27,16 @@ import React, {
   useCallback,
   createContext,
 } from 'react';
+import styled from 'styled-components';
+
+import { spacings } from '@styles/configs/spacings';
+
+import { useApi } from '@hooks/useApi';
+
+import { RequestEndpoint } from '@utils/constants';
+
+import { LoadingCircle } from '@components/generics/LoadingCircle';
+import Button from '@components/generics/buttons/Button';
 
 /**
  * GUI DEFAULTS
@@ -48,6 +58,7 @@ const GUIContext = createContext({
  * GUI PROVIDER
  */
 const GUIProvider = ({ children }) => {
+  const { post, loading } = useApi(RequestEndpoint.SETTINGS);
   const [position, setPosition] = useState(defaultPosition);
   const [rotation, setRotation] = useState(defaultRotation);
   const [scale, setScale] = useState(defaultScale);
@@ -62,7 +73,8 @@ const GUIProvider = ({ children }) => {
     [setPosition, setRotation, setScale],
   );
 
-  const onSave = useCallback((data) => {
+  const onSave = useCallback(() => {
+    const data = guiRef.current.save();
     const position = data.folders.Position.controllers;
     const rotation = data.folders.Rotation.controllers;
     const scale = data.folders.Scale.controllers;
@@ -72,6 +84,11 @@ const GUIProvider = ({ children }) => {
       scale,
     };
     console.log('send data: ', payload);
+    post(payload);
+  }, []);
+
+  const onApplyDefault = useCallback(() => {
+    guiRef.current.reset(true);
   }, []);
 
   useEffect(() => {
@@ -106,15 +123,6 @@ const GUIProvider = ({ children }) => {
       onChange(scale, 'scale');
     });
 
-    gui.add(
-      {
-        enregistrer: () => {
-          onSave(gui.save());
-        },
-      },
-      'enregistrer',
-    );
-
     guiRef.current = gui;
 
     return () => {
@@ -125,9 +133,25 @@ const GUIProvider = ({ children }) => {
   return (
     <GUIContext.Provider value={{ position, rotation, scale }}>
       {children}
+      <ButtonWrapper>
+        <Button.Outline label="Valeurs par défaut" onClick={onApplyDefault} />
+        <Button.Default label="Enregister" onClick={onSave} />
+      </ButtonWrapper>
+      {loading && <LoadingCircle opaque />}
     </GUIContext.Provider>
   );
 };
+
+const ButtonWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: right;
+  padding: ${spacings.default}px;
+  gap: ${spacings.default}px;
+  width: 100%;
+  bottom: 0;
+  z-index: 3000;
+`;
 
 export { GUIContext };
 export default GUIProvider;
