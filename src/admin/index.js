@@ -108,7 +108,7 @@ export default () => {
         <Route exact path="/intro" element={<IntroPage />} />
         <Route exact path="/mirror" element={<MirrorPage />} />
         {process.env.ENVIRONMENT !== 'production' ? (
-          <Route exact path="/playerstandalone" component={<PlayerAlone />} />
+          <Route exact path="/playerstandalone" element={<PlayerAlone />} />
         ) : null}
       </CustomRoutes>
       {(permissions) => (
@@ -164,7 +164,8 @@ export default () => {
               icon={CategoryIcon}
             />
           )}
-          ,{permissions === 'user' && (
+          ,
+          {permissions === 'user' && (
             <CustomRoutes noLayout>
               <Route path="*" element={<Navigate to="/intro" />} />
             </CustomRoutes>
