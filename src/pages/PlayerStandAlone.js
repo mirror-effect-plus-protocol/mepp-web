@@ -20,12 +20,14 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import * as deepar from 'deepar';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 
 import { DisabledBodyScrollGlogalStyle } from '@styles/utils/DisabledBodyScroll';
 
 import BasicLayout from '@layouts/Basic';
+
+import GUIProvider, { GUIContext } from '@components/generics/GUI';
 
 /**
  * Player Standalone page with BasicLayout
@@ -39,7 +41,9 @@ const PlayerStandalonePage = () => {
         content={
           <ContainerWrapper>
             <ContainerInner>
-              <Player />
+              <GUIProvider>
+                <Player />
+              </GUIProvider>
             </ContainerInner>
           </ContainerWrapper>
         }
@@ -54,6 +58,7 @@ const PlayerStandalonePage = () => {
 const Player = () => {
   const deepAR = useRef(null);
   const canvas = useRef(null);
+  const gui = useContext(GUIContext);
 
   /**
    * Init DeepAR
@@ -62,7 +67,6 @@ const Player = () => {
     canvas.current.width = window.innerWidth;
     canvas.current.height = window.innerHeight;
     let AR;
-
     const init = async () => {
       AR = await deepar.initialize({
         licenseKey: process.env.DEEPAR_LICENSE_KEY,
@@ -110,6 +114,40 @@ const Player = () => {
       }
     };
   }, [deepAR]);
+
+  /**
+   * GUI modifiers
+   */
+  useEffect(() => {
+    if (deepAR.current) {
+      deepAR.current.changeParameterVector(
+        'Root',
+        '',
+        'rotation',
+        gui.rotation.x,
+        gui.rotation.y,
+        gui.rotation.z,
+      );
+
+      deepAR.current.changeParameterVector(
+        'Root',
+        '',
+        'position',
+        gui.position.x,
+        gui.position.y,
+        gui.position.z,
+      );
+
+      deepAR.current.changeParameterVector(
+        'Root',
+        '',
+        'scale',
+        gui.scale.x,
+        gui.scale.y,
+        gui.scale.z,
+      );
+    }
+  }, [deepAR, gui]);
 
   return (
     <Container>

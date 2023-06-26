@@ -19,12 +19,12 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-//import GUI from 'lil-gui';
+import GUI from 'lil-gui';
 import React, {
-  /*useRef,
-useEffect,
-useState,
-useCallback,*/
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
   createContext,
 } from 'react';
 
@@ -48,7 +48,7 @@ const GUIContext = createContext({
  * GUI PROVIDER
  */
 const GUIProvider = ({ children }) => {
-  /*const [position, setPosition] = useState(defaultPosition);
+  const [position, setPosition] = useState(defaultPosition);
   const [rotation, setRotation] = useState(defaultRotation);
   const [scale, setScale] = useState(defaultScale);
   const guiRef = useRef(null);
@@ -124,13 +124,6 @@ const GUIProvider = ({ children }) => {
 
   return (
     <GUIContext.Provider value={{ position, rotation, scale }}>
-      {children}
-    </GUIContext.Provider>
-  );
-  */
-
-  return (
-    <GUIContext.Provider value={{ position: 0, rotation: 0, scale: 0 }}>
       {children}
     </GUIContext.Provider>
   );
