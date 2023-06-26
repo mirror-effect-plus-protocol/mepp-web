@@ -56,6 +56,7 @@ const PlayerStandalonePage = () => {
  * Player Standalone
  */
 const Player = () => {
+  const deepARInit = useRef(false);
   const deepAR = useRef(null);
   const canvas = useRef(null);
   const gui = useContext(GUIContext);
@@ -64,10 +65,14 @@ const Player = () => {
    * Init DeepAR
    */
   useEffect(() => {
+    if (deepAR.current) return;
+    if (deepARInit.current) return;
+
     canvas.current.width = window.innerWidth;
     canvas.current.height = window.innerHeight;
     let AR;
     const init = async () => {
+      deepARInit.current = true;
       AR = await deepar.initialize({
         licenseKey: process.env.DEEPAR_LICENSE_KEY,
         canvas: canvas.current,

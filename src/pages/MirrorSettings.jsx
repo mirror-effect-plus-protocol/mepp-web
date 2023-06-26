@@ -20,31 +20,42 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { zindex } from '@styles/configs/zindex';
-import { FlexAlignCenter } from '@styles/tools';
-import { rem } from '@styles/utils/rem';
+import { DisabledBodyScrollGlogalStyle } from '@styles/utils/DisabledBodyScroll';
+
+import withAuth from '@hocs/withAuth';
+
+import BasicLayout from '@layouts/Basic';
+
+import ExerciseProvider from '@components/exercises/ExerciseProvider';
+import Player from '@components/exercises/Player';
+import GUIProvider from '@components/generics/GUI';
 
 /**
- * Header with Logo and login navigation
+ * Mirror page with AR player with BasicLayout
  */
-const TemporaryProfilBanner = () => {
-  const { t } = useTranslation();
-  return <Container>{t('temporaryProfile:label')}</Container>;
+const MirrorSettingsPage = () => {
+  return (
+    <ExerciseProvider>
+      <DisabledBodyScrollGlogalStyle />
+      <BasicLayout
+        content={
+          <ContainerWrapper>
+            <ContainerInner>
+              <GUIProvider>
+                <Player />
+              </GUIProvider>
+            </ContainerInner>
+          </ContainerWrapper>
+        }
+      />
+    </ExerciseProvider>
+  );
 };
 
-const Container = styled(FlexAlignCenter.Component)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 5px;
-  font-size: ${rem(12)};
-  color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) => theme.colors.tertiary};
-  z-index: ${zindex.max};
-`;
+const ContainerWrapper = styled.div``;
 
-export { TemporaryProfilBanner };
+const ContainerInner = styled.div``;
+
+export default withAuth(MirrorSettingsPage);

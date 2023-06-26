@@ -23,7 +23,10 @@ import React, { useEffect, useState } from 'react';
 import { Authenticated } from 'react-admin';
 import { WithPermissions } from 'react-admin';
 
+import { temporaryProfil } from '@admin/authProvider';
 import { authTemporaryToken } from '@admin/authProvider';
+
+import { TemporaryProfilBanner } from '@components/header/TemporaryProfilBanner';
 
 /**
  * Protect pages that need authenticated users like /mirror page
@@ -38,7 +41,10 @@ const withAuth = (Component) => {
             location={props.location}
             render={({ permissions }) =>
               permissions === 'user' || permissions === 'admin' ? (
-                <Component {...props} />
+                <>
+                  {temporaryProfil && <TemporaryProfilBanner />}
+                  <Component {...props} />
+                </>
               ) : null
             }
           />
@@ -55,6 +61,7 @@ const Main = (props) => {
     async function handleTokens() {
       const queries = new URLSearchParams(window.location.search);
       const token = queries.get('tt');
+
       if (token) {
         await authTemporaryToken(token);
         setChildren(props.children);

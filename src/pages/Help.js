@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -43,61 +42,75 @@ import { Header } from '@components/header/Header';
  * Help/Support page with BasicLayout
  */
 const HelpPage = () => {
-  const {locale} = useLocale();
-  const {t} = useTranslation();
+  const { locale } = useLocale();
+  const { t } = useTranslation();
   useTrackingView('/privacy');
 
   return (
     <BasicLayout
-      header={<Header/>}
+      header={<Header />}
       content={
         <ContainerWrapper>
           <ContainerInner>
-            {locale === Language.FR ? <HelpFr t={t}/> : <HelpEn t={t}/>}
+            {locale === Language.FR ? <HelpFr t={t} /> : <HelpEn t={t} />}
           </ContainerInner>
         </ContainerWrapper>
       }
-      footer={<Footer/>}
+      footer={<Footer />}
     />
   );
 };
 
-const HelpFr = ({t}) => {
+const HelpFr = ({ t }) => {
   return (
     <>
       <H3>AIDE ET SUPPORT TECHNIQUE</H3>
+      <P>De courts tutoriels vidéo sont disponibles en ligne</P>
+      <ul>
+        <li>
+          <a
+            href="https://youtu.be/tEIdtV9QQV8"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Patients
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://youtu.be/Q0qoov-OJUM"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Cliniciens
+          </a>
+        </li>
+      </ul>
+      <br />
       <P>
-        De courts tutoriels vidéo sont disponibles en ligne
-        <ul>
-          <li>
-            <a href="https://youtu.be/tEIdtV9QQV8" target="_blank" rel="noreferrer">Patients</a>
-          </li>
-          <li>
-            <a href="https://youtu.be/Q0qoov-OJUM" target="_blank" rel="noreferrer">Cliniciens</a>
-          </li>
-        </ul>
+        Pour tout problème technique avec le MEPP, veuillez nous contacter par
+        courriel à l’adresse&nbsp;suivante&nbsp;:&nbsp;
+        <a href="mailto:support@mirroreffectplus.org">
+          support@mirroreffectplus.org
+        </a>{' '}
+        en décrivant en détail le problème.
       </P>
-      <P>
-        Pour tout problème technique avec le MEPP, veuillez nous contacter par courriel à
-        l’adresse&nbsp;suivante&nbsp;:&nbsp;<a href="mailto:support@mirroreffectplus.org">support@mirroreffectplus.org</a> en décrivant en détail le problème.<br />
-        <br/>
-
-        <b>SVP, veuillez fournir les détails suivants:</b>
-        <ul>
-          <li>
-            La version du navigateur ou de l’application mobile que vous utilisez
-          </li>
-          <li>
-            La version du système d’exploitation (ex: Windows 11, macOS Ventura, etc…)
-          </li>
-          <li>
-            Le modèle de l’appareil utilisé (ex: PC, iPhone 8, iPad Pro, etc…)
-          </li>
-        </ul>
-      </P>
-      <P>
-        L’équipe du MEPP
-      </P>
+      <br />
+      <b>SVP, veuillez fournir les détails suivants:</b>
+      <ul>
+        <li>
+          La version du navigateur ou de l’application mobile que vous utilisez
+        </li>
+        <li>
+          La version du système d’exploitation (ex: Windows 11, macOS Ventura,
+          etc…)
+        </li>
+        <li>
+          Le modèle de l’appareil utilisé (ex: PC, iPhone 8, iPad Pro, etc…)
+        </li>
+      </ul>
+      <br />
+      <P>L’équipe du MEPP</P>
 
       <ButtonsWrapper>
         <LoginLink
@@ -110,45 +123,52 @@ const HelpFr = ({t}) => {
           {t('cta:back')}
         </LoginLink>
       </ButtonsWrapper>
-
     </>
   );
 };
 
-const HelpEn = ({t}) => {
+const HelpEn = ({ t }) => {
   return (
     <>
       <H3>HELP AND SUPPORT</H3>
+      <P>Short video tutorials are available on line</P>
+      <ul>
+        <li>
+          <a
+            href="https://youtu.be/bLpt1BnjkEA"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Patients
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.youtube.com/watch?v=Tux2tV9GvyI"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Clinicians
+          </a>
+        </li>
+      </ul>
+      <br />
       <P>
-        Short video tutorials are available on line
-        <ul>
-          <li>
-            <a href="https://youtu.be/bLpt1BnjkEA" target="_blank" rel="noreferrer">Patients</a>
-          </li>
-          <li>
-            <a href="https://www.youtube.com/watch?v=Tux2tV9GvyI" target="_blank" rel="noreferrer">Clinicians</a>
-          </li>
-        </ul>
+        Please contact us with any technical issues with MEPP at&nbsp;
+        <a href="mailto:support@mirroreffectplus.org">
+          support@mirroreffectplus.org
+        </a>{' '}
+        with as much details as possible.
       </P>
-      <P>
-        Please contact us with any technical issues with MEPP at&nbsp;<a href="mailto:support@mirroreffectplus.org">support@mirroreffectplus.org</a> with as much details as possible.<br />
-        <br/>
-        Please provide the following details:
-        <ul>
-          <li>
-            Browser or app version you use
-          </li>
-          <li>
-            Operating system version (ex: Windows 11, macOS Ventura, etc…)
-          </li>
-          <li>
-            The kind of device you use (ex: PC, iPhone 8, iPad Pro, etc…)
-          </li>
-        </ul>
-      </P>
-      <P>
-        The MEPP team
-      </P>
+      <br />
+      <b>Please provide the following details:</b>
+      <ul>
+        <li>Browser or app version you use</li>
+        <li>Operating system version (ex: Windows 11, macOS Ventura, etc…)</li>
+        <li>The kind of device you use (ex: PC, iPhone 8, iPad Pro, etc…)</li>
+      </ul>
+      <br />
+      <P>The MEPP team</P>
 
       <ButtonsWrapper>
         <LoginLink
@@ -161,7 +181,6 @@ const HelpEn = ({t}) => {
           {t('cta:back')}
         </LoginLink>
       </ButtonsWrapper>
-
     </>
   );
 };

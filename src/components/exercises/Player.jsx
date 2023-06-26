@@ -19,26 +19,25 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { DeepAR } from 'deepar';
+import * as deepar from 'deepar';
 import React, { useRef, useEffect, useContext } from 'react';
 import { useGetIdentity } from 'react-admin';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-
+import { GUIContext } from '@components/generics/GUI';
 
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
-
 
 /**
  * DeepAP.ai player
  */
 const Player = () => {
   const { exercise, exerciseStep, ready } = useContext(ExerciseContext);
+  const gui = useContext(GUIContext);
   const { identity, isLoading: identityLoading } = useGetIdentity();
   const deepAR = useRef(null);
+  const deepARInit = useRef(false);
   const canvas = useRef(null);
-  const navigate = useNavigate();
 
   /**
    * Init Deep AR
@@ -47,30 +46,29 @@ const Player = () => {
   useEffect(() => {
     if (!identity) return;
     if (deepAR.current) return;
+    if (deepARInit.current) return;
+
     canvas.current.width = window.innerWidth;
     canvas.current.height = window.innerHeight;
 
     const side = identity.side === 0 ? 'left' : 'right';
 
-    const AR = new DeepAR({
-      licenseKey: process.env.DEEPAR_LICENSE_KEY,
-      canvas: canvas.current,
-      numberOfFaces: 1,
-      deeparWasmPath: './assets/deepar/deepar.wasm',
-      segmentationConfig: {
-        modelPath: './assets/deepar/segmentation-160x160-opt.bin',
-      },
-      callbacks: {
-        onInitialize: () => {
-          AR.startVideo(true);
-          AR.switchEffect(0, side, `./assets/deepar/effects/${side}`);
-        },
-        onVideoStarted: () => ready(true),
-      },
-    });
-    AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
-    AR.callbacks.onCameraPermissionDenied = () => navigate('/intro');
-    deepAR.current = AR;
+    let AR;
+    const init = async () => {
+      deepARInit.current = true;
+      AR = await deepar.initialize({
+        licenseKey: process.env.DEEPAR_LICENSE_KEY,
+        canvas: canvas.current,
+        effect: `./assets/effects/${side}`,
+      });
+      deepAR.current = AR;
+      ready(true);
+    };
+    init();
+
+    return () => {
+      AR && AR.shutdown();
+    };
   }, [deepAR, canvas, identity, exercise]);
 
   /**
@@ -133,6 +131,40 @@ const Player = () => {
       }, 2000);
     }
   }, [deepAR, exerciseStep]);
+
+  /**
+   * GUI modifiers
+   */
+  useEffect(() => {
+    if (deepAR.current) {
+      deepAR.current.changeParameterVector(
+        'Root',
+        '',
+        'rotation',
+        gui.rotation.x,
+        gui.rotation.y,
+        gui.rotation.z,
+      );
+
+      deepAR.current.changeParameterVector(
+        'Root',
+        '',
+        'position',
+        gui.position.x,
+        gui.position.y,
+        gui.position.z,
+      );
+
+      deepAR.current.changeParameterVector(
+        'Root',
+        '',
+        'scale',
+        gui.scale.x,
+        gui.scale.y,
+        gui.scale.z,
+      );
+    }
+  }, [deepAR, gui]);
 
   if (identityLoading) return <></>;
 

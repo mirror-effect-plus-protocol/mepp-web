@@ -30,6 +30,7 @@ import Help from '@pages/Help';
 import Intro from '@pages/Intro';
 import Login from '@pages/Login';
 import Mirror from '@pages/Mirror';
+import MirrorSettings from '@pages/MirrorSettings';
 import PlayerStandalonePage from '@pages/PlayerStandAlone';
 import Privacy from '@pages/Privacy';
 import ResetPassword from '@pages/ResetPassword';
@@ -80,6 +81,7 @@ export default () => {
   // with auth pages
   const IntroPage = withPage(Intro);
   const MirrorPage = withPage(Mirror);
+  const MirrorSettingsPage = withPage(MirrorSettings);
 
   // without auth pages
   const LoginPage = withPage(Login);
@@ -107,6 +109,7 @@ export default () => {
         <Route exact path="/reset-password" element={<ResetPasswordPage />} />
         <Route exact path="/intro" element={<IntroPage />} />
         <Route exact path="/mirror" element={<MirrorPage />} />
+        <Route exact path="/mirror-settings" element={<MirrorSettingsPage />} />
         {process.env.ENVIRONMENT !== 'production' ? (
           <Route exact path="/playerstandalone" element={<PlayerAlone />} />
         ) : null}

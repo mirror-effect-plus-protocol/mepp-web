@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -283,7 +282,7 @@ const InputRadio = styled.input`
   & + label {
     position: relative;
     display: inline-block;
-    padding: 8px 0 8px 40px;
+    padding: 2px 0px 0px 40px;
     font-weight: 500;
     font-size: ${rem(18)};
     cursor: pointer;
@@ -309,8 +308,8 @@ const InputRadio = styled.input`
       width: 16px;
       height: 16px;
       background: ${theme.colors.secondary};
-      top: 8px;
-      left: 8px;
+      top: 7px;
+      left: 7px;
       border-radius: 100%;
       transition: all 0.3s ease-out;
     }
