@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import ReactAdminFr from 'ra-language-french';
 
 import a11y from './a11y';
@@ -35,7 +34,8 @@ import settings from './settings';
 const reactAdminFrOverride = { ...ReactAdminFr };
 reactAdminFrOverride.ra.action.show = 'Voir';
 reactAdminFrOverride.ra.action.edit = 'Modifier';
-reactAdminFrOverride.ra.notification.updated = 'Élément mis à jour avec succès |||| %{smart_count} élements mis à jour avec succès';
+reactAdminFrOverride.ra.notification.updated =
+  'Élément mis à jour avec succès |||| %{smart_count} élements mis à jour avec succès';
 reactAdminFrOverride.ra.notification.created = 'Élément créé avec succès';
 
 export default {
@@ -52,5 +52,18 @@ export default {
 
   temporaryProfile: {
     label: 'Vous êtes connecté(e) dans une session temporaire',
+  },
+  GUI: {
+    title: 'Configurations de l’effet',
+    folders: {
+      position: 'Position (x,y,z)',
+      rotation: 'Rotation (x,y,z)',
+      scale: 'Échelle (x,y,z)',
+    },
+    cta: {
+      profile: 'Valeurs du profil',
+      default: 'Valeurs par défaut',
+      save: 'Enregister',
+    },
   },
 };

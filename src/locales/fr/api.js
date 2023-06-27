@@ -23,6 +23,7 @@
 export default {
   api: {
     success: {
+      settings_update: 'Modification de l’effet effectuée avec succès',
       profile_update: 'Modification de votre profil effectuée avec succès',
     },
     error: {

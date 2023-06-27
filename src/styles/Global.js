@@ -26,6 +26,7 @@ import reset from 'styled-reset';
 
 import { BASE_FONT_SIZE } from '@styles/configs/fontsize';
 import { spacings } from '@styles/configs/spacings';
+import { zindex } from '@styles/configs/zindex';
 import { rem } from '@styles/utils/rem';
 
 import { theme } from '@themes/index';
@@ -150,6 +151,11 @@ const GlobalStyles = createGlobalStyle`
 
   .MuiScopedCssBaseline-root{
     background-color: ${theme.colors.background};
+  }
+  .lil-gui.autoPlace {
+    top: 30px;
+    right:0;
+    z-index: ${zindex.max};
   }
 `;
 

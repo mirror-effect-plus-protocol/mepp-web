@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import * as deepar from 'deepar';
-import React, { useRef, useEffect, useContext } from 'react';
+import React, { useRef, useEffect, useContext, useCallback } from 'react';
 import { useGetIdentity } from 'react-admin';
 import styled from 'styled-components';
 
@@ -38,6 +38,48 @@ const Player = () => {
   const deepAR = useRef(null);
   const deepARInit = useRef(false);
   const canvas = useRef(null);
+
+  const updateEffectValues = useCallback(
+    (data) => {
+      if (!deepAR.current) return;
+      if (data) {
+        const position = data.position;
+        const rotation = data.rotation;
+        const scale = data.scale;
+        if (position) {
+          deepAR.current.changeParameterVector(
+            'Root',
+            '',
+            'position',
+            position.x,
+            position.y,
+            position.z,
+          );
+        }
+        if (rotation) {
+          deepAR.current.changeParameterVector(
+            'Root',
+            '',
+            'rotation',
+            rotation.x,
+            rotation.y,
+            rotation.z,
+          );
+        }
+        if (scale) {
+          deepAR.current.changeParameterVector(
+            'Root',
+            '',
+            'scale',
+            scale.x,
+            scale.y,
+            scale.z,
+          );
+        }
+      }
+    },
+    [deepAR],
+  );
 
   /**
    * Init Deep AR
@@ -62,6 +104,7 @@ const Player = () => {
         effect: `./assets/effects/${side}`,
       });
       deepAR.current = AR;
+      updateEffectValues(identity.settings);
       ready(true);
     };
     init();
@@ -136,33 +179,8 @@ const Player = () => {
    * GUI modifiers
    */
   useEffect(() => {
-    if (deepAR.current) {
-      deepAR.current.changeParameterVector(
-        'Root',
-        '',
-        'rotation',
-        gui.rotation.x,
-        gui.rotation.y,
-        gui.rotation.z,
-      );
-
-      deepAR.current.changeParameterVector(
-        'Root',
-        '',
-        'position',
-        gui.position.x,
-        gui.position.y,
-        gui.position.z,
-      );
-
-      deepAR.current.changeParameterVector(
-        'Root',
-        '',
-        'scale',
-        gui.scale.x,
-        gui.scale.y,
-        gui.scale.z,
-      );
+    if (deepAR.current && gui) {
+      updateEffectValues(gui);
     }
   }, [deepAR, gui]);
 

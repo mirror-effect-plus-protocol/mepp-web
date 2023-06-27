@@ -96,7 +96,7 @@ const IntroPage = () => {
                   onClick={onCheckCameraPermission}
                 />
                 {temporaryProfil && (
-                  <ButtonStart
+                  <ButtonEffect
                     label={t('cta:settings')}
                     onClick={() => {
                       navigate('/mirror-settings');
@@ -176,6 +176,10 @@ const ButtonStart = styled(Button.Default)`
 
 const ButtonPermission = styled(Button.Default)`
   margin: 0 auto;
+`;
+
+const ButtonEffect = styled(Button.Outline)`
+  margin: ${spacings.default * 2}px auto 0;
 `;
 
 const Instruction = styled(P)`

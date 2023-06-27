@@ -33,7 +33,7 @@ import Player from '@components/exercises/Player';
 import GUIProvider from '@components/generics/GUI';
 
 /**
- * Mirror page with AR player with BasicLayout
+ * Mirror Settings page with AR player with BasicLayout + GUI Effect modifiers
  */
 const MirrorSettingsPage = () => {
   return (

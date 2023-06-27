@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import ReactAdminEn from 'ra-language-english';
 
 import a11y from './a11y';
@@ -46,5 +45,19 @@ export default {
 
   temporaryProfile: {
     label: 'You are connected a temporary session',
+  },
+
+  GUI: {
+    title: 'Effect settings',
+    folders: {
+      position: 'Position (x,y,z)',
+      rotation: 'Rotation (x,y,z)',
+      scale: 'Scale (x,y,z)',
+    },
+    cta: {
+      profile: 'Profile values',
+      default: 'Default values',
+      save: 'Save',
+    },
   },
 };

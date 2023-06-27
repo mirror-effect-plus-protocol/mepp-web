@@ -23,12 +23,12 @@
 export default {
   api: {
     success: {
+      settings_update: 'Effects settings has been updated successfully',
       profile_update: 'Your profile has been updated successfully',
     },
     error: {
       generic: 'An error has occurred',
-      token_invalid:
-        'Your request is invalid or has expired',
+      token_invalid: 'Your request is invalid or has expired',
       pwd_invalid: 'Your password is invalid',
     },
   },

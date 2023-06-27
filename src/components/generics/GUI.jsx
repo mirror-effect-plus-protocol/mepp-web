@@ -27,6 +27,8 @@ import React, {
   useCallback,
   createContext,
 } from 'react';
+import { useNotify, useGetIdentity } from 'react-admin';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { spacings } from '@styles/configs/spacings';
@@ -58,10 +60,14 @@ const GUIContext = createContext({
  * GUI PROVIDER
  */
 const GUIProvider = ({ children }) => {
+  const { t } = useTranslation();
+  const notify = useNotify();
+  const { identity, isLoading: identityLoading } = useGetIdentity();
   const { post, loading } = useApi(RequestEndpoint.SETTINGS);
   const [position, setPosition] = useState(defaultPosition);
   const [rotation, setRotation] = useState(defaultRotation);
   const [scale, setScale] = useState(defaultScale);
+  const [ready, setReady] = useState(false);
   const guiRef = useRef(null);
 
   const onChangePosition = useCallback(
@@ -90,27 +96,59 @@ const GUIProvider = ({ children }) => {
   }, [guiRef]);
 
   const onApplyDefault = useCallback(() => {
-    guiRef.current.reset(true);
+    // TODO -  get default values
+    // guiRef.current.reset(true);
   }, [guiRef]);
 
   const onSave = useCallback(() => {
     const data = guiRef.current.save();
-    const position = data.folders.Position.controllers;
-    const rotation = data.folders.Rotation.controllers;
-    const scale = data.folders.Scale.controllers;
-    post({
-      position,
-      rotation,
-      scale,
-    });
-  }, [post]);
+    const position = data.folders[t('GUI:folders:position')].controllers;
+    const rotation = data.folders[t('GUI:folders:rotation')].controllers;
+    const scale = data.folders[t('GUI:folders:scale')].controllers;
+
+    const send = async () => {
+      const { response } = await post({
+        position,
+        rotation,
+        scale,
+      });
+      if (response.status === 200) {
+        notify('api.success.settings_update', { type: 'success' });
+      } else {
+        notify('api.error.generic', { type: 'error' });
+      }
+    };
+
+    send();
+  }, [post, notify, t]);
 
   useEffect(() => {
+    if (!identity) return;
+    if (identity.settings) {
+      if (identity.settings.position) {
+        setPosition(identity.settings.position);
+      }
+      if (identity.settings.rotation) {
+        setRotation(identity.settings.rotation);
+      }
+      if (identity.settings.scale) {
+        setScale(identity.settings.scale);
+      }
+    }
+    setReady(true);
+  }, [identity]);
+
+  useEffect(() => {
+    if (!ready) return;
+    if (!identity) return;
     if (guiRef.current) return;
 
-    const gui = new GUI();
+    const gui = new GUI({
+      title: t('GUI:title'),
+      closeFolders: true,
+    });
 
-    const positionFolder = gui.addFolder('Position');
+    const positionFolder = gui.addFolder(t('GUI:folders:position'));
     positionFolder.add(position, 'x', -4, 4).onChange(() => {
       onChangePosition(position);
     });
@@ -121,25 +159,25 @@ const GUIProvider = ({ children }) => {
       onChangePosition(position);
     });
 
-    const rotationFolder = gui.addFolder('Rotation');
-    rotationFolder.add(rotation, 'x', -1, 1).onChange(() => {
+    const rotationFolder = gui.addFolder(t('GUI:folders:rotation'));
+    rotationFolder.add(rotation, 'x', -2, 2).onChange(() => {
       onChangeRotation(rotation);
     });
-    rotationFolder.add(rotation, 'y', -1, 1).onChange(() => {
+    rotationFolder.add(rotation, 'y', -2, 2).onChange(() => {
       onChangeRotation(rotation);
     });
     rotationFolder.add(rotation, 'z', -10, 10).onChange(() => {
       onChangeRotation(rotation);
     });
 
-    const scaleFolder = gui.addFolder('Scale');
+    const scaleFolder = gui.addFolder(t('GUI:folders:scale'));
     scaleFolder.add(scale, 'x', 0.5, 1.5).onChange(() => {
       onChangeScale(scale);
     });
-    scaleFolder.add(scale, 'y', 0.8, 1.2).onChange(() => {
+    scaleFolder.add(scale, 'y', 0.5, 1.5).onChange(() => {
       onChangeScale(scale);
     });
-    scaleFolder.add(scale, 'z', 0.8, 1.2).onChange(() => {
+    scaleFolder.add(scale, 'z', 0.5, 1.5).onChange(() => {
       onChangeScale(scale);
     });
 
@@ -148,17 +186,17 @@ const GUIProvider = ({ children }) => {
     return () => {
       gui.destroy();
     };
-  }, []);
+  }, [identity, ready]);
 
   return (
     <GUIContext.Provider value={{ position, rotation, scale }}>
       {children}
       <ButtonWrapper>
-        <Button.Outline label="Valeurs du profil" onClick={onApplyProfile} />
-        <Button.Outline label="Valeurs par défaut" onClick={onApplyDefault} />
-        <Button.Default label="Enregister" onClick={onSave} />
+        <Button.Outline label={t('GUI:cta:profile')} onClick={onApplyProfile} />
+        <Button.Outline label={t('GUI:cta:default')} onClick={onApplyDefault} />
+        <Button.Default label={t('GUI:cta:save')} onClick={onSave} />
       </ButtonWrapper>
-      {loading && <LoadingCircle opaque />}
+      {loading || (identityLoading && <LoadingCircle opaque />)}
     </GUIContext.Provider>
   );
 };
@@ -171,7 +209,7 @@ const ButtonWrapper = styled.div`
   gap: ${spacings.default}px;
   width: 100%;
   bottom: 0;
-  z-index: 3000;
+  z-index: 800;
 `;
 
 export { GUIContext };
