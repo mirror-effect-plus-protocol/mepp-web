@@ -281,8 +281,8 @@ const InputRadio = styled.input`
 
   & + label {
     position: relative;
-    display: inline-block;
-    padding: 2px 0px 0px 40px;
+    display: flex;
+    align-items: center;
     font-weight: 500;
     font-size: ${rem(18)};
     cursor: pointer;
@@ -290,9 +290,7 @@ const InputRadio = styled.input`
     &:before {
       content: '';
       display: block;
-      position: absolute;
-      left: 0;
-      top: 0;
+      margin-right: ${spacings.default / 2}px;
       width: 30px;
       height: 30px;
       border: 1px solid #cbcbcb;

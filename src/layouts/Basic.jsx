@@ -65,6 +65,7 @@ const CellHeader = styled(Cell)`
 
   ${media.xsOnly`
     position: relative;
+
   `}
 
   /* fix for increase fonts values for a11y */

@@ -64,36 +64,46 @@ const GUIProvider = ({ children }) => {
   const [scale, setScale] = useState(defaultScale);
   const guiRef = useRef(null);
 
-  const onChange = useCallback(
-    (obj, type) => {
-      if (type === 'position') setPosition({ ...obj });
-      if (type === 'rotation') setRotation({ ...obj });
-      if (type === 'scale') setScale({ ...obj });
+  const onChangePosition = useCallback(
+    (obj) => {
+      setPosition({ ...obj });
     },
-    [setPosition, setRotation, setScale],
+    [setPosition],
+  );
+
+  const onChangeRotation = useCallback(
+    (obj) => {
+      setRotation({ ...obj });
+    },
+    [setRotation],
+  );
+
+  const onChangeScale = useCallback(
+    (obj) => {
+      setScale({ ...obj });
+    },
+    [setScale],
   );
 
   const onApplyProfile = useCallback(() => {
     // TODO -  get profil values
-    guiRef.current.reset(true);
-  }, []);
+  }, [guiRef]);
 
   const onApplyDefault = useCallback(() => {
     guiRef.current.reset(true);
-  }, []);
+  }, [guiRef]);
 
   const onSave = useCallback(() => {
     const data = guiRef.current.save();
     const position = data.folders.Position.controllers;
     const rotation = data.folders.Rotation.controllers;
     const scale = data.folders.Scale.controllers;
-    const payload = {
+    post({
       position,
       rotation,
       scale,
-    };
-    post(payload);
-  }, []);
+    });
+  }, [post]);
 
   useEffect(() => {
     if (guiRef.current) return;
@@ -102,29 +112,35 @@ const GUIProvider = ({ children }) => {
 
     const positionFolder = gui.addFolder('Position');
     positionFolder.add(position, 'x', -4, 4).onChange(() => {
-      onChange(position, 'position');
+      onChangePosition(position);
     });
     positionFolder.add(position, 'y', -4, 4).onChange(() => {
-      onChange(position, 'position');
+      onChangePosition(position);
     });
     positionFolder.add(position, 'z', -10, 10).onChange(() => {
-      onChange(position, 'position');
+      onChangePosition(position);
     });
 
     const rotationFolder = gui.addFolder('Rotation');
+    rotationFolder.add(rotation, 'x', -1, 1).onChange(() => {
+      onChangeRotation(rotation);
+    });
+    rotationFolder.add(rotation, 'y', -1, 1).onChange(() => {
+      onChangeRotation(rotation);
+    });
     rotationFolder.add(rotation, 'z', -10, 10).onChange(() => {
-      onChange(rotation, 'rotation');
+      onChangeRotation(rotation);
     });
 
     const scaleFolder = gui.addFolder('Scale');
     scaleFolder.add(scale, 'x', 0.5, 1.5).onChange(() => {
-      onChange(scale, 'scale');
+      onChangeScale(scale);
     });
     scaleFolder.add(scale, 'y', 0.8, 1.2).onChange(() => {
-      onChange(scale, 'scale');
+      onChangeScale(scale);
     });
     scaleFolder.add(scale, 'z', 0.8, 1.2).onChange(() => {
-      onChange(scale, 'scale');
+      onChangeScale(scale);
     });
 
     guiRef.current = gui;

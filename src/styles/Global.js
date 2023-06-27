@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
@@ -114,7 +113,6 @@ const GlobalStyles = createGlobalStyle`
     border-radius: 0;
     outline: none;
     -webkit-appearance: none;
-    touch-action: none;
 
     &:focus-visible {
       outline-width: 2px;
@@ -150,6 +148,9 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  .MuiScopedCssBaseline-root{
+    background-color: ${theme.colors.background};
+  }
 `;
 
 export default React.memo(GlobalStyles);

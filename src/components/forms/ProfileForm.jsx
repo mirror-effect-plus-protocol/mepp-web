@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useContext, useRef, useState } from 'react';
 import { useNotify, useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
@@ -65,6 +64,7 @@ const ProfileForm = () => {
     const { data, response } = await patch(payload);
     if (data && response.status === 200) {
       close();
+      identity.email = email;
 
       // Update token since e-mail and/or password have been changed.
       if (data.token) {
@@ -79,10 +79,11 @@ const ProfileForm = () => {
         );
       }
 
-      notify('api.success.profile_update', 'success');
+      notify('api.success.profile_update', { type: 'success' });
     } else {
-      if (data && data.password) notify('api.error.pwd_invalid', {type: 'error'});
-      else notify('api.error.generic', {type: 'error'});
+      if (data && data.password)
+        notify('api.error.pwd_invalid', { type: 'error' });
+      else notify('api.error.generic', { type: 'error' });
     }
   };
 

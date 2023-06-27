@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +32,6 @@ import { WrapperFullSizeMiddle } from '@styles/tools';
 
 import withAuth from '@hocs/withAuth';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import { useTrackingView } from '@hooks/useTrackingView';
 
 import BasicLayout from '@layouts/Basic';
@@ -49,19 +48,11 @@ const IntroPage = () => {
   const { t } = useTranslation();
   const { identity, isLoading: identityLoading } = useGetIdentity();
   const navigate = useNavigate();
-  const { locale, setLocale } = useLocale();
   const [permissionAuthorize, setPermissionAuthorize] = useState(false);
   const [permissionDenied, setPermissionDenied] = useState(false);
   useTrackingView('/introduction');
 
   const name = (identity && identity.first_name) || '';
-
-  // change UI language according to profile language (once)
-  useEffect(() => {
-    if (identity && identity.language && identity.language !== locale) {
-      setLocale(identity.language);
-    }
-  }, [identity]);
 
   /**
    * Camera permission validation

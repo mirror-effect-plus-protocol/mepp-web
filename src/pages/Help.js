@@ -89,13 +89,11 @@ const HelpFr = ({ t }) => {
       <br />
       <P>
         Pour tout problème technique avec le MEPP, veuillez nous contacter par
-        courriel à l’adresse&nbsp;suivante&nbsp;:&nbsp;
+        courriel à l’adresse suivante en décrivant en détail le problème:{' '}
         <a href="mailto:support@mirroreffectplus.org">
           support@mirroreffectplus.org
-        </a>{' '}
-        en décrivant en détail le problème.
+        </a>
       </P>
-      <br />
       <b>SVP, veuillez fournir les détails suivants:</b>
       <ul>
         <li>
@@ -154,13 +152,12 @@ const HelpEn = ({ t }) => {
       </ul>
       <br />
       <P>
-        Please contact us with any technical issues with MEPP at&nbsp;
+        Please contact us with any technical issues with MEPP with as much
+        details as possible:{' '}
         <a href="mailto:support@mirroreffectplus.org">
           support@mirroreffectplus.org
-        </a>{' '}
-        with as much details as possible.
+        </a>
       </P>
-      <br />
       <b>Please provide the following details:</b>
       <ul>
         <li>Browser or app version you use</li>

@@ -84,10 +84,11 @@ const button = css`
   font-style: normal;
 
   svg {
+    width: 25px;
     height: 25px;
     fill: ${({ theme }) => theme.colors.white};
     transition: fill 0.2s ease-out;
-    padding: 0px 14px;
+    margin: 0px 10px;
   }
 
   ${media.xsOnly`
