@@ -57,7 +57,6 @@ export default {
     cta: {
       profile: 'Profile values',
       default: 'Default values',
-      save: 'Save',
     },
   },
 };

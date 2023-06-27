@@ -63,7 +63,6 @@ export default {
     cta: {
       profile: 'Valeurs du profil',
       default: 'Valeurs par défaut',
-      save: 'Enregister',
     },
   },
 };

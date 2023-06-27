@@ -66,34 +66,38 @@ const Player = () => {
    */
   useEffect(() => {
     if (!identity) return;
-    if (deepAR.current) return;
-    if (deepARInit.current) return;
+    if (!deepAR.current) {
+      if (!deepARInit.current) {
+        canvas.current.width = window.innerWidth;
+        canvas.current.height = window.innerHeight;
 
-    canvas.current.width = window.innerWidth;
-    canvas.current.height = window.innerHeight;
+        const side = identity.side === 0 ? 'left' : 'right';
 
-    const side = identity.side === 0 ? 'left' : 'right';
+        let AR;
+        const init = async () => {
+          deepARInit.current = true;
 
-    let AR;
-    const init = async () => {
-      deepARInit.current = true;
+          AR = await deepar.initialize({
+            licenseKey: process.env.DEEPAR_LICENSE_KEY,
+            canvas: canvas.current,
+            effect: `./assets/effects/${side}`,
+          });
 
-      AR = await deepar.initialize({
-        licenseKey: process.env.DEEPAR_LICENSE_KEY,
-        canvas: canvas.current,
-        effect: `./assets/effects/${side}`,
-      });
+          deepAR.current = AR;
 
-      deepAR.current = AR;
+          updateEffectValues(identity.settings);
+          ready(true);
+        };
 
-      updateEffectValues(identity.settings);
-      ready(true);
-    };
-
-    init();
+        init();
+      }
+    }
 
     return () => {
-      AR && AR.shutdown();
+      if (deepAR.current) {
+        deepAR.current.stopCamera();
+        deepAR.current.shutdown();
+      }
     };
   }, [identity, exercise]);
 
@@ -122,6 +126,7 @@ const Player = () => {
 
       if (deepAR.current) {
         try {
+          deepAR.current.stopCamera();
           deepAR.current.shutdown();
           deepAR.current = null;
           // eslint-disable-next-line no-empty
@@ -136,6 +141,7 @@ const Player = () => {
    */
   useEffect(() => {
     if (exerciseStep === ExerciseStep.ENDED && deepAR.current) {
+      deepAR.current.stopCamera();
       deepAR.current.shutdown();
       deepAR.current = null;
     }
@@ -151,6 +157,7 @@ const Player = () => {
       // can't be destroy without this settimeout
       setTimeout(() => {
         if (deepAR.current) {
+          deepAR.current.stopCamera();
           deepAR.current.shutdown();
           deepAR.current = null;
         }

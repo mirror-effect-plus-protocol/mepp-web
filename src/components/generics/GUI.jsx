@@ -29,6 +29,7 @@ import React, {
 } from 'react';
 import { useNotify, useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { spacings } from '@styles/configs/spacings';
@@ -62,6 +63,7 @@ const GUIContext = createContext({
 const GUIProvider = ({ children }) => {
   const { t } = useTranslation();
   const notify = useNotify();
+  const navigate = useNavigate();
   const { identity, isLoading: identityLoading } = useGetIdentity();
   const { post, loading } = useApi(RequestEndpoint.SETTINGS);
   const [position, setPosition] = useState({ ...defaultPosition });
@@ -219,7 +221,11 @@ const GUIProvider = ({ children }) => {
       <ButtonWrapper>
         <Button.Outline label={t('GUI:cta:profile')} onClick={onApplyProfile} />
         <Button.Outline label={t('GUI:cta:default')} onClick={onApplyDefault} />
-        <Button.Default label={t('GUI:cta:save')} onClick={onSave} />
+        <Button.Default
+          label={t('cta:cancel')}
+          onClick={() => navigate('/intro')}
+        />
+        <Button.Default label={t('cta:save')} onClick={onSave} />
       </ButtonWrapper>
       {(loading || identityLoading) && <LoadingCircle opaque />}
     </GUIContext.Provider>
