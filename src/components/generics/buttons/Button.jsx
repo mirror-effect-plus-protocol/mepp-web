@@ -88,7 +88,8 @@ const button = css`
     height: 25px;
     fill: ${({ theme }) => theme.colors.white};
     transition: fill 0.2s ease-out;
-    margin: 0px 10px;
+    padding: 0px 14px;
+    box-sizing: initial;
   }
 
   ${media.xsOnly`

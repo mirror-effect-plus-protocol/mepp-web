@@ -51,9 +51,9 @@ const defaultScale = { x: 1, y: 1, z: 1 };
  * GUI CONTEXT
  */
 const GUIContext = createContext({
-  position: defaultPosition,
-  rotation: defaultRotation,
-  scale: defaultScale,
+  position: { ...defaultPosition },
+  rotation: { ...defaultRotation },
+  scale: { ...defaultScale },
 });
 
 /**
@@ -64,9 +64,9 @@ const GUIProvider = ({ children }) => {
   const notify = useNotify();
   const { identity, isLoading: identityLoading } = useGetIdentity();
   const { post, loading } = useApi(RequestEndpoint.SETTINGS);
-  const [position, setPosition] = useState(defaultPosition);
-  const [rotation, setRotation] = useState(defaultRotation);
-  const [scale, setScale] = useState(defaultScale);
+  const [position, setPosition] = useState({ ...defaultPosition });
+  const [rotation, setRotation] = useState({ ...defaultRotation });
+  const [scale, setScale] = useState({ ...defaultScale });
   const [ready, setReady] = useState(false);
   const guiRef = useRef(null);
 
@@ -74,7 +74,7 @@ const GUIProvider = ({ children }) => {
     (obj) => {
       setPosition({ ...obj });
     },
-    [setPosition],
+    [setPosition, identity],
   );
 
   const onChangeRotation = useCallback(
@@ -92,13 +92,36 @@ const GUIProvider = ({ children }) => {
   );
 
   const onApplyProfile = useCallback(() => {
-    // TODO -  get profil values
-  }, [guiRef]);
+    if (!identity) return;
+    const clone = guiRef.current.save();
+    if (identity.settings) {
+      // prettier-ignore
+      clone.folders[t('GUI:folders:position')].controllers = {...identity.settings.position};
+      // prettier-ignore
+      clone.folders[t('GUI:folders:rotation')].controllers = {...identity.settings.rotation};
+      // prettier-ignore
+      clone.folders[t('GUI:folders:scale')].controllers = {...identity.settings.scale};
+    } else {
+      // prettier-ignore
+      clone.folders[t('GUI:folders:position')].controllers = {...defaultPosition};
+      // prettier-ignore
+      clone.folders[t('GUI:folders:rotation')].controllers = {...defaultRotation};
+      // prettier-ignore
+      clone.folders[t('GUI:folders:scale')].controllers = {...defaultScale};
+    }
+    guiRef.current.load(clone);
+  }, [identity]);
 
-  const onApplyDefault = useCallback(() => {
-    // TODO -  get default values
-    // guiRef.current.reset(true);
-  }, [guiRef]);
+  const onApplyDefault = () => {
+    const clone = guiRef.current.save();
+    // prettier-ignore
+    clone.folders[t('GUI:folders:position')].controllers = {...defaultPosition};
+    // prettier-ignore
+    clone.folders[t('GUI:folders:rotation')].controllers = {...defaultRotation};
+    // prettier-ignore
+    clone.folders[t('GUI:folders:scale')].controllers = { ...defaultScale };
+    guiRef.current.load(clone);
+  };
 
   const onSave = useCallback(() => {
     const data = guiRef.current.save();
@@ -123,20 +146,22 @@ const GUIProvider = ({ children }) => {
   }, [post, notify, t]);
 
   useEffect(() => {
+    if (ready) return;
     if (!identity) return;
+
     if (identity.settings) {
       if (identity.settings.position) {
-        setPosition(identity.settings.position);
+        setPosition({ ...identity.settings.position });
       }
       if (identity.settings.rotation) {
-        setRotation(identity.settings.rotation);
+        setRotation({ ...identity.settings.rotation });
       }
       if (identity.settings.scale) {
-        setScale(identity.settings.scale);
+        setScale({ ...identity.settings.scale });
       }
     }
     setReady(true);
-  }, [identity]);
+  }, [identity, ready]);
 
   useEffect(() => {
     if (!ready) return;
@@ -196,7 +221,7 @@ const GUIProvider = ({ children }) => {
         <Button.Outline label={t('GUI:cta:default')} onClick={onApplyDefault} />
         <Button.Default label={t('GUI:cta:save')} onClick={onSave} />
       </ButtonWrapper>
-      {loading || (identityLoading && <LoadingCircle opaque />)}
+      {(loading || identityLoading) && <LoadingCircle opaque />}
     </GUIContext.Provider>
   );
 };

@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import * as deepar from 'deepar';
-import React, { useRef, useEffect, useContext, useCallback } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import { useGetIdentity } from 'react-admin';
 import styled from 'styled-components';
 
@@ -32,54 +32,33 @@ import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
  * DeepAP.ai player
  */
 const Player = () => {
-  const { exercise, exerciseStep, ready } = useContext(ExerciseContext);
   const gui = useContext(GUIContext);
+  const { exercise, exerciseStep, ready } = useContext(ExerciseContext);
   const { identity, isLoading: identityLoading } = useGetIdentity();
   const deepAR = useRef(null);
   const deepARInit = useRef(false);
   const canvas = useRef(null);
 
-  const updateEffectValues = useCallback(
-    (data) => {
-      if (!deepAR.current) return;
-      if (data) {
-        const position = data.position;
-        const rotation = data.rotation;
-        const scale = data.scale;
-        if (position) {
-          deepAR.current.changeParameterVector(
-            'Root',
-            '',
-            'position',
-            position.x,
-            position.y,
-            position.z,
-          );
-        }
-        if (rotation) {
-          deepAR.current.changeParameterVector(
-            'Root',
-            '',
-            'rotation',
-            rotation.x,
-            rotation.y,
-            rotation.z,
-          );
-        }
-        if (scale) {
-          deepAR.current.changeParameterVector(
-            'Root',
-            '',
-            'scale',
-            scale.x,
-            scale.y,
-            scale.z,
-          );
-        }
+  const updateEffectValues = (data) => {
+    if (!deepAR.current) return;
+    if (data) {
+      const position = data.position;
+      const rotation = data.rotation;
+      const scale = data.scale;
+      if (position) {
+        // prettier-ignore
+        deepAR.current.changeParameterVector('Root','','position', position.x, position.y, position.z);
       }
-    },
-    [deepAR],
-  );
+      if (rotation) {
+        // prettier-ignore
+        deepAR.current.changeParameterVector('Root', '', 'rotation', rotation.x, rotation.y, rotation.z);
+      }
+      if (scale) {
+        // prettier-ignore
+        deepAR.current.changeParameterVector('Root', '', 'scale', scale.x, scale.y, scale.z);
+      }
+    }
+  };
 
   /**
    * Init Deep AR
@@ -98,21 +77,25 @@ const Player = () => {
     let AR;
     const init = async () => {
       deepARInit.current = true;
+
       AR = await deepar.initialize({
         licenseKey: process.env.DEEPAR_LICENSE_KEY,
         canvas: canvas.current,
         effect: `./assets/effects/${side}`,
       });
+
       deepAR.current = AR;
+
       updateEffectValues(identity.settings);
       ready(true);
     };
+
     init();
 
     return () => {
       AR && AR.shutdown();
     };
-  }, [deepAR, canvas, identity, exercise]);
+  }, [identity, exercise]);
 
   /**
    * Resize browser event
@@ -145,7 +128,7 @@ const Player = () => {
         } catch (e) {}
       }
     };
-  }, [deepAR]);
+  }, []);
 
   /**
    * Ending
@@ -156,7 +139,7 @@ const Player = () => {
       deepAR.current.shutdown();
       deepAR.current = null;
     }
-  }, [deepAR, exerciseStep]);
+  }, [exerciseStep]);
 
   /**
    * Empty
@@ -173,7 +156,7 @@ const Player = () => {
         }
       }, 2000);
     }
-  }, [deepAR, exerciseStep]);
+  }, [exerciseStep]);
 
   /**
    * GUI modifiers
@@ -182,7 +165,7 @@ const Player = () => {
     if (deepAR.current && gui) {
       updateEffectValues(gui);
     }
-  }, [deepAR, gui]);
+  }, [gui]);
 
   if (identityLoading) return <></>;
 

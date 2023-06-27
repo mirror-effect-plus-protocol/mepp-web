@@ -52,10 +52,12 @@ const GlobalStyles = createGlobalStyle`
     overflow-x: hidden;
   }
 
-  body {
+  body{
     position: relative;
     background-color: ${theme.colors.background};
     color: ${theme.colors.text};
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    line-height: 1;
 
     min-height: 100vh;
     min-height: -webkit-fill-available;
@@ -149,11 +151,16 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
-  .MuiScopedCssBaseline-root{
+  .MuiScopedCssBaseline-root {
     background-color: ${theme.colors.background};
+    color: ${theme.colors.text};
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    line-height: 1;
+    font-size: ${rem(BASE_FONT_SIZE)};
   }
+
   .lil-gui.autoPlace {
-    top: 30px;
+    top: 23px;
     right:0;
     z-index: ${zindex.max};
   }
