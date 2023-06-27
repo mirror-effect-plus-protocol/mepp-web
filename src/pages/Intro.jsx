@@ -25,6 +25,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { temporaryProfil } from '@admin/authProvider';
+
 import Warning from '@assets/icons/warning.svg';
 
 import { spacings } from '@styles/configs/spacings';
@@ -93,6 +95,14 @@ const IntroPage = () => {
                   label={t('cta:start')}
                   onClick={onCheckCameraPermission}
                 />
+                {temporaryProfil && (
+                  <ButtonStart
+                    label={t('cta:settings')}
+                    onClick={() => {
+                      navigate('/mirror-settings');
+                    }}
+                  />
+                )}
               </>
             )}
             {permissionAuthorize && <PermissionAuthorize />}
