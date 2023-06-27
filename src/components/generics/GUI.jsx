@@ -73,6 +73,15 @@ const GUIProvider = ({ children }) => {
     [setPosition, setRotation, setScale],
   );
 
+  const onApplyProfile = useCallback(() => {
+    // TODO -  get profil values
+    guiRef.current.reset(true);
+  }, []);
+
+  const onApplyDefault = useCallback(() => {
+    guiRef.current.reset(true);
+  }, []);
+
   const onSave = useCallback(() => {
     const data = guiRef.current.save();
     const position = data.folders.Position.controllers;
@@ -83,12 +92,7 @@ const GUIProvider = ({ children }) => {
       rotation,
       scale,
     };
-    console.log('send data: ', payload);
     post(payload);
-  }, []);
-
-  const onApplyDefault = useCallback(() => {
-    guiRef.current.reset(true);
   }, []);
 
   useEffect(() => {
@@ -134,6 +138,7 @@ const GUIProvider = ({ children }) => {
     <GUIContext.Provider value={{ position, rotation, scale }}>
       {children}
       <ButtonWrapper>
+        <Button.Outline label="Valeurs du profil" onClick={onApplyProfile} />
         <Button.Outline label="Valeurs par défaut" onClick={onApplyDefault} />
         <Button.Default label="Enregister" onClick={onSave} />
       </ButtonWrapper>
