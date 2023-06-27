@@ -47,6 +47,10 @@ export default {
     label: 'You are connected a temporary session',
   },
 
+  browserSupport: {
+    label: '{name} version {version} is not supported',
+  },
+
   GUI: {
     title: 'Effect settings',
     folders: {

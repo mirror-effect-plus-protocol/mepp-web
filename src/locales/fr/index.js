@@ -53,6 +53,11 @@ export default {
   temporaryProfile: {
     label: 'Vous êtes connecté(e) dans une session temporaire',
   },
+
+  browserSupport: {
+    label: '{name} version {version} n’est pas supporté',
+  },
+
   GUI: {
     title: 'Configurations de l’effet',
     folders: {
