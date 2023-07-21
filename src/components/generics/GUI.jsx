@@ -96,13 +96,13 @@ const GUIProvider = ({ children }) => {
   const onApplyProfile = useCallback(() => {
     if (!identity) return;
     const clone = guiRef.current.save();
-    if (identity.settings) {
+    if (identity.mirror_settings) {
       // prettier-ignore
-      clone.folders[t('GUI:folders:position')].controllers = {...identity.settings.position};
+      clone.folders[t('GUI:folders:position')].controllers = {...identity.mirror_settings.position};
       // prettier-ignore
-      clone.folders[t('GUI:folders:rotation')].controllers = {...identity.settings.rotation};
+      clone.folders[t('GUI:folders:rotation')].controllers = {...identity.mirror_settings.rotation};
       // prettier-ignore
-      clone.folders[t('GUI:folders:scale')].controllers = {...identity.settings.scale};
+      clone.folders[t('GUI:folders:scale')].controllers = {...identity.mirror_settings.scale};
     } else {
       // prettier-ignore
       clone.folders[t('GUI:folders:position')].controllers = {...defaultPosition};
@@ -151,15 +151,15 @@ const GUIProvider = ({ children }) => {
     if (ready) return;
     if (!identity) return;
 
-    if (identity.settings) {
-      if (identity.settings.position) {
-        setPosition({ ...identity.settings.position });
+    if (identity.mirror_settings) {
+      if (identity.mirror_settings.position) {
+        setPosition({ ...identity.mirror_settings.position });
       }
-      if (identity.settings.rotation) {
-        setRotation({ ...identity.settings.rotation });
+      if (identity.mirror_settings.rotation) {
+        setRotation({ ...identity.mirror_settings.rotation });
       }
-      if (identity.settings.scale) {
-        setScale({ ...identity.settings.scale });
+      if (identity.mirror_settings.scale) {
+        setScale({ ...identity.mirror_settings.scale });
       }
     }
     setReady(true);

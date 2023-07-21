@@ -176,6 +176,7 @@ class CurrentUserViewSet(
                 'language': user.language,
                 'use_audio': user.use_audio,
                 'side': user.side,
+                'mirror_settings': user.mirror_settings,
             },
             'permissions': RoleEnum.get_role(user),
         }

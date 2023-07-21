@@ -85,7 +85,7 @@ const Player = () => {
 
           deepAR.current = AR;
 
-          updateEffectValues(identity.settings);
+          updateEffectValues(identity.mirror_settings);
           ready(true);
         };
 

@@ -108,8 +108,9 @@ class PatientSettingsSerializer(CredentialsMixin, serializers.ModelSerializer):
     """
 
     email = serializers.EmailField()
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, required=False)
     new_password = serializers.CharField(write_only=True, required=False)
+    mirror_settings = serializers.JSONField(required=False)
 
     class Meta:
         model = User
@@ -131,6 +132,7 @@ class PatientSettingsSerializer(CredentialsMixin, serializers.ModelSerializer):
             'profile': {
                 'email': instance.email,
                 'language': instance.language,
+                'mirror_settings': instance.mirror_settings,
             }
         }
 
