@@ -30,10 +30,14 @@ import { FlexAlignCenter } from '@styles/tools';
 import { rem } from '@styles/utils/rem';
 
 const browsers = {
-  chrome: '111.0',
+  chrome: '112.0',
   firefox: '111.0',
-  edge: '111.0',
+  edge: '9999.0',
+  'edge-chromium': '9999.0',
   safari: '13.0',
+  opera: '9999',
+  msie: '20',
+  yandex: '9999',
 };
 
 /**
@@ -95,7 +99,7 @@ const Container = styled(FlexAlignCenter.Component)`
   top: 0;
   left: 0;
   width: 100%;
-  padding: 8px;
+  padding: 20px;
   font-weight: bold;
   font-size: ${rem(14)};
   text-align: center;
