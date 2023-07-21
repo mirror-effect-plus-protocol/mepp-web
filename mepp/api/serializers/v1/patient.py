@@ -212,7 +212,6 @@ class PatientMirrorSettingsSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, attrs):
-
         mirror_default_settings = default_settings()
         attrs['mirror_settings'] = (
             self.instance.mirror_settings or mirror_default_settings

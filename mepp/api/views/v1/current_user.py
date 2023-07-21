@@ -39,7 +39,10 @@ from mepp.api.models import (
     Log,
     Session,
 )
-from mepp.api.permissions import MeppMirrorPermission
+from mepp.api.permissions import (
+    MeppMirrorPermission,
+    MeppMirrorSettingPermission,
+)
 from mepp.api.serializers.v1.log import UserLogSerializer
 from mepp.api.serializers.v1.patient import (
     PatientSettingsSerializer,
@@ -72,11 +75,11 @@ class CurrentUserViewSet(
 
         return Response(self.__detail(user))
 
-    def get_object(self):
-        return self.request.user
-
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+
+    def get_object(self):
+        return self.request.user
 
     def retrieve(self, request, *args, **kwargs):
         try:
@@ -99,32 +102,6 @@ class CurrentUserViewSet(
 
     @action(
         detail=False,
-        methods=['GET'],
-        permission_classes=[MeppMirrorPermission],
-        url_path='session',
-    )
-    def user_session_view(self, request, *args, **kwargs):
-        user_session = request.user.active_session
-        if not user_session:
-            raise Http404
-
-        try:
-            ua_string = request.META.get('HTTP_USER_AGENT', '')
-            user_agent = parse(ua_string)
-        except Exception as e:
-            logging.error(f'CurrentUserViewSet.user_session_view(): {str(e)}')
-            user_agent = ''
-
-        Log.objects.create(
-            session=user_session,
-            action=ActionEnum.LOGIN.value,
-            user_agent=user_agent,
-        )
-        serializer = UserSessionSerializer(user_session)
-        return Response(serializer.data)
-
-    @action(
-        detail=False,
         methods=['POST'],
         permission_classes=[MeppMirrorPermission],
         url_path='session/(?P<session_uid>[a-z0-9]*)/logs',
@@ -143,6 +120,19 @@ class CurrentUserViewSet(
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=HTTP_201_CREATED,
                         headers=headers)
+
+    @action(
+        detail=False,
+        methods=['PATCH'],
+        permission_classes=[MeppMirrorSettingPermission],
+        url_path='settings',
+    )
+    def user_mirror_settings(self, request, *args, **kwargs):
+        user = request.user
+        serializer = PatientMirrorSettingsSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
     @action(
         detail=False,
@@ -169,14 +159,28 @@ class CurrentUserViewSet(
 
     @action(
         detail=False,
-        methods=['PATCH'],
-        url_path='settings',
+        methods=['GET'],
+        permission_classes=[MeppMirrorPermission],
+        url_path='session',
     )
-    def user_mirror_settings(self, request, *args, **kwargs):
-        user = request.user
-        serializer = PatientMirrorSettingsSerializer(user, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
+    def user_session_view(self, request, *args, **kwargs):
+        user_session = request.user.active_session
+        if not user_session:
+            raise Http404
+
+        try:
+            ua_string = request.META.get('HTTP_USER_AGENT', '')
+            user_agent = parse(ua_string)
+        except Exception as e:
+            logging.error(f'CurrentUserViewSet.user_session_view(): {str(e)}')
+            user_agent = ''
+
+        Log.objects.create(
+            session=user_session,
+            action=ActionEnum.LOGIN.value,
+            user_agent=user_agent,
+        )
+        serializer = UserSessionSerializer(user_session)
         return Response(serializer.data)
 
     def __detail(self, user):

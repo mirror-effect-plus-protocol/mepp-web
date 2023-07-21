@@ -19,6 +19,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
+from copy import deepcopy
 from datetime import timedelta
 
 import pytest
@@ -26,6 +27,7 @@ from django.utils.timezone import now
 from rest_framework import status
 
 from mepp.api.enums.action import ActionEnum
+from mepp.api.helpers.mirror import default_settings
 from . import BaseV1TestCase
 
 
@@ -96,6 +98,95 @@ class MeSessionAPITestCase(BaseV1TestCase):
 
     def test_user_with_no_treatmentplan(self):
         pass
+
+
+class MeMirrorSettingsAPITestCase(BaseV1TestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.payload = {
+            'position': {'x': 1, 'y': 1, 'z': 1},
+            'rotation': {'x': 1, 'y': 1, 'z': 1},
+            'scale': {'x': -1, 'y': -1, 'z': -1},
+        }
+        self.assertNotEqual(self.payload, default_settings)
+
+    def test_save_settings_with_temporary_token(self):
+        """
+        Changing mirror setting is only available from admin mirror which gets
+        a temporary token
+        """
+        john_token = self.patient_john.auth_token.last()
+        john_token.temporary = True
+        john_token.save(update_fields=['temporary'])
+        response = self.client.patch(
+            self.reverse('current-user-profile-user-mirror-settings'),
+            data=self.payload,
+            format='json',
+            **self.get_token_header(john_token),
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, self.payload)
+
+    def test_cannot_save_settings_with_regular_token(self):
+        john_token = self.patient_john.auth_token.last()
+        response = self.client.patch(
+            self.reverse('current-user-profile-user-mirror-settings'),
+            data=self.payload,
+            format='json',
+            **self.get_token_header(john_token),
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_cannot_save_settings_as_anonymous(self):
+        self.client.logout()
+        response = self.client.patch(
+            self.reverse('current-user-profile-user-mirror-settings'),
+            data=self.payload,
+            format='json',
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_cannot_save_settings_with_wrong_payload(self):
+        payload = deepcopy(self.payload)
+        payload['position']['x'] = 'foo'
+
+        john_token = self.patient_john.auth_token.last()
+        john_token.temporary = True
+        john_token.save(update_fields=['temporary'])
+        response = self.client.patch(
+            self.reverse('current-user-profile-user-mirror-settings'),
+            data=payload,
+            format='json',
+            **self.get_token_header(john_token),
+        )
+        self.assertContains(
+            response, 'Wrong format', status_code=status.HTTP_400_BAD_REQUEST
+        )
+
+    def test_save_settings_with_partial_payload(self):
+        payload = deepcopy(self.payload)
+        payload.pop('position')
+
+        john_token = self.patient_john.auth_token.last()
+        john_token.temporary = True
+        john_token.save(update_fields=['temporary'])
+        response = self.client.patch(
+            self.reverse('current-user-profile-user-mirror-settings'),
+            data=payload,
+            format='json',
+            **self.get_token_header(john_token),
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(
+            response.data['position'], default_settings()['position']
+        )
+        expected = {
+            'position': default_settings()['position'],
+            'rotation': payload['rotation'],
+            'scale': payload['scale'],
+        }
+        self.assertEqual(response.data, expected)
 
 
 class MeLogAPITestCase(BaseV1TestCase):
