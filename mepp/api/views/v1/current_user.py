@@ -41,7 +41,10 @@ from mepp.api.models import (
 )
 from mepp.api.permissions import MeppMirrorPermission
 from mepp.api.serializers.v1.log import UserLogSerializer
-from mepp.api.serializers.v1.patient import PatientSettingsSerializer
+from mepp.api.serializers.v1.patient import (
+    PatientSettingsSerializer,
+    PatientMirrorSettingsSerializer,
+)
 from mepp.api.serializers.v1.session import UserSessionSerializer
 
 
@@ -160,6 +163,18 @@ class CurrentUserViewSet(
     def user_profile(self, request, *args, **kwargs):
         user = request.user
         serializer = PatientSettingsSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+    @action(
+        detail=False,
+        methods=['PATCH'],
+        url_path='settings',
+    )
+    def user_mirror_settings(self, request, *args, **kwargs):
+        user = request.user
+        serializer = PatientMirrorSettingsSerializer(user, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data)

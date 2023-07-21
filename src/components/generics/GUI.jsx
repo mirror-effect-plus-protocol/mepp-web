@@ -65,7 +65,7 @@ const GUIProvider = ({ children }) => {
   const notify = useNotify();
   const navigate = useNavigate();
   const { identity, isLoading: identityLoading } = useGetIdentity();
-  const { post, loading } = useApi(RequestEndpoint.SETTINGS);
+  const { patch, loading } = useApi(RequestEndpoint.SETTINGS);
   const [position, setPosition] = useState({ ...defaultPosition });
   const [rotation, setRotation] = useState({ ...defaultRotation });
   const [scale, setScale] = useState({ ...defaultScale });
@@ -132,7 +132,7 @@ const GUIProvider = ({ children }) => {
     const scale = data.folders[t('GUI:folders:scale')].controllers;
 
     const send = async () => {
-      const { response } = await post({
+      const { response } = await patch({
         position,
         rotation,
         scale,
@@ -145,7 +145,7 @@ const GUIProvider = ({ children }) => {
     };
 
     send();
-  }, [post, notify, t]);
+  }, [patch, notify, t]);
 
   useEffect(() => {
     if (ready) return;
