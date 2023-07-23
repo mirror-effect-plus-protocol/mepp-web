@@ -178,7 +178,7 @@ class MeMirrorSettingsAPITestCase(BaseV1TestCase):
             **self.get_token_header(john_token),
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(
+        self.assertEqual(
             response.data['position'], default_settings()['position']
         )
         expected = {
