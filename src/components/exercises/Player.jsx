@@ -97,6 +97,7 @@ const Player = () => {
       if (deepAR.current) {
         deepAR.current.stopCamera();
         deepAR.current.shutdown();
+        deepAR.current = null;
       }
     };
   }, [identity, exercise]);
