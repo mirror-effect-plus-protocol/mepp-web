@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useRef } from 'react';
 import {
   Button,
@@ -30,9 +29,11 @@ import {
   useRecordSelection,
   useTranslate,
 } from 'react-admin';
-import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
-import {sanitizeRestProps} from "@admin/utils/props";
+
+import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
+import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+
+import { sanitizeRestProps } from '@admin/utils/props';
 
 const ToggleActiveButton = ({
   resource,
@@ -63,11 +64,13 @@ const ToggleActiveButton = ({
     // Update data
     updateHandler();
   };
-  const [updateHandler, { loading }] = useUpdate(
+  const [updateHandler, { isLoading }] = useUpdate(
     resource,
-    record.id,
-    {'active': !record.active},
-    record,
+    {
+      id: record.id,
+      data: { active: !record.active },
+      previousData: record,
+    },
     {
       onSuccess: () => {
         const translatedText = record.active
@@ -77,13 +80,13 @@ const ToggleActiveButton = ({
           redirect(redirectionRef.current);
         }
         refresh();
-        notify(translatedText, 'info');
+        notify(translatedText, { type: 'info' });
       },
-      onFailure: (error) => {
+      onError: (error) => {
         const translatedText = record.active
           ? 'admin.shared.notifications.deactivate.failure'
           : 'admin.shared.notifications.activate.failure';
-        notify(translatedText, 'error');
+        notify(translatedText, { type: 'error' });
       },
     },
   );
@@ -93,14 +96,13 @@ const ToggleActiveButton = ({
     <Button
       label={t(label)}
       onClick={handleToggleArchive}
-      disabled={loading}
+      disabled={isLoading}
       className={className}
-      {...sanitizeRestProps(rest, [
-        'redirectToBasePath',
-        'showLabel',
-        'context',
-        'showLocation'
-      ], true)}
+      {...sanitizeRestProps(
+        rest,
+        ['redirectToBasePath', 'showLabel', 'context', 'showLocation'],
+        true,
+      )}
     >
       {!record.active ? <PlayCircleFilledIcon /> : <PauseCircleFilledIcon />}
     </Button>

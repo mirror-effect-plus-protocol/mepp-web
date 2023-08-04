@@ -111,9 +111,7 @@ class EnvStarter:
     def start_docker(self):
         cmd = (
             'cd {base_dir} && '
-            '$(command -v docker-compose) '
-            '-f docker-compose.yml '
-            'up --force-recreate -d'
+            '$(command -v docker) compose -f docker-compose.yml up --force-recreate -d'
         ).format(base_dir=self.BASE_DIR)
         self.run_shell(cmd)
 

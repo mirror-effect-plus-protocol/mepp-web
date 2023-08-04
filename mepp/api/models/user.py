@@ -34,9 +34,11 @@ from mepp.api.enums import (
     StatusEnum,
 )
 from mepp.api.fields.uuid import UUIDField
+from mepp.api.helpers.mirror import default_settings
 from mepp.api.mixins.models.archivable import Archivable
 from mepp.api.mixins.models.searchable import Searchable
 from mepp.api.models.expiring_token import ExpiringToken
+
 from .plan import TreatmentPlan
 from .session import Session
 
@@ -67,6 +69,7 @@ class User(AbstractUser, Archivable, Searchable):
         blank=True,
         on_delete=models.SET_NULL,
     )
+    mirror_settings = models.JSONField(null=True)
 
     def __init__(self, *args, **kwargs):
         self.email_has_changed = False
@@ -162,6 +165,9 @@ class User(AbstractUser, Archivable, Searchable):
         # Set `is_active` to `archived` all the time.
         # We do not want users to be able to log in if they are inactive
         self.is_active = not self.archived
+
+        if not self.mirror_settings and self.clinician:
+            self.mirror_settings = default_settings()
 
         # ToDo archive related objects when user is archived
         super().save(

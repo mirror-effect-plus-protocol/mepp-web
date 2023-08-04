@@ -20,11 +20,14 @@
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
+import jsonschema
+from django.utils.translation import gettext as _
 from rest_framework import serializers
 from rest_framework.reverse import reverse
 from rest_framework.fields import empty
 
 from mepp.api.fields.uuid import HyperlinkedUUIDIdentityField
+from mepp.api.helpers.mirror import default_settings
 from mepp.api.mixins.serializers.clinician import ClinicianValidatorMixin
 from mepp.api.mixins.serializers.credential import CredentialsMixin
 from mepp.api.models.user import User
@@ -103,7 +106,7 @@ class NestedPatientSerializer(PatientSerializer):
 
 class PatientSettingsSerializer(CredentialsMixin, serializers.ModelSerializer):
     """
-    This serializer should be only use to update settings.
+    This serializer should be only use to update user's settings.
     Creation is not supported.
     """
 
@@ -131,6 +134,7 @@ class PatientSettingsSerializer(CredentialsMixin, serializers.ModelSerializer):
             'profile': {
                 'email': instance.email,
                 'language': instance.language,
+                'mirror_settings': instance.mirror_settings,
             }
         }
 
@@ -151,3 +155,81 @@ class PatientSettingsSerializer(CredentialsMixin, serializers.ModelSerializer):
             raise serializers.ValidationError('Invalid password')
 
         return password
+
+
+class PatientMirrorSettingsSerializer(serializers.ModelSerializer):
+    """
+    This serializer should be only use to update user's mirror settings.
+    Creation is not supported.
+    """
+
+    rotation = serializers.JSONField(write_only=True, required=True)
+    position = serializers.JSONField(write_only=True, required=True)
+    scale = serializers.JSONField(write_only=True, required=True)
+
+    JSON_SCHEMA = {
+        'type': 'object',
+        'uniqueItems': True,
+        'properties': {
+            'x': {'type': 'number'},
+            'y': {'type': 'number'},
+            'z': {'type': 'number'},
+        },
+        'required': [
+            'x',
+            'y',
+            'z',
+        ],
+        'additionalProperties': False,
+    }
+
+    class Meta:
+        model = User
+        fields = [
+            'rotation',
+            'position',
+            'scale',
+        ]
+
+    def __init__(self, instance=None, data=empty, **kwargs):
+        if instance is None:
+            raise NotImplementedError('Model creation not supported')
+        super().__init__(instance=instance, data=data, **kwargs)
+
+    def to_representation(self, instance):
+        return instance.mirror_settings
+
+    def validate_position(self, value):
+        self._validate_setting(value)
+        return value
+
+    def validate_rotation(self, value):
+        self._validate_setting(value)
+        return value
+
+    def validate_scale(self, value):
+        self._validate_setting(value)
+        return value
+
+    def validate(self, attrs):
+        mirror_default_settings = default_settings()
+        attrs['mirror_settings'] = (
+            self.instance.mirror_settings or mirror_default_settings
+        )
+        position = attrs.pop('position', None) or attrs['mirror_settings']['position']
+        rotation = attrs.pop('rotation', None) or attrs['mirror_settings']['rotation']
+        scale = attrs.pop('scale', None) or attrs['mirror_settings']['scale']
+        attrs['mirror_settings'] = {
+            'position': position,
+            'rotation': rotation,
+            'scale': scale,
+        }
+        return attrs
+
+    def _validate_setting(self, setting):
+        try:
+            jsonschema.validate(instance=setting, schema=self.JSON_SCHEMA)
+        except jsonschema.exceptions.ValidationError:
+            raise serializers.ValidationError(_(
+                'Wrong format: expected {"x": <float>, "y": <float>, "z": <float>}'
+            ))

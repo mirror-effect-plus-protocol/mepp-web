@@ -19,10 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { createContext, useEffect, useState } from 'react';
 
-import { useApi } from '@hooks/useAPI';
+import { useApi } from '@hooks/useApi';
 
 import { RequestEndpoint, RequestMethod } from '@utils/constants';
 import { fetchData } from '@utils/fetch';
@@ -249,7 +248,12 @@ const ExerciseProvider = ({ children }) => {
   /**
    * Get Exercises data from API
    */
-  useEffect(get, []);
+  useEffect(() => {
+    const initCall = async () => {
+      get();
+    };
+    initCall();
+  }, []);
 
   return (
     <ExerciseContext.Provider

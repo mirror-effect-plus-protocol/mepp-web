@@ -19,27 +19,31 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import { useGetList } from 'react-admin';
 
-
 const useGetSubCategories = (locale) => {
-  const {data, loaded} = useGetList(
-    'categories',
-    { page: 1, perPage: 9999},
-    { field: 'i18n__name', order: 'ASC' },
-    { language: locale }
-  );
+  const { data, isLoading } = useGetList('categories', {
+    pagination: { page: 1, perPage: 9999 },
+    sort: { field: 'i18n__name', order: 'ASC' },
+    filter: { language: locale },
+  });
   return useMemo(() => {
-    const subCategoriesArray = Object.values(data).map((category) => ([
-      category.id,
-      data[category.id]['sub_categories'].map((subCategory) => {
-          return {'id': subCategory.id, 'name': subCategory.i18n.name[locale]};
-      })
-    ]));
-    return Object.fromEntries(subCategoriesArray);
-  }, [data, loaded]);
+    if (data) {
+      const subCategoriesArray = Object.values(data).map((category) => [
+        category.id,
+        category.sub_categories.map((subCategory) => {
+          return {
+            'id': subCategory.id,
+            'name': subCategory.i18n.name[locale],
+          };
+        }),
+      ]);
+      return Object.fromEntries(subCategoriesArray);
+    } else {
+      return [];
+    }
+  }, [data, isLoading]);
 };
 
 export default useGetSubCategories;

@@ -19,11 +19,13 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { temporaryProfil } from '@admin/authProvider';
 
 import Warning from '@assets/icons/warning.svg';
 
@@ -32,7 +34,6 @@ import { WrapperFullSizeMiddle } from '@styles/tools';
 
 import withAuth from '@hocs/withAuth';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import { useTrackingView } from '@hooks/useTrackingView';
 
 import BasicLayout from '@layouts/Basic';
@@ -47,21 +48,13 @@ import { Header } from '@components/header/Header';
  */
 const IntroPage = () => {
   const { t } = useTranslation();
-  const { identity, loading: identityLoading } = useGetIdentity();
-  const history = useHistory();
-  const { locale, setLocale } = useLocale();
+  const { identity, isLoading: identityLoading } = useGetIdentity();
+  const navigate = useNavigate();
   const [permissionAuthorize, setPermissionAuthorize] = useState(false);
   const [permissionDenied, setPermissionDenied] = useState(false);
   useTrackingView('/introduction');
 
   const name = (identity && identity.first_name) || '';
-
-  // change UI language according to profile language (once)
-  useEffect(() => {
-    if (identity && identity.language && identity.language !== locale) {
-      setLocale(identity.language);
-    }
-  }, [identity]);
 
   /**
    * Camera permission validation
@@ -79,7 +72,7 @@ const IntroPage = () => {
         }));
 
     if (permission) {
-      if (permission.state === 'granted') history.push('/mirror');
+      if (permission.state === 'granted') navigate('/mirror');
       else if (permission.state === 'denied') setPermissionDenied(true);
       else setPermissionAuthorize(true);
     } else setPermissionAuthorize(true);
@@ -102,6 +95,14 @@ const IntroPage = () => {
                   label={t('cta:start')}
                   onClick={onCheckCameraPermission}
                 />
+                {temporaryProfil && (
+                  <ButtonEffect
+                    label={t('cta:settings')}
+                    onClick={() => {
+                      navigate('/mirror-settings');
+                    }}
+                  />
+                )}
               </>
             )}
             {permissionAuthorize && <PermissionAuthorize />}
@@ -137,7 +138,7 @@ const PermissionDenied = () => {
  */
 const PermissionAuthorize = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -146,7 +147,7 @@ const PermissionAuthorize = () => {
       <Introduction xlarge>{t('permission:introduction')}</Introduction>
       <ButtonPermission
         label={t('cta:authorize')}
-        onClick={() => history.push('/mirror')}
+        onClick={() => navigate('/mirror')}
       />
     </>
   );
@@ -175,6 +176,10 @@ const ButtonStart = styled(Button.Default)`
 
 const ButtonPermission = styled(Button.Default)`
   margin: 0 auto;
+`;
+
+const ButtonEffect = styled(Button.Outline)`
+  margin: ${spacings.default * 2}px auto 0;
 `;
 
 const Instruction = styled(P)`

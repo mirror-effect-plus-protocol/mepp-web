@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import styled, { css } from 'styled-components';
 
@@ -90,6 +89,7 @@ const button = css`
     fill: ${({ theme }) => theme.colors.white};
     transition: fill 0.2s ease-out;
     padding: 0px 14px;
+    box-sizing: initial;
   }
 
   ${media.xsOnly`

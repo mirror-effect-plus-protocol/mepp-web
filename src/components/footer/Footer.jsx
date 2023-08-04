@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -88,7 +87,10 @@ const Footer = () => {
 
         <CopyrightWrapper>
           <Copyright small>
-            <Href href="https://github.com/mirror-effect-plus-protocol/mepp-web/">MEPP v{process.env.PROJECT_VERSION}</Href>&nbsp;©&nbsp;2021&nbsp;
+            <Href href="https://github.com/mirror-effect-plus-protocol/mepp-web/">
+              MEPP v{process.env.PROJECT_VERSION}
+            </Href>
+            &nbsp;©&nbsp;2021&nbsp;
             <Href
               href="https://github.com/mirror-effect-plus-protocol/mepp-web/blob/main/LICENSE"
               target="_blank"
@@ -101,29 +103,44 @@ const Footer = () => {
             >
               <svg width="100" height="20">
                 <linearGradient id="b" x2="0" y2="100%">
-                  <stop offset="0" stopColor="#bbb" stopOpacity=".1"/>
-                  <stop offset="1" stopOpacity=".1"/>
+                  <stop offset="0" stopColor="#bbb" stopOpacity=".1" />
+                  <stop offset="1" stopOpacity=".1" />
                 </linearGradient>
-                <clipPath id="a"><rect width="100" height="20" rx="3" fill="#fff"/></clipPath>
+                <clipPath id="a">
+                  <rect width="100" height="20" rx="3" fill="#fff" />
+                </clipPath>
                 <g clipPath="url(#a)">
-                  <path fill="#555" d="M0 0h51v20H0z"/>
-                  <path fill="#007ec6" d="M51 0h49v20H51z"/>
-                  <path fill="url(#b)" d="M0 0h100v20H0z"/>
+                  <path fill="#555" d="M0 0h51v20H0z" />
+                  <path fill="#007ec6" d="M51 0h49v20H51z" />
+                  <path fill="url(#b)" d="M0 0h100v20H0z" />
                 </g>
-                <g fill="#fff" textAnchor="middle" fontFamily="DejaVu Sans,Verdana,Geneva,sans-serif" fontSize="11">
-                  <text x="25.5" y="15" fill="#010101" fillOpacity=".3">{t('footer:license')}</text>
-                  <text x="25.5" y="14">{t('footer:license')}</text>
-                  <text x="74.5" y="15" fill="#010101" fillOpacity=".3">GPL v3</text>
-                  <text x="74.5" y="14">GPL v3</text>
+                <g
+                  fill="#fff"
+                  textAnchor="middle"
+                  fontFamily="DejaVu Sans,Verdana,Geneva,sans-serif"
+                  fontSize="11"
+                >
+                  <text x="25.5" y="15" fill="#010101" fillOpacity=".3">
+                    {t('footer:license')}
+                  </text>
+                  <text x="25.5" y="14">
+                    {t('footer:license')}
+                  </text>
+                  <text x="74.5" y="15" fill="#010101" fillOpacity=".3">
+                    GPL v3
+                  </text>
+                  <text x="74.5" y="14">
+                    GPL v3
+                  </text>
                 </g>
               </svg>
             </Href>
           </Copyright>
 
           <CopyrightLinks>
-            <Href href="#privacy">{t('footer:privacy')}</Href>
+            <Href href="#/privacy">{t('footer:privacy')}</Href>
             &nbsp;|&nbsp;
-            <Href href="#termsofuse">{t('footer:termsofuse')}</Href>
+            <Href href="#/termsofuse">{t('footer:termsofuse')}</Href>
           </CopyrightLinks>
         </CopyrightWrapper>
       </ContainerInter>
@@ -176,6 +193,7 @@ const CellLogo = styled(Cell)`
 const CopyrightWrapper = styled(FlexAlignMiddle.Component)`
   flex-direction: column;
   margin: ${spacings.default * 2}px 0 0;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 const Copyright = styled(P)`

@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 
 import BackButton from '../buttons/BackButton';
@@ -35,15 +35,11 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const ShowToolBar = (props) => {
-  const {
-    patientUid = false,
-    ...rest
-  } = props;
+const ShowToolBar = () => {
   const classes = useStyles();
   return (
     <div className={classes.toolbar}>
-      <BackButton patientUid={patientUid} basePath={rest.basePath} />
+      <BackButton />
     </div>
   );
 };

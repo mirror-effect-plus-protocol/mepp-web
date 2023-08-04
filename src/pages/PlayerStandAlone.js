@@ -19,13 +19,15 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { DeepAR } from 'deepar';
-import React, { useRef, useEffect } from 'react';
+import * as deepar from 'deepar';
+import React, { useRef, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 
 import { DisabledBodyScrollGlogalStyle } from '@styles/utils/DisabledBodyScroll';
 
 import BasicLayout from '@layouts/Basic';
+
+import GUIProvider, { GUIContext } from '@components/generics/GUI';
 
 /**
  * Player Standalone page with BasicLayout
@@ -39,7 +41,9 @@ const PlayerStandalonePage = () => {
         content={
           <ContainerWrapper>
             <ContainerInner>
-              <Player />
+              <GUIProvider>
+                <Player />
+              </GUIProvider>
             </ContainerInner>
           </ContainerWrapper>
         }
@@ -52,30 +56,35 @@ const PlayerStandalonePage = () => {
  * Player Standalone
  */
 const Player = () => {
+  const deepARInit = useRef(false);
   const deepAR = useRef(null);
   const canvas = useRef(null);
+  const gui = useContext(GUIContext);
 
+  /**
+   * Init DeepAR
+   */
   useEffect(() => {
+    if (deepAR.current) return;
+    if (deepARInit.current) return;
+
     canvas.current.width = window.innerWidth;
     canvas.current.height = window.innerHeight;
+    let AR;
+    const init = async () => {
+      deepARInit.current = true;
+      AR = await deepar.initialize({
+        licenseKey: process.env.DEEPAR_LICENSE_KEY,
+        canvas: canvas.current,
+        effect: './assets/effects/right',
+      });
+      deepAR.current = AR;
+    };
+    init();
 
-    const AR = new DeepAR({
-      licenseKey: process.env.DEEPAR_LICENSE_KEY,
-      canvas: canvas.current,
-      numberOfFaces: 1,
-      deeparWasmPath: './assets/deepar/deepar.wasm',
-      segmentationConfig: {
-        modelPath: './assets/deepar/segmentation-160x160-opt.bin',
-      },
-      callbacks: {
-        onInitialize: () => {
-          AR.startVideo(true);
-          AR.switchEffect(0, 'right', `./assets/deepar/effects/right`);
-        },
-      },
-    });
-    AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
-    deepAR.current = AR;
+    return () => {
+      AR && AR.shutdown();
+    };
   }, [deepAR, canvas]);
 
   /**
@@ -111,6 +120,40 @@ const Player = () => {
     };
   }, [deepAR]);
 
+  /**
+   * GUI modifiers
+   */
+  useEffect(() => {
+    if (deepAR.current) {
+      deepAR.current.changeParameterVector(
+        'Root',
+        '',
+        'rotation',
+        gui.rotation.x,
+        gui.rotation.y,
+        gui.rotation.z,
+      );
+
+      deepAR.current.changeParameterVector(
+        'Root',
+        '',
+        'position',
+        gui.position.x,
+        gui.position.y,
+        gui.position.z,
+      );
+
+      deepAR.current.changeParameterVector(
+        'Root',
+        '',
+        'scale',
+        gui.scale.x,
+        gui.scale.y,
+        gui.scale.z,
+      );
+    }
+  }, [deepAR, gui]);
+
   return (
     <Container>
       <Canvas ref={canvas}></Canvas>
@@ -135,4 +178,4 @@ const Container = styled.div`
 
 const Canvas = styled.canvas``;
 
-export default PlayerStandalonePage;
+export default React.memo(PlayerStandalonePage);

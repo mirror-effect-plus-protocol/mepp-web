@@ -22,7 +22,7 @@
 
 import React from 'react';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import {
   BooleanField,
@@ -30,7 +30,7 @@ import {
   TextField,
   EmailField,
   FunctionField,
-  useTranslate,
+  useTranslate, useResourceDefinition,
 } from 'react-admin';
 
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
@@ -69,14 +69,14 @@ const useRaBoxStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ClinicianShow = (props) => {
+export const ClinicianShow = () => {
   const t = useTranslate();
+  const { hasEdit } = useResourceDefinition();
   const classes = useRaBoxStyles();
 
   return (
     <Show
-      actions={<TopToolbar/>}
-      {...props}
+      actions={<TopToolbar hasEdit={hasEdit}/>}
     >
       <BoxedShowLayout>
         <Typography variant="h6" gutterBottom>
@@ -110,11 +110,7 @@ export const ClinicianShow = (props) => {
           </RaBox>
         </RaBox>
 
-        <ShowToolBar
-          resource={props.resource}
-          record={props.record}
-          basePath={props.basePath}
-        />
+        <ShowToolBar />
       </BoxedShowLayout>
     </Show>
   );

@@ -65,6 +65,7 @@ const CellHeader = styled(Cell)`
 
   ${media.xsOnly`
     position: relative;
+
   `}
 
   /* fix for increase fonts values for a11y */
@@ -76,6 +77,8 @@ const CellHeader = styled(Cell)`
 const CellContent = styled(Cell)`
   width: 100vw;
   min-height: calc(100vh - 155px);
+  color: ${({ theme }) => theme.colors.text};
+  background-color: ${({ theme }) => theme.colors.background};
 
   ${media.xsOnly`
     min-height: calc(100vh - 210px);
@@ -87,6 +90,8 @@ const CellContent = styled(Cell)`
   }
 `;
 
-const CellFooter = styled(Cell)``;
+const CellFooter = styled(Cell)`
+  background-color: ${({ theme }) => theme.colors.background};
+`;
 
 export default React.memo(BasicLayout);

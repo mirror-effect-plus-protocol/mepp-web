@@ -35,6 +35,7 @@ export const RequestEndpoint = {
   LOGIN: '/me/',
   SESSION: '/me/session/',
   PROFILE: '/me/profile/',
+  SETTINGS: '/me/settings/',
   PERMISSIONS: '/me/permissions/',
   LOGS: '/me/session/{uid}/logs/',
   RESET_PWD: '/password_reset/',

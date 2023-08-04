@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -43,6 +42,7 @@ const Container = styled(FlexAlignCenter.Component)`
   width: 100%;
   padding: 5px;
   font-size: ${rem(12)};
+  color: ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.tertiary};
   z-index: ${zindex.max};
 `;

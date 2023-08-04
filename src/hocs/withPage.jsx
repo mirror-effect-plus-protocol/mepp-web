@@ -19,21 +19,19 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useEffect } from 'react';
-import {
-  Notification,
-  useSetLocale,
-  useLocale,
-} from 'react-admin';
+import { Notification, useSetLocale, useLocale } from 'react-admin';
 import { useLocation } from 'react-router-dom';
-import { LANGUAGES } from '../locales';
+
 import { temporaryProfil } from '@admin/authProvider';
 
 import GlobalStyles from '@styles/Global';
 
+import { BrowserSupportBanner } from '@components/header/BrowserSupportBanner';
 import { TemporaryProfilBanner } from '@components/header/TemporaryProfilBanner';
 import OverlayProvider from '@components/overlays/OverlayProvider';
+
+import { LANGUAGES } from '../locales';
 
 /**
  * Basic page wrapper
@@ -41,13 +39,12 @@ import OverlayProvider from '@components/overlays/OverlayProvider';
  */
 const withPage = (Component) => {
   return function withPage(props) {
-
-
     return (
       <OverlayProvider>
         <GlobalStyles />
         <Main>
           {temporaryProfil && <TemporaryProfilBanner />}
+          <BrowserSupportBanner />
           <Component {...props} />
           <Notification />
         </Main>
@@ -65,7 +62,6 @@ const Main = (props) => {
     window.scrollTo(0, 0);
   }, [location]);
 
-
   useEffect(() => {
     const queries = new URLSearchParams(window.location.search);
     const lang = queries.get('l');
@@ -79,7 +75,7 @@ const Main = (props) => {
     }
   }, []);
 
-  return <main>{ props.children}</main>
-}
+  return <main>{props.children}</main>;
+};
 
 export default withPage;

@@ -19,20 +19,20 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {Fragment, useMemo, useState} from 'react';
-import { useDispatch } from 'react-redux';
+import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
+import React, { Fragment, useMemo, useState } from 'react';
 import {
   useGetList,
   useLocale,
   useRefresh,
   useNotify,
-  fetchStart,
-  fetchEnd,
   useRedirect,
   useTranslate,
 } from 'react-admin';
-import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
+
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import {
   Button,
   Radio,
@@ -45,19 +45,15 @@ import {
   DialogTitle,
   TextField as TextFieldMui,
   CircularProgress,
-} from '@material-ui/core';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import CheckCircle from '@material-ui/icons/CheckCircle';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+} from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
 
-const AddPlanButton = ({patientUid}) => {
+const AddPlanButton = ({ patientUid }) => {
   const t = useTranslate();
   const locale = useLocale();
   const refresh = useRefresh();
   const notify = useNotify();
   const redirect = useRedirect();
-  const dispatch = useDispatch();
   const [treatmentPlanChoice, setTreatmentPlanChoice] = useState('template');
   const [confirmDisabled, setConfirmDisabled] = useState(true);
   const [autocompleteDisabled, setAutocompleteDisabled] = useState(false);
@@ -79,28 +75,22 @@ const AddPlanButton = ({patientUid}) => {
   const handleTemplatesChange = (event, template) => {
     setSelectedPlan(template);
     setConfirmDisabled(template === null);
-  }
+  };
   const handleConfirmClick = () => {
-
     if (treatmentPlanChoice === 'new') {
-      redirect(
-        'create',
-        '/plans',
-        undefined,
-        undefined,
-        { patientUid: patientUid }
-      );
+      redirect('create', '/plans', undefined, undefined, {
+        patientUid: patientUid,
+      });
     } else {
-
-      const updatedRecord = {treatment_plan_uid: selectedPlan.id};
+      const updatedRecord = { treatment_plan_uid: selectedPlan.id };
       const url = `${process.env.API_ENDPOINT}/patients/${patientUid}/assign_plan/`;
 
       setConfirmDisabled(true);
-      dispatch(fetchStart()); // start the global loading indicator
+      // notify(fetchStart()); // start the global loading indicator
 
       fetchJsonWithAuthToken(url, {
         method: 'POST',
-        body: JSON.stringify(updatedRecord)
+        body: JSON.stringify(updatedRecord),
       })
         .then(() => {
           notify('resources.patients.notifications.plans.add.success', 'info');
@@ -112,44 +102,47 @@ const AddPlanButton = ({patientUid}) => {
         .finally(() => {
           setConfirmDisabled(false);
           setOpenDialog(false);
-          dispatch(fetchEnd()); // stop the global loading indicator
+          // notify(fetchEnd()); // stop the global loading indicator
         });
     }
   };
 
-  const {data, loading, loaded} = useGetList(
-    'plans',
-    { page: 1, perPage: 9999},
-    { field: 'i18n__name', order: 'ASC' },
-    {
+  const { data, isLoading } = useGetList('plans', {
+    pagination: { page: 1, perPage: 9999 },
+    sort: { field: 'i18n__name', order: 'ASC' },
+    filter: {
       language: locale,
       archived: false,
       is_template: true,
-    }
-  );
+    },
+  });
 
   const treatmentPlans = useMemo(() => {
-    return Object.values(data).map((plan) => ({
-      name: plan.i18n.name[locale],
-      id: plan.id
-    }));
-  }, [data, loaded]);
+    if (data) {
+      return Object.values(data).map((plan) => ({
+        name: plan.i18n.name[locale],
+        id: plan.id,
+      }));
+    } else {
+      return [];
+    }
+  }, [data, isLoading]);
 
   return (
     <>
       <Button
-        style={{float: 'right'}}
-        startIcon={<AddCircleOutlineIcon/>}
+        style={{ float: 'right' }}
+        startIcon={<AddCircleOutlineIcon />}
         onClick={handleOpenDialog}
         size="small"
         color="primary"
       >
         {t('ra.action.add')}
       </Button>
-      <Dialog
-        open={openDialog}
-      >
-        <DialogTitle>{t('resources.patients.card.plan_dialog.title')}</DialogTitle>
+      <Dialog open={openDialog}>
+        <DialogTitle>
+          {t('resources.patients.card.plan_dialog.title')}
+        </DialogTitle>
         <DialogContent>
           <FormControl component="fieldset">
             <RadioGroup
@@ -161,25 +154,32 @@ const AddPlanButton = ({patientUid}) => {
               <FormControlLabel
                 value="template"
                 control={<Radio />}
-                label={t('resources.patients.card.plan_dialog.labels.radio_template')}
+                label={t(
+                  'resources.patients.card.plan_dialog.labels.radio_template',
+                )}
               />
               <Autocomplete
                 /*classes={autocompleteClasses}*/
                 options={treatmentPlans}
                 autoHighlight
-                loading={loading}
+                loading={isLoading}
                 disabled={autocompleteDisabled}
                 onChange={handleTemplatesChange}
                 getOptionLabel={(option) => option.name}
                 renderInput={(params) => (
-                  <TextFieldMui {...params}
-                    label={t('resources.patients.card.plan_dialog.labels.autocomplete')}
+                  <TextFieldMui
+                    {...params}
+                    label={t(
+                      'resources.patients.card.plan_dialog.labels.autocomplete',
+                    )}
                     variant="filled"
                     InputProps={{
                       ...params.InputProps,
                       endAdornment: (
                         <Fragment>
-                          {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                          {isLoading ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
                           {params.InputProps.endAdornment}
                         </Fragment>
                       ),
@@ -190,7 +190,9 @@ const AddPlanButton = ({patientUid}) => {
               <FormControlLabel
                 value="new"
                 control={<Radio />}
-                label={t('resources.patients.card.plan_dialog.labels.radio_new')}
+                label={t(
+                  'resources.patients.card.plan_dialog.labels.radio_new',
+                )}
               />
             </RadioGroup>
           </FormControl>
@@ -219,6 +221,5 @@ const AddPlanButton = ({patientUid}) => {
     </>
   );
 };
-
 
 export default AddPlanButton;

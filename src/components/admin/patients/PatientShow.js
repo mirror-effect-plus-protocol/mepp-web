@@ -19,20 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {Fragment, useState} from 'react';
-import {
-  IconButton,
-  FormGroup,
-  FormControlLabel,
-  Switch,
-  DialogTitle,
-  DialogContent,
-  DialogActions, Button, Dialog, DialogContentText
-} from '@material-ui/core';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect, useState } from 'react';
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
+import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import {
   Datagrid,
   Show,
@@ -41,28 +30,48 @@ import {
   DateField,
   EmailField,
   FunctionField,
+  Labeled,
   ListContextProvider,
   useLocale,
   useGetList,
   useNotify,
+  usePermissions,
+  useRecordContext,
+  useResourceContext,
+  useResourceDefinition,
+  useStore,
   useTranslate,
 } from 'react-admin';
 
-import AddPlanButton from '@components/admin/patients/AddPlanButton';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import {
+  IconButton,
+  FormGroup,
+  FormControlLabel,
+  Switch,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Dialog,
+  DialogContentText,
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+
 import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
-import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
+import AddPlanButton from '@components/admin/patients/AddPlanButton';
 import Spinner from '@components/admin/shared/Spinner';
-import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import {sanitizeRestProps} from "@admin/utils/props";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
-import CheckCircle from "@material-ui/icons/CheckCircle";
-import {fetchJsonWithAuthToken} from "ra-data-django-rest-framework";
+import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
+import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
+import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
 const useRaBoxStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    width: '100%',
   },
   leftColumn: {
     flexDirection: 'column',
@@ -91,30 +100,68 @@ const useRaBoxStyles = makeStyles((theme) => ({
   innerChild: {
     width: '50%',
   },
+  buttonLine: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  buttonLineLeft: {
+    display: 'flex',
+  },
 }));
 
 const useArchivesStyles = makeStyles((theme) => ({
   root: {
     display: 'inline-block',
-    marginLeft: theme.spacing(2)
-  }
+    marginLeft: theme.spacing(2),
+  },
 }));
 
-export const PatientShow = (props) => {
+export const PatientShow = () => {
+  const { hasEdit } = useResourceDefinition();
+  return (
+    <Show
+      actions={
+        <TopToolbar showExport={true} hasEdit={hasEdit} hasShow={false} />
+      }
+    >
+      <PatientShowRecord />
+    </Show>
+  );
+};
+
+export const PatientShowRecord = () => {
+  const record = useRecordContext();
+  if (!record) return null;
+  const [patientUid, setPatientUid] = useStore('patient.uid', record.id);
+
+  useEffect(() => {
+    setPatientUid(record.id);
+  }, [record]);
+
+  return (
+    <BoxedShowLayout>
+      <PatientShowLayout record={record}></PatientShowLayout>
+    </BoxedShowLayout>
+  );
+};
+
+export const PatientShowLayout = ({ record }) => {
   const t = useTranslate();
   const locale = useLocale();
   const notify = useNotify();
+  const resource = useResourceContext();
+  const { permissions } = usePermissions();
   const classes = useRaBoxStyles();
   const archivesToggleClasses = useArchivesStyles();
   const [sort, setSort] = useState({ field: 'start_date', order: 'DESC' });
   const [openDialogEmail, setOpenDialogEmail] = useState(false);
   const [archives, setArchives] = useState(false);
-  const {data, ids, total, loaded} = useGetList(
-    'plans',
-    { page: 1, perPage: 9999},
-    { field: 'start_date', order: 'DESC' },
-    { language: locale, patient_id: props.id, archived: archives}
-  );
+  const { data, total, isLoading } = useGetList('plans', {
+    pagination: { page: 1, perPage: 9999 },
+    sort: { field: 'start_date', order: 'DESC' },
+    filter: { language: locale, patient_id: record.id, archived: archives },
+  });
   const handleArchivesChange = (event) => {
     setArchives(event.target.checked);
   };
@@ -129,47 +176,46 @@ export const PatientShow = (props) => {
 
   const handleSendOnboarding = (event) => {
     setOpenDialogEmail(false);
-    const url = `${process.env.API_ENDPOINT}/patients/${props.id}/resend/`;
+    const url = `${process.env.API_ENDPOINT}/patients/${record.id}/resend/`;
     fetchJsonWithAuthToken(url, {
       method: 'POST',
-      body: JSON.stringify({'confirm': true})
+      body: JSON.stringify({ 'confirm': true }),
     })
-    .then(() => {
-      notify('resources.patients.notifications.email.send.success', 'info');
-    })
-    .catch((e) => {
-      notify('resources.patients.notifications.email.send.failure', 'error');
-    })
-    .finally(() => {
-    });
+      .then(() => {
+        notify('resources.patients.notifications.email.send.success', {
+          type: 'info',
+        });
+      })
+      .catch((e) => {
+        notify('resources.patients.notifications.email.send.failure', {
+          type: 'error',
+        });
+      })
+      .finally(() => {});
   };
 
   return (
-    <Show
-      actions={<TopToolbar showExport={true}/>}
-      {...props}
-    >
-      <BoxedShowLayout>
-        <RaBox className={classes.root}>
-          <RaBox className={classes.leftColumn}>
-            <Typography variant="h6" gutterBottom>
-              {t('admin.shared.labels.card.identity')}
-            </Typography>
-            <RaBox className={classes.columnChild}>
-              <RaBox className={classes.innerChild}>
+    <BoxedShowLayout>
+      <RaBox className={classes.root}>
+        <RaBox className={classes.leftColumn}>
+          <Typography variant="h6" gutterBottom>
+            {t('admin.shared.labels.card.identity')}
+          </Typography>
+          <RaBox className={classes.columnChild}>
+            <RaBox className={classes.innerChild}>
+              <Labeled>
                 <TextField source="first_name" />
-                <div>
+              </Labeled>
+              <div>
                 <EmailField source="email" />
                 <IconButton
                   size="small"
-                  style={{marginLeft: '0.5em'}}
+                  style={{ marginLeft: '0.5em' }}
                   onClick={handleOpenDialogEmail}
                 >
                   <MailOutlineIcon />
                 </IconButton>
-                <Dialog
-                  open={openDialogEmail}
-                >
+                <Dialog open={openDialogEmail}>
                   <DialogTitle>
                     {t('admin.shared.text.emailDialog.title')}
                   </DialogTitle>
@@ -199,46 +245,57 @@ export const PatientShow = (props) => {
                     </Button>
                   </DialogActions>
                 </Dialog>
-                </div>
-              </RaBox>
-              <RaBox className={classes.innerChild}>
+              </div>
+            </RaBox>
+            <RaBox className={classes.innerChild}>
+              <Labeled>
                 <TextField source="last_name" />
-              </RaBox>
+              </Labeled>
             </RaBox>
           </RaBox>
+        </RaBox>
 
-          <RaBox className={classes.rightColumn}>
-            <Typography variant="h6" gutterBottom>
-              {t('admin.shared.labels.card.informations')}
-            </Typography>
-            <RaBox className={classes.columnChild}>
-              <RaBox className={classes.innerChild}>
+        <RaBox className={classes.rightColumn}>
+          <Typography variant="h6" gutterBottom>
+            {t('admin.shared.labels.card.informations')}
+          </Typography>
+          <RaBox className={classes.columnChild}>
+            <RaBox className={classes.innerChild}>
+              <Labeled>
                 <FunctionField
                   label={t('resources.patients.fields.use_audio')}
                   render={(record) =>
                     t(`resources.patients.shared.audio.${record.use_audio}`)
                   }
                 />
+              </Labeled>
+              <Labeled>
                 <FunctionField
                   label={t('resources.patients.fields.language')}
                   render={(record) => t(`languages.${record.language}`)}
                 />
-              </RaBox>
-              <RaBox className={classes.innerChild}>
+              </Labeled>
+            </RaBox>
+            <RaBox className={classes.innerChild}>
+              <Labeled>
                 <FunctionField
                   label={t('resources.patients.fields.side')}
                   render={(record) =>
                     t(`resources.patients.shared.side.${record.side}`)
                   }
                 />
-                <ClinicianTextField show={props.permissions === 'admin'} />
-              </RaBox>
+              </Labeled>
+              <ClinicianTextField show={permissions === 'admin'} />
             </RaBox>
           </RaBox>
         </RaBox>
+      </RaBox>
 
-        <Typography variant="h6" gutterBottom gutterTop={true}>
-          {t('resources.patients.card.labels.plans')}
+      <RaBox className={classes.buttonLine}>
+        <RaBox className={classes.buttonLineLeft}>
+          <Typography variant="h6" gutterBottom>
+            {t('resources.patients.card.labels.plans')}
+          </Typography>
           <FormGroup classes={archivesToggleClasses}>
             <FormControlLabel
               control={
@@ -251,66 +308,59 @@ export const PatientShow = (props) => {
               label={t('resources.plans.fields.archived')}
             />
           </FormGroup>
-          <AddPlanButton patientUid={props.id} />
-        </Typography>
-        <div>
-          {!loaded && <Spinner />}
-          {loaded && (
-            <ListContextProvider
-              value={{
-                data: data,
-                ids: ids,
-                total,
-                currentSort: sort,
-                basePath: props.basePath,
-                resource: props.resource,
-                selectedIds: [],
-              }}
-              {...sanitizeRestProps(props, ['label'],true)}
-            >
-              <Datagrid>
-                <TextField
-                  label={t('resources.plans.fields.name')}
-                  source={`i18n.name.${locale}`}
-                />
-                <NumberField
-                  textAlign="center"
-                  label={t('resources.plans.fields.daily_repeat')}
-                  source="daily_repeat"
-                />
-                <FunctionField
-                  textAlign="center"
-                  label={t('resources.plans.list.labels.exercises_count')}
-                  render={(record) => record.exercises.length}
-                />
-                <DateField
-                  textAlign="center"
-                  label={t('resources.plans.fields.start_date')}
-                  source="start_date"
-                />
-                <DateField
-                  textAlign="center"
-                  label={t('resources.plans.fields.end_date')}
-                  source="end_date"
-                />
-                <RowActionToolbar
-                  basePath='/plans'
-                  rowResource='plans'
-                  context={{patientUid: props.id}}
-                  activable={true}
-                  clonable={true}
-                />
-              </Datagrid>
-            </ListContextProvider>
-          )}
-        </div>
+        </RaBox>
+        <AddPlanButton patientUid={record.id} />
+      </RaBox>
+      <div>
+        {isLoading && <Spinner />}
+        {!isLoading && (
+          <ListContextProvider
+            value={{
+              data: data,
+              total,
+              sort: sort,
+              resource: resource,
+              selectedIds: [],
+            }}
+          >
+            <Datagrid bulkActionButtons={false}>
+              <TextField
+                label={t('resources.plans.fields.name')}
+                source={`i18n.name.${locale}`}
+              />
+              <NumberField
+                textAlign="center"
+                label={t('resources.plans.fields.daily_repeat')}
+                source="daily_repeat"
+              />
+              <FunctionField
+                textAlign="center"
+                label={t('resources.plans.list.labels.exercises_count')}
+                render={(record) => record.exercises.length}
+              />
+              <DateField
+                textAlign="center"
+                label={t('resources.plans.fields.start_date')}
+                source="start_date"
+              />
+              <DateField
+                textAlign="center"
+                label={t('resources.plans.fields.end_date')}
+                source="end_date"
+              />
+              <RowActionToolbar
+                rowResource="plans"
+                record={record}
+                context={{ patientUid: record.id }}
+                activable={true}
+                clonable={true}
+              />
+            </Datagrid>
+          </ListContextProvider>
+        )}
+      </div>
 
-        <ShowToolBar
-          resource={props.resource}
-          record={props.record}
-          basePath={props.basePath}
-        />
-      </BoxedShowLayout>
-    </Show>
+      <ShowToolBar />
+    </BoxedShowLayout>
   );
 };

@@ -26,7 +26,8 @@ import {
   FilterListItem,
   FilterLiveSearch,
 } from 'react-admin';
-import { CardContent, withStyles } from '@material-ui/core';
+import { CardContent } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 import { ClinicianIcon } from '@components/admin/shared/icons/ClinicianIcon';
 import useGetClinicians from '@components/admin/shared/hook/useGetClinicians';
 import { ASide } from '@components/admin/shared/cards/ASide';
