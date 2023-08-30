@@ -25,7 +25,6 @@ import { useTranslation } from 'react-i18next';
 import cmp from 'semver-compare';
 import styled from 'styled-components';
 
-import { zindex } from '@styles/configs/zindex';
 import { FlexAlignCenter } from '@styles/tools';
 import { rem } from '@styles/utils/rem';
 
@@ -95,17 +94,11 @@ const BrowserSupportBanner = () => {
 };
 
 const Container = styled(FlexAlignCenter.Component)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px;
+  padding: 10px;
   font-weight: bold;
   font-size: ${rem(14)};
-  text-align: center;
   color: ${({ theme }) => theme.colors.tertiary};
   background-color: ${({ theme }) => theme.colors.warning};
-  z-index: ${zindex.max};
 `;
 
 export { BrowserSupportBanner };

@@ -22,12 +22,15 @@
 import React, { useEffect } from 'react';
 import { Notification, useSetLocale, useLocale } from 'react-admin';
 import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { temporaryProfil } from '@admin/authProvider';
 
 import GlobalStyles from '@styles/Global';
+import { zindex } from '@styles/configs/zindex';
 
 import { BrowserSupportBanner } from '@components/header/BrowserSupportBanner';
+import { EnvironmentBanner } from '@components/header/EnvironmentBanner';
 import { TemporaryProfilBanner } from '@components/header/TemporaryProfilBanner';
 import OverlayProvider from '@components/overlays/OverlayProvider';
 
@@ -43,8 +46,11 @@ const withPage = (Component) => {
       <OverlayProvider>
         <GlobalStyles />
         <Main>
-          {temporaryProfil && <TemporaryProfilBanner />}
-          <BrowserSupportBanner />
+          <BannersContainer>
+            {temporaryProfil && <TemporaryProfilBanner />}
+            <EnvironmentBanner />
+            <BrowserSupportBanner />
+          </BannersContainer>
           <Component {...props} />
           <Notification />
         </Main>
@@ -77,5 +83,13 @@ const Main = (props) => {
 
   return <main>{props.children}</main>;
 };
+
+const BannersContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: ${zindex.max};
+`;
 
 export default withPage;
