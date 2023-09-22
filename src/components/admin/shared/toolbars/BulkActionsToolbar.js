@@ -58,7 +58,7 @@ const BulkActionsToolbar = ({ permissions, showExport, ...props }) => {
           <BulkDeleteButton
             variant="outlined"
             style={{ marginLeft: '10px', borderColor: 'red' }}
-            mutationMode="optimistic"
+            mutationMode="pessimistic"
             {...props}
           />
         )}

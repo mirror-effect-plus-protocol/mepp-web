@@ -162,7 +162,7 @@ const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
           <span>
             <DeleteWithConfirmButton
               confirmTitle={confirmTitle}
-              mutationMode="optimistic"
+              mutationMode="pessimistic"
               resource={props.rowResource || resource}
               label=""
               record={record}

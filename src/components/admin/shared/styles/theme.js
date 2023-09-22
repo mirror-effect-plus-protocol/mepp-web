@@ -105,6 +105,7 @@ export const meppTheme = {
             backgroundColor: '#a8b0bb',
             padding: '10px 17px',
             fontSize: '0.8125rem',
+            color: '#fff',
             '&:hover': {
               backgroundColor: gray,
             },
@@ -188,9 +189,9 @@ export const meppTheme = {
       styleOverrides: {
         root: {
           '& .RaBulkActionsToolbar-toolbar': {
-            top: '-5px',
+            top: '-8px',
             paddingBottom: '30px',
-            paddingTop: '30px',
+            paddingTop: '33px',
             borderTopLeftRadius: '8px',
             borderTopRightRadius: '8px',
           },
@@ -204,7 +205,8 @@ export const meppTheme = {
           '& .RaBulkActionsToolbar-topToolbar': {
             gap:0,
             '&>button': {
-              lineHeight: '1.75'
+              lineHeight: '1.75',
+              '&:last-child': { lineHeight: '1.6' }
             }
           },
         },
