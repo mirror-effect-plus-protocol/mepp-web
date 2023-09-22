@@ -186,8 +186,27 @@ export const meppTheme = {
     },
     RaBulkActionsToolbar: {
       styleOverrides: {
-        topToolbar: {
-          paddingTop: '10px',
+        root: {
+          '& .RaBulkActionsToolbar-toolbar': {
+            top: '-5px',
+            paddingBottom: '30px',
+            paddingTop: '30px',
+            borderTopLeftRadius: '8px',
+            borderTopRightRadius: '8px',
+          },
+          '& .RaBulkActionsToolbar-toolbar.RaBulkActionsToolbar-collapsed': {
+            top: '0',
+            paddingBottom: '0',
+            paddingTop: '0',
+            borderTopLeftRadius: '8px',
+            borderTopRightRadius: '8px',
+          },
+          '& .RaBulkActionsToolbar-topToolbar': {
+            gap:0,
+            '&>button': {
+              lineHeight: '1.75'
+            }
+          },
         },
       }
     },
