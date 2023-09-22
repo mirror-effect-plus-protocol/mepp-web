@@ -52,6 +52,7 @@ class Searchable(models.Model):
 
         fulltext_search = ' '.join(list(set(fulltext_words)))
         self.fulltext_search = f' {fulltext_search} '
+        print('SELF.fulltext_search', self.fulltext_search, flush=True)
         if save:
             self.save(update_fields=['fulltext_search'])
 
@@ -75,4 +76,3 @@ class I18nSearchable(BaseI18nModel):
             update_fields=update_fields,
         )
         self.parent.update_fulltext_search()
-

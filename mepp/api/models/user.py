@@ -151,13 +151,15 @@ class User(AbstractUser, Archivable, Searchable):
     ):
 
         if self.pk is not None:
+            self.email = self.email.lower()
+            self.username = self.username.lower()
             self.email_has_changed = self.email != self.username
             self.previous_email = self.username
         else:
             # When user is created through Django admin, e-mail field may be empty
             # Let's init it with the username
             if not self.email:
-                self.email = self.username
+                self.email = self.username.lower()
 
         self.username = self.email
         self.update_fulltext_search(save=False)
