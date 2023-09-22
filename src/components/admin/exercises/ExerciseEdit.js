@@ -117,7 +117,7 @@ export const ExerciseEdit = () => {
     <Edit
       transform={transform}
       actions={<TopToolbar hasShow={hasShow} />}
-      mutationMode="optimistic"
+      mutationMode="pessimistic"
     >
       <SimpleForm
         toolbar={<SimpleFormToolBar identity={false} />}

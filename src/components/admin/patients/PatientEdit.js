@@ -71,19 +71,24 @@ export const PatientEdit = () => {
   const options = Options();
   const notify = useNotify();
   const { permissions } = usePermissions();
-  const handleFailure = (error) => {
+
+  const onError = (error) => {
     let message = '';
-    Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${resourceName}.errors.${key}`);
-    });
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
     notify(message, { type: 'error' });
   };
 
   return (
     <Edit
-      mutationOptions={{ onError: handleFailure }}
+      mutationOptions={{ onError: onError }}
       actions={<TopToolbar hasShow={hasShow}/>}
-      mutationMode="optimistic"
+      mutationMode="pessimistic"
     >
       <SimpleForm
         toolbar={<SimpleFormToolBar identity={false} />}

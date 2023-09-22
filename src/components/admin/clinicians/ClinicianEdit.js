@@ -83,14 +83,18 @@ export const ClinicianEdit = () => {
   const classes = useStyles();
   const notify = useNotify();
   const options = Options();
-  const onFailure = (error) => {
+  const onError = (error) => {
     let message = '';
-    Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${resource}.errors.${key}`);
-    });
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
     notify(message, { type: 'error' });
   };
-  const onUpdate = (data) => {
+  const onSuccess = (data) => {
     if (identity?.uid === data.id) {
       const backUrl = decodeURIComponent(searchParams.get('back'));
       const profile = JSON.parse(localStorage.getItem('profile'));
@@ -111,9 +115,8 @@ export const ClinicianEdit = () => {
 
   return (
     <Edit
-      mutationMode="optimistic"
-      mutationOptions={{ onSuccess: onUpdate }}
-      queryOptions={{ onError: onFailure }}
+      mutationMode="pessimistic"
+      mutationOptions={{ onSuccess: onSuccess, onError: onError }}
       actions={<TopToolbar hasShow={hasShow} identity={identity} />}
     >
       <SimpleForm toolbar={<SimpleFormToolBar identity={identity} />}>

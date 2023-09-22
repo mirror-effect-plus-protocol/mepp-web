@@ -82,14 +82,15 @@ const ToggleArchiveButton = ({
         notify(translatedText, { type: 'info' });
         select([])
       },
-      onFailure: (error) => {
+      onError: (error) => {
         const translatedText = record.archived
           ? 'admin.shared.notifications.unarchive.failure'
           : 'admin.shared.notifications.archive.failure';
         notify(translatedText, { type: 'error' });
       },
-    },
+    }
   );
+
   redirectionRef.current = `/${resource}`;
 
   return (

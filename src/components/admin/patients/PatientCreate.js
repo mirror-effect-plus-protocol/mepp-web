@@ -70,9 +70,13 @@ export const PatientCreate = () => {
   const { permissions } = usePermissions();
   const handleFailure = (error) => {
     let message = '';
-    Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${resourceName}.errors.${key}`);
-    });
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
     notify(message, { type: 'error' });
   };
 

@@ -88,7 +88,7 @@ export const PlanEdit = () => {
   return (
     <Edit
       actions={<TopToolbar hasShow={hasShow} patientUid={patientUid} />}
-      mutationMode="optimistic"
+      mutationMode="pessimistic"
       redirect={redirect}
       transform={transform}
     >
