@@ -68,7 +68,7 @@ export const PatientCreate = () => {
   const options = Options();
   const notify = useNotify();
   const { permissions } = usePermissions();
-  const handleFailure = (error) => {
+  const onError = (error) => {
     let message = '';
     if (error?.body) {
       Object.entries(error.body).forEach(([key, values]) => {
@@ -81,11 +81,8 @@ export const PatientCreate = () => {
   };
 
   return (
-    <Create mutationOptions={{ onError: handleFailure }}>
-      <SimpleForm
-        redirect="show"
-        toolbar={<SimpleFormToolBar identity={false} />}
-      >
+    <Create mutationOptions={{ onError: onError }} redirect="list">
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />} >
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>

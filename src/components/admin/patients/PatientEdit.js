@@ -91,6 +91,7 @@ export const PatientEdit = () => {
       mutationMode="pessimistic"
     >
       <SimpleForm
+        redirect="list"
         toolbar={<SimpleFormToolBar identity={false} />}
       >
         <Typography variant="h6" gutterBottom>

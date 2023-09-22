@@ -85,12 +85,25 @@ export const PlanEdit = () => {
     setAsTemplate(patientUid === false);
   }, [patientUid]);
 
+  const onError = (error) => {
+    let message = '';
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
+    notify(message, { type: 'error' });
+  };
+
   return (
     <Edit
       actions={<TopToolbar hasShow={hasShow} patientUid={patientUid} />}
       mutationMode="pessimistic"
       redirect={redirect}
       transform={transform}
+      mutationOptions={{ onError: onError }}
     >
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>

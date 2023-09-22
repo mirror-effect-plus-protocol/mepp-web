@@ -33,7 +33,7 @@ import {
   TranslatableInputs,
   useGetList,
   useLocale,
-  usePermissions,
+  usePermissions, useResourceContext,
   useTranslate,
 } from 'react-admin';
 
@@ -66,6 +66,7 @@ export const ExerciseCreate = () => {
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
   let categories = [];
   let subCategories = {};
+  const resourceName = useResourceContext();
   const { data, isLoading } = useGetList(
     'categories',
     {
@@ -114,12 +115,21 @@ export const ExerciseCreate = () => {
     });
   }
 
+  const onError = (error) => {
+    let message = '';
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
+    notify(message, { type: 'error' });
+  };
+
   return (
-    <Create transform={transform}>
-      <SimpleForm
-        redirect="show"
-        toolbar={<SimpleFormToolBar identity={false} />}
-      >
+    <Create transform={transform} mutationOptions={{ onError: onError }} redirect="list">
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}
         </Typography>

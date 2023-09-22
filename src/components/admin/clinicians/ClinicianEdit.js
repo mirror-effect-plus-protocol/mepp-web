@@ -118,8 +118,11 @@ export const ClinicianEdit = () => {
       mutationMode="pessimistic"
       mutationOptions={{ onSuccess: onSuccess, onError: onError }}
       actions={<TopToolbar hasShow={hasShow} identity={identity} />}
+      redirect="list"
     >
-      <SimpleForm toolbar={<SimpleFormToolBar identity={identity} />}>
+      <SimpleForm
+        toolbar={<SimpleFormToolBar identity={identity} />}
+      >
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>

@@ -113,6 +113,18 @@ export const ExerciseEdit = () => {
     });
   }
 
+  const onError = (error) => {
+    let message = '';
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
+    notify(message, { type: 'error' });
+  };
+
   return (
     <Edit
       transform={transform}
@@ -120,6 +132,7 @@ export const ExerciseEdit = () => {
       mutationMode="pessimistic"
     >
       <SimpleForm
+        redirect="list"
         toolbar={<SimpleFormToolBar identity={false} />}
       >
         <Typography variant="h6" gutterBottom>

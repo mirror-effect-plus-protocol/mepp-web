@@ -65,20 +65,21 @@ export const ClinicianCreate = () => {
   const classes = useStyles();
   const options = Options();
   const notify = useNotify();
-  const onFailure = (error) => {
+  const onError = (error) => {
     let message = '';
-    Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${resourceName}.errors.${key}`);
-    });
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
     notify(message, { type: 'error' });
   };
 
   return (
-    <Create queryOptions={{ onError: onFailure }}>
-      <SimpleForm
-        toolbar={<SimpleFormToolBar identity={false} />}
-        redirect="list"
-      >
+    <Create mutationOptions={{ onError: onError }} redirect="list">
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />} >
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>

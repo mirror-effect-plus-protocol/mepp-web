@@ -32,7 +32,7 @@ import {
   TranslatableInputs,
   useLocale,
   usePermissions,
-  useRecordContext, useStore,
+  useRecordContext, useResourceContext, useStore,
   useTranslate,
 } from 'react-admin';
 
@@ -68,6 +68,7 @@ export const PlanCreate = () => {
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'description');
   };
+  const resourceName = useResourceContext();
   const categories = useGetCategories(locale);
   const subCategories = useGetSubCategories(locale);
   const redirect = useCallback(
@@ -86,8 +87,20 @@ export const PlanCreate = () => {
     }
   }, [patientUid]);
 
+  const onError = (error) => {
+    let message = '';
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
+    notify(message, { type: 'error' });
+  };
+
   return (
-    <Create transform={transform} redirect={redirect}>
+    <Create transform={transform} redirect={redirect} mutationOptions={{ onError: onError }}>
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}
