@@ -23,17 +23,6 @@
 import { makeStyles } from '@mui/styles';
 
 
-export const useSimpleFormIteratorStyles = makeStyles((theme) => ({
-  styleOverrides: {
-    root: {
-      backgroundColor: 'red'
-    },
-    line: {
-      borderBottom: 'none'
-    }
-  }
-}));
-
 export const useNumberStyles = makeStyles((theme) => ({
   numbers: {
     display: 'flex',
@@ -44,12 +33,6 @@ export const useNumberStyles = makeStyles((theme) => ({
       minWidth: '95px',
       width: '95px'
     },
-  }
-}));
-
-export const useTranslatorInputStyles = makeStyles((theme) => ({
-  root: {
-    width: 'calc(2*256px + 1em)' /* category + subcategory dropdown + spacing */
   }
 }));
 

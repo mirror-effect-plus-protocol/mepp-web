@@ -39,10 +39,6 @@ import { useLocale } from '@hooks/locale/useLocale';
 import ExerciseRow from '@components/admin/plans/ExerciseRow';
 import IsSystemInput from '@components/admin/plans/IsSystem';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
-import {
-  useSimpleFormIteratorStyles,
-  useTranslatorInputStyles,
-} from '@components/admin/plans/styles';
 import { validateExercises } from '@components/admin/plans/validators';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import {
@@ -54,14 +50,16 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
+import {
+  categoriesSelectorStyle,
+  translatorInputStyle
+} from "@components/admin/shared/styles/shared";
 
 export const PlanCreate = () => {
   const record = useRecordContext();
   const t = useTranslate();
   const { permissions } = usePermissions();
   const { locale } = useLocale();
-  const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
-  const translatorClasses = useTranslatorInputStyles();
   const [patientUid, setPatientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -108,7 +106,7 @@ export const PlanCreate = () => {
         <TranslatableInputs
           locales={LANGUAGES}
           defaultLocale={locale}
-          classes={translatorClasses}
+          sx={translatorInputStyle}
         >
           <TextInput source="i18n.name" validate={validateI18n} fullWidth />
           <TextInput
@@ -135,7 +133,7 @@ export const PlanCreate = () => {
           label=""
           validate={validateExercises}
         >
-          <SimpleFormIterator classes={simpleFormIteratorclasses}>
+          <SimpleFormIterator sx={categoriesSelectorStyle}>
             <ExerciseRow
               categories={categories}
               subCategories={subCategories}

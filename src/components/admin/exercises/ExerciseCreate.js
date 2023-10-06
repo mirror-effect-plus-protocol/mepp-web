@@ -41,8 +41,6 @@ import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
 import { preSave } from '@components/admin/exercises/callbacks';
 import {
   useNumberStyles,
-  useSimpleFormIteratorStyles,
-  useTranslatorInputStyles,
 } from '@components/admin/exercises/styles';
 import {
   validateCategory,
@@ -55,13 +53,15 @@ import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
+import {
+  categoriesSelectorStyle,
+  translatorInputStyle
+} from "@components/admin/shared/styles/shared";
 
 export const ExerciseCreate = () => {
   const { permissions } = usePermissions();
   const t = useTranslate();
-  const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const numberClasses = useNumberStyles();
-  const translatorClasses = useTranslatorInputStyles();
   const { locale } = useLocale();
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
   let categories = [];
@@ -136,7 +136,7 @@ export const ExerciseCreate = () => {
         <TranslatableInputs
           locales={LANGUAGES}
           defaultLocale={locale}
-          classes={translatorClasses}
+          sx={translatorInputStyle}
         >
           <TextInput
             source="i18n.description"
@@ -173,7 +173,7 @@ export const ExerciseCreate = () => {
             fullWidth={false}
           >
             <SimpleFormIterator
-              classes={simpleFormIteratorclasses}
+              sx={categoriesSelectorStyle}
               disableReordering={true}
               inline
             >

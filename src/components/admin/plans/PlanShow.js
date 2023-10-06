@@ -21,13 +21,11 @@
  */
 import React, { useEffect, useState } from 'react';
 import { BoxedShowLayout } from 'ra-compact-ui';
-import { useNavigate } from 'react-router-dom';
 import {
   ArrayField,
   BooleanField,
   Datagrid,
   NumberField,
-  NumberInput,
   Show,
   TextField,
   TranslatableFields,
@@ -39,13 +37,13 @@ import { useLocale } from '@hooks/locale/useLocale';
 import { makeStyles } from '@mui/styles';
 
 import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
-import { useTranslatorInputStyles } from '@components/admin/exercises/styles';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import { useOnelineStyles } from '@components/admin/shared/styles/oneline';
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
 import { LANGUAGES } from '../../../locales';
+import {translatorInputStyle} from "@components/admin/shared/styles/shared";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -65,11 +63,9 @@ export const PlanShow = (props) => {
   const { hasEdit } = useResourceDefinition();
   const t = useTranslate();
   const { locale } = useLocale();
-  const translatorClasses = useTranslatorInputStyles();
   const [patientUid, setPatientUid] = useState(undefined);
   const onelineClasses = useOnelineStyles();
   const planShowClasses = useStyles();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (props.history?.location?.state?.patientUid) {
@@ -92,7 +88,7 @@ export const PlanShow = (props) => {
         <TranslatableFields
           locales={LANGUAGES}
           defaultLocale={locale}
-          classes={translatorClasses}
+          sx={translatorInputStyle}
         >
           <TextField source="i18n.name" fullWidth={true} />
           <TextField source="i18n.description" fullWidth={true} />
