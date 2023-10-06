@@ -41,7 +41,6 @@ class TreatmentPlan(BaseModel, Archivable, Template, Searchable):
 
     fulltext_search_fields = [
         'i18n__name',
-        'i18n__description',
     ]
 
     uid = UUIDField('tp')
@@ -220,7 +219,6 @@ class TreatmentPlanI18n(I18nSearchable):
         TreatmentPlan, related_name='i18n', on_delete=models.CASCADE
     )
     name = models.CharField(max_length=200, null=False)
-    description = models.TextField(null=False)
 
     def __str__(self):
         return f'{self.name} ({self.language})'

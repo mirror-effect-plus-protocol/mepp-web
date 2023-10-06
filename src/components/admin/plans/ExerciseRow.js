@@ -127,6 +127,7 @@ const ExerciseRow = (props) => {
         onClick={handleOpenDialog}
         multiline={true}
         fullWidth={true}
+        sx={{ minWidth: '500px' }}
       />
       <div className={numberClasses.numbers}>
         <NumberInput

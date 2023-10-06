@@ -110,7 +110,6 @@ class TreatmentPlanI18nSerializer(serializers.ModelSerializer):
         model = TreatmentPlanI18n
         fields = [
             'name',
-            'description',
             'language',
         ]
         list_serializer_class = I18nSerializer
@@ -322,18 +321,8 @@ class TreatmentPlanSerializer(
                     )
                 })
 
-            try:
-                translated_description = translation['description']
-            except KeyError:
-                raise serializers.ValidationError({
-                    'i18n.description': (
-                        f'Field is required for language: {translated_language}'
-                    )
-                })
-
             treatment_plan_i18n, _ = TreatmentPlanI18n.objects.get_or_create(
                 language=translated_language, parent=instance
             )
             treatment_plan_i18n.name = translated_name
-            treatment_plan_i18n.description = translated_description
             treatment_plan_i18n.save()

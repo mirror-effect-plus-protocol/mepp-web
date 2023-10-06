@@ -126,6 +126,7 @@ export const ExerciseEdit = () => {
     <Edit
       transform={transform}
       actions={<TopToolbar hasShow={hasShow} />}
+      mutationOptions={{ onError: onError }}
       mutationMode="pessimistic"
     >
       <SimpleForm

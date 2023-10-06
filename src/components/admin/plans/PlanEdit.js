@@ -119,12 +119,6 @@ export const PlanEdit = () => {
           sx={translatorInputStyle}
         >
           <TextInput source="i18n.name" validate={validateI18n} fullWidth />
-          <TextInput
-            source="i18n.description"
-            validate={validateI18n}
-            fullWidth
-            multiline
-          />
         </TranslatableInputs>
         {permissions === 'admin' && asTemplate && (
           <FormDataConsumer>
