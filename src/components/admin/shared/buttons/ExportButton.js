@@ -24,11 +24,11 @@ import React, { useCallback } from 'react';
 import {
   useNotify,
   useUnselectAll,
-  useLocale,
   useTranslate,
   useResourceContext,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import DownloadIcon from '@mui/icons-material/GetApp';
 import Button from '@mui/material/Button';
 
@@ -48,7 +48,7 @@ const ExportButton = (props) => {
   const t = useTranslate();
   const locale = useLocale();
   const notify = useNotify();
-  const unselectAll = useUnselectAll();
+  const unselectAll = useUnselectAll(resource);
   const label = showLabel ? t('admin.shared.labels.exportButton') : '';
   const exportEndpoint = useCallback(
     (token) => {
@@ -62,7 +62,7 @@ const ExportButton = (props) => {
       const qs = new URLSearchParams(data).toString();
       return `${process.env.API_ENDPOINT}/${resource}/export/?${qs}`;
     },
-    [selectedIds, filterValues, locale],
+    [selectedIds, filterValues, locale]
   );
 
   const handleClick = (e) => {
