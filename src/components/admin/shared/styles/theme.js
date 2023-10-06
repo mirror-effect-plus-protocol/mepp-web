@@ -206,7 +206,6 @@ export const meppTheme = {
             gap:0,
             '&>button': {
               lineHeight: '1.75',
-              '&:last-child': { lineHeight: '1.6' }
             }
           },
         },
@@ -248,6 +247,13 @@ export const meppTheme = {
           [theme.breakpoints.up('sm')]: {
             paddingRight: 0
           },
+        }
+      }
+    },
+    RaSimpleFormIterator: {
+      styleOverrides: {
+        root: {
+          '&>ul>li': { borderBottom: 'none'}
         }
       }
     }

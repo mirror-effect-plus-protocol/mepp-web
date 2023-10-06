@@ -23,13 +23,13 @@ import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import React, { Fragment, useMemo, useState } from 'react';
 import {
   useGetList,
-  useLocale,
   useRefresh,
   useNotify,
   useRedirect,
   useTranslate,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -50,7 +50,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 const AddPlanButton = ({ patientUid }) => {
   const t = useTranslate();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const refresh = useRefresh();
   const notify = useNotify();
   const redirect = useRedirect();

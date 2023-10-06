@@ -25,9 +25,10 @@ import {
   FilterList,
   FilterListItem,
   FilterLiveSearch,
-  useLocale,
   useListFilterContext,
 } from 'react-admin';
+
+import { useLocale } from '@hooks/locale/useLocale';
 import { Card as MuiCard, CardContent } from '@mui/material';
 import {
   CategoryIcon,
@@ -42,7 +43,7 @@ import {
 import { ASide } from '@components/admin/shared/cards/ASide';
 
 const ExerciseListAside = ({permissions}) => {
-  const locale = useLocale();
+  const { locale } = useLocale();
   const [selectedCategory, setSelectedCategory] = useState(-1);
   const { data: clinicians, isLoading } = useGetClinicians(permissions);
   const categories = useGetCategories(locale);

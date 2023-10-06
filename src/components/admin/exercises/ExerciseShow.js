@@ -28,12 +28,12 @@ import {
   TextField,
   TranslatableFields,
   useGetList,
-  useLocale,
   usePermissions,
   useRecordContext,
   useTranslate, useResourceDefinition,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import { Chip } from '@mui/material';
 
 import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
@@ -75,7 +75,7 @@ export const ExerciseShow = () => {
   const { permissions } = usePermissions();
   const { hasEdit } = useResourceDefinition();
   const t = useTranslate();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const translatorClasses = useTranslatorInputStyles();
   const onelineClasses = useOnelineStyles();
   const categories = {};

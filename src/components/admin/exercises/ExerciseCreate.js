@@ -32,11 +32,11 @@ import {
   TextInput,
   TranslatableInputs,
   useGetList,
-  useLocale,
   usePermissions, useResourceContext,
   useTranslate,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
 import { preSave } from '@components/admin/exercises/callbacks';
 import {
@@ -62,7 +62,7 @@ export const ExerciseCreate = () => {
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const numberClasses = useNumberStyles();
   const translatorClasses = useTranslatorInputStyles();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
   let categories = [];
   let subCategories = {};
@@ -175,6 +175,7 @@ export const ExerciseCreate = () => {
             <SimpleFormIterator
               classes={simpleFormIteratorclasses}
               disableReordering={true}
+              inline
             >
               <SelectInput
                 label="Category"

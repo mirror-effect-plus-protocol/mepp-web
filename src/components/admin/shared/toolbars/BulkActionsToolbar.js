@@ -57,7 +57,7 @@ const BulkActionsToolbar = ({ permissions, showExport, ...props }) => {
         {permissions === 'admin' && filterValues.archived && (
           <BulkDeleteButton
             variant="outlined"
-            style={{ marginLeft: '10px', borderColor: 'red' }}
+            style={{ lineHeight: 1.6, marginLeft: '10px', borderColor: 'red' }}
             mutationMode="pessimistic"
             {...props}
           />

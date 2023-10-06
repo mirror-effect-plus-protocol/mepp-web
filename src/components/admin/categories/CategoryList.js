@@ -24,10 +24,10 @@ import {
   List,
   TextField,
   Datagrid,
-  useLocale,
   useTranslate,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import { Chip } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
@@ -50,7 +50,7 @@ const SubCategoriesRow = ({ record, locale }) => {
 
 export const CategoryList = () => {
   const t = useTranslate();
-  const locale = useLocale();
+  const { locale } = useLocale();
 
   return (
     <List

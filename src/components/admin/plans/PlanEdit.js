@@ -31,13 +31,13 @@ import {
   TextField,
   TextInput,
   TranslatableInputs,
-  useLocale,
   usePermissions,
   useResourceDefinition,
   useStore,
   useTranslate,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import IsSystemInput from '@components/admin/plans/IsSystem';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
 import {
@@ -62,7 +62,7 @@ export const PlanEdit = () => {
   const { permissions } = usePermissions();
   const { hasShow } = useResourceDefinition();
   const t = useTranslate();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const translatorClasses = useTranslatorInputStyles();
   const [asTemplate, setAsTemplate] = useState(true);

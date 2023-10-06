@@ -24,24 +24,13 @@ import { makeStyles } from '@mui/styles';
 
 
 export const useSimpleFormIteratorStyles = makeStyles((theme) => ({
-  root: {
-    '& li > div:first-child': {
-      display: 'none'
+  styleOverrides: {
+    root: {
+      backgroundColor: 'red'
+    },
+    line: {
+      borderBottom: 'none'
     }
-  },
-  form: {
-    display: 'flex',
-    justifyContent: 'start',
-    gap: '1em'
-  },
-  action: {
-    '& .button-remove': {
-      'marginLeft': '1em',
-      'marginTop': '10px',
-    }
-  },
-  line: {
-    borderBottom: 'none'
   }
 }));
 

@@ -32,7 +32,6 @@ import {
   FunctionField,
   Labeled,
   ListContextProvider,
-  useLocale,
   useGetList,
   useNotify,
   usePermissions,
@@ -43,6 +42,7 @@ import {
   useTranslate,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
@@ -148,7 +148,7 @@ export const PatientShowRecord = () => {
 
 export const PatientShowLayout = ({ record }) => {
   const t = useTranslate();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const notify = useNotify();
   const resource = useResourceContext();
   const { permissions } = usePermissions();

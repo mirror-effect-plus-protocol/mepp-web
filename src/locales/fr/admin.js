@@ -143,6 +143,10 @@ export default {
       fields: {
         'i18n.name.fr': 'Nom',
         'i18n.name': 'Nom'
+      },
+      labels: {
+        category: 'Catégorie',
+        sub_category: 'Sous-catégorie'
       }
     },
     clinicians: {

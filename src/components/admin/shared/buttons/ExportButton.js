@@ -46,7 +46,7 @@ const ExportButton = (props) => {
 
   const resource = rest.resource || useResourceContext();
   const t = useTranslate();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const notify = useNotify();
   const unselectAll = useUnselectAll(resource);
   const label = showLabel ? t('admin.shared.labels.exportButton') : '';

@@ -30,12 +30,12 @@ import {
   SimpleFormIterator,
   TextInput,
   TranslatableInputs,
-  useLocale,
   usePermissions,
   useRecordContext, useResourceContext, useStore,
   useTranslate,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import ExerciseRow from '@components/admin/plans/ExerciseRow';
 import IsSystemInput from '@components/admin/plans/IsSystem';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
@@ -59,7 +59,7 @@ export const PlanCreate = () => {
   const record = useRecordContext();
   const t = useTranslate();
   const { permissions } = usePermissions();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const translatorClasses = useTranslatorInputStyles();
   const [patientUid, setPatientUid] = useStore('patient.uid', false);

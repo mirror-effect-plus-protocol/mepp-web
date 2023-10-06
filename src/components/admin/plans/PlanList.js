@@ -28,12 +28,12 @@ import {
   ReferenceField,
   TextField,
   useListContext,
-  useLocale,
   usePermissions,
   useResourceContext, useStore,
   useTranslate,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import { Divider, Tabs, Tab } from '@mui/material';
 
 import PlanListAside from '@components/admin/plans/PlanListAside';
@@ -51,7 +51,7 @@ const tabs = [
 
 const PlanDatagrid = ({ permissions }) => {
 
-  const locale = useLocale();
+  const { locale } = useLocale();
   const t = useTranslate();
 
   return (
@@ -136,7 +136,7 @@ const TabbedDatagrid = ({ permissions }) => {
 
 export const PlanList = () => {
   const { permissions } = usePermissions();
-  const locale = useLocale();
+  const { locale } = useLocale();
 
   const [patientUid, setPatientUid] = useStore('patient.uid', false);
   useEffect(() => {

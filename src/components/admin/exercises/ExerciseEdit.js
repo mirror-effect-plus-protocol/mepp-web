@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   ArrayInput,
   BooleanInput,
@@ -34,7 +34,6 @@ import {
   TextInput,
   TranslatableInputs,
   useGetList,
-  useLocale,
   usePermissions, useResourceDefinition,
   useTranslate,
 } from 'react-admin';
@@ -56,6 +55,7 @@ import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolb
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
+import { useLocale } from '@hooks/locale/useLocale';
 
 import { LANGUAGES } from '../../../locales';
 
@@ -66,7 +66,7 @@ export const ExerciseEdit = () => {
   const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const numberClasses = useNumberStyles();
   const translatorClasses = useTranslatorInputStyles();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
   let categories = [];
   let subCategories = {};
@@ -189,9 +189,10 @@ export const ExerciseEdit = () => {
             <SimpleFormIterator
               classes={simpleFormIteratorclasses}
               disableReordering={true}
+              inline
             >
               <SelectInput
-                label="Category"
+                label={t('resources.categories.labels.category')}
                 source="category__uid"
                 choices={categories}
                 onChange={handleChange}
@@ -201,7 +202,7 @@ export const ExerciseEdit = () => {
                 {({ scopedFormData, getSource, ...rest }) =>
                   scopedFormData ? (
                     <SubCategoryInput
-                      label="Sub-category"
+                      label={t('resources.categories.labels.sub_category')}
                       source={getSource('uid')}
                       data={scopedFormData}
                       updatedSubCategoryInputs={updatedSubCategoryInputs}
