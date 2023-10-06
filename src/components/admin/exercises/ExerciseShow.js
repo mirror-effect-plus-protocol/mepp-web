@@ -39,14 +39,13 @@ import { Chip } from '@mui/material';
 import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
 import {
   useCategoryChipsStyles,
-  useTranslatorInputStyles,
 } from '@components/admin/exercises/styles';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import { useOnelineStyles } from '@components/admin/shared/styles/oneline';
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
 import { LANGUAGES } from '../../../locales';
+import {translatorInputStyle} from "@components/admin/shared/styles/shared";
 
 const CategoryChips = (props) => {
   const classes = useCategoryChipsStyles();
@@ -76,8 +75,6 @@ export const ExerciseShow = () => {
   const { hasEdit } = useResourceDefinition();
   const t = useTranslate();
   const { locale } = useLocale();
-  const translatorClasses = useTranslatorInputStyles();
-  const onelineClasses = useOnelineStyles();
   const categories = {};
   const subCategories = {};
   const { data, isLoading } = useGetList('categories', {
@@ -104,24 +101,22 @@ export const ExerciseShow = () => {
         <TranslatableFields
           locales={LANGUAGES}
           defaultLocale={locale}
-          classes={translatorClasses}
+          sx={translatorInputStyle}
         >
           <TextField source="i18n.description" fullWidth={true} />
         </TranslatableFields>
         <RaBox>
           <NumberField
             source="movement_duration"
-            className={onelineClasses.oneline}
           />
-          <NumberField source="pause" className={onelineClasses.oneline} />
-          <NumberField source="repeat" className={onelineClasses.oneline} />
+          <NumberField source="pause" />
+          <NumberField source="repeat" />
         </RaBox>
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
         <CategoryChips categories={categories} subCategories={subCategories} />
-        <BooleanField source="is_system" className={onelineClasses.oneline} />
-
+        <BooleanField source="is_system" />
         <ShowToolBar />
       </BoxedShowLayout>
     </Show>

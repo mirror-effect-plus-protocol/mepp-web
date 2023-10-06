@@ -120,6 +120,11 @@ export const meppTheme = {
         }
       }
     },
+    MuiStack: {
+      styleOverrides: {
+        root: { width: '100%'}
+      }
+    },
     RaListToolbar:{
       styleOverrides: {
         root: {

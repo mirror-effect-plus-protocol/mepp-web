@@ -38,7 +38,6 @@ import { makeStyles } from '@mui/styles';
 
 import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import { useOnelineStyles } from '@components/admin/shared/styles/oneline';
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
@@ -64,7 +63,6 @@ export const PlanShow = (props) => {
   const t = useTranslate();
   const { locale } = useLocale();
   const [patientUid, setPatientUid] = useState(undefined);
-  const onelineClasses = useOnelineStyles();
   const planShowClasses = useStyles();
 
   useEffect(() => {
@@ -90,16 +88,16 @@ export const PlanShow = (props) => {
           defaultLocale={locale}
           sx={translatorInputStyle}
         >
-          <TextField source="i18n.name" fullWidth={true} />
-          <TextField source="i18n.description" fullWidth={true} />
+          <TextField source="i18n.name" />
+          <TextField source="i18n.description" />
         </TranslatableFields>
-        <NumberField source="daily_repeat" className={onelineClasses.oneline} />
-        <BooleanField source="is_system" className={onelineClasses.oneline} />
+        <NumberField source="daily_repeat" />
+        <BooleanField source="is_system" />
         <Typography variant="h6" gutterTop={true}>
           {t('resources.plans.card.labels.exercises')}
         </Typography>
 
-        <ArrayField source="exercises" label="">
+        <ArrayField source="exercises" label="" sx={{ '&>.MuiStack-root': { width: '100%'} }}>
           <Datagrid bulkActionButtons={false}>
             <TextField
               source={`i18n.description.${locale}`}
