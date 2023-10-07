@@ -98,7 +98,6 @@ const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
               record={record}
               className={classes.icon_action_button}
               showLabel={false}
-              redirectToBasePath={false}
               size="small"
               color="secondary"
             />
@@ -150,7 +149,6 @@ const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
               record={record}
               className={classes.icon_action_button}
               showLabel={false}
-              redirectToBasePath={false}
               size="small"
               color="secondary"
             />

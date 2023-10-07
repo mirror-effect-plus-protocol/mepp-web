@@ -101,7 +101,7 @@ const ToggleArchiveButton = ({
       className={className}
       {...sanitizeRestProps(
         rest,
-        ['redirectToBasePath', 'showLabel', 'showLocation'],
+        ['showLabel', 'showLocation'],
         true,
       )}
       variant={rest.variant}

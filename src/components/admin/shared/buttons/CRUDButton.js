@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { linkToRecord, useResourceContext } from 'ra-core';
+import { useCreatePath, useResourceContext } from 'ra-core';
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -44,18 +44,9 @@ const CRUDButton = (props) => {
   } = props;
 
   const resource = rest.resource || useResourceContext();
-
-  let icon = <ContentCreate />;
-  let endpoint = '';
-  switch (type) {
-    case 'show':
-      icon = <ImageEye />;
-      endpoint = '/show';
-      break;
-    case 'edit':
-    default:
-      break;
-  }
+  const createPath = useCreatePath();
+  const link = createPath({type: type, resource: resource, id: record.id });
+  const icon = type === 'show' ? <ImageEye /> : <ContentCreate />;
   const state = { _scrollToTop: scrollToTop };
   const context =
     rest.hasOwnProperty('context') && rest.context
@@ -65,8 +56,8 @@ const CRUDButton = (props) => {
   const location = rest.hasOwnProperty('location')
     ? props.location
     : record
-    ? `${linkToRecord(`/${resource}`, record.id)}${endpoint}`
-    : '';
+      ? link
+      : '';
 
   return (
     <Button
@@ -82,7 +73,7 @@ const CRUDButton = (props) => {
       color={color}
       variant={variant}
       startIcon={label !== false && icon}
-      {...sanitizeRestProps(rest, ['context', 'redirectToBasePath'], true)}
+      {...sanitizeRestProps(rest, ['context'], true)}
     >
       {label !== false && label}
       {label === false && icon}
