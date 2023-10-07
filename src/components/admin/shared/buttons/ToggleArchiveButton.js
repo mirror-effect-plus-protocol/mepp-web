@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useRef } from 'react';
+import React from 'react';
 import {
   Button,
   useNotify,
@@ -28,6 +28,7 @@ import {
   useRedirect,
   useRecordSelection,
   useTranslate,
+  useStore,
 } from 'react-admin';
 
 import ArchiveIcon from '@mui/icons-material/Archive';
@@ -46,13 +47,13 @@ const ToggleArchiveButton = ({
   const t = useTranslate();
   const refresh = useRefresh();
   const redirect = useRedirect();
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
   const label = showLabel
     ? record.archived
       ? 'admin.shared.labels.unarchiveButton'
       : 'admin.shared.labels.archiveButton'
     : '';
   const [selectedIds, { select }] = useRecordSelection(resource);
-  const redirectionRef = useRef();
   const handleToggleArchive = (e) => {
     e.preventDefault();
     // Update bulk actions counter
@@ -75,12 +76,15 @@ const ToggleArchiveButton = ({
         const translatedText = record.archived
           ? 'admin.shared.notifications.unarchive.success'
           : 'admin.shared.notifications.archive.success';
-        if (redirectionRef.current) {
-          redirect(redirectionRef.current);
+        if (patientUid) {
+            if (patientUid && resource === 'patients') {
+              setPatientUid(false);
+              redirect(resource);
+            }
         }
         refresh();
         notify(translatedText, { type: 'info' });
-        select([])
+        select([]);
       },
       onError: (error) => {
         const translatedText = record.archived
@@ -90,8 +94,6 @@ const ToggleArchiveButton = ({
       },
     }
   );
-
-  redirectionRef.current = `/${resource}`;
 
   return (
     <Button

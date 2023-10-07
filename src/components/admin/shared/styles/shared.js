@@ -19,6 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import {makeStyles} from "@mui/styles";
+
 export const translatorInputStyle = { width: 'calc(2*256px + 1em)' };
 
 export const categoriesSelectorStyle = {
@@ -26,3 +28,49 @@ export const categoriesSelectorStyle = {
       borderBottom: 'none'
     }
 };
+
+
+export const useRaBoxStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    width: '100%',
+  },
+  container: {
+    paddingTop: '0 !important',
+  },
+  leftColumn: {
+    flexDirection: 'column',
+    flex: '0 0 60%',
+    flexGrow: '3',
+    justifyContent: 'center',
+    marginBottom: '10px',
+    paddingRight: '10px',
+    borderRight: 'solid thin',
+    marginRight: '10px',
+  },
+  rightColumn: {
+    flex: '0 0 40%',
+    flexDirection: 'column',
+    flexGrow: '1',
+  },
+  columnChild: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    paddingLeft: '10px',
+    '& .innerChild': {
+      paddingLeft: 0,
+    },
+  },
+  innerChild: {
+    width: '50%',
+  },
+  buttonLine: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  buttonLineLeft: {
+    display: 'flex',
+  },
+}));

@@ -67,51 +67,8 @@ import { Typography } from '@components/admin/shared/dom/sanitize';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
+import {useRaBoxStyles} from "@components/admin/shared/styles/shared";
 
-const useRaBoxStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    width: '100%',
-  },
-  container: {
-    paddingTop: '0 !important',
-  },
-  leftColumn: {
-    flexDirection: 'column',
-    flex: '0 0 60%',
-    flexGrow: '3',
-    justifyContent: 'center',
-    marginBottom: '10px',
-    paddingRight: '10px',
-    borderRight: 'solid thin',
-    marginRight: '10px',
-  },
-  rightColumn: {
-    flex: '0 0 40%',
-    flexDirection: 'column',
-    flexGrow: '1',
-  },
-  columnChild: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    paddingLeft: '10px',
-    '& .innerChild': {
-      paddingLeft: 0,
-    },
-  },
-  innerChild: {
-    width: '50%',
-  },
-  buttonLine: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-  },
-  buttonLineLeft: {
-    display: 'flex',
-  },
-}));
 
 const useArchivesStyles = makeStyles((theme) => ({
   root: {
@@ -181,6 +138,7 @@ export const PatientShowLayout = ({ record }) => {
   const handleSendOnboarding = (event) => {
     setOpenDialogEmail(false);
     const url = `${process.env.API_ENDPOINT}/patients/${record.id}/resend/`;
+
     fetchJsonWithAuthToken(url, {
       method: 'POST',
       body: JSON.stringify({ 'confirm': true }),
