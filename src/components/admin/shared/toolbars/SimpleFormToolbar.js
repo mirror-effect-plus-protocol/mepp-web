@@ -25,7 +25,7 @@ import {
   Toolbar,
   useRecordContext,
   useRedirect,
-  useResourceContext,
+  useResourceContext, useStore,
   useTranslate,
 } from 'react-admin';
 import { useFormState } from 'react-hook-form';
@@ -70,6 +70,7 @@ const SimpleFormToolBar = ({ identity }) => {
   const resource = useResourceContext();
   const { isDirty } = useFormState();
   const [confirm, setConfirm] = React.useState(false);
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
   const [searchParams, setSearchParams] = useSearchParams();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const showEditButtons = useMemo(() => {
@@ -84,7 +85,9 @@ const SimpleFormToolBar = ({ identity }) => {
     if (isDirty) {
       setConfirm(true);
     } else {
-      redirect(formRedirect);
+      const redirectUrl = getRedirectUrl;
+      setPatientUid(false);
+      redirect(redirectUrl);
     }
   };
   const handleClose = () => {
@@ -92,10 +95,12 @@ const SimpleFormToolBar = ({ identity }) => {
   };
 
   const handleConfirmClose = () => {
-    redirect(formRedirect);
+    const redirectUrl = getRedirectUrl;
+    setPatientUid(false);
+    redirect(redirectUrl);
   };
 
-  const formRedirect = useMemo(() => {
+  const getRedirectUrl = useMemo(() => {
     if (!showEditButtons) {
       if (searchParams.get('back')) {
         return decodeURIComponent(searchParams.get('back'));
@@ -103,7 +108,9 @@ const SimpleFormToolBar = ({ identity }) => {
         return '/';
       }
     } else {
-      return `/${resource}`;
+      return (patientUid && resource !== 'patients')
+        ? `/patients/${patientUid}/show`
+        : `/${resource}`;
     }
   }, [showEditButtons]);
 
