@@ -73,6 +73,9 @@ const useRaBoxStyles = makeStyles((theme) => ({
     display: 'flex',
     width: '100%',
   },
+  container: {
+    paddingTop: '0 !important',
+  },
   leftColumn: {
     flexDirection: 'column',
     flex: '0 0 60%',
@@ -134,13 +137,14 @@ export const PatientShowRecord = () => {
   const record = useRecordContext();
   if (!record) return null;
   const [patientUid, setPatientUid] = useStore('patient.uid', record.id);
+  const classes = useRaBoxStyles();
 
   useEffect(() => {
     setPatientUid(record.id);
   }, [record]);
 
   return (
-    <BoxedShowLayout>
+    <BoxedShowLayout className={classes.container}>
       <PatientShowLayout record={record}></PatientShowLayout>
     </BoxedShowLayout>
   );
@@ -195,7 +199,7 @@ export const PatientShowLayout = ({ record }) => {
   };
 
   return (
-    <BoxedShowLayout>
+    <BoxedShowLayout className={classes.container}>
       <RaBox className={classes.root}>
         <RaBox className={classes.leftColumn}>
           <Typography variant="h6" gutterBottom>
