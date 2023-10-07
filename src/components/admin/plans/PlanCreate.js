@@ -56,7 +56,6 @@ import {
 } from "@components/admin/shared/styles/shared";
 
 export const PlanCreate = () => {
-  const record = useRecordContext();
   const t = useTranslate();
   const { permissions } = usePermissions();
   const { locale } = useLocale();
@@ -64,7 +63,7 @@ export const PlanCreate = () => {
   const [asTemplate, setAsTemplate] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const validateI18n = (value, record) => {
-    return requiredLocalizedField(value, record, locale, 'description');
+    return requiredLocalizedField(value, record, locale, 'name');
   };
   const resourceName = useResourceContext();
   const categories = useGetCategories(locale);
@@ -109,12 +108,6 @@ export const PlanCreate = () => {
           sx={translatorInputStyle}
         >
           <TextInput source="i18n.name" validate={validateI18n} fullWidth />
-          <TextInput
-            source="i18n.description"
-            validate={validateI18n}
-            fullWidth
-            multiline
-          />
         </TranslatableInputs>
         {permissions === 'admin' && asTemplate && (
           <FormDataConsumer>

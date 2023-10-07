@@ -63,7 +63,7 @@ export const PlanEdit = () => {
   const [asTemplate, setAsTemplate] = useState(true);
   const [patientUid, setPatientUid] = useStore('patient.uid', false);
   const validateI18n = (value, record) => {
-    return requiredLocalizedField(value, record, locale, 'description');
+    return requiredLocalizedField(value, record, locale, 'name');
   };
   const categories = useGetCategories(locale);
   const subCategories = useGetSubCategories(locale);
