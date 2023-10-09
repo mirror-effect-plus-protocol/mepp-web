@@ -37,7 +37,7 @@ const EnvironmentBanner = () => {
 
     // env detection
     const env = process.env.ENVIRONMENT;
-    if (env === 'dev') {
+    if (env === 'staging') {
       setIsProd(false);
     }
   }, [setIsProd]);
