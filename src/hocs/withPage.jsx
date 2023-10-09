@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { useEffect } from 'react';
-import { Notification, useSetLocale, useLocale } from 'react-admin';
+import { Notification, useLocaleState } from 'react-admin';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -60,8 +60,7 @@ const withPage = (Component) => {
 };
 
 const Main = (props) => {
-  const locale = useLocale();
-  const setLocale = useSetLocale();
+  const [locale, setLocale] = useLocaleState();
   const location = useLocation();
 
   useEffect(() => {

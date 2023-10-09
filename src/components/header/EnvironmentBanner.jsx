@@ -1,9 +1,3 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-
-import { FlexAlignCenter } from '@styles/tools';
-import { rem } from '@styles/utils/rem';
-
 /*
  * MEPP - A web application to guide patients and clinicians in the process of
  * facial palsy rehabilitation, with the help of the mirror effect and principles
@@ -25,6 +19,11 @@ import { rem } from '@styles/utils/rem';
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
+import { FlexAlignCenter } from '@styles/tools';
+import { rem } from '@styles/utils/rem';
 
 /**
  * Environment Banner (show dev/staging banner)
@@ -38,7 +37,7 @@ const EnvironmentBanner = () => {
 
     // env detection
     const env = process.env.ENVIRONMENT;
-    if (env === 'staging') {
+    if (env === 'dev') {
       setIsProd(false);
     }
   }, [setIsProd]);
