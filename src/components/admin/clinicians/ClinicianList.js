@@ -59,7 +59,6 @@ export const ClinicianList = () => {
         <BooleanField
           textAlign="center"
           source="is_superuser"
-          style={{display: 'inline-block'}}
         />
         <FunctionField
           label={t('resources.clinicians.list.labels.patients_count')}

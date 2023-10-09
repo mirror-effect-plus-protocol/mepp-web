@@ -89,12 +89,31 @@ export const PlanShow = (props) => {
           sx={translatorInputStyle}
         >
           <TextField source="i18n.name" />
-          <TextField source="i18n.description" />
         </TranslatableFields>
         <NumberField source="daily_repeat" />
         <BooleanField source="is_system" />
-        <Typography variant="h6" gutterTop={true}>
+        <Typography
+          variant="h6"
+          gutterTop={true}
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            gap: '1em'
+          }}
+        >
           {t('resources.plans.card.labels.exercises')}
+          <span style={{
+            fontWeight: "normal",
+            fontSize: '0.5em',
+            marginTop: '7px'
+          }}>
+            {t('resources.plans.fields.randomize')}
+            <BooleanField
+              size="small"
+              source="randomize"
+              sx={{ marginLeft: '5px' }}
+            />
+          </span>
         </Typography>
 
         <ArrayField source="exercises" label="" sx={{ '&>.MuiStack-root': { width: '100%'} }}>

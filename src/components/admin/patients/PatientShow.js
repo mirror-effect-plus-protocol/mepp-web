@@ -25,6 +25,7 @@ import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import {
   Datagrid,
   Show,
+  BooleanField,
   TextField,
   NumberField,
   DateField,
@@ -299,6 +300,11 @@ export const PatientShowLayout = ({ record }) => {
                 textAlign="center"
                 label={t('resources.plans.list.labels.exercises_count')}
                 render={(record) => record.exercises.length}
+              />
+              <BooleanField
+                textAlign="center"
+                label={t('resources.plans.fields.randomize')}
+                source="randomize"
               />
               <DateField
                 textAlign="center"

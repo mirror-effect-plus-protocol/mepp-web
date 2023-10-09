@@ -27,6 +27,7 @@ import {
   ListContextProvider,
   ReferenceField,
   TextField,
+  BooleanField,
   useListContext,
   usePermissions,
   useResourceContext, useStore,
@@ -70,6 +71,10 @@ const PlanDatagrid = ({ permissions }) => {
           <TextField source="full_name" />
         </ReferenceField>
       )}
+      <BooleanField
+        source="randomize"
+        textAlign="center"
+      />
       <RowActionToolbar permissions={permissions} clonable={true} />
     </Datagrid>
   );
