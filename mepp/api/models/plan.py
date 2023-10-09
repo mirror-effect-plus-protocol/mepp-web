@@ -63,6 +63,7 @@ class TreatmentPlan(BaseModel, Archivable, Template, Searchable):
     end_date = models.DateTimeField(null=True, blank=True)
     daily_repeat = models.PositiveSmallIntegerField(null=False, default=3)
     active = models.BooleanField(null=True)
+    randomize = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['i18n__name']

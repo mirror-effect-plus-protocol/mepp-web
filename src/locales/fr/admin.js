@@ -302,6 +302,7 @@ export default {
         clinician_uid: 'Clinicien(ne)',
         archived: 'Archives',
         daily_repeat: 'Fréquences quotidiennes',
+        randomize: 'Ordre aléatoire',
         is_system: 'Système',
         start_date: 'Date de début',
         end_date: 'Date de fin',

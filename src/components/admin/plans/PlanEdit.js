@@ -21,7 +21,7 @@
  */
 import React, { useEffect, useCallback, useState } from 'react';
 import {
-  ArrayInput,
+  ArrayInput, BooleanInput,
   Edit,
   FormDataConsumer,
   NumberInput,
@@ -31,7 +31,7 @@ import {
   TextField,
   TextInput,
   TranslatableInputs,
-  usePermissions,
+  usePermissions, useRecordContext,
   useResourceDefinition,
   useStore,
   useTranslate,
@@ -56,17 +56,11 @@ import ExerciseRow from './ExerciseRow';
 import { translatorInputStyle, categoriesSelectorStyle } from '@components/admin/shared/styles/shared';
 
 export const PlanEdit = () => {
-  const { permissions } = usePermissions();
   const { hasShow } = useResourceDefinition();
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [asTemplate, setAsTemplate] = useState(true);
   const t = useTranslate();
   const { locale } = useLocale();
-  const [asTemplate, setAsTemplate] = useState(true);
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
-  const validateI18n = (value, record) => {
-    return requiredLocalizedField(value, record, locale, 'name');
-  };
-  const categories = useGetCategories(locale);
-  const subCategories = useGetSubCategories(locale);
   const redirect = useCallback(
     () => contextualRedirect(patientUid),
     [patientUid]
@@ -75,11 +69,6 @@ export const PlanEdit = () => {
     (record) => preSave(record, locale, patientUid, asTemplate),
     [patientUid, asTemplate]
   );
-
-  useEffect(() => {
-    setAsTemplate(patientUid === false);
-  }, [patientUid]);
-
   const onError = (error) => {
     let message = '';
     if (error?.body) {
@@ -92,6 +81,10 @@ export const PlanEdit = () => {
     notify(message, { type: 'error' });
   };
 
+  useEffect(() => {
+    setAsTemplate(patientUid === false);
+  }, [patientUid]);
+
   return (
     <Edit
       actions={<TopToolbar hasShow={hasShow} patientUid={patientUid} />}
@@ -100,7 +93,28 @@ export const PlanEdit = () => {
       transform={transform}
       mutationOptions={{ onError: onError }}
     >
-      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
+      <SimplePlanEditForm locale={locale} asTemplate={asTemplate}/>
+    </Edit>
+  )
+};
+
+const SimplePlanEditForm = ({locale, asTemplate}) => {
+  const record = useRecordContext();
+  const { permissions } = usePermissions();
+  const t = useTranslate();
+  const [randomize, setRandomize] = useState(record.randomize);
+  const validateI18n = (value, record) => {
+    return requiredLocalizedField(value, record, locale, 'name');
+  };
+  const categories = useGetCategories(locale);
+  const subCategories = useGetSubCategories(locale);
+
+  const handleRandomizeClick = (event) => {
+    setRandomize(event.target.checked);
+  };
+
+  return (
+    <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}
         </Typography>
@@ -127,8 +141,23 @@ export const PlanEdit = () => {
         )}
         <NumberInput source="daily_repeat" validate={validateNumber} />
 
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography
+          variant="h6"
+          gutterBottom
+          gutterTop={true}
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: '1em'
+          }}
+        >
           {t('resources.plans.card.labels.exercises')}
+          <BooleanInput
+            size="small"
+            source="randomize"
+            onClick={handleRandomizeClick}
+            sx={{ marginTop: '5px' }}
+          />
         </Typography>
 
         <ArrayInput
@@ -137,7 +166,10 @@ export const PlanEdit = () => {
           label=""
           validate={validateExercises}
         >
-          <SimpleFormIterator sx={categoriesSelectorStyle}>
+          <SimpleFormIterator
+            sx={categoriesSelectorStyle}
+            disableReordering={randomize}
+          >
             <ExerciseRow
               categories={categories}
               subCategories={subCategories}
@@ -145,6 +177,5 @@ export const PlanEdit = () => {
           </SimpleFormIterator>
         </ArrayInput>
       </SimpleForm>
-    </Edit>
   );
 };

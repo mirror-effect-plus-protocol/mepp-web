@@ -149,6 +149,7 @@ class TreatmentPlanSerializer(
             'is_template',
             'patient_uid',
             'active',
+            'randomize',
         ]
         read_only_fields = [
             'clinician_uid',

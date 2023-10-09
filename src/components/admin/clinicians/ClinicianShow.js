@@ -22,7 +22,6 @@
 
 import React, {useState} from 'react';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import { makeStyles } from '@mui/styles';
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import {
   BooleanField,

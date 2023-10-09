@@ -46,10 +46,15 @@ export const Typography = ({gutterTop, ...props}) => {
     'paragraph',
     'variant',
     'variantMapping',
-    'style',
+    'sx'
   ];
   const sanitizedProps = sanitizeRestProps(props, validProps, false);
-  if (gutterTop) { sanitizedProps['style'] = {marginTop: '10px'}; }
+  if (gutterTop) {
+    sanitizedProps['sx'] = {
+      ...sanitizedProps?.sx || {},
+      marginTop: '10px'
+    };
+  }
   return (
     <MuiTypography {...sanitizedProps}>
       {props.children}

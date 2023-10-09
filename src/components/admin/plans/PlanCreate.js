@@ -22,7 +22,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
-  ArrayInput,
+  ArrayInput, BooleanInput,
   Create,
   FormDataConsumer,
   NumberInput,
@@ -61,6 +61,7 @@ export const PlanCreate = () => {
   const { locale } = useLocale();
   const [patientUid, setPatientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
+  const [randomize, setRandomize] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'name');
@@ -96,6 +97,10 @@ export const PlanCreate = () => {
     notify(message, { type: 'error' });
   };
 
+  const handleRandomizeClick = (event) => {
+    setRandomize(event.target.checked);
+  };
+
   return (
     <Create transform={transform} redirect={redirect} mutationOptions={{ onError: onError }}>
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
@@ -116,8 +121,23 @@ export const PlanCreate = () => {
         )}
         <NumberInput source="daily_repeat" validate={validateNumber} />
 
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography
+          variant="h6"
+          gutterBottom
+          gutterTop={true}
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: '1em'
+          }}
+        >
           {t('resources.plans.card.labels.exercises')}
+          <BooleanInput
+            size="small"
+            source="randomize"
+            onClick={handleRandomizeClick}
+            sx={{ marginTop: '5px' }}
+          />
         </Typography>
 
         <ArrayInput
@@ -126,7 +146,10 @@ export const PlanCreate = () => {
           label=""
           validate={validateExercises}
         >
-          <SimpleFormIterator sx={categoriesSelectorStyle}>
+          <SimpleFormIterator
+            sx={categoriesSelectorStyle}
+            disableReordering={randomize}
+          >
             <ExerciseRow
               categories={categories}
               subCategories={subCategories}
