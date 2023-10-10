@@ -85,8 +85,19 @@ module.exports = {
   plugins: [
     new webpack.ProgressPlugin(),
 
+    // Async tag method borrowed from https://github.com/jantimon/html-webpack-plugin/issues/1578#issuecomment-753686199
     new HtmlWebpackPlugin({
       template: config.template,
+      templateParameters: (compilation, assets, tags, options) => {
+        tags.headTags.forEach((tag) => {
+          if (tag.tagName === 'script') {
+            tag.attributes.async = true;
+          }
+        });
+        return {
+          htmlWebpackPlugin: { options },
+        };
+      },
     }),
 
     new CopyPlugin({
