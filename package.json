@@ -5,7 +5,7 @@
   "description": "mepp",
   "scripts": {
     "setup": "npm install --legacy-peer-deps",
-    "start": "cross-env NODE_ENV=development ENV=dev webpack-dev-server --port 8080 --open --client-web-socket-url-hostname mepp.local --client-web-socket-url-port 9090",
+    "start": "cross-env NODE_ENV=development ENV=dev webpack-dev-server --port 8080 --client-web-socket-url-hostname mepp.local --client-web-socket-url-port 9090 --open-target http://mepp.local:9090",
     "staging": "cross-env NODE_ENV=production ENV=staging webpack",
     "prod": "cross-env NODE_ENV=production ENV=production webpack",
     "build": "cross-env NODE_ENV=production ENV=production webpack",

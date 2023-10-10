@@ -30,7 +30,7 @@ module.exports = {
   mode: 'production',
 
   output: {
-    filename: `[name].[hash].js`,
+    filename: `[name].[chunkhash].js`,
     path: config.output,
     chunkFilename: `[name].[chunkhash].js`,
   },
