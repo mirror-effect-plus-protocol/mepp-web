@@ -54,10 +54,10 @@ class AdminTreatmentPlanListAPITestCase(BaseV1TestCase):
         # Create one plan
         treatment_plan = TreatmentPlan.objects.create(clinician=self.helen)
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
         response = self.client.get(
             url,
@@ -105,10 +105,6 @@ class AdminTreatmentPlanCreateAPITestCase(BaseV1TestCase):
                     'fr': 'Lorem Ipsum en français',
                     'en': 'Lorem Ipsum in English'
                 },
-                'description': {
-                    'fr': 'Lorem Ipsum en français',
-                    'en': 'Lorem Ipsum in English'
-                }
             },
             'movement_duration': 1,
             'pause': 1,
@@ -200,10 +196,10 @@ class AdminTreatmentPlanUpdateAPITestCase(BaseV1TestCase):
     def test_update_treatment_plan_as_admin(self):
         treatment_plan = TreatmentPlan.objects.create(clinician=self.admin)
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.admin.username, self.common_password)
@@ -218,10 +214,10 @@ class AdminTreatmentPlanUpdateAPITestCase(BaseV1TestCase):
     def test_update_treatment_plan_as_clinician(self):
         treatment_plan = TreatmentPlan.objects.create(clinician=self.helen)
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.helen.username, self.common_password)
@@ -236,10 +232,10 @@ class AdminTreatmentPlanUpdateAPITestCase(BaseV1TestCase):
     def test_update_other_clinician_treatment_plan_as_clinician(self):
         treatment_plan = TreatmentPlan.objects.create(clinician=self.helen)
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.john.username, self.common_password)
@@ -254,10 +250,10 @@ class AdminTreatmentPlanUpdateAPITestCase(BaseV1TestCase):
     def test_update_other_clinician_treatment_plan_as_admin(self):
         treatment_plan = TreatmentPlan.objects.create(clinician=self.helen)
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.admin.username, self.common_password)
@@ -272,10 +268,10 @@ class AdminTreatmentPlanUpdateAPITestCase(BaseV1TestCase):
     def test_update_treatment_plan_as_patient(self):
         treatment_plan = TreatmentPlan.objects.create(clinician=self.helen)
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.patient_john.username, self.common_password)
@@ -290,10 +286,10 @@ class AdminTreatmentPlanUpdateAPITestCase(BaseV1TestCase):
     def test_cannot_update_not_valid_treatment_plan(self):
         treatment_plan = TreatmentPlan.objects.create(clinician=self.helen)
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.helen.username, self.common_password)
@@ -310,10 +306,10 @@ class AdminTreatmentPlanUpdateAPITestCase(BaseV1TestCase):
             clinician=self.admin, is_system=True
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.john.username, self.common_password)
@@ -330,10 +326,10 @@ class AdminTreatmentPlanUpdateAPITestCase(BaseV1TestCase):
             clinician=self.admin, is_system=True
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.admin.username, self.common_password)
@@ -350,10 +346,10 @@ class AdminTreatmentPlanDeleteAPITestCase(BaseV1TestCase):
     def test_delete_treatment_plan_as_admin(self):
         treatment_plan = TreatmentPlan.objects.create(clinician=self.admin)
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.admin.username, self.common_password)
@@ -367,10 +363,10 @@ class AdminTreatmentPlanDeleteAPITestCase(BaseV1TestCase):
     def test_delete_treatment_plan_as_clinician(self):
         treatment_plan = TreatmentPlan.objects.create(clinician=self.john)
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.john.username, self.common_password)
@@ -384,10 +380,10 @@ class AdminTreatmentPlanDeleteAPITestCase(BaseV1TestCase):
     def test_delete_treatment_plan_as_patient(self):
         treatment_plan = TreatmentPlan.objects.create(clinician=self.john)
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.patient_john.username, self.common_password)
@@ -401,10 +397,10 @@ class AdminTreatmentPlanDeleteAPITestCase(BaseV1TestCase):
     def test_cannot_delete_not_owned_treatment_plan(self):
         treatment_plan = TreatmentPlan.objects.create(clinician=self.john)
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.helen.username, self.common_password)
@@ -420,10 +416,10 @@ class AdminTreatmentPlanDeleteAPITestCase(BaseV1TestCase):
             clinician=self.admin, is_system=True
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='fr'
+            name='Lorem ipsum', parent=treatment_plan, language='fr'
         )
         TreatmentPlanI18n.objects.create(
-            description='Lorem ipsum', parent=treatment_plan, language='en'
+            name='Lorem ipsum', parent=treatment_plan, language='en'
         )
 
         token = self.login(self.helen.username, self.common_password)
@@ -433,4 +429,3 @@ class AdminTreatmentPlanDeleteAPITestCase(BaseV1TestCase):
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-

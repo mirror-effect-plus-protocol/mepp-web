@@ -19,12 +19,12 @@ with the MEPP website.
 
 **Back end:**
 
-- Python 3.8
+- Python 3.10
 - pipenv
 
 **Front end:**
 
-- nodejs 15.x
+- nodejs 16.x
 
 **DeepAR.ai**
 

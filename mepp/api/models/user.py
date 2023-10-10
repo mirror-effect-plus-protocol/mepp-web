@@ -27,6 +27,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from mepp.api.enums import (
     LanguageEnum,
@@ -45,6 +46,7 @@ from .session import Session
 
 class User(AbstractUser, Archivable, Searchable):
 
+    email = models.EmailField(_('email address'), blank=False, null=False)
     fulltext_search_fields = [
         'first_name',
         'last_name',
@@ -73,6 +75,7 @@ class User(AbstractUser, Archivable, Searchable):
 
     def __init__(self, *args, **kwargs):
         self.email_has_changed = False
+        self.email = models.EmailField(_("email address"), blank=True)
         super().__init__(*args, **kwargs)
 
     @property

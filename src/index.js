@@ -23,7 +23,6 @@ import i18n from 'i18next';
 import React, { useEffect } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import { StyledEngineProvider } from '@mui/material';
-// import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider } from 'styled-components';
 
 import Admin from '@admin/index';
