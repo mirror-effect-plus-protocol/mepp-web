@@ -24,7 +24,6 @@ const config = require('./config');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
@@ -90,16 +89,16 @@ module.exports = {
       template: config.template,
     }),
 
-    new ScriptExtHtmlWebpackPlugin({
-      defaultAttribute: 'async',
+    new CopyPlugin({
+      patterns: [
+        {
+          from: config.public,
+          globOptions: {
+            ignore: ['**/*.md', '**/*.html'],
+          },
+        },
+      ],
     }),
-
-    new CopyPlugin([
-      {
-        from: config.public,
-        ignore: ['*.md,*.html'],
-      },
-    ]),
 
     new ESLintPlugin({
       extensions: ['js', 'jsx'],
