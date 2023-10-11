@@ -52,7 +52,7 @@ const EnvironmentBanner = () => {
 };
 
 const Container = styled(FlexAlignCenter.Component)`
-  padding: 5px;
+  padding: 3px;
   font-size: ${rem(12)};
   font-weight: bold;
   color: ${({ theme }) => theme.colors.white};

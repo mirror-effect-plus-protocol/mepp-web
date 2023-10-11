@@ -31,12 +31,14 @@ import {
   useGetIdentity,
 } from 'react-admin';
 import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 import { Logo } from '@components/admin/shared/icons/Logo';
+import { EnvironmentBanner } from '@components/header/EnvironmentBanner';
 
 import { LocaleSwitcher } from './buttons/LocaleSwitcher';
 
@@ -59,12 +61,17 @@ const useStyles = makeStyles((theme) => ({
 
 const MeppAdminAppBar = (props) => {
   return (
-    <AppBar {...props} elevation={1} userMenu={<CustomUserMenu />}>
-      <Box flex="1">
-        <Logo />
-      </Box>
-      <LocaleSwitcher />
-    </AppBar>
+    <>
+      <BannersContainer>
+        <EnvironmentBanner />
+      </BannersContainer>
+      <AppBar {...props} elevation={1} userMenu={<CustomUserMenu />}>
+        <Box flex="1">
+          <Logo />
+        </Box>
+        <LocaleSwitcher />
+      </AppBar>
+    </>
   );
 };
 
@@ -107,3 +114,11 @@ export const MeppAdminLayout = (props) => {
     />
   );
 };
+
+const BannersContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999999;
+`;
