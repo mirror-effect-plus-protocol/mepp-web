@@ -21,7 +21,7 @@
  */
 import i18n from 'i18next';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useSetLocale, useLogout } from 'react-admin';
+import { useLocaleState, useLogout } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -35,7 +35,6 @@ import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
 import { FlexAlignMiddle, FlexDisplay } from '@styles/tools';
 
-import { useLocale } from '@hooks/locale/useLocale';
 
 import { Language } from '@utils/constants';
 
@@ -81,12 +80,10 @@ const LeftSide = () => {
 };
 
 const RightSideWithoutLogout = () => {
-  const locale = useSetLocale();
-  const { setLocale } = useLocale();
+  const [locale, setLocale] = useLocaleState();
 
   const switchLanguage = useCallback(() => {
     const lang = i18n.language == Language.FR ? Language.EN : Language.FR;
-    locale(lang);
     setLocale(lang);
   }, [locale, i18n.language]);
 
