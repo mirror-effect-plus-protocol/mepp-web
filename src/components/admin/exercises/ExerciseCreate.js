@@ -32,17 +32,15 @@ import {
   TextInput,
   TranslatableInputs,
   useGetList,
-  useLocale,
-  usePermissions,
+  usePermissions, useResourceContext,
   useTranslate,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
 import { preSave } from '@components/admin/exercises/callbacks';
 import {
   useNumberStyles,
-  useSimpleFormIteratorStyles,
-  useTranslatorInputStyles,
 } from '@components/admin/exercises/styles';
 import {
   validateCategory,
@@ -55,17 +53,20 @@ import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
+import {
+  categoriesSelectorStyle,
+  translatorInputStyle
+} from "@components/admin/shared/styles/shared";
 
 export const ExerciseCreate = () => {
   const { permissions } = usePermissions();
   const t = useTranslate();
-  const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const numberClasses = useNumberStyles();
-  const translatorClasses = useTranslatorInputStyles();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
   let categories = [];
   let subCategories = {};
+  const resourceName = useResourceContext();
   const { data, isLoading } = useGetList(
     'categories',
     {
@@ -114,19 +115,28 @@ export const ExerciseCreate = () => {
     });
   }
 
+  const onError = (error) => {
+    let message = '';
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
+    notify(message, { type: 'error' });
+  };
+
   return (
-    <Create transform={transform}>
-      <SimpleForm
-        redirect="show"
-        toolbar={<SimpleFormToolBar identity={false} />}
-      >
+    <Create transform={transform} mutationOptions={{ onError: onError }} redirect="list">
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}
         </Typography>
         <TranslatableInputs
           locales={LANGUAGES}
           defaultLocale={locale}
-          classes={translatorClasses}
+          sx={translatorInputStyle}
         >
           <TextInput
             source="i18n.description"
@@ -163,8 +173,9 @@ export const ExerciseCreate = () => {
             fullWidth={false}
           >
             <SimpleFormIterator
-              classes={simpleFormIteratorclasses}
+              sx={categoriesSelectorStyle}
               disableReordering={true}
+              inline
             >
               <SelectInput
                 label="Category"

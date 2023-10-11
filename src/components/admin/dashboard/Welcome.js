@@ -24,11 +24,11 @@ import React, { Fragment, useMemo, useState } from 'react';
 import {
   useGetIdentity,
   useGetList,
-  useLocale,
   useNotify,
   useTranslate,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import {
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 export const Welcome = () => {
   const classes = useStyles();
   const t = useTranslate();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const notify = useNotify();
   const { isLoading: identityLoading } = useGetIdentity();
   const [confirmDisabled, setConfirmDisabled] = useState(true);

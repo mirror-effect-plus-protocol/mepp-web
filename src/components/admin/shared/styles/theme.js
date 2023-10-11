@@ -19,9 +19,12 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import { defaultTheme } from 'react-admin';
+
+
 
 import { createTheme } from '@mui/material/styles';
-import { defaultTheme } from 'react-admin';
+
 
 const lightBlue = '#33a4e4';
 const blue = '#078EE4';
@@ -56,10 +59,17 @@ export const meppTheme = {
   typography: {
     ...defaultTheme.typography,
     // Use the system font instead of the default Roboto font.
-    fontFamily: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Helvetica', 'Arial', 'sans-serif'].join(','),
+    fontFamily: [
+      'Inter',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      'Helvetica',
+      'Arial',
+      'sans-serif',
+    ].join(','),
     h6: {
-      fontWeight: 'bold'
-    }
+      fontWeight: 'bold',
+    },
   },
   components: {
     ...defaultTheme.components,
@@ -70,33 +80,41 @@ export const meppTheme = {
           padding: '8px 15px',
           fontWeight: 500,
           '&.RaCreateButton-root': {
-            padding: '10px 17px'
-          }
-        }
-      }
+            padding: '10px 17px',
+          },
+        },
+      },
     },
     MuiPaper: {
       styleOverrides: {
         rounded: {
-          borderRadius: '8px'
-        }
-      }
+          borderRadius: '8px',
+        },
+      },
     },
     MuiTableHead: {
       styleOverrides: {
         root: {
           '& th': {
             height: '50px',
-          }
-        }
-      }
+          },
+        },
+      },
     },
     MuiTableCell: {
       styleOverrides: {
         root: {
-          height: '50px'
-        }
-      }
+          height: '50px',
+        },
+      },
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        root: {
+          minHeight: '52px',
+          marginBottom: '-52px',
+        },
+      },
     },
     MuiDialogActions: {
       styleOverrides: {
@@ -105,103 +123,142 @@ export const meppTheme = {
             backgroundColor: '#a8b0bb',
             padding: '10px 17px',
             fontSize: '0.8125rem',
+            color: '#fff',
             '&:hover': {
               backgroundColor: gray,
             },
             '&.ra-confirm, &.MuiButton-containedPrimary': {
               color: '#fff',
-              backgroundColor: lightBlue
+              backgroundColor: lightBlue,
             },
             '&.ra-confirm:hover, &.MuiButton-containedPrimary:hover': {
               backgroundColor: blue,
-            }
-          }
-        }
-      }
+            },
+          },
+        },
+      },
     },
-    RaListToolbar:{
+    MuiStack: {
+      styleOverrides: {
+        root: { width: '100%' },
+      },
+    },
+    RaList: {
+      styleOverrides: {
+        root: {
+          '& .RaList-main': {
+            paddingBottom: '52px',
+          },
+          '& .RaList-content': {
+            height: '100%',
+          },
+        },
+      },
+    },
+    RaListToolbar: {
       styleOverrides: {
         root: {
           [theme.breakpoints.up('xs')]: {
             paddingRight: 0,
-            flexWrap: 'nowrap'
+            flexWrap: 'nowrap',
           },
-          [theme.breakpoints.up('sm')]: {
-            paddingBottom: '4px !important' /* need to override React-Admin `!important` */
-          },
-        }
-      }
+        },
+      },
     },
     RaDatagrid: {
       styleOverrides: {
         root: {
           '.RaDatagrid-headerCell:first-of-type': {
-            borderTopLeftRadius: '8px'
+            borderTopLeftRadius: '8px',
           },
-          '.RaDatagrid-headerCell:last-of-type': {
-            borderTopLeftRadius: '8px'
-          }
-        }
-      }
+          '.RaDatagridah-headerCell:last-of-type': {
+            borderTopLeftRadius: '8px',
+          },
+          '.RaDatagrid-row:last-of-type': {
+            'td': {
+              borderBottom: 'none !important',
+            },
+          },
+        },
+      },
     },
     RaMenuItemLink: {
       styleOverrides: {
         root: {
           color: black,
           '& svg': {
-            color: grayIcon
+            color: grayIcon,
           },
           '&.RaMenuItemLink-active': {
             color: blue,
             fontWeight: 500,
             '& svg': {
-              color: blue
-            }
-          }
-        }
-      }
+              color: blue,
+            },
+          },
+        },
+      },
     },
     RaTranslatableFields: {
       styleOverrides: {
         root: {
           '& button': {
             minWidth: '48px',
-            width: '48px'
+            width: '48px',
           },
           '& div[role="tablist"]': {
-            backgroundColor: lighterGray
-          }
-        }
-      }
+            backgroundColor: lighterGray,
+          },
+        },
+      },
     },
     RaTranslatableInputs: {
       styleOverrides: {
         root: {
           '& div[role="tablist"]': {
             backgroundColor: lighterGray,
-            height: '48px'
-          }
-        }
-      }
+            height: '48px',
+          },
+        },
+      },
     },
     RaBulkActionsToolbar: {
       styleOverrides: {
-        topToolbar: {
-          paddingTop: '10px',
+        root: {
+          '& .RaBulkActionsToolbar-toolbar': {
+            top: '-8px',
+            paddingBottom: '30px',
+            paddingTop: '33px',
+            borderTopLeftRadius: '8px',
+            borderTopRightRadius: '8px',
+          },
+          '& .RaBulkActionsToolbar-toolbar.RaBulkActionsToolbar-collapsed': {
+            top: '0',
+            paddingBottom: '0',
+            paddingTop: '0',
+            borderTopLeftRadius: '8px',
+            borderTopRightRadius: '8px',
+          },
+          '& .RaBulkActionsToolbar-topToolbar': {
+            gap: 0,
+            '&>button': {
+              lineHeight: '1.75',
+            },
+          },
         },
-      }
+      },
     },
     RaPaginationActions: {
       styleOverrides: {
         actions: {
           '& button': {
-            minWidth: 0
-          }
+            minWidth: 0,
+          },
         },
         currentPageButton: {
-          color: black
-        }
-      }
+          color: black,
+        },
+      },
     },
     RaFilterFormInput: {
       styleOverrides: {
@@ -212,23 +269,29 @@ export const meppTheme = {
           },
           [theme.breakpoints.up('sm')]: {
             paddingLeft: '1px',
-            paddingBottom: '3px'
+            paddingBottom: '3px',
           },
-
-        }
-      }
+        },
+      },
     },
     RaTopToolbar: {
       styleOverrides: {
         root: {
           [theme.breakpoints.up('xs')]: {
-            paddingRight: 0
+            paddingRight: 0,
           },
           [theme.breakpoints.up('sm')]: {
-            paddingRight: 0
+            paddingRight: 0,
           },
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+    RaSimpleFormIterator: {
+      styleOverrides: {
+        root: {
+          '&>ul>li': { borderBottom: 'none' },
+        },
+      },
+    },
+  },
 };

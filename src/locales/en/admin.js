@@ -298,6 +298,7 @@ export default {
         clinician_uid: 'Clinician',
         archived: 'Archives',
         daily_repeat: 'Daily repetitions',
+        randomize: 'Random positions',
         is_system: 'System',
         start_date: 'Start date',
         end_date: 'End date',

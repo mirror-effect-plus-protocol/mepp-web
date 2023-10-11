@@ -24,11 +24,11 @@ import {
   CloneButton,
   DeleteWithConfirmButton,
   useTranslate,
-  useLocale,
   useRecordContext,
   useResourceContext,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Queue from '@mui/icons-material/Queue';
 import Tooltip from '@mui/material/Tooltip';
@@ -58,7 +58,7 @@ const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
   const t = useTranslate();
   const record = useRecordContext();
   const resource = useResourceContext();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const classes = useRowActionToolbarStyles();
   const confirmTitle = t('resources.' + resource + '.delete.confirmTitle', {
     placeholder: getPlaceHolder(record, locale),
@@ -98,7 +98,6 @@ const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
               record={record}
               className={classes.icon_action_button}
               showLabel={false}
-              redirectToBasePath={false}
               size="small"
               color="secondary"
             />
@@ -150,7 +149,6 @@ const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
               record={record}
               className={classes.icon_action_button}
               showLabel={false}
-              redirectToBasePath={false}
               size="small"
               color="secondary"
             />
@@ -162,7 +160,7 @@ const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
           <span>
             <DeleteWithConfirmButton
               confirmTitle={confirmTitle}
-              mutationMode="optimistic"
+              mutationMode="pessimistic"
               resource={props.rowResource || resource}
               label=""
               record={record}

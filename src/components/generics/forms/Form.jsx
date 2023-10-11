@@ -21,8 +21,8 @@
  */
 
 import React, { createElement, useEffect } from 'react';
-import { useLocale } from 'react-admin';
 import { useForm } from 'react-hook-form';
+import { useLocale } from '@hooks/locale/useLocale';
 
 import Input from '@components/generics/forms/Input';
 
@@ -59,7 +59,7 @@ import Input from '@components/generics/forms/Input';
 const Form = ({ children, submit, options }) => {
   const { register, handleSubmit, formState, trigger, watch, setValue } =
     useForm(options);
-  const locale = useLocale();
+  const { locale } = useLocale();
 
   const mapChildren = (child) => {
     if (!React.isValidElement(child) || typeof child.type === 'string') {

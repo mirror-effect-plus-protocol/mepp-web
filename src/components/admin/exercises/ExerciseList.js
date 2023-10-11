@@ -27,12 +27,12 @@ import {
   ReferenceField,
   TextField,
   useListContext,
-  useLocale,
   usePermissions,
   useResourceContext, useStore,
   useTranslate,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import { Divider, Tabs, Tab } from '@mui/material';
 
 import Spinner from '@components/admin/shared/Spinner';
@@ -67,7 +67,7 @@ const ExerciseDatagrid = ({ locale, permissions, ...props }) => {
 
 const TabbedDatagrid = ({ permissions, ...props }) => {
   const listContext = useListContext();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const t = useTranslate();
   const resource = useResourceContext();
   const { data, filterValues, setFilters, displayedFilters, isLoading } =
@@ -143,7 +143,7 @@ const TabbedDatagrid = ({ permissions, ...props }) => {
 
 export const ExerciseList = () => {
   const { permissions } = usePermissions();
-  const locale = useLocale();
+  const { locale } = useLocale();
 
   const [patientUid, setPatientUid] = useStore('patient.uid', false);
   useEffect(() => {

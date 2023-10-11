@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   ArrayInput,
   BooleanInput,
@@ -34,7 +34,6 @@ import {
   TextInput,
   TranslatableInputs,
   useGetList,
-  useLocale,
   usePermissions, useResourceDefinition,
   useTranslate,
 } from 'react-admin';
@@ -43,8 +42,6 @@ import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
 import { preSave } from '@components/admin/exercises/callbacks';
 import {
   useNumberStyles,
-  useSimpleFormIteratorStyles,
-  useTranslatorInputStyles,
 } from '@components/admin/exercises/styles';
 import {
   validateCategory,
@@ -56,6 +53,8 @@ import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolb
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
+import { useLocale } from '@hooks/locale/useLocale';
+import { translatorInputStyle, categoriesSelectorStyle } from '@components/admin/shared/styles/shared';
 
 import { LANGUAGES } from '../../../locales';
 
@@ -63,10 +62,8 @@ export const ExerciseEdit = () => {
   const t = useTranslate();
   const { permissions } = usePermissions();
   const { hasShow } = useResourceDefinition();
-  const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
   const numberClasses = useNumberStyles();
-  const translatorClasses = useTranslatorInputStyles();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
   let categories = [];
   let subCategories = {};
@@ -113,13 +110,27 @@ export const ExerciseEdit = () => {
     });
   }
 
+  const onError = (error) => {
+    let message = '';
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
+    notify(message, { type: 'error' });
+  };
+
   return (
     <Edit
       transform={transform}
       actions={<TopToolbar hasShow={hasShow} />}
-      mutationMode="optimistic"
+      mutationOptions={{ onError: onError }}
+      mutationMode="pessimistic"
     >
       <SimpleForm
+        redirect="list"
         toolbar={<SimpleFormToolBar identity={false} />}
       >
         <Typography variant="h6" gutterBottom>
@@ -137,7 +148,7 @@ export const ExerciseEdit = () => {
         <TranslatableInputs
           locales={LANGUAGES}
           defaultLocale={locale}
-          classes={translatorClasses}
+          sx={translatorInputStyle}
         >
           <TextInput
             source="i18n.description"
@@ -174,11 +185,12 @@ export const ExerciseEdit = () => {
             fullWidth={false}
           >
             <SimpleFormIterator
-              classes={simpleFormIteratorclasses}
+              sx={categoriesSelectorStyle}
               disableReordering={true}
+              inline
             >
               <SelectInput
-                label="Category"
+                label={t('resources.categories.labels.category')}
                 source="category__uid"
                 choices={categories}
                 onChange={handleChange}
@@ -188,7 +200,7 @@ export const ExerciseEdit = () => {
                 {({ scopedFormData, getSource, ...rest }) =>
                   scopedFormData ? (
                     <SubCategoryInput
-                      label="Sub-category"
+                      label={t('resources.categories.labels.sub_category')}
                       source={getSource('uid')}
                       data={scopedFormData}
                       updatedSubCategoryInputs={updatedSubCategoryInputs}

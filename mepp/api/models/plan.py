@@ -41,7 +41,6 @@ class TreatmentPlan(BaseModel, Archivable, Template, Searchable):
 
     fulltext_search_fields = [
         'i18n__name',
-        'i18n__description',
     ]
 
     uid = UUIDField('tp')
@@ -64,6 +63,7 @@ class TreatmentPlan(BaseModel, Archivable, Template, Searchable):
     end_date = models.DateTimeField(null=True, blank=True)
     daily_repeat = models.PositiveSmallIntegerField(null=False, default=3)
     active = models.BooleanField(null=True)
+    randomize = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['i18n__name']
@@ -220,7 +220,6 @@ class TreatmentPlanI18n(I18nSearchable):
         TreatmentPlan, related_name='i18n', on_delete=models.CASCADE
     )
     name = models.CharField(max_length=200, null=False)
-    description = models.TextField(null=False)
 
     def __str__(self):
         return f'{self.name} ({self.language})'

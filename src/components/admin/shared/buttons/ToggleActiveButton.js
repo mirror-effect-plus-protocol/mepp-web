@@ -100,7 +100,7 @@ const ToggleActiveButton = ({
       className={className}
       {...sanitizeRestProps(
         rest,
-        ['redirectToBasePath', 'showLabel', 'context', 'showLocation'],
+        ['showLabel', 'context', 'showLocation'],
         true,
       )}
     >

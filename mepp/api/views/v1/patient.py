@@ -1,5 +1,3 @@
-# coding: utf-8
-
 # MEPP - A web application to guide patients and clinicians in the process of
 # facial palsy rehabilitation, with the help of the mirror effect and principles
 # of motor learning
@@ -44,7 +42,7 @@ from mepp.api.serializers.v1.widget import (
     DailyRepeatWidgetSerializer,
     SessionsWidgetSerializer,
 )
-from mepp.api.helpers.emails import send_onboarding_patient_email
+from mepp.api.helpers.emails import send_onboarding_email
 from mepp.api.models.log import Log
 from mepp.api.models.user import User
 from mepp.api.permissions import MeppExportPermission
@@ -245,7 +243,7 @@ class PatientViewSet(UUIDLookupFieldViewSet):
     @action(detail=True, methods=['POST'])
     def resend(self, request, uid, *args, **kwargs) -> Response:
         if request.data.get('confirm', False):
-            if send_onboarding_patient_email(self.get_object()):
+            if send_onboarding_email(self.get_object()):
                 return Response({'send', 'ok'})
 
         return Response({'send', 'ko'})

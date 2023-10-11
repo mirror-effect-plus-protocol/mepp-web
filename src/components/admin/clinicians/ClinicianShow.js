@@ -20,9 +20,8 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import { makeStyles } from '@mui/styles';
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import {
   BooleanField,
@@ -30,55 +29,89 @@ import {
   TextField,
   EmailField,
   FunctionField,
-  useTranslate, useResourceDefinition,
+  useTranslate,
+  useResourceDefinition,
+  useNotify,
+  useRecordContext,
 } from 'react-admin';
 
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
-
-const useRaBoxStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  leftColumn: {
-    flexDirection: 'column',
-    flex: '0 0 60%',
-    flexGrow: '3',
-    justifyContent: 'center',
-    marginBottom: '10px',
-    paddingRight: '10px',
-    borderRight: 'solid thin',
-    marginRight: '10px',
-  },
-  rightColumn: {
-    flex: '0 0 40%',
-    flexDirection: 'column',
-    flexGrow: '1',
-  },
-  columnChild: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    paddingLeft: '10px',
-    '& .innerChild': {
-      paddingLeft: 0,
-    },
-  },
-  innerChild: {
-    width: '50%',
-  },
-}));
+import {
+  Button,
+  Dialog, DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton
+} from "@mui/material";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import CheckCircle from "@mui/icons-material/CheckCircle";
+import {fetchJsonWithAuthToken} from "ra-data-django-rest-framework";
+import {useRaBoxStyles} from "@components/admin/shared/styles/shared";
 
 export const ClinicianShow = () => {
-  const t = useTranslate();
   const { hasEdit } = useResourceDefinition();
+
+  return (
+    <Show actions={<TopToolbar hasEdit={hasEdit} />}>
+      <ClinicianShowRecord />
+    </Show>
+  );
+};
+
+
+export const ClinicianShowRecord = () => {
+  const record = useRecordContext();
+  if (!record) return null;
   const classes = useRaBoxStyles();
 
   return (
-    <Show
-      actions={<TopToolbar hasEdit={hasEdit}/>}
-    >
-      <BoxedShowLayout>
+    <BoxedShowLayout className={classes.container}>
+      <ClinicianShowLayout record={record}></ClinicianShowLayout>
+    </BoxedShowLayout>
+  );
+
+};
+
+export const ClinicianShowLayout = ({ record }) => {
+  const t = useTranslate();
+  const notify = useNotify();
+  const classes = useRaBoxStyles();
+  const [openDialogEmail, setOpenDialogEmail] = useState(false);
+
+  const handleOpenDialogEmail = (event) => {
+    setOpenDialogEmail(true);
+  };
+
+  const handleCloseDialogEmail = (event) => {
+    setOpenDialogEmail(false);
+  };
+
+  const handleSendOnboarding = (event) => {
+    setOpenDialogEmail(false);
+    const url = `${process.env.API_ENDPOINT}/clinicians/${record.id}/resend/`;
+
+    fetchJsonWithAuthToken(url, {
+      method: 'POST',
+      body: JSON.stringify({ 'confirm': true }),
+    })
+      .then(() => {
+        notify('resources.patients.notifications.email.send.success', {
+          type: 'info',
+        });
+      })
+      .catch((e) => {
+        notify('resources.patients.notifications.email.send.failure', {
+          type: 'error',
+        });
+      })
+      .finally(() => {});
+  };
+
+  return (
+      <BoxedShowLayout className={classes.container}>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>
@@ -86,7 +119,46 @@ export const ClinicianShow = () => {
           <RaBox className={classes.columnChild}>
             <RaBox className={classes.innerChild}>
               <TextField source="first_name" />
-              <EmailField source="email" />
+              <div>
+                <EmailField source="email" />
+                <IconButton
+                  size="small"
+                  style={{ marginLeft: '0.5em' }}
+                  onClick={handleOpenDialogEmail}
+                >
+                  <MailOutlineIcon />
+                </IconButton>
+                <Dialog open={openDialogEmail}>
+                  <DialogTitle>
+                    {t('admin.shared.text.emailDialog.title')}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      {t('admin.shared.text.emailDialog.body')}
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={handleCloseDialogEmail}
+                      autoFocus
+                      size="small"
+                      variant="contained"
+                      color="secondary"
+                      startIcon={<ErrorOutlineIcon />}
+                    >
+                      {t('admin.shared.labels.cancelButton')}
+                    </Button>
+                    <Button
+                      onClick={handleSendOnboarding}
+                      color="primary"
+                      variant="contained"
+                      startIcon={<CheckCircle />}
+                    >
+                      {t('admin.shared.labels.confirmButton')}
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
             </RaBox>
             <RaBox className={classes.innerChild}>
               <TextField source="last_name" />
@@ -112,6 +184,5 @@ export const ClinicianShow = () => {
 
         <ShowToolBar />
       </BoxedShowLayout>
-    </Show>
   );
 };

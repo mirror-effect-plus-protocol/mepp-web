@@ -78,12 +78,12 @@ const ToggleBulkArchiveButton = ({
   );
   const notify = useNotify();
   const refresh = useRefresh();
-  const unselectAll = useUnselectAll();
+  const unselectAll = useUnselectAll(resource);
   const { data } = useListContext();
   const handleClick = () => {
     selectedIds.forEach(updateRecords);
     updateMany();
-    unselectAll(resource);
+    unselectAll();
     refresh();
   };
   const updateRecords = (value) => {

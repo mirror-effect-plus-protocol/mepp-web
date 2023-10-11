@@ -27,7 +27,7 @@ from django.template.loader import render_to_string
 from django.utils import translation
 
 
-def send_onboarding_patient_email(user: 'api.User') -> bool:
+def send_onboarding_email(user: 'api.User') -> bool:
     # send an e-mail to the user
     mepp_host = settings.HTTP_HOST
     context = {

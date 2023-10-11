@@ -24,9 +24,9 @@ import React, { Fragment, useState } from 'react';
 import {
   NumberInput,
   TextInput,
-  useLocale,
   useTranslate,
 } from 'react-admin';
+import { useLocale } from '@hooks/locale/useLocale';
 import {
   useAutocompleteStyles,
   useNumberStyles
@@ -50,7 +50,7 @@ import DropDown from '@components/admin/shared/inputs/Dropdown';
 
 const ExerciseRow = (props) => {
   const t = useTranslate();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const numberClasses = useNumberStyles();
   const autocompleteClasses = useAutocompleteStyles();
   const [uid, setUid] = useState('');
@@ -127,6 +127,7 @@ const ExerciseRow = (props) => {
         onClick={handleOpenDialog}
         multiline={true}
         fullWidth={true}
+        sx={{ minWidth: '500px' }}
       />
       <div className={numberClasses.numbers}>
         <NumberInput

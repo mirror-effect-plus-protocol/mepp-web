@@ -21,7 +21,7 @@
  */
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import React, { useState } from 'react';
-import { useLocale, useSetLocale, useTranslate, useNotify } from 'react-admin';
+import { useLocaleState, useTranslate, useNotify } from 'react-admin';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -39,9 +39,8 @@ const LocaleSwitcher = () => {
   const t = useTranslate();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const locale = useLocale();
+  const [locale, setLocale] = useLocaleState();
   const notify = useNotify();
-  const setLocale = useSetLocale();
 
   const languages = LANGUAGES.map((item) => {
     return (

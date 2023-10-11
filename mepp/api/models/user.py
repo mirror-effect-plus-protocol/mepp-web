@@ -27,6 +27,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from mepp.api.enums import (
     LanguageEnum,
@@ -45,6 +46,7 @@ from .session import Session
 
 class User(AbstractUser, Archivable, Searchable):
 
+    email = models.EmailField(_('email address'), blank=False, null=False)
     fulltext_search_fields = [
         'first_name',
         'last_name',
@@ -73,6 +75,7 @@ class User(AbstractUser, Archivable, Searchable):
 
     def __init__(self, *args, **kwargs):
         self.email_has_changed = False
+        self.email = models.EmailField(_("email address"), blank=True)
         super().__init__(*args, **kwargs)
 
     @property
@@ -151,13 +154,15 @@ class User(AbstractUser, Archivable, Searchable):
     ):
 
         if self.pk is not None:
+            self.email = self.email.lower()
+            self.username = self.username.lower()
             self.email_has_changed = self.email != self.username
             self.previous_email = self.username
         else:
             # When user is created through Django admin, e-mail field may be empty
             # Let's init it with the username
             if not self.email:
-                self.email = self.username
+                self.email = self.username.lower()
 
         self.username = self.email
         self.update_fulltext_search(save=False)

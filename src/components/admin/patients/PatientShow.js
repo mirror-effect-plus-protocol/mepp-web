@@ -25,6 +25,7 @@ import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import {
   Datagrid,
   Show,
+  BooleanField,
   TextField,
   NumberField,
   DateField,
@@ -32,7 +33,6 @@ import {
   FunctionField,
   Labeled,
   ListContextProvider,
-  useLocale,
   useGetList,
   useNotify,
   usePermissions,
@@ -43,6 +43,7 @@ import {
   useTranslate,
 } from 'react-admin';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
@@ -67,48 +68,8 @@ import { Typography } from '@components/admin/shared/dom/sanitize';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
+import {useRaBoxStyles} from "@components/admin/shared/styles/shared";
 
-const useRaBoxStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    width: '100%',
-  },
-  leftColumn: {
-    flexDirection: 'column',
-    flex: '0 0 60%',
-    flexGrow: '3',
-    justifyContent: 'center',
-    marginBottom: '10px',
-    paddingRight: '10px',
-    borderRight: 'solid thin',
-    marginRight: '10px',
-  },
-  rightColumn: {
-    flex: '0 0 40%',
-    flexDirection: 'column',
-    flexGrow: '1',
-  },
-  columnChild: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    paddingLeft: '10px',
-    '& .innerChild': {
-      paddingLeft: 0,
-    },
-  },
-  innerChild: {
-    width: '50%',
-  },
-  buttonLine: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-  },
-  buttonLineLeft: {
-    display: 'flex',
-  },
-}));
 
 const useArchivesStyles = makeStyles((theme) => ({
   root: {
@@ -134,13 +95,14 @@ export const PatientShowRecord = () => {
   const record = useRecordContext();
   if (!record) return null;
   const [patientUid, setPatientUid] = useStore('patient.uid', record.id);
+  const classes = useRaBoxStyles();
 
   useEffect(() => {
     setPatientUid(record.id);
   }, [record]);
 
   return (
-    <BoxedShowLayout>
+    <BoxedShowLayout className={classes.container}>
       <PatientShowLayout record={record}></PatientShowLayout>
     </BoxedShowLayout>
   );
@@ -148,7 +110,7 @@ export const PatientShowRecord = () => {
 
 export const PatientShowLayout = ({ record }) => {
   const t = useTranslate();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const notify = useNotify();
   const resource = useResourceContext();
   const { permissions } = usePermissions();
@@ -177,6 +139,7 @@ export const PatientShowLayout = ({ record }) => {
   const handleSendOnboarding = (event) => {
     setOpenDialogEmail(false);
     const url = `${process.env.API_ENDPOINT}/patients/${record.id}/resend/`;
+
     fetchJsonWithAuthToken(url, {
       method: 'POST',
       body: JSON.stringify({ 'confirm': true }),
@@ -195,7 +158,7 @@ export const PatientShowLayout = ({ record }) => {
   };
 
   return (
-    <BoxedShowLayout>
+    <BoxedShowLayout className={classes.container}>
       <RaBox className={classes.root}>
         <RaBox className={classes.leftColumn}>
           <Typography variant="h6" gutterBottom>
@@ -337,6 +300,11 @@ export const PatientShowLayout = ({ record }) => {
                 textAlign="center"
                 label={t('resources.plans.list.labels.exercises_count')}
                 render={(record) => record.exercises.length}
+              />
+              <BooleanField
+                textAlign="center"
+                label={t('resources.plans.fields.randomize')}
+                source="randomize"
               />
               <DateField
                 textAlign="center"
