@@ -21,7 +21,10 @@
  */
 import { defaultTheme } from 'react-admin';
 
+
+
 import { createTheme } from '@mui/material/styles';
+
 
 const lightBlue = '#33a4e4';
 const blue = '#078EE4';
@@ -105,6 +108,14 @@ export const meppTheme = {
         },
       },
     },
+    MuiTablePagination: {
+      styleOverrides: {
+        root: {
+          minHeight: '52px',
+          marginBottom: '-52px',
+        },
+      },
+    },
     MuiDialogActions: {
       styleOverrides: {
         root: {
@@ -135,6 +146,9 @@ export const meppTheme = {
     RaList: {
       styleOverrides: {
         root: {
+          '& .RaList-main': {
+            paddingBottom: '52px',
+          },
           '& .RaList-content': {
             height: '100%',
           },
