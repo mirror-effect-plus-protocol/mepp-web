@@ -19,8 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import { useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -48,31 +47,35 @@ const LanguageForm = () => {
   const { identity } = useGetIdentity();
   const { close } = useContext(OverlayContext);
 
-  const submit = async () => {
+  const submit = useCallback(() => {
     setLocale(language);
     close();
 
-    const { data } = await fetchData(
-      RequestEndpoint.PROFILE,
-      { language },
-      RequestMethod.PATCH,
-    );
+    const save = async () => {
+      const { data } = await fetchData(
+        RequestEndpoint.PROFILE,
+        { language },
+        RequestMethod.PATCH,
+      );
 
-    if (data) {
-      // Update token since e-mail and/or password have been changed.
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-      }
+      if (data) {
+        // Update token since e-mail and/or password have been changed.
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+        }
 
-      // Update current profile
-      if (data.profile) {
-        localStorage.setItem(
-          'profile',
-          JSON.stringify({ ...identity, ...data.profile }),
-        );
+        // Update current profile
+        if (data.profile) {
+          localStorage.setItem(
+            'profile',
+            JSON.stringify({ ...identity, ...data.profile }),
+          );
+        }
       }
-    }
-  };
+    };
+
+    save();
+  }, [language, setLocale, close]);
 
   return (
     <Container>

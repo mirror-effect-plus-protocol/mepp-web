@@ -25,10 +25,11 @@ import {
   FilterList,
   FilterListItem,
   FilterLiveSearch,
-  useLocale,
   useListFilterContext,
 } from 'react-admin';
-import { Card as MuiCard, CardContent, withStyles } from '@material-ui/core';
+
+import { useLocale } from '@hooks/locale/useLocale';
+import { Card as MuiCard, CardContent } from '@mui/material';
 import {
   CategoryIcon,
   ClinicianIcon,
@@ -42,9 +43,9 @@ import {
 import { ASide } from '@components/admin/shared/cards/ASide';
 
 const ExerciseListAside = ({permissions}) => {
-  const locale = useLocale();
+  const { locale } = useLocale();
   const [selectedCategory, setSelectedCategory] = useState(-1);
-  const { data: clinicians, loaded } = useGetClinicians(permissions);
+  const { data: clinicians, isLoading } = useGetClinicians(permissions);
   const categories = useGetCategories(locale);
   const subCategories = useGetSubCategories(locale);
   const { filterValues, setFilters } = useListFilterContext();
@@ -104,7 +105,7 @@ const ExerciseListAside = ({permissions}) => {
             label="resources.exercises.fields.clinician_uid"
             icon={<ClinicianIcon />}
           >
-            {loaded &&
+            {!isLoading &&
               clinicians.map((clinician) => (
                 <FilterListItem
                   label={clinician.name}

@@ -40,9 +40,10 @@ class CredentialsMixin:
     def validate_email(self, email):
         user_email = None
         user_pk = None
+        email = email.lower()
         # Avoid a DB query if email has not been changed
         if self.instance:
-            user_email = self.instance.email
+            user_email = self.instance.email.lower()
             user_pk = self.instance.pk
 
         if email == user_email:

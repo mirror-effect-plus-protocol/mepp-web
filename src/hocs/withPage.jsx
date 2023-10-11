@@ -19,21 +19,22 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useEffect } from 'react';
-import {
-  Notification,
-  useSetLocale,
-  useLocale,
-} from 'react-admin';
+import { Notification, useLocaleState } from 'react-admin';
 import { useLocation } from 'react-router-dom';
-import { LANGUAGES } from '../locales';
+import styled from 'styled-components';
+
 import { temporaryProfil } from '@admin/authProvider';
 
 import GlobalStyles from '@styles/Global';
+import { zindex } from '@styles/configs/zindex';
 
+import { BrowserSupportBanner } from '@components/header/BrowserSupportBanner';
+import { EnvironmentBanner } from '@components/header/EnvironmentBanner';
 import { TemporaryProfilBanner } from '@components/header/TemporaryProfilBanner';
 import OverlayProvider from '@components/overlays/OverlayProvider';
+
+import { LANGUAGES } from '../locales';
 
 /**
  * Basic page wrapper
@@ -41,13 +42,15 @@ import OverlayProvider from '@components/overlays/OverlayProvider';
  */
 const withPage = (Component) => {
   return function withPage(props) {
-
-
     return (
       <OverlayProvider>
         <GlobalStyles />
         <Main>
-          {temporaryProfil && <TemporaryProfilBanner />}
+          <BannersContainer>
+            {temporaryProfil && <TemporaryProfilBanner />}
+            <EnvironmentBanner />
+            <BrowserSupportBanner />
+          </BannersContainer>
           <Component {...props} />
           <Notification />
         </Main>
@@ -57,14 +60,12 @@ const withPage = (Component) => {
 };
 
 const Main = (props) => {
-  const locale = useLocale();
-  const setLocale = useSetLocale();
+  const [locale, setLocale] = useLocaleState();
   const location = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
-
 
   useEffect(() => {
     const queries = new URLSearchParams(window.location.search);
@@ -79,7 +80,15 @@ const Main = (props) => {
     }
   }, []);
 
-  return <main>{ props.children}</main>
-}
+  return <main>{props.children}</main>;
+};
+
+const BannersContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: ${zindex.max};
+`;
 
 export default withPage;

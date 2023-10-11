@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import i18n from 'i18next';
 import { useMemo, useCallback } from 'react';
 import { useSetLocale } from 'react-admin';

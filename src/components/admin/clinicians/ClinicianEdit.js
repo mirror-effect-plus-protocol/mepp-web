@@ -19,23 +19,29 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+import { RaBox } from 'ra-compact-ui';
 import React from 'react';
-import { Typography } from '@components/admin/shared/dom/sanitize';
-import { makeStyles } from '@material-ui/core/styles';
-import { CompactForm, RaBox } from 'ra-compact-ui';
 import {
   BooleanInput,
   Edit,
   SelectInput,
+  SimpleForm,
   PasswordInput,
   TextInput,
   useGetIdentity,
+  useRecordContext,
+  useResourceContext,
   useTranslate,
   useNotify,
+  useResourceDefinition,
+  useRedirect
 } from 'react-admin';
+import { useSearchParams } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
 
-import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolBar';
+import { Typography } from '@components/admin/shared/dom/sanitize';
+import Options from '@components/admin/shared/options';
+import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import {
   validateEmail,
   validateFirstName,
@@ -44,11 +50,12 @@ import {
   validatePasswordOptional as validatePassword,
   validatePasswords,
 } from '@components/admin/shared/validators';
-import Options from '@components/admin/shared/options';
-import TopToolbar from "@components/admin/shared/toolbars/TopToolbar";
+
+import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
     '& > div': {
@@ -57,39 +64,64 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfileRow = ({identity, identityLoaded, ...props}) => {
-  if (!identityLoaded || identity?.uid === props?.record?.id) {
+const ProfileRow = ({ identity, identityLoading, ...props }) => {
+  const record = useRecordContext();
+  if (identityLoading || identity?.uid === record?.id) {
     return false;
   } else {
     return props.children;
   }
 };
 
-export const ClinicianEdit = (props) => {
+export const ClinicianEdit = () => {
   const t = useTranslate();
-  const { identity, loaded: identityLoaded } = useGetIdentity();
+  const { hasShow } = useResourceDefinition();
+  const { identity, isLoading: identityLoading, refetch } = useGetIdentity();
+  const resource = useResourceContext();
+  const redirect = useRedirect();
+  const [searchParams, setSearchParams] = useSearchParams();
   const classes = useStyles();
   const notify = useNotify();
   const options = Options();
-  const onFailure = (error) => {
+  const onError = (error) => {
     let message = '';
-    Object.entries(error.body).forEach(([key, values]) => {
-      message += t(`resources.${props.resource}.errors.${key}`);
-    });
-    notify(message, {type: 'error'});
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
+    notify(message, { type: 'error' });
+  };
+  const onSuccess = (data) => {
+    if (identity?.uid === data.id) {
+      const backUrl = decodeURIComponent(searchParams.get('back'));
+      const profile = JSON.parse(localStorage.getItem('profile'));
+
+      profile.first_name = data.first_name;
+      profile.last_name = data.last_name;
+      profile.full_name = `${profile.first_name} ${profile.last_name}`;
+      profile.email = data.email;
+      localStorage.setItem('profile', JSON.stringify(profile));
+      refetch();
+      redirect(backUrl);
+      notify('admin.shared.notifications.profile.success', { type: 'info' });
+    } else {
+      redirect(`/${resource}`);
+      notify('ra.notification.updated', { type: 'info', messageArgs: { smart_count: 1 }});
+    }
   };
 
   return (
     <Edit
-      onFailure={onFailure}
-      undoable={false}
-      actions={<TopToolbar identity={identity} />}
-      {...props}
+      mutationMode="pessimistic"
+      mutationOptions={{ onSuccess: onSuccess, onError: onError }}
+      actions={<TopToolbar hasShow={hasShow} identity={identity} />}
+      redirect="list"
     >
-      <CompactForm
-        layoutComponents={[RaBox]}
+      <SimpleForm
         toolbar={<SimpleFormToolBar identity={identity} />}
-        validate={validatePasswords}
       >
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
@@ -100,20 +132,12 @@ export const ClinicianEdit = (props) => {
             fullWidth
             validate={validateFirstName}
           />
-          <TextInput
-            source="last_name"
-            fullWidth
-            validate={validateLastName}
-          />
+          <TextInput source="last_name" fullWidth validate={validateLastName} />
         </RaBox>
         <RaBox className={classes.root}>
-          <TextInput
-            source="email"
-            fullWidth
-            validate={validateEmail}
-          />
+          <TextInput source="email" fullWidth validate={validateEmail} />
         </RaBox>
-        <ProfileRow identity={identity} identityLoaded={identityLoaded}>
+        <ProfileRow identity={identity} identityLoading={identityLoading}>
           <Typography variant="h6" gutterBottom gutterTop={true}>
             {t('admin.shared.labels.card.informations')}
           </Typography>
@@ -144,10 +168,11 @@ export const ClinicianEdit = (props) => {
           <PasswordInput
             label={t('resources.clinicians.fields.confirm_password')}
             source="confirm_password"
+            validate={validatePasswords}
             fullWidth
           />
         </RaBox>
-      </CompactForm>
+      </SimpleForm>
     </Edit>
   );
 };

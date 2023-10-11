@@ -19,29 +19,31 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
-import { cloneElement } from 'react';
-import {
-  TopToolbar,
-  CreateButton,
-} from 'react-admin';
+import { TopToolbar, CreateButton, useResourceContext } from 'react-admin';
+
 import ExportButton from '@components/admin/shared/buttons/ExportButton';
 
-const ListActions = ({showExport, ...props}) => (
-  <TopToolbar>
-    {cloneElement(props.filters, { context: 'button' })}
-    {showExport &&
-      <ExportButton
-        basePath={props.basePath}
-        resource={props.resource}
-        variant="outlined"
-        style={{marginRight: '0.8em'}}
-        filterValues={props.filterValues}
-      />
-      }
-    <CreateButton variant="outlined" />
-  </TopToolbar>
-);
+const ListActions = ({ showExport, ...props }) => {
+  const resourceName = useResourceContext();
+  return (
+    <TopToolbar>
+      {showExport && (
+        <ExportButton
+          resource={resourceName}
+          variant="outlined"
+          sx={{
+            marginRight: {
+              xs: '5px', // theme.breakpoints.up('xs')
+              md: 0, // theme.breakpoints.up('md')
+            }
+          }}
+          filterValues={props.filterValues}
+        />
+      )}
+      <CreateButton variant="outlined" />
+    </TopToolbar>
+  );
+};
 
 export default ListActions;

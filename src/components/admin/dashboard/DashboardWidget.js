@@ -23,9 +23,8 @@
 import React, { useEffect, useState } from 'react';
 import {
   useTranslate,
-  useVersion,
 } from 'react-admin';
-import { Card, CardContent } from '@material-ui/core';
+import { Card, CardContent } from '@mui/material';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import {
@@ -38,9 +37,9 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import Spinner from "@components/admin/shared/Spinner";
-import { makeStyles } from '@material-ui/core/styles';
-import FormControl from '@material-ui/core/FormControl';
-import NativeSelect from '@material-ui/core/NativeSelect';
+import { makeStyles } from '@mui/styles';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -82,7 +81,6 @@ const widgetTooptipWrapperStyle = {
 
 export const DashboardWidget = ({widget}) => {
   const t = useTranslate();
-  const version = useVersion();
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -108,7 +106,7 @@ export const DashboardWidget = ({widget}) => {
   };
   useEffect(() => {
     fetchData();
-  }, [version, weekRange]);
+  }, [weekRange]);
 
   const CustomTooltip = ({widget, active, payload}) => {
     if (active) {

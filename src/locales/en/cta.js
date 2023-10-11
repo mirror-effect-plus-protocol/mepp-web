@@ -31,6 +31,7 @@ export default {
     goto_login: 'Back to login',
 
     start: 'Start the session',
+    settings: 'Configure the effect',
     start_exercise: 'Start',
     restart: 'Start a new session',
     restart_exercise: 'Continue',

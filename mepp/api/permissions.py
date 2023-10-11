@@ -80,7 +80,7 @@ class MeppStaffProfilePermission(BasePermission):
     def has_object_permission(self, request, view, obj):
 
         user = request.user
-        # Super users can do everything
+        # Superusers can do everything
         if user.is_superuser:
             return True
 
@@ -129,6 +129,17 @@ class MeppMirrorPermission(BasePermission):
         return True
 
 
+class MeppMirrorSettingPermission(BasePermission):
+
+    def has_permission(self, request, view):
+        if not request.auth:
+            return False
+
+        return ExpiringToken.objects.filter(
+            key=request.auth.key, temporary=True
+        ).exists()
+
+
 class MeppSuperUserPermission(BasePermission):
 
     def has_permission(self, request, view):
@@ -140,4 +151,3 @@ class MeppSuperUserPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
 
         return request.user.is_superuser
-

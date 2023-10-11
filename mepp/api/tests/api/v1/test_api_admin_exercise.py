@@ -279,7 +279,7 @@ class AdminExerciseUpdateAPITestCase(BaseV1TestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_cannot_update_system_exercise_as_admin(self):
+    def test_can_update_system_exercise_as_admin(self):
         exercise = Exercise.objects.create(clinician=self.admin, is_system=True)
         ExerciseI18n.objects.create(description='Lorem ipsum', parent=exercise, language='fr')
         ExerciseI18n.objects.create(description='Lorem ipsum', parent=exercise, language='en')
@@ -360,4 +360,3 @@ class AdminExerciseDeleteAPITestCase(BaseV1TestCase):
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-

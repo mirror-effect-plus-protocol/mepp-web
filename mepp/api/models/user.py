@@ -27,6 +27,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from mepp.api.enums import (
     LanguageEnum,
@@ -34,15 +35,18 @@ from mepp.api.enums import (
     StatusEnum,
 )
 from mepp.api.fields.uuid import UUIDField
+from mepp.api.helpers.mirror import default_settings
 from mepp.api.mixins.models.archivable import Archivable
 from mepp.api.mixins.models.searchable import Searchable
 from mepp.api.models.expiring_token import ExpiringToken
+
 from .plan import TreatmentPlan
 from .session import Session
 
 
 class User(AbstractUser, Archivable, Searchable):
 
+    email = models.EmailField(_('email address'), blank=False, null=False)
     fulltext_search_fields = [
         'first_name',
         'last_name',
@@ -67,9 +71,11 @@ class User(AbstractUser, Archivable, Searchable):
         blank=True,
         on_delete=models.SET_NULL,
     )
+    mirror_settings = models.JSONField(null=True)
 
     def __init__(self, *args, **kwargs):
         self.email_has_changed = False
+        self.email = models.EmailField(_("email address"), blank=True)
         super().__init__(*args, **kwargs)
 
     @property
@@ -148,13 +154,15 @@ class User(AbstractUser, Archivable, Searchable):
     ):
 
         if self.pk is not None:
+            self.email = self.email.lower()
+            self.username = self.username.lower()
             self.email_has_changed = self.email != self.username
             self.previous_email = self.username
         else:
             # When user is created through Django admin, e-mail field may be empty
             # Let's init it with the username
             if not self.email:
-                self.email = self.username
+                self.email = self.username.lower()
 
         self.username = self.email
         self.update_fulltext_search(save=False)
@@ -162,6 +170,9 @@ class User(AbstractUser, Archivable, Searchable):
         # Set `is_active` to `archived` all the time.
         # We do not want users to be able to log in if they are inactive
         self.is_active = not self.archived
+
+        if not self.mirror_settings and self.clinician:
+            self.mirror_settings = default_settings()
 
         # ToDo archive related objects when user is archived
         super().save(

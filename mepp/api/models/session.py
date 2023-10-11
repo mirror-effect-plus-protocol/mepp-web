@@ -180,9 +180,11 @@ class Session(BaseModel):
         Useful to keep the history of the exercises during the treatment plan.
         The exercises could change during the treatment plan life.
         """
+        treatment_plan = self.patient.active_treatment_plan
         exercises_through = TreatmentPlanExerciseM2M.objects.filter(
-            treatment_plan=self.patient.active_treatment_plan
-        ).order_by('index')
+            treatment_plan=treatment_plan
+        ).order_by('?' if treatment_plan.randomize else 'index')
+
         exercises = []
         for exercise_through in exercises_through:
             exercise = {

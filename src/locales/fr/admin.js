@@ -143,6 +143,10 @@ export default {
       fields: {
         'i18n.name.fr': 'Nom',
         'i18n.name': 'Nom'
+      },
+      labels: {
+        category: 'Catégorie',
+        sub_category: 'Sous-catégorie'
       }
     },
     clinicians: {
@@ -298,6 +302,7 @@ export default {
         clinician_uid: 'Clinicien(ne)',
         archived: 'Archives',
         daily_repeat: 'Fréquences quotidiennes',
+        randomize: 'Ordre aléatoire',
         is_system: 'Système',
         start_date: 'Date de début',
         end_date: 'Date de fin',

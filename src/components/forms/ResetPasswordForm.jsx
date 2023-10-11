@@ -28,7 +28,7 @@ import styled from 'styled-components';
 import { spacings } from '@styles/configs/spacings';
 import { FlexAlignMiddle, FlexAlignCenter } from '@styles/tools';
 
-import { useApi } from '@hooks/useAPI';
+import { useApi } from '@hooks/useApi';
 
 import { RequestEndpoint } from '@utils/constants';
 
@@ -56,10 +56,10 @@ const ResetPasswordForm = () => {
 
     const { response } = await post(payload);
     if (response.status === 404 || response.status === 400) {
-      notify('api.error.token_invalid', 'error');
+      notify('api.error.token_invalid', {type: 'error'});
     }
     if (response.status === 500) {
-      notify('api:error:generic', 'error');
+      notify('api:error:generic', {type: 'error'});
     }
   };
 

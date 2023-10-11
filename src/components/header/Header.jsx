@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import i18n from 'i18next';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useSetLocale, useLogout } from 'react-admin';
@@ -190,7 +189,8 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
 
   button {
     margin: 0 ${spacings.default}px;
-    &:first-child, &:last-child {
+    &:first-child,
+    &:last-child {
       margin-right: 0;
     }
     &:last-child {
@@ -198,10 +198,9 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
     }
 
     ${media.xsOnly`
-      margin: 0 ${spacings.default / 2 }px;
+      margin: 0 ${spacings.default / 2}px;
     `}
   }
-
 `;
 
 export { Header };

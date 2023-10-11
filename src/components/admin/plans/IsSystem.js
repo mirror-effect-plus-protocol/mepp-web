@@ -19,50 +19,40 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import React, { useState } from 'react';
+import { BooleanInput, useTranslate } from 'react-admin';
 
-import React, { useState} from 'react';
-import {
-  BooleanInput,
-  useTranslate,
-} from 'react-admin';
-import { makeStyles } from '@material-ui/core/styles';
-import Alert from '@material-ui/lab/Alert';
-
+import Alert from '@mui/material/Alert';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => {
   return {
     root: {
       marginBottom: theme.spacing(2),
-      width: 'calc(2*256px + 1em)' /* category + subcategory dropdown + spacing */
+      width:
+        'calc(2*256px + 1em)' /* category + subcategory dropdown + spacing */,
     },
   };
 });
 
-const IsSystemInput = (props) => {
-
+const IsSystemInput = ({ data }) => {
   const classes = useStyles();
   const t = useTranslate();
-  const [showAlert, setShowAlert] = useState(props.record.is_system);
-  const handleChange = (newValue) => {
-    setShowAlert(newValue);
+  const [showAlert, setShowAlert] = useState(data.is_system);
+  const handleChange = (e) => {
+    setShowAlert(e.target.checked);
   };
 
   return (
     <>
-      <BooleanInput
-        basePath={props.basePath}
-        resource={props.resource}
-        record={props.record}
-        source="is_system"
-        onChange={handleChange}
-      />
-      {showAlert &&
+      <BooleanInput source="is_system" onChange={handleChange} />
+      {showAlert && (
         <Alert classes={classes} variant="outlined" severity="warning">
           {t('resources.plans.card.labels.is_system_warning')}
         </Alert>
-      }
+      )}
     </>
-  )
+  );
 };
 
 export default IsSystemInput;

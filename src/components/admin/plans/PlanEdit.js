@@ -19,11 +19,11 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {useEffect, useCallback, useState} from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import {
-  ArrayInput,
+  ArrayInput, BooleanInput,
   Edit,
+  FormDataConsumer,
   NumberInput,
   ReferenceField,
   SimpleForm,
@@ -31,77 +31,94 @@ import {
   TextField,
   TextInput,
   TranslatableInputs,
-  useLocale,
+  usePermissions, useRecordContext,
+  useResourceDefinition,
+  useStore,
   useTranslate,
 } from 'react-admin';
-import { Typography} from '@components/admin/shared/dom/sanitize';
 
-import {requiredLocalizedField} from '@components/admin/shared/validators';
-import {
-  useSimpleFormIteratorStyles,
-  useTranslatorInputStyles,
-} from '@components/admin/plans/styles';
-
-import { LANGUAGES } from "../../../locales";
-import { validateExercises } from '@components/admin/plans/validators';
-import { validateNumber } from '@components/admin/shared/validators';
-
-import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolBar';
-import ExerciseRow from './ExerciseRow';
+import { useLocale } from '@hooks/locale/useLocale';
 import IsSystemInput from '@components/admin/plans/IsSystem';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
+import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
+import { validateExercises } from '@components/admin/plans/validators';
+import { Typography } from '@components/admin/shared/dom/sanitize';
 import {
   useGetCategories,
   useGetSubCategories,
 } from '@components/admin/shared/hook';
-import {
-  contextualRedirect,
-  preSave
-} from '@components/admin/plans/callbacks';
+import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
+import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
+import { requiredLocalizedField } from '@components/admin/shared/validators';
+import { validateNumber } from '@components/admin/shared/validators';
 
-export const PlanEdit = (props) => {
+import { LANGUAGES } from '../../../locales';
+import ExerciseRow from './ExerciseRow';
+import { translatorInputStyle, categoriesSelectorStyle } from '@components/admin/shared/styles/shared';
 
-  const t = useTranslate();
-  const locale = useLocale();
-  const simpleFormIteratorclasses = useSimpleFormIteratorStyles();
-  const translatorClasses = useTranslatorInputStyles();
-  const [patientUid, setPatientUid] = useState(undefined);
+export const PlanEdit = () => {
+  const { hasShow } = useResourceDefinition();
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
-  const validateI18n = (record) => {
-    return requiredLocalizedField(record, locale, ['name', 'description']);
-  }
-  const categories = useGetCategories(locale);
-  const subCategories = useGetSubCategories(locale);
-  const redirect = useCallback(() => (
-    contextualRedirect(patientUid)
-  ), [patientUid]);
-  const transform = useCallback((record) => (
-    preSave(record, locale, patientUid, asTemplate)
-  ), [patientUid, asTemplate]);
+  const t = useTranslate();
+  const { locale } = useLocale();
+  const redirect = useCallback(
+    () => contextualRedirect(patientUid),
+    [patientUid]
+  );
+  const transform = useCallback(
+    (record) => preSave(record, locale, patientUid, asTemplate),
+    [patientUid, asTemplate]
+  );
+  const onError = (error) => {
+    let message = '';
+    if (error?.body) {
+      Object.entries(error.body).forEach(([key, values]) => {
+        message += t(`resources.${resourceName}.errors.${key}`);
+      });
+    } else {
+      message = t('api.error.generic');
+    }
+    notify(message, { type: 'error' });
+  };
 
   useEffect(() => {
-    setPatientUid(props?.history?.location?.state?.patientUid);
-  }, [props?.history?.location?.state?.patientUid]);
-
-  useEffect(() => {
-    setAsTemplate(patientUid === undefined)
+    setAsTemplate(patientUid === false);
   }, [patientUid]);
 
   return (
     <Edit
-      actions={<TopToolbar patientUid={patientUid} />}
-      undoable={false}
-      {...props}
+      actions={<TopToolbar hasShow={hasShow} patientUid={patientUid} />}
+      mutationMode="pessimistic"
+      redirect={redirect}
+      transform={transform}
+      mutationOptions={{ onError: onError }}
     >
-      <SimpleForm
-        redirect={redirect}
-        validate={validateI18n}
-        toolbar={<SimpleFormToolBar identity={false} transform={transform} />}
-      >
+      <SimplePlanEditForm locale={locale} asTemplate={asTemplate}/>
+    </Edit>
+  )
+};
+
+const SimplePlanEditForm = ({locale, asTemplate}) => {
+  const record = useRecordContext();
+  const { permissions } = usePermissions();
+  const t = useTranslate();
+  const [randomize, setRandomize] = useState(record.randomize);
+  const validateI18n = (value, record) => {
+    return requiredLocalizedField(value, record, locale, 'name');
+  };
+  const categories = useGetCategories(locale);
+  const subCategories = useGetSubCategories(locale);
+
+  const handleRandomizeClick = (event) => {
+    setRandomize(event.target.checked);
+  };
+
+  return (
+    <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}
         </Typography>
-        {props.permissions === 'admin' && (
+        {permissions === 'admin' && (
           <ReferenceField
             source="clinician_uid"
             reference="clinicians"
@@ -113,28 +130,34 @@ export const PlanEdit = (props) => {
         <TranslatableInputs
           locales={LANGUAGES}
           defaultLocale={locale}
-          classes={translatorClasses}
+          sx={translatorInputStyle}
         >
-          <TextInput
-            source="i18n.name"
-            fullWidth
-          />
-          <TextInput
-            source="i18n.description"
-            fullWidth
-            multiline
-          />
+          <TextInput source="i18n.name" validate={validateI18n} fullWidth />
         </TranslatableInputs>
-        {props.permissions === 'admin' && asTemplate &&
-          <IsSystemInput/>
-        }
-        <NumberInput
-          source="daily_repeat"
-          validate={validateNumber}
-        />
+        {permissions === 'admin' && asTemplate && (
+          <FormDataConsumer>
+            {({ formData, ...rest }) => <IsSystemInput data={formData} />}
+          </FormDataConsumer>
+        )}
+        <NumberInput source="daily_repeat" validate={validateNumber} />
 
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography
+          variant="h6"
+          gutterBottom
+          gutterTop={true}
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: '1em'
+          }}
+        >
           {t('resources.plans.card.labels.exercises')}
+          <BooleanInput
+            size="small"
+            source="randomize"
+            onClick={handleRandomizeClick}
+            sx={{ marginTop: '5px' }}
+          />
         </Typography>
 
         <ArrayInput
@@ -144,7 +167,8 @@ export const PlanEdit = (props) => {
           validate={validateExercises}
         >
           <SimpleFormIterator
-            classes={simpleFormIteratorclasses}
+            sx={categoriesSelectorStyle}
+            disableReordering={randomize}
           >
             <ExerciseRow
               categories={categories}
@@ -153,6 +177,5 @@ export const PlanEdit = (props) => {
           </SimpleFormIterator>
         </ArrayInput>
       </SimpleForm>
-    </Edit>
   );
 };

@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import PreventFocusKeyTrap from 'focus-trap-react';
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
@@ -82,8 +81,8 @@ const OverlayWrapper = styled(WrapperFullSize)`
   top: 100px;
   z-index: ${zindex.overlay};
   height: calc(100vh - 100px);
-
   width: 100vw;
+  color: ${({ theme }) => theme.colors.text};
   padding: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;

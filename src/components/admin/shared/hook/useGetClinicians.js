@@ -33,6 +33,7 @@ const useGetClinicians = (permissions) => {
     const options = {
       ordering: 'full_name',
       archived: false,
+      page_size: 9999,
     };
     const qs = new URLSearchParams(options).toString();
     const url = `${process.env.API_ENDPOINT}/clinicians/?${qs}`;

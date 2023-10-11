@@ -111,9 +111,7 @@ class EnvStarter:
     def start_docker(self):
         cmd = (
             'cd {base_dir} && '
-            '$(command -v docker-compose) '
-            '-f docker-compose.yml '
-            'up --force-recreate -d'
+            '$(command -v docker) compose -f docker-compose.yml up --force-recreate -d'
         ).format(base_dir=self.BASE_DIR)
         self.run_shell(cmd)
 
@@ -349,4 +347,3 @@ if __name__ == '__main__':
             time.sleep(10)
     except KeyboardInterrupt:
         env_starter.stop()
-

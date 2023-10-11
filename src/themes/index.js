@@ -38,5 +38,6 @@ export const theme = {
 
     background: '#232525',
     error: '#f52a2a',
+    warning: '#ffcc00',
   },
 };
