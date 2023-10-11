@@ -34,7 +34,7 @@ export const ASide = withStyles((theme) => ({
       width: '15em',
       marginRight: '1em',
       marginTop: '64px',
-      marginBottom: '52px'
+      marginBottom: '47px'
     },
     [theme.breakpoints.down('md')]: {
       display: 'none',
