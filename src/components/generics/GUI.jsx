@@ -139,6 +139,11 @@ const GUIProvider = ({ children }) => {
       });
       if (response.status === 200) {
         notify('api.success.settings_update', { type: 'success' });
+        identity.mirror_settings = {
+          position,
+          rotation,
+          scale
+        }
       } else {
         notify('api.error.generic', { type: 'error' });
       }
@@ -146,6 +151,32 @@ const GUIProvider = ({ children }) => {
 
     send();
   }, [patch, notify, t]);
+
+  const valuesAreEqual = (a, b) => {
+    return JSON.stringify(a) === JSON.stringify(b);
+  };
+
+  const formUnchanged = () => {
+    if (identity?.mirror_settings && guiRef?.current) {
+      const data = guiRef.current.save();
+      return (
+        valuesAreEqual(
+          data.folders[t('GUI:folders:position')].controllers,
+          identity.mirror_settings.position,
+        ) &&
+        valuesAreEqual(
+          data.folders[t('GUI:folders:rotation')].controllers,
+          identity.mirror_settings.rotation,
+        ) &&
+        valuesAreEqual(
+          data.folders[t('GUI:folders:scale')].controllers,
+          identity.mirror_settings.scale,
+        )
+      );
+    } else {
+      return true;
+    }
+  };
 
   useEffect(() => {
     if (ready) return;
@@ -222,7 +253,7 @@ const GUIProvider = ({ children }) => {
         <Button.Outline label={t('GUI:cta:profile')} onClick={onApplyProfile} />
         <Button.Outline label={t('GUI:cta:default')} onClick={onApplyDefault} />
         <Button.Default
-          label={t('cta:cancel')}
+          label={formUnchanged() ? t('cta:close') : t('cta:cancel')}
           onClick={() => navigate('/intro')}
         />
         <Button.Default label={t('cta:save')} onClick={onSave} />

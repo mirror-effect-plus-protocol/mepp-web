@@ -41,6 +41,7 @@ export default {
     authorize: 'Authorize',
 
     cancel: 'Cancel',
+    close: 'Close',
     save: 'Save',
     modify: 'Modify',
     back: 'Back',

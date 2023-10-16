@@ -40,6 +40,7 @@ export default {
     authorize: 'Autoriser',
 
     cancel: 'Annuler',
+    close: 'Fermer',
     save: 'Sauvegarder',
     modify: 'Modifier',
     back: 'Retour',
