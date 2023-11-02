@@ -125,6 +125,12 @@ const GUIProvider = ({ children }) => {
     guiRef.current.load(clone);
   };
 
+  const closeWithoutSaveConfirm = () => {
+    if (window.confirm('Close without saving changes?')) {
+      navigate('/intro');
+    }
+  };
+
   const onSave = useCallback(() => {
     const data = guiRef.current.save();
     const position = data.folders[t('GUI:folders:position')].controllers;
@@ -254,7 +260,9 @@ const GUIProvider = ({ children }) => {
         <Button.Outline label={t('GUI:cta:default')} onClick={onApplyDefault} />
         <Button.Secondary
           label={t('cta:close')}
-          onClick={() => navigate('/intro')}
+          onClick={() => {
+            formUnchanged() ? navigate('/intro') : closeWithoutSaveConfirm();
+          }}
         />
         <Button.Default
           disabled={formUnchanged() ? true : false}
