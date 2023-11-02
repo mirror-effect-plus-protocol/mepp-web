@@ -142,8 +142,8 @@ const GUIProvider = ({ children }) => {
         identity.mirror_settings = {
           position,
           rotation,
-          scale
-        }
+          scale,
+        };
       } else {
         notify('api.error.generic', { type: 'error' });
       }
@@ -252,11 +252,15 @@ const GUIProvider = ({ children }) => {
       <ButtonWrapper>
         <Button.Outline label={t('GUI:cta:profile')} onClick={onApplyProfile} />
         <Button.Outline label={t('GUI:cta:default')} onClick={onApplyDefault} />
-        <Button.Default
-          label={formUnchanged() ? t('cta:close') : t('cta:cancel')}
+        <Button.Secondary
+          label={t('cta:close')}
           onClick={() => navigate('/intro')}
         />
-        <Button.Default label={t('cta:save')} onClick={onSave} />
+        <Button.Default
+          disabled={formUnchanged() ? true : false}
+          label={t('cta:save')}
+          onClick={onSave}
+        />
       </ButtonWrapper>
       {(loading || identityLoading) && <LoadingCircle opaque />}
     </GUIContext.Provider>
