@@ -44,5 +44,6 @@ export default {
     save: 'Sauvegarder',
     modify: 'Modifier',
     back: 'Retour',
+    confirm: 'Ok',
   },
 };

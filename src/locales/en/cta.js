@@ -45,5 +45,6 @@ export default {
     save: 'Save',
     modify: 'Modify',
     back: 'Back',
+    confirm: 'Ok',
   },
 };

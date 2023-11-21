@@ -24,6 +24,7 @@ import React, {
   useRef,
   useEffect,
   useState,
+  useContext,
   useCallback,
   createContext,
 } from 'react';
@@ -40,6 +41,7 @@ import { RequestEndpoint } from '@utils/constants';
 
 import { LoadingCircle } from '@components/generics/LoadingCircle';
 import Button from '@components/generics/buttons/Button';
+import { OverlayContext, ConfirmOverlay } from '@components/overlays';
 
 /**
  * GUI DEFAULTS
@@ -64,6 +66,7 @@ const GUIProvider = ({ children }) => {
   const { t } = useTranslation();
   const notify = useNotify();
   const navigate = useNavigate();
+  const { open, close } = useContext(OverlayContext);
   const { identity, isLoading: identityLoading } = useGetIdentity();
   const { patch, loading } = useApi(RequestEndpoint.SETTINGS);
   const [position, setPosition] = useState({ ...defaultPosition });
@@ -126,9 +129,18 @@ const GUIProvider = ({ children }) => {
   };
 
   const closeWithoutSaveConfirm = () => {
-    if (window.confirm('Close without saving changes?')) {
-      navigate('/intro');
-    }
+    guiRef.current.hide();
+    open(
+      <ConfirmOverlay
+        close={() => {
+          guiRef.current.show();
+          close();
+        }}
+        confirm={() => {
+          navigate('/intro');
+        }}
+      />,
+    );
   };
 
   const onSave = useCallback(() => {
@@ -283,7 +295,7 @@ const ButtonWrapper = styled.div`
   gap: ${spacings.default}px;
   width: 100%;
   bottom: 0;
-  z-index: 800;
+  z-index: 1;
 `;
 
 export { GUIContext };

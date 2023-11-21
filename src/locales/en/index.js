@@ -62,5 +62,8 @@ export default {
       profile: 'Profile values',
       default: 'Default values',
     },
+    confirm: {
+      title: 'Are you sure you want to exit without saving?',
+    },
   },
 };
