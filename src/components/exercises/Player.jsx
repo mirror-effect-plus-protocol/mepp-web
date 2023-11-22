@@ -33,7 +33,7 @@ import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
  */
 const Player = () => {
   const gui = useContext(GUIContext);
-  const { exercise, exerciseStep, ready } = useContext(ExerciseContext);
+  const { exerciseStep, ready } = useContext(ExerciseContext);
   const { identity, isLoading: identityLoading } = useGetIdentity();
   const deepAR = useRef(null);
   const deepARInit = useRef(false);
@@ -100,7 +100,7 @@ const Player = () => {
         deepAR.current = null;
       }
     };
-  }, [identity, exercise]);
+  }, [identity]);
 
   /**
    * Resize browser event
