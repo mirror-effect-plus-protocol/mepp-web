@@ -69,5 +69,8 @@ export default {
       profile: 'Valeurs du profil',
       default: 'Valeurs par défaut',
     },
+    confirm: {
+      title: 'Voulez-vous vraiment quitter sans enregistrer&nbsp;?',
+    },
   },
 };

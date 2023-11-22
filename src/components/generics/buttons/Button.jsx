@@ -22,9 +22,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+
+
 import { media } from '@styles/configs/breakpoints';
 import { HoverOrActive } from '@styles/utils/HoverOrActive';
 import { rem } from '@styles/utils/rem';
+
 
 /**
  * BUTTON SIDE LABEL TYPES ALLOWED
@@ -49,6 +52,7 @@ const ButtonFactory = (Button) => {
               'role': 'switch',
             }
           : {})}
+        disabled={props.disabled}
       >
         {label && label}
         {icon && icon}
@@ -126,6 +130,12 @@ const button = css`
       fill: ${({ theme }) => theme.colors.secondary};
     }
   `}
+
+  :disabled {
+    color: #9f9f9f;
+    background-color: #d7d7d7;
+    cursor: default;
+  }
 `;
 
 /**
@@ -133,6 +143,18 @@ const button = css`
  */
 const Default = styled.button`
   ${button}
+`;
+
+/**
+ * Button style components
+ */
+
+const Secondary = styled(Default)`
+  background-color: #666d77;
+
+  ${HoverOrActive`
+    background-color: #939dab;
+  `}
 `;
 
 /**
@@ -246,6 +268,7 @@ const Liner = styled.button`
 export { ButtonSideLabelTypes };
 export default {
   Default: ButtonFactory(Default),
+  Secondary: ButtonFactory(Secondary),
   Outline: ButtonFactory(Outline),
   Transparent: ButtonFactory(Transparent),
   Liner: ButtonFactory(Liner),

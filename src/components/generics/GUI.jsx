@@ -24,6 +24,7 @@ import React, {
   useRef,
   useEffect,
   useState,
+  useContext,
   useCallback,
   createContext,
 } from 'react';
@@ -40,6 +41,7 @@ import { RequestEndpoint } from '@utils/constants';
 
 import { LoadingCircle } from '@components/generics/LoadingCircle';
 import Button from '@components/generics/buttons/Button';
+import { OverlayContext, ConfirmOverlay } from '@components/overlays';
 
 /**
  * GUI DEFAULTS
@@ -64,6 +66,7 @@ const GUIProvider = ({ children }) => {
   const { t } = useTranslation();
   const notify = useNotify();
   const navigate = useNavigate();
+  const { open, close } = useContext(OverlayContext);
   const { identity, isLoading: identityLoading } = useGetIdentity();
   const { patch, loading } = useApi(RequestEndpoint.SETTINGS);
   const [position, setPosition] = useState({ ...defaultPosition });
@@ -125,6 +128,21 @@ const GUIProvider = ({ children }) => {
     guiRef.current.load(clone);
   };
 
+  const closeWithoutSaveConfirm = () => {
+    guiRef.current.hide();
+    open(
+      <ConfirmOverlay
+        close={() => {
+          guiRef.current.show();
+          close();
+        }}
+        confirm={() => {
+          navigate('/intro');
+        }}
+      />,
+    );
+  };
+
   const onSave = useCallback(() => {
     const data = guiRef.current.save();
     const position = data.folders[t('GUI:folders:position')].controllers;
@@ -139,6 +157,11 @@ const GUIProvider = ({ children }) => {
       });
       if (response.status === 200) {
         notify('api.success.settings_update', { type: 'success' });
+        identity.mirror_settings = {
+          position,
+          rotation,
+          scale,
+        };
       } else {
         notify('api.error.generic', { type: 'error' });
       }
@@ -146,6 +169,32 @@ const GUIProvider = ({ children }) => {
 
     send();
   }, [patch, notify, t]);
+
+  const valuesAreEqual = (a, b) => {
+    return JSON.stringify(a) === JSON.stringify(b);
+  };
+
+  const formUnchanged = () => {
+    if (identity?.mirror_settings && guiRef?.current) {
+      const data = guiRef.current.save();
+      return (
+        valuesAreEqual(
+          data.folders[t('GUI:folders:position')].controllers,
+          identity.mirror_settings.position,
+        ) &&
+        valuesAreEqual(
+          data.folders[t('GUI:folders:rotation')].controllers,
+          identity.mirror_settings.rotation,
+        ) &&
+        valuesAreEqual(
+          data.folders[t('GUI:folders:scale')].controllers,
+          identity.mirror_settings.scale,
+        )
+      );
+    } else {
+      return true;
+    }
+  };
 
   useEffect(() => {
     if (ready) return;
@@ -221,11 +270,17 @@ const GUIProvider = ({ children }) => {
       <ButtonWrapper>
         <Button.Outline label={t('GUI:cta:profile')} onClick={onApplyProfile} />
         <Button.Outline label={t('GUI:cta:default')} onClick={onApplyDefault} />
-        <Button.Default
-          label={t('cta:cancel')}
-          onClick={() => navigate('/intro')}
+        <Button.Secondary
+          label={t('cta:close')}
+          onClick={() => {
+            formUnchanged() ? navigate('/intro') : closeWithoutSaveConfirm();
+          }}
         />
-        <Button.Default label={t('cta:save')} onClick={onSave} />
+        <Button.Default
+          disabled={formUnchanged() ? true : false}
+          label={t('cta:save')}
+          onClick={onSave}
+        />
       </ButtonWrapper>
       {(loading || identityLoading) && <LoadingCircle opaque />}
     </GUIContext.Provider>
@@ -240,7 +295,7 @@ const ButtonWrapper = styled.div`
   gap: ${spacings.default}px;
   width: 100%;
   bottom: 0;
-  z-index: 800;
+  z-index: 1;
 `;
 
 export { GUIContext };
