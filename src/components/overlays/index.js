@@ -19,12 +19,12 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import OverlayProvider, {
   OverlayContext,
 } from '@components/overlays/OverlayProvider';
 
-import SettingsOverlay from '.SettingsOverlay';
+import { ConfirmOverlay } from './ConfirmOverlay';
+import { SettingsOverlay } from './SettingsOverlay';
 
-export { SettingsOverlay };
+export { SettingsOverlay, ConfirmOverlay };
 export { OverlayProvider, OverlayContext };
