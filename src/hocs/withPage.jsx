@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { useEffect } from 'react';
-import { Notification, useLocaleState } from 'react-admin';
+import { Notification } from 'react-admin';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -33,6 +33,7 @@ import { BrowserSupportBanner } from '@components/header/BrowserSupportBanner';
 import { EnvironmentBanner } from '@components/header/EnvironmentBanner';
 import { TemporaryProfilBanner } from '@components/header/TemporaryProfilBanner';
 import OverlayProvider from '@components/overlays/OverlayProvider';
+import { useLocale } from '@hooks/locale/useLocale';
 
 import { LANGUAGES } from '../locales';
 
@@ -60,7 +61,7 @@ const withPage = (Component) => {
 };
 
 const Main = (props) => {
-  const [locale, setLocale] = useLocaleState();
+  const { locale, setLocale } = useLocale();
   const location = useLocation();
 
   useEffect(() => {
@@ -72,11 +73,7 @@ const Main = (props) => {
     const lang = queries.get('l');
 
     if (lang !== locale && LANGUAGES.includes(lang)) {
-      setLocale(lang).then(() => {
-        // setLocale does not change the language right away.
-        // Force reload
-        window.location.reload();
-      });
+      setLocale(lang);
     }
   }, []);
 
