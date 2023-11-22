@@ -236,12 +236,18 @@ const GUIProvider = ({ children }) => {
     });
 
     const rotationFolder = gui.addFolder(t('GUI:folders:rotation'));
-    rotationFolder.add(rotation, 'x', -2, 2).onChange(() => {
-      onChangeRotation(rotation);
-    });
-    rotationFolder.add(rotation, 'y', -2, 2).onChange(() => {
-      onChangeRotation(rotation);
-    });
+    rotationFolder
+      .add(rotation, 'x', -2, 2)
+      .onChange(() => {
+        onChangeRotation(rotation);
+      })
+      .hide();
+    rotationFolder
+      .add(rotation, 'y', -2, 2)
+      .onChange(() => {
+        onChangeRotation(rotation);
+      })
+      .hide();
     rotationFolder.add(rotation, 'z', -10, 10).onChange(() => {
       onChangeRotation(rotation);
     });
@@ -253,9 +259,12 @@ const GUIProvider = ({ children }) => {
     scaleFolder.add(scale, 'y', 0.5, 1.5).onChange(() => {
       onChangeScale(scale);
     });
-    scaleFolder.add(scale, 'z', 0.5, 1.5).onChange(() => {
-      onChangeScale(scale);
-    });
+    scaleFolder
+      .add(scale, 'z', 0.5, 1.5)
+      .onChange(() => {
+        onChangeScale(scale);
+      })
+      .hide();
 
     guiRef.current = gui;
 

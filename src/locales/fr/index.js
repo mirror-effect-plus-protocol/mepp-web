@@ -61,9 +61,9 @@ export default {
   GUI: {
     title: 'Configurations de l’effet',
     folders: {
-      position: 'Position (x,y,z)',
-      rotation: 'Rotation (x,y,z)',
-      scale: 'Échelle (x,y,z)',
+      position: 'Position',
+      rotation: 'Rotation',
+      scale: 'Échelle',
     },
     cta: {
       profile: 'Valeurs du profil',
