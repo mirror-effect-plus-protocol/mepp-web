@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-05 00:06+0000\n"
-"PO-Revision-Date: 2023-01-23 17:04-0500\n"
+"PO-Revision-Date: 2023-11-22 08:57-0500\n"
 "Last-Translator: Olivier Leger\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #: mepp/api/authentication.py:28
 msgid "Invalid token."
@@ -104,7 +104,7 @@ msgstr ""
 #: mepp/api/templates/email/staff_registration.html:133
 #: mepp/api/templates/email/staff_registration.source.html:367
 msgid "staff_introduction_video"
-msgstr "https://www.youtube.com/watch?v=Tux2tV9GvyI"
+msgstr "https://youtu.be/nOesUIUzqlU"
 
 #: mepp/api/templates/email/staff_registration.html:135
 #: mepp/api/templates/email/staff_registration.source.html:369
@@ -155,7 +155,7 @@ msgstr ""
 #: mepp/api/templates/email/staff_registration.html:144
 #: mepp/api/templates/email/staff_registration.source.html:378
 msgid "staff_training_video"
-msgstr "https://www.youtube.com/watch?v=RLrTRneHCic"
+msgstr "https://youtu.be/tHzH1TbrgYs "
 
 #: mepp/api/templates/email/staff_registration.html:146
 #: mepp/api/templates/email/staff_registration.source.html:380
