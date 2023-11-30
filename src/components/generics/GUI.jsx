@@ -143,11 +143,22 @@ const GUIProvider = ({ children }) => {
     );
   };
 
+  const getSanitizedFolder = (data, folder) => {
+    let controllers = data.folders[t(`GUI:folders:${folder}`)].controllers;
+
+    return {
+      'x': controllers[t(`GUI:labels:${folder}:x`)],
+      'y': controllers[t(`GUI:labels:${folder}:y`)],
+      'z': controllers[t(`GUI:labels:${folder}:z`)]
+    };
+
+  };
+
   const onSave = useCallback(() => {
     const data = guiRef.current.save();
-    const position = data.folders[t('GUI:folders:position')].controllers;
-    const rotation = data.folders[t('GUI:folders:rotation')].controllers;
-    const scale = data.folders[t('GUI:folders:scale')].controllers;
+    const position = getSanitizedFolder(data, 'position');
+    const rotation = getSanitizedFolder(data, 'rotation');
+    const scale = getSanitizedFolder(data, 'scale');
 
     const send = async () => {
       const { response } = await patch({
@@ -179,15 +190,15 @@ const GUIProvider = ({ children }) => {
       const data = guiRef.current.save();
       return (
         valuesAreEqual(
-          data.folders[t('GUI:folders:position')].controllers,
+          getSanitizedFolder(data, 'position'),
           identity.mirror_settings.position,
         ) &&
         valuesAreEqual(
-          data.folders[t('GUI:folders:rotation')].controllers,
+          getSanitizedFolder(data, 'rotation'),
           identity.mirror_settings.rotation,
         ) &&
         valuesAreEqual(
-          data.folders[t('GUI:folders:scale')].controllers,
+          getSanitizedFolder(data, 'scale'),
           identity.mirror_settings.scale,
         )
       );
@@ -225,13 +236,22 @@ const GUIProvider = ({ children }) => {
     });
 
     const positionFolder = gui.addFolder(t('GUI:folders:position'));
-    positionFolder.add(position, 'x', -4, 4).onChange(() => {
+    positionFolder
+      .add(position, 'x', -1, 1)
+      .name(t('GUI:labels:position:x'))
+      .onChange(() => {
+        onChangePosition(position);
+      });
+    positionFolder
+      .add(position, 'y', -1, 1)
+      .name(t('GUI:labels:position:y'))
+      .onChange(() => {
       onChangePosition(position);
     });
-    positionFolder.add(position, 'y', -4, 4).onChange(() => {
-      onChangePosition(position);
-    });
-    positionFolder.add(position, 'z', -10, 10).onChange(() => {
+    positionFolder
+      .add(position, 'z', -3, 3)
+      .name(t('GUI:labels:position:z'))
+      .onChange(() => {
       onChangePosition(position);
     });
 
@@ -248,15 +268,24 @@ const GUIProvider = ({ children }) => {
         onChangeRotation(rotation);
       })
       .hide();
-    rotationFolder.add(rotation, 'z', -10, 10).onChange(() => {
-      onChangeRotation(rotation);
-    });
+    rotationFolder
+      .add(rotation, 'z', -10, 10)
+      .name(t('GUI:labels:rotation:z'))
+      .onChange(() => {
+        onChangeRotation(rotation);
+      });
 
     const scaleFolder = gui.addFolder(t('GUI:folders:scale'));
-    scaleFolder.add(scale, 'x', 0.5, 1.5).onChange(() => {
+    scaleFolder
+      .add(scale, 'x', 0.5, 1.5)
+      .name(t('GUI:labels:scale:x'))
+      .onChange(() => {
       onChangeScale(scale);
     });
-    scaleFolder.add(scale, 'y', 0.5, 1.5).onChange(() => {
+    scaleFolder
+      .add(scale, 'y', 0.5, 1.5)
+      .name(t('GUI:labels:scale:y'))
+      .onChange(() => {
       onChangeScale(scale);
     });
     scaleFolder
