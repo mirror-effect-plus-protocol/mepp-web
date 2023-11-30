@@ -58,6 +58,23 @@ export default {
       rotation: 'Rotation',
       scale: 'Scale',
     },
+    labels: {
+      position: {
+        x: 'Left ↔ Right',
+        y: 'Top ↕ Bottom',
+        z: 'Forward ↹ Backward',
+      },
+      rotation: {
+        x: 'x',
+        y: 'y',
+        z: '↺ | ↻',
+      },
+      scale: {
+        x: 'Narrow ↔ Large',
+        y: 'Small ↕ Long',
+        z: 'z',
+      },
+    },
     cta: {
       profile: 'Profile values',
       default: 'Default values',

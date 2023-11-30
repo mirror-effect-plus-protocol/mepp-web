@@ -65,6 +65,23 @@ export default {
       rotation: 'Rotation',
       scale: 'Échelle',
     },
+    labels: {
+      position: {
+        x: 'Gauche ↔ Droite',
+        y: 'Haut ↕ Bas',
+        z: 'Avant ↹ Arrière',
+      },
+      rotation: {
+        x: 'x',
+        y: 'y',
+        z: '↺ | ↻',
+      },
+      scale: {
+        x: 'Étroit ↔ Large',
+        y: 'Petit ↕ Long',
+        z: 'z',
+      },
+    },
     cta: {
       profile: 'Valeurs du profil',
       default: 'Valeurs par défaut',
