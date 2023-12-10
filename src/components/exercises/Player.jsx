@@ -141,7 +141,7 @@ const Player = () => {
    * Destroy DeepAR
    */
   useEffect(() => {
-    if (exerciseStep === ExerciseStep.ENDED && deepAR.current) {
+    if (exerciseStep === ExerciseStep.ENDED && deepAR.current && !gui) {
       deepAR.current.stopCamera();
       deepAR.current.shutdown();
       deepAR.current = null;
@@ -153,7 +153,7 @@ const Player = () => {
    * Destroy DeepAR
    */
   useEffect(() => {
-    if (exerciseStep === ExerciseStep.EMPTY) {
+    if (exerciseStep === ExerciseStep.EMPTY && !gui) {
       // weird settimeout because DeepAR seems not to be fully initialized to this state
       // can't be destroy without this settimeout
       setTimeout(() => {
