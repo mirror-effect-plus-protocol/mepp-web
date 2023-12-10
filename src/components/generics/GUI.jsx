@@ -101,18 +101,30 @@ const GUIProvider = ({ children }) => {
     const clone = guiRef.current.save();
     if (identity.mirror_settings) {
       // prettier-ignore
-      clone.folders[t('GUI:folders:position')].controllers = {...identity.mirror_settings.position};
+      clone.folders[t('GUI:folders:position')].controllers = {
+        ...getMappedCoordinates(identity.mirror_settings.position, 'position')
+      };
       // prettier-ignore
-      clone.folders[t('GUI:folders:rotation')].controllers = {...identity.mirror_settings.rotation};
+      clone.folders[t('GUI:folders:rotation')].controllers = {
+        ...getMappedCoordinates(identity.mirror_settings.rotation, 'rotation')
+      };
       // prettier-ignore
-      clone.folders[t('GUI:folders:scale')].controllers = {...identity.mirror_settings.scale};
+      clone.folders[t('GUI:folders:scale')].controllers = {
+        ...getMappedCoordinates(identity.mirror_settings.scale, 'scale')
+      };
     } else {
       // prettier-ignore
-      clone.folders[t('GUI:folders:position')].controllers = {...defaultPosition};
+      clone.folders[t('GUI:folders:position')].controllers = {
+        ...getMappedCoordinates(defaultPosition, 'position')
+      };
       // prettier-ignore
-      clone.folders[t('GUI:folders:rotation')].controllers = {...defaultRotation};
+      clone.folders[t('GUI:folders:rotation')].controllers = {
+        ...getMappedCoordinates(defaultRotation, 'rotation')
+      };
       // prettier-ignore
-      clone.folders[t('GUI:folders:scale')].controllers = {...defaultScale};
+      clone.folders[t('GUI:folders:scale')].controllers = {
+        ...getMappedCoordinates(defaultScale, 'scale')
+      };
     }
     guiRef.current.load(clone);
   }, [identity]);
@@ -120,11 +132,17 @@ const GUIProvider = ({ children }) => {
   const onApplyDefault = () => {
     const clone = guiRef.current.save();
     // prettier-ignore
-    clone.folders[t('GUI:folders:position')].controllers = {...defaultPosition};
+    clone.folders[t('GUI:folders:position')].controllers = {
+      ...getMappedCoordinates(defaultPosition, 'position')
+    };
     // prettier-ignore
-    clone.folders[t('GUI:folders:rotation')].controllers = {...defaultRotation};
+    clone.folders[t('GUI:folders:rotation')].controllers = {
+      ...getMappedCoordinates(defaultRotation, 'rotation')
+    };
     // prettier-ignore
-    clone.folders[t('GUI:folders:scale')].controllers = { ...defaultScale };
+    clone.folders[t('GUI:folders:scale')].controllers = {
+      ...getMappedCoordinates(defaultScale, 'scale')
+    };
     guiRef.current.load(clone);
   };
 
@@ -152,6 +170,16 @@ const GUIProvider = ({ children }) => {
       'z': controllers[t(`GUI:labels:${folder}:z`)]
     };
 
+  };
+
+  const getMappedCoordinates = (obj, folder) => {
+    let controllers = {};
+
+    controllers[t(`GUI:labels:${folder}:x`)] = obj.x;
+    controllers[t(`GUI:labels:${folder}:y`)] = obj.y;
+    controllers[t(`GUI:labels:${folder}:z`)] = obj.z;
+
+    return controllers;
   };
 
   const onSave = useCallback(() => {

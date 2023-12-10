@@ -38,7 +38,7 @@ import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 
 export const ClinicianList = () => {
-  const permissions = usePermissions();
+  const { permissions } = usePermissions();
   const t = useTranslate();
 
   const [patientUid, setPatientUid] = useStore('patient.uid', false);

@@ -52,6 +52,13 @@ const useRowActionToolbarStyles = makeStyles({
     '& svg': { fontSize: '1.35rem !important' },
     '& .MuiButton-startIcon': { marginRight: 0 }
   },
+  icon_action_button_red: {
+    color: 'red',
+    minWidth: '40px;',
+    padding: '4px 5px',
+    '& svg': { fontSize: '1.35rem !important' },
+    '& .MuiButton-startIcon': { marginRight: 0 }
+  },
 });
 
 const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
@@ -164,7 +171,7 @@ const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
               resource={props.rowResource || resource}
               label=""
               record={record}
-              className={classes.icon_action_button}
+              className={classes.icon_action_button_red}
               color="secondary"
             />
           </span>
