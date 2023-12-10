@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
@@ -27,6 +26,7 @@ import reset from 'styled-reset';
 
 import { BASE_FONT_SIZE } from '@styles/configs/fontsize';
 import { spacings } from '@styles/configs/spacings';
+import { zindex } from '@styles/configs/zindex';
 import { rem } from '@styles/utils/rem';
 
 import { theme } from '@themes/index';
@@ -52,10 +52,12 @@ const GlobalStyles = createGlobalStyle`
     overflow-x: hidden;
   }
 
-  body {
+  body{
     position: relative;
     background-color: ${theme.colors.background};
     color: ${theme.colors.text};
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    line-height: 1;
 
     min-height: 100vh;
     min-height: -webkit-fill-available;
@@ -114,7 +116,6 @@ const GlobalStyles = createGlobalStyle`
     border-radius: 0;
     outline: none;
     -webkit-appearance: none;
-    touch-action: none;
 
     &:focus-visible {
       outline-width: 2px;
@@ -150,6 +151,19 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  .MuiScopedCssBaseline-root {
+    background-color: ${theme.colors.background};
+    color: ${theme.colors.text};
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    line-height: 1;
+    font-size: ${rem(BASE_FONT_SIZE)};
+  }
+
+  .lil-gui.autoPlace {
+    top: 23px;
+    right:0;
+    z-index: ${zindex.max};
+  }
 `;
 
 export default React.memo(GlobalStyles);

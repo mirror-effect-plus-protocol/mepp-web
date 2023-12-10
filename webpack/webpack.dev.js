@@ -39,7 +39,7 @@ module.exports = {
   },
 
   devServer: {
-    contentBase: config.output,
+    static: config.output,
     compress: true,
     hot: true,
     host: '0.0.0.0',

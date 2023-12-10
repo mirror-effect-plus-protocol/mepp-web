@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
 module.exports = merge(
   require('./webpack/webpack.common'),

@@ -19,11 +19,12 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { DeepAR } from 'deepar';
+import * as deepar from 'deepar';
 import React, { useRef, useEffect, useContext } from 'react';
 import { useGetIdentity } from 'react-admin';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { GUIContext } from '@components/generics/GUI';
 
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
 
@@ -31,11 +32,33 @@ import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
  * DeepAP.ai player
  */
 const Player = () => {
-  const { exercise, exerciseStep, ready } = useContext(ExerciseContext);
-  const { identity, loading: identityLoading } = useGetIdentity();
+  const gui = useContext(GUIContext);
+  const { exerciseStep, ready } = useContext(ExerciseContext);
+  const { identity, isLoading: identityLoading } = useGetIdentity();
   const deepAR = useRef(null);
+  const deepARInit = useRef(false);
   const canvas = useRef(null);
-  const history = useHistory();
+
+  const updateEffectValues = (data) => {
+    if (!deepAR.current) return;
+    if (data) {
+      const position = data.position;
+      const rotation = data.rotation;
+      const scale = data.scale;
+      if (position) {
+        // prettier-ignore
+        deepAR.current.changeParameterVector('Root','','position', position.x, position.y, position.z);
+      }
+      if (rotation) {
+        // prettier-ignore
+        deepAR.current.changeParameterVector('Root', '', 'rotation', rotation.x, rotation.y, rotation.z);
+      }
+      if (scale) {
+        // prettier-ignore
+        deepAR.current.changeParameterVector('Root', '', 'scale', scale.x, scale.y, scale.z);
+      }
+    }
+  };
 
   /**
    * Init Deep AR
@@ -43,33 +66,41 @@ const Player = () => {
    */
   useEffect(() => {
     if (!identity) return;
-    if (deepAR.current) return;
+    if (!deepAR.current) {
+      if (!deepARInit.current) {
+        canvas.current.width = window.innerWidth;
+        canvas.current.height = window.innerHeight;
 
-    canvas.current.width = window.innerWidth;
-    canvas.current.height = window.innerHeight;
+        const side = identity.side === 0 ? 'left' : 'right';
 
-    const side = identity.side === 0 ? 'left' : 'right';
+        let AR;
+        const init = async () => {
+          deepARInit.current = true;
 
-    const AR = new DeepAR({
-      licenseKey: process.env.DEEPAR_LICENSE_KEY,
-      canvas: canvas.current,
-      numberOfFaces: 1,
-      deeparWasmPath: './assets/deepar/deepar.wasm',
-      segmentationConfig: {
-        modelPath: './assets/deepar/segmentation-160x160-opt.bin',
-      },
-      callbacks: {
-        onInitialize: () => {
-          AR.startVideo(true);
-          AR.switchEffect(0, side, `./assets/deepar/effects/${side}`);
-        },
-        onVideoStarted: () => ready(true),
-      },
-    });
-    AR.downloadFaceTrackingModel('./assets/deepar/models-68-extreme.bin');
-    AR.callbacks.onCameraPermissionDenied = () => history.push('/intro');
-    deepAR.current = AR;
-  }, [deepAR, canvas, identity, exercise]);
+          AR = await deepar.initialize({
+            licenseKey: process.env.DEEPAR_LICENSE_KEY,
+            canvas: canvas.current,
+            effect: `./assets/effects/${side}`,
+          });
+
+          deepAR.current = AR;
+
+          updateEffectValues(identity.mirror_settings);
+          ready(true);
+        };
+
+        init();
+      }
+    }
+
+    return () => {
+      if (deepAR.current) {
+        deepAR.current.stopCamera();
+        deepAR.current.shutdown();
+        deepAR.current = null;
+      }
+    };
+  }, [identity]);
 
   /**
    * Resize browser event
@@ -96,41 +127,53 @@ const Player = () => {
 
       if (deepAR.current) {
         try {
+          deepAR.current.stopCamera();
           deepAR.current.shutdown();
           deepAR.current = null;
           // eslint-disable-next-line no-empty
         } catch (e) {}
       }
     };
-  }, [deepAR]);
+  }, []);
 
   /**
    * Ending
    * Destroy DeepAR
    */
   useEffect(() => {
-    if (exerciseStep === ExerciseStep.ENDED && deepAR.current) {
+    if (exerciseStep === ExerciseStep.ENDED && deepAR.current && !gui) {
+      deepAR.current.stopCamera();
       deepAR.current.shutdown();
       deepAR.current = null;
     }
-  }, [deepAR, exerciseStep]);
+  }, [exerciseStep]);
 
   /**
    * Empty
    * Destroy DeepAR
    */
   useEffect(() => {
-    if (exerciseStep === ExerciseStep.EMPTY) {
+    if (exerciseStep === ExerciseStep.EMPTY && !gui) {
       // weird settimeout because DeepAR seems not to be fully initialized to this state
       // can't be destroy without this settimeout
       setTimeout(() => {
         if (deepAR.current) {
+          deepAR.current.stopCamera();
           deepAR.current.shutdown();
           deepAR.current = null;
         }
       }, 2000);
     }
-  }, [deepAR, exerciseStep]);
+  }, [exerciseStep]);
+
+  /**
+   * GUI modifiers
+   */
+  useEffect(() => {
+    if (deepAR.current && gui) {
+      updateEffectValues(gui);
+    }
+  }, [gui]);
 
   if (identityLoading) return <></>;
 

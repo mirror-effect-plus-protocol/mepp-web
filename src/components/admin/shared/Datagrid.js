@@ -19,57 +19,53 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import {
   Datagrid as RaDatagrid,
   DatagridBody as RaDatagridBody,
+  useListContext,
 } from 'react-admin';
 
-const DatagridBody = ({ ids, data, total, filterValues, ...rest }) => {
-  const data_copy = {};
-  const ids_copy = ids.filter((id) => {
-    if (!data.hasOwnProperty(id)) {
+const DatagridBody = ({ data, total, ...rest }) => {
+  const { filterValues } = useListContext();
+  const data_copy = data.filter((item) => {
+    if (item.archived != filterValues.archived) {
       return false;
     }
-    if (data[id].archived != filterValues.archived) {
-      return false;
-    }
-
-    data_copy[id] = data[id];
-
-    if (data.hasOwnProperty('fetchedAt')) {
-      if (!data_copy.hasOwnProperty('fetchedAt')) {
-        data_copy['fetchedAt'] = {};
-      }
-      data_copy['fetchedAt'][id] = data['fetchedAt'][id];
-    }
-
     return true;
   });
 
-  return (
-    <RaDatagridBody
-      ids={ids_copy}
-      data={data_copy}
-      total={ids_copy.length}
-      {...rest}
-    />
-  );
+  // const ids_copy = ids.filter((id) => {
+  //   if (!data.hasOwnProperty(id)) {
+  //     return false;
+  //   }
+  //   if (data[id].archived != filterValues.archived) {
+  //     return false;
+  //   }
+
+  //   data_copy[id] = data[id];
+
+  //   if (data.hasOwnProperty('fetchedAt')) {
+  //     if (!data_copy.hasOwnProperty('fetchedAt')) {
+  //       data_copy['fetchedAt'] = {};
+  //     }
+  //     data_copy['fetchedAt'][id] = data['fetchedAt'][id];
+  //   }
+
+  //   return true;
+  // });
+
+  return <RaDatagridBody data={data_copy} total={data_copy.length} {...rest} />;
 };
 
 const Datagrid = (props) => {
+  const { bulkActionButtons, filterValues, data, ...rest } = props;
   return (
     <RaDatagrid
-      {...props}
-      body={
-        <DatagridBody
-          filterValues={props.filterValues}
-          ids={props.ids}
-          data={props.data}
-          hasBulkActions={props.hasBulkActions}
-        />
-      }
+      {...rest}
+      filterValues={filterValues}
+      bulkActionButtons={bulkActionButtons}
+      body={<DatagridBody data={data} />}
     />
   );
 };

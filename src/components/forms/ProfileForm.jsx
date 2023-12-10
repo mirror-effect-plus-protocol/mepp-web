@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useContext, useRef, useState } from 'react';
 import { useNotify, useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
@@ -30,7 +29,7 @@ import { spacings } from '@styles/configs/spacings';
 import { FlexAlignCenter } from '@styles/tools';
 import { rem } from '@styles/utils/rem';
 
-import { useApi } from '@hooks/useAPI';
+import { useApi } from '@hooks/useApi';
 
 import { RequestEndpoint } from '@utils/constants';
 
@@ -47,7 +46,7 @@ import { OverlayContext } from '@components/overlays/OverlayProvider';
  */
 const ProfileForm = () => {
   const { t } = useTranslation();
-  const { identity, loading: identityLoading } = useGetIdentity();
+  const { identity, isLoading: identityLoading } = useGetIdentity();
   const { close } = useContext(OverlayContext);
   const notify = useNotify();
   const newpassword = useRef();
@@ -65,6 +64,7 @@ const ProfileForm = () => {
     const { data, response } = await patch(payload);
     if (data && response.status === 200) {
       close();
+      identity.email = email;
 
       // Update token since e-mail and/or password have been changed.
       if (data.token) {
@@ -79,10 +79,11 @@ const ProfileForm = () => {
         );
       }
 
-      notify('api.success.profile_update', 'success');
+      notify('api.success.profile_update', { type: 'success' });
     } else {
-      if (data && data.password) notify('api.error.pwd_invalid', 'error');
-      else notify('api.error.generic', 'error');
+      if (data && data.password)
+        notify('api.error.pwd_invalid', { type: 'error' });
+      else notify('api.error.generic', { type: 'error' });
     }
   };
 

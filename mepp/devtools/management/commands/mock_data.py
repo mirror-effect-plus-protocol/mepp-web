@@ -87,7 +87,7 @@ class Command(BaseCommand):
                 use_audio=user_[2],
                 side=user_[3],
                 clinician=user_[4],
-                language='fr'
+                language='fr',
             )
             obj.set_password(self.PASSWORD)
             obj.save()
@@ -99,39 +99,55 @@ class Command(BaseCommand):
         exercise2 = exercises[2]
 
         self.stdout.write('Creating treatment plan templates...')
-        tp = TreatmentPlan.objects.create(daily_repeat=3, is_template=True,
-                                          is_system=True,
-                                          clinician=admin)
-        TreatmentPlanExerciseM2M.objects.create(exercise=exercise,
-                                                treatment_plan=tp)
-        TreatmentPlanExerciseM2M.objects.create(exercise=exercise1,
-                                                treatment_plan=tp)
-        TreatmentPlanI18n.objects.create(parent=tp, language='fr',
-                                         name='Paralysie de Bell',
-                                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu sem id turpis vestibulum pretium ut et leo. Fusce metus nunc, posuere convallis dui vel, bibendum malesuada lacus.')
-        TreatmentPlanI18n.objects.create(parent=tp, language='en',
-                                         name="Bell's palsy",
-                                         description='Nullam et augue et nulla varius congue at a ipsum. Pellentesque a metus nec lorem tempus lacinia id at erat.')
+        tp = TreatmentPlan.objects.create(
+            daily_repeat=3, is_template=True, is_system=True, clinician=admin
+        )
+        TreatmentPlanExerciseM2M.objects.create(
+            exercise=exercise, treatment_plan=tp
+        )
+        TreatmentPlanExerciseM2M.objects.create(
+            exercise=exercise1, treatment_plan=tp
+        )
+        TreatmentPlanI18n.objects.create(
+            parent=tp,
+            language='fr',
+            name='Paralysie de Bell',
+        )
+        TreatmentPlanI18n.objects.create(
+            parent=tp,
+            language='en',
+            name="Bell's palsy",
+        )
 
-        tp2 = TreatmentPlan.objects.create(daily_repeat=3, is_template=True,
-                                           clinician=admin)
-        TreatmentPlanExerciseM2M.objects.create(exercise=exercise2,
-                                                treatment_plan=tp2)
-        TreatmentPlanI18n.objects.create(parent=tp2, language='fr',
-                                         name='AVC sévère',
-                                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu sem id turpis vestibulum pretium ut et leo. Fusce metus nunc, posuere convallis dui vel, bibendum malesuada lacus.')
-        TreatmentPlanI18n.objects.create(parent=tp2, language='en',
-                                         name='Severe stroke',
-                                         description='Nullam et augue et nulla varius congue at a ipsum. Pellentesque a metus nec lorem tempus lacinia id at erat.')
+        tp2 = TreatmentPlan.objects.create(
+            daily_repeat=3, is_template=True, clinician=admin
+        )
+        TreatmentPlanExerciseM2M.objects.create(
+            exercise=exercise2, treatment_plan=tp2
+        )
+        TreatmentPlanI18n.objects.create(
+            parent=tp2,
+            language='fr',
+            name='AVC sévère',
+        )
+        TreatmentPlanI18n.objects.create(
+            parent=tp2,
+            language='en',
+            name='Severe stroke',
+        )
 
         self.stdout.write(
-            f'Creating a treatment plan for {users[0][0]} {users[0][1]}...')
+            f'Creating a treatment plan for {users[0][0]} {users[0][1]}...'
+        )
         patient0 = User.objects.get(
-            username=f'{users[0][0]}.{users[0][1]}@example.org'.lower())
+            username=f'{users[0][0]}.{users[0][1]}@example.org'.lower()
+        )
         patient0_tp = tp.clone(new_clinician=helen, patient=patient0)
 
         self.stdout.write(
-            f'Creating a treatment plan for {users[1][0]} {users[1][1]}...')
+            f'Creating a treatment plan for {users[1][0]} {users[1][1]}...'
+        )
         patient1 = User.objects.get(
-            username=f'{users[1][0]}.{users[1][1]}@example.org'.lower())
+            username=f'{users[1][0]}.{users[1][1]}@example.org'.lower()
+        )
         patient1_tp = tp2.clone(new_clinician=john, patient=patient1)

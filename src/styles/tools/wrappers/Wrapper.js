@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import styled from 'styled-components';
 
 import { media } from '@styles/configs/breakpoints';
@@ -79,7 +78,6 @@ const WrapperFull = styled.div`
  * </WrapperFullSize>
  */
 const WrapperFullSize = styled.div`
-  width: calc(100% - ${spacings.default * 2}px);
   height: 100%;
   padding: 0 ${spacings.default}px;
   max-width: none;

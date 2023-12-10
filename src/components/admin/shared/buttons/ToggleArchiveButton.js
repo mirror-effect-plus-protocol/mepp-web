@@ -19,8 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, { useRef } from 'react';
+import React from 'react';
 import {
   Button,
   useNotify,
@@ -29,9 +28,12 @@ import {
   useRedirect,
   useRecordSelection,
   useTranslate,
+  useStore,
 } from 'react-admin';
-import ArchiveIcon from '@material-ui/icons/Archive';
-import UnarchiveIcon from '@material-ui/icons/Unarchive';
+
+import ArchiveIcon from '@mui/icons-material/Archive';
+import UnarchiveIcon from '@mui/icons-material/Unarchive';
+
 import { sanitizeRestProps } from '@admin/utils/props';
 
 const ToggleArchiveButton = ({
@@ -39,20 +41,19 @@ const ToggleArchiveButton = ({
   record,
   className,
   showLabel,
-  redirectLocation,
   ...rest
 }) => {
   const notify = useNotify();
   const t = useTranslate();
   const refresh = useRefresh();
   const redirect = useRedirect();
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
   const label = showLabel
     ? record.archived
       ? 'admin.shared.labels.unarchiveButton'
       : 'admin.shared.labels.archiveButton'
     : '';
   const [selectedIds, { select }] = useRecordSelection(resource);
-  const redirectionRef = useRef();
   const handleToggleArchive = (e) => {
     e.preventDefault();
     // Update bulk actions counter
@@ -63,43 +64,48 @@ const ToggleArchiveButton = ({
     // Update data
     updateHandler();
   };
-  const [updateHandler, { loading }] = useUpdate(
+  const [updateHandler, { isLoading }] = useUpdate(
     resource,
-    record.id,
-    { 'archived': !record.archived },
-    record,
+    {
+      id: record.id,
+      data: { archived: !record.archived },
+      previousData: record,
+    },
     {
       onSuccess: () => {
         const translatedText = record.archived
           ? 'admin.shared.notifications.unarchive.success'
           : 'admin.shared.notifications.archive.success';
-        if (redirectionRef.current) {
-          redirect(redirectionRef.current);
+        if (patientUid) {
+            if (patientUid && resource === 'patients') {
+              setPatientUid(false);
+              redirect(resource);
+            }
         }
         refresh();
-        notify(translatedText, 'info');
+        notify(translatedText, { type: 'info' });
+        select([]);
       },
-      onFailure: (error) => {
+      onError: (error) => {
         const translatedText = record.archived
           ? 'admin.shared.notifications.unarchive.failure'
           : 'admin.shared.notifications.archive.failure';
-        notify(translatedText, 'error');
+        notify(translatedText, { type: 'error' });
       },
-    },
+    }
   );
-  redirectionRef.current = redirectLocation;
 
   return (
     <Button
       label={t(label)}
       onClick={handleToggleArchive}
-      disabled={loading}
+      disabled={isLoading}
       className={className}
-      {...sanitizeRestProps(rest, [
-        'redirectToBasePath',
-        'showLabel',
-        'showLocation'
-      ], true)}
+      {...sanitizeRestProps(
+        rest,
+        ['showLabel', 'showLocation'],
+        true,
+      )}
       variant={rest.variant}
       color={rest.color}
     >

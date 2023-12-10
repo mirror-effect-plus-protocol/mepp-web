@@ -19,10 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import i18n from 'i18next';
 import { useMemo, useCallback } from 'react';
-import { useSetLocale } from 'react-admin';
+import {useLocaleState} from 'react-admin';
 
 import { Language } from '@utils/constants';
 
@@ -30,8 +29,9 @@ import { Language } from '@utils/constants';
  * - set a new locale
  */
 const useLocale = () => {
-  const localeRAdmin = useSetLocale();
+  const [, setLocaleRAdmin] = useLocaleState();
 
+  // test
   // current locale
   const locale = useMemo(() => {
     return i18n.language;
@@ -44,7 +44,7 @@ const useLocale = () => {
         newLocale === Language.FR || newLocale === Language.EN
           ? newLocale
           : Language.FR;
-      localeRAdmin(lang);
+      setLocaleRAdmin(lang);
       i18n.changeLanguage(lang);
       document.documentElement.lang = lang;
     },

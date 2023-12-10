@@ -19,18 +19,16 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import { usePermissions } from 'react-admin';
-import { useMediaQuery } from '@material-ui/core';
+
+import { useMediaQuery } from '@mui/material';
 
 import { DashboardWidget } from './DashboardWidget';
 import { Welcome } from './Welcome';
 
 const Dashboard = () => {
-  const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));
-  // We cannot use `props.permissions` since it does not seem to be refreshed
-  // until the <Admin> component has been unmount
+  const isSmall = useMediaQuery((theme) => theme.breakpoints.down('lg'));
   const { permissions } = usePermissions();
   const styles = {
     flex: { display: 'flex' },

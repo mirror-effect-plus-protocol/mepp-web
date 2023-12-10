@@ -31,7 +31,7 @@ from django_rest_passwordreset.signals import reset_password_token_created
 from mepp.api.models.expiring_token import ExpiringToken
 from mepp.api.helpers.emails import (
     send_alert_email,
-    send_onboarding_patient_email,
+    send_onboarding_email,
 )
 
 
@@ -48,7 +48,7 @@ def user_post_save(instance=None, created=False, **kwargs):
         ))
 
         if not skip:
-            send_onboarding_patient_email(instance)
+            send_onboarding_email(instance)
 
     if not created and instance.email_has_changed:
         send_alert_email(instance)
@@ -68,7 +68,7 @@ def password_reset_token_created(
     context = {
         'first_name': reset_password_token.user.first_name,
         'reset_password_url': f'{mepp_host}/?l={reset_password_token.user.language}'
-                              f'&t={reset_password_token.key}#reset-password',
+                              f'&t={reset_password_token.key}#/reset-password',
         'mepp_host': mepp_host,
     }
 

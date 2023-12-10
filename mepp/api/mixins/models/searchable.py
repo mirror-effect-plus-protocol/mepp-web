@@ -31,8 +31,13 @@ class Searchable(models.Model):
 
     fulltext_search = models.TextField(default='')
 
+    SKIPPED_WORDS = [
+        'com',
+    ]
+
     class Meta:
         abstract = True
+
 
     def update_fulltext_search(self, save: bool = True):
         """
@@ -41,17 +46,29 @@ class Searchable(models.Model):
         avoid maximum recursion depth.
         """
         fulltext_words = []
-        records = self.__class__.objects.values_list(
-            *self.fulltext_search_fields
-        ).filter(pk=self.pk)
+        if save:
+            records = self.__class__.objects.values_list(
+                *self.fulltext_search_fields
+            ).filter(pk=self.pk)
+        else:
+            records = [
+                [
+                    getattr(self, field, '')
+                    for field in self.fulltext_search_fields
+                ]
+            ]
+
         for record in records:
             for index in range(len(self.fulltext_search_fields)):
                 normalized_str = normalize(record[index])
                 for word in normalized_str.split(' '):
+                    if word in self.SKIPPED_WORDS:
+                        continue
                     fulltext_words.append(word.lower())
 
         fulltext_search = ' '.join(list(set(fulltext_words)))
         self.fulltext_search = f' {fulltext_search} '
+
         if save:
             self.save(update_fields=['fulltext_search'])
 
@@ -75,4 +92,3 @@ class I18nSearchable(BaseI18nModel):
             update_fields=update_fields,
         )
         self.parent.update_fulltext_search()
-

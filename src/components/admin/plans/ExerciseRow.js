@@ -24,14 +24,14 @@ import React, { Fragment, useState } from 'react';
 import {
   NumberInput,
   TextInput,
-  useLocale,
   useTranslate,
 } from 'react-admin';
+import { useLocale } from '@hooks/locale/useLocale';
 import {
   useAutocompleteStyles,
   useNumberStyles
 } from '@components/admin/plans/styles';
-import { useForm } from 'react-final-form';
+import { useFormContext } from 'react-hook-form';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import {
   Button,
@@ -40,18 +40,17 @@ import {
   DialogContent,
   DialogTitle,
   TextField as TextFieldMui
-} from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import CheckCircle from '@material-ui/icons/CheckCircle';
+} from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CheckCircle from '@mui/icons-material/CheckCircle';
 import { validateNumber } from '@components/admin/shared/validators';
 import DropDown from '@components/admin/shared/inputs/Dropdown';
 
 
 const ExerciseRow = (props) => {
-
   const t = useTranslate();
-  const locale = useLocale();
+  const { locale } = useLocale();
   const numberClasses = useNumberStyles();
   const autocompleteClasses = useAutocompleteStyles();
   const [uid, setUid] = useState('');
@@ -64,7 +63,7 @@ const ExerciseRow = (props) => {
   const [subCategories, setSubCategories] = useState([]);
   const [loadingExercises, setLoadingExercises] = useState(undefined);
   const [exerciseOptions, setExerciseOptions] = useState([]);
-  const form = useForm();
+  const form = useFormContext();
   const getExercises = async (categoryUid, subCategoryUid) => {
     let url = `${process.env.API_ENDPOINT}/exercises/?page=1&page_size=9999&archived=false&language=${locale}&ordering=i18n__name`;
     if (categoryUid) {
@@ -104,14 +103,13 @@ const ExerciseRow = (props) => {
     setMovementDuration(exercise.movement_duration);
     setPause(exercise.pause);
     setRepeat(exercise.repeat);
-  }
+  };
   const handleSelectExercise = () => {
-
-    form.change(`${props.source}.i18n.description.${locale}`, description);
-    form.change(`${props.source}.movement_duration`, movementDuration);
-    form.change(`${props.source}.pause`, pause);
-    form.change(`${props.source}.repeat`, repeat);
-    form.change(`${props.source}.id`, uid);
+    form.setValue(`${props.source}.i18n.description.${locale}`, description);
+    form.setValue(`${props.source}.movement_duration`, movementDuration);
+    form.setValue(`${props.source}.pause`, pause);
+    form.setValue(`${props.source}.repeat`, repeat);
+    form.setValue(`${props.source}.id`, uid);
     setOpenDialog(false);
   };
 
@@ -129,6 +127,7 @@ const ExerciseRow = (props) => {
         onClick={handleOpenDialog}
         multiline={true}
         fullWidth={true}
+        sx={{ minWidth: '500px' }}
       />
       <div className={numberClasses.numbers}>
         <NumberInput

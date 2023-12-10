@@ -30,6 +30,7 @@ export default {
     goto_login: 'Revenir à l’écran de connexion',
 
     start: 'Commencer la séance',
+    settings: 'Configurer l’effet',
     start_exercise: 'Commencer',
     restart: 'Recommencer',
     restart_exercise: 'Continuer',
@@ -39,8 +40,10 @@ export default {
     authorize: 'Autoriser',
 
     cancel: 'Annuler',
+    close: 'Fermer',
     save: 'Sauvegarder',
     modify: 'Modifier',
     back: 'Retour',
+    confirm: 'Ok',
   },
 };

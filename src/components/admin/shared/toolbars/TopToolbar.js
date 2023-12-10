@@ -21,6 +21,7 @@
  */
 
 import React from 'react';
+import { useRecordContext } from 'react-admin';
 import {
   TopToolbar as RaTopToolbar,
   useTranslate,
@@ -28,31 +29,30 @@ import {
 import CRUDButton from '@components/admin/shared/buttons/CRUDButton';
 import ExportButton from '@components/admin/shared/buttons/ExportButton';
 
-const TopToolbar = ({ basePath, data, resource, ...rest }) => {
+const TopToolbar = (props) => {
   const t = useTranslate();
+  const record = useRecordContext();
   let context = false;
-  if (rest.patientUid) {
-    context = { patientUid: rest.patientUid };
+
+  if (props.patientUid) {
+    context = { patientUid: props.patientUid };
   }
 
-  if (!data?.id || (rest?.identity?.uid === data?.id)) {
+  if (!record?.id || (props?.identity?.uid === record?.id)) {
     return <></>;
   }
 
   return (
     <RaTopToolbar>
-      {rest.showExport &&
+      {props.showExport &&
         <ExportButton
-          basePath={basePath}
-          selectedIds={[data.id]}
+          selectedIds={[record.id]}
           variant="outlined"
-          style={{marginRight: '10px'}}
         />
       }
-      {rest.hasEdit &&
+      {props.hasEdit &&
         <CRUDButton
-          basePath={basePath}
-          record={data}
+          record={record}
           type="edit"
           label={t('ra.action.edit')}
           context={context}
@@ -60,10 +60,9 @@ const TopToolbar = ({ basePath, data, resource, ...rest }) => {
           variant="outlined"
         />
       }
-      {rest.hasShow &&
+      {props.hasShow &&
         <CRUDButton
-          basePath={basePath}
-          record={data}
+          record={record}
           type="show"
           label={t('ra.action.show')}
           context={context}

@@ -20,13 +20,14 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   BooleanField,
   List,
   TextField,
   FunctionField,
-  useTranslate,
+  usePermissions,
+  useTranslate, useStore,
 } from 'react-admin';
 
 
@@ -36,32 +37,35 @@ import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar
 import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 
-export const ClinicianList = (props) => {
+export const ClinicianList = () => {
+  const { permissions } = usePermissions();
   const t = useTranslate();
+
+  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  useEffect(() => {
+    setPatientUid(false);
+  }, []);
 
   return (
     <List
-      {...props}
       sort={{ field: 'first_name', order: 'ASC' }}
       filters={<ArchivableFilter />}
       filterDefaultValues={{ archived: false, me: false }}
       perPage={25}
       actions={<ListActions/>}
-      bulkActionButtons={<BulkActionButtons permissions={props.permissions} />}
     >
-      <Datagrid>
+      <Datagrid bulkActionButtons={<BulkActionButtons permissions={permissions} />}>
         <TextField source="full_name" />
         <BooleanField
           textAlign="center"
           source="is_superuser"
-          style={{display: 'inline-block'}}
         />
         <FunctionField
           label={t('resources.clinicians.list.labels.patients_count')}
           render={(record) => record.patients.length}
           textAlign="center"
         />
-        <RowActionToolbar permissions={props.permissions} />
+        <RowActionToolbar permissions={permissions} />
       </Datagrid>
     </List>
   );

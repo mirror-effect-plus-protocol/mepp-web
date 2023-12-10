@@ -42,4 +42,4 @@ MIRROR_SESSION_TIMEOUT = 60 * 10  # 10 minutes
 # Should include scheme and domain name
 HTTP_HOST = os.environ.get('HTTP_HOST', 'http://mepp.local:9090')
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

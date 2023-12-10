@@ -39,9 +39,15 @@ from mepp.api.models import (
     Log,
     Session,
 )
-from mepp.api.permissions import MeppMirrorPermission
+from mepp.api.permissions import (
+    MeppMirrorPermission,
+    MeppMirrorSettingPermission,
+)
 from mepp.api.serializers.v1.log import UserLogSerializer
-from mepp.api.serializers.v1.patient import PatientSettingsSerializer
+from mepp.api.serializers.v1.patient import (
+    PatientSettingsSerializer,
+    PatientMirrorSettingsSerializer,
+)
 from mepp.api.serializers.v1.session import UserSessionSerializer
 
 
@@ -69,11 +75,11 @@ class CurrentUserViewSet(
 
         return Response(self.__detail(user))
 
-    def get_object(self):
-        return self.request.user
-
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+
+    def get_object(self):
+        return self.request.user
 
     def retrieve(self, request, *args, **kwargs):
         try:
@@ -93,6 +99,63 @@ class CurrentUserViewSet(
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+    @action(
+        detail=False,
+        methods=['POST'],
+        permission_classes=[MeppMirrorPermission],
+        url_path='session/(?P<session_uid>[a-z0-9]*)/logs',
+    )
+    def user_logs_view(self, request, session_uid, *args, **kwargs):
+        user_session = get_object_or_404(Session, active=True, uid=session_uid)
+        # May raise a permission denied
+        self.check_object_permissions(request, user_session)
+        context = {
+            'request': request,
+            'user_session': user_session,
+        }
+        serializer = UserLogSerializer(data=request.data, context=context)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=HTTP_201_CREATED,
+                        headers=headers)
+
+    @action(
+        detail=False,
+        methods=['PATCH'],
+        permission_classes=[MeppMirrorSettingPermission],
+        url_path='settings',
+    )
+    def user_mirror_settings(self, request, *args, **kwargs):
+        user = request.user
+        serializer = PatientMirrorSettingsSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+    @action(
+        detail=False,
+        methods=['GET'],
+        permission_classes=[IsAuthenticated],
+        url_path='permissions',
+    )
+    def user_permissions(self, request, *args, **kwargs):
+        return Response({
+            'permissions': RoleEnum.get_role(request.user)
+        })
+
+    @action(
+        detail=False,
+        methods=['PATCH'],
+        url_path='profile',
+    )
+    def user_profile(self, request, *args, **kwargs):
+        user = request.user
+        serializer = PatientSettingsSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
     @action(
         detail=False,
@@ -120,50 +183,6 @@ class CurrentUserViewSet(
         serializer = UserSessionSerializer(user_session)
         return Response(serializer.data)
 
-    @action(
-        detail=False,
-        methods=['POST'],
-        permission_classes=[MeppMirrorPermission],
-        url_path='session/(?P<session_uid>[a-z0-9]*)/logs',
-    )
-    def user_logs_view(self, request, session_uid, *args, **kwargs):
-        user_session = get_object_or_404(Session, active=True, uid=session_uid)
-        # May raise a permission denied
-        self.check_object_permissions(request, user_session)
-        context = {
-            'request': request,
-            'user_session': user_session,
-        }
-        serializer = UserLogSerializer(data=request.data, context=context)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=HTTP_201_CREATED,
-                        headers=headers)
-
-    @action(
-        detail=False,
-        methods=['GET'],
-        permission_classes=[IsAuthenticated],
-        url_path='permissions',
-    )
-    def user_permissions(self, request, *args, **kwargs):
-        return Response({
-            'permissions': RoleEnum.get_role(request.user)
-        })
-
-    @action(
-        detail=False,
-        methods=['PATCH'],
-        url_path='profile',
-    )
-    def user_profile(self, request, *args, **kwargs):
-        user = request.user
-        serializer = PatientSettingsSerializer(user, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
-
     def __detail(self, user):
         return {
             'token': user.token,
@@ -176,6 +195,7 @@ class CurrentUserViewSet(
                 'language': user.language,
                 'use_audio': user.use_audio,
                 'side': user.side,
+                'mirror_settings': user.mirror_settings,
             },
             'permissions': RoleEnum.get_role(user),
         }

@@ -19,11 +19,10 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import i18n from 'i18next';
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { hot } from 'react-hot-loader/root';
+import * as ReactDOMClient from 'react-dom/client';
+import { StyledEngineProvider } from '@mui/material';
 import { ThemeProvider } from 'styled-components';
 
 import Admin from '@admin/index';
@@ -35,7 +34,7 @@ import { log } from '@utils/log';
 /**
  * Application initialisation with hot reload
  */
-const App = hot(() => {
+const App = () => {
   useEffect(() => {
     // set dom starting language
     document.documentElement.lang = i18n.language;
@@ -46,10 +45,14 @@ const App = hot(() => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Admin />
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <Admin />
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
-});
+};
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const container = document.getElementById('app');
+const root = ReactDOMClient.createRoot(container);
+root.render(<App />);

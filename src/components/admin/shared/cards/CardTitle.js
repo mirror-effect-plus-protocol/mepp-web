@@ -22,13 +22,12 @@
 
 import {
   useTranslate,
-  useLocale,
 } from 'react-admin';
 import { getPlaceHolder } from '@admin/utils/placeholder';
 
 const CardTitle = ({ resource, record }) => {
   const t = useTranslate();
-  const locale = useLocale();
+  const { locale } = useLocale();
 
   if (!record.hasOwnProperty('id')) {
     return t(`resources.${resource}.card.title.create`);

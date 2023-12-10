@@ -26,7 +26,8 @@ import {
   FilterListItem,
   FilterLiveSearch,
 } from 'react-admin';
-import { CardContent, withStyles } from '@material-ui/core';
+import { CardContent } from '@mui/material';
+
 import {
   endOfYesterday,
   startOfWeek,
