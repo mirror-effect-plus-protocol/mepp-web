@@ -12,7 +12,7 @@ pytest-env = "*"
 mock = "*"
 
 [packages]
-django = "==4.2.3"
+django = "==4.2.11"
 werkzeug = "*"
 django-extensions = "*"
 djangorestframework = "*"
