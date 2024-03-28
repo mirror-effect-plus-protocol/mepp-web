@@ -21,11 +21,9 @@
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
 class SessionStatusException(Exception):
 
     def __init__(self, *args, **kwargs):
         super().__init__(
             'Cannot update `status` directly', *args, **kwargs
         )
-
