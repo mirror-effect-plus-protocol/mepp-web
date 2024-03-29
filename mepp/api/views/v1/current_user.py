@@ -43,6 +43,7 @@ from mepp.api.permissions import (
     MeppMirrorPermission,
     MeppMirrorSettingPermission,
 )
+from mepp.api.serializers.v1.authtoken import AuthTokenSerializer
 from mepp.api.serializers.v1.log import UserLogSerializer
 from mepp.api.serializers.v1.patient import (
     PatientSettingsSerializer,
@@ -60,6 +61,7 @@ class CurrentUserViewSet(
 ):
     User = get_user_model()  # noqa
     queryset = User.objects.none()
+    serializer_class = AuthTokenSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(
