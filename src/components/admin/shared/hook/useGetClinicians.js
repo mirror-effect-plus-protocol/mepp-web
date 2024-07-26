@@ -23,15 +23,16 @@
 import React, {useMemo, useState, useEffect } from 'react';
 import {fetchJsonWithAuthToken} from "ra-data-django-rest-framework";
 
-const useGetClinicians = (permissions) => {
+const useGetClinicians = (permissions, useProfileFirst = false) => {
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+
   const fetchData = async () => {
     setLoading(true);
     setLoaded(false);
     const options = {
-      ordering: 'full_name',
+      ordering: !useProfileFirst ? 'full_name' : 'profile',
       archived: false,
       page_size: 9999,
     };
@@ -41,6 +42,27 @@ const useGetClinicians = (permissions) => {
     setData(response.json.results);
     setLoading(false);
     setLoaded(true);
+  };
+
+  const sortData = (userUid, selectedUid) => {
+    if (userUid && data && data.length) {
+      setLoading(true);
+      const user = data.splice(data.findIndex(c => c.id === userUid), 1)[0];
+      if (selectedUid && selectedUid !== userUid) {
+        const selected = data.splice(data.findIndex(c => c.id === selectedUid), 1)[0];
+        setData([
+          user,
+          selected,
+          ...data.sort((a, b) => (a.full_name.localeCompare(b.full_name)))
+        ]);
+      } else {
+        setData([
+          user,
+          ...data.sort((a, b) => (a.full_name.localeCompare(b.full_name)))
+        ]);
+      }
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -56,7 +78,8 @@ const useGetClinicians = (permissions) => {
         id: clinician.id
       })),
       loading: loading,
-      loaded: loaded
+      loaded: loaded,
+      refetch: sortData,
     };
   }, [data, loading, loaded]);
 };

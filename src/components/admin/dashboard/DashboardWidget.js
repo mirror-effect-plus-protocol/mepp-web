@@ -109,8 +109,6 @@ export const DashboardWidget = ({widget}) => {
   }, [weekRange]);
 
   const CustomTooltip = ({widget, active, payload}) => {
-    console.log('PAYLOAD', payload);
-
     if (!payload || !payload.length) {
       return null;
     }

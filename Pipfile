@@ -10,6 +10,7 @@ pytest = "*"
 pytest-django = "*"
 pytest-env = "*"
 mock = "*"
+pip-licenses = "*"
 
 [packages]
 django = "==4.2.11"

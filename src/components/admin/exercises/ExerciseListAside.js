@@ -24,7 +24,7 @@ import React, {useEffect, useState} from 'react';
 import {
   FilterList,
   FilterListItem,
-  FilterLiveSearch,
+  FilterLiveSearch, useGetIdentity,
   useListFilterContext,
 } from 'react-admin';
 
@@ -45,11 +45,51 @@ import { ASide } from '@components/admin/shared/cards/ASide';
 const ExerciseListAside = ({permissions}) => {
   const { locale } = useLocale();
   const [selectedCategory, setSelectedCategory] = useState(-1);
-  const { data: clinicians, isLoading } = useGetClinicians(permissions);
+  const { identity} = useGetIdentity();
+  const {
+    data: clinicians,
+    loading: isLoading,
+    loaded: isLoaded,
+    refetch
+  } = useGetClinicians(permissions, true);
+  const [defaultClinician, setDefaultClinician] = useState(true);
+  const [clickClinician, setClickClinician] = useState(false);
   const categories = useGetCategories(locale);
   const subCategories = useGetSubCategories(locale);
   const { filterValues, setFilters } = useListFilterContext();
+
   useEffect(() => {
+    if (permissions !== 'admin') return;
+
+    if (defaultClinician && identity?.uid) {
+      if (!filterValues?.clinician_uid) {
+        setFilters({
+          ...filterValues,
+          'clinician_uid': identity.uid
+        });
+      }
+    }
+  }, [identity, defaultClinician]);
+
+  useEffect(() => {
+
+    if (permissions !== 'admin') return;
+
+     if (identity?.uid && isLoaded) {
+       if (filterValues?.clinician_uid) {
+         refetch(identity?.uid, filterValues.clinician_uid);
+       }
+     }
+  }, [identity, isLoaded]);
+
+
+  useEffect(() => {
+
+    if (clickClinician) {
+      refetch(identity?.uid, filterValues.clinician_uid);
+      setTimeout(() => setClickClinician(false), 200);
+    }
+
     if (filterValues && filterValues.category__uid) {
       setSelectedCategory(filterValues.category__uid);
     } else {
@@ -111,6 +151,10 @@ const ExerciseListAside = ({permissions}) => {
                   label={clinician.name}
                   key={clinician.id}
                   value={{ clinician_uid: clinician.id }}
+                  onMouseUp={() => {
+                    setDefaultClinician(false);
+                    setClickClinician(true);
+                  }}
                 />
               ))
             }
