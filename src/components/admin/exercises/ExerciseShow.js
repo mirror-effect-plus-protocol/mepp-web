@@ -110,7 +110,7 @@ export const ExerciseShow = () => {
             source="movement_duration"
           />
           <NumberField source="pause" />
-          <NumberField source="repeat" />
+          <NumberField source="repetition" />
         </RaBox>
         <Typography variant="h6" gutterBottom gutterTop={true}>
           {t('resources.exercises.card.labels.classification')}

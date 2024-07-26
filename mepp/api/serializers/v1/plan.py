@@ -97,7 +97,7 @@ class TreatmentPlanExerciseM2MSerializer(HyperlinkedModelUUIDSerializer):
             'index',
             'movement_duration',
             'pause',
-            'repeat',
+            'repetition',
         ]
         read_only_fields = [
             'index',
@@ -284,7 +284,7 @@ class TreatmentPlanSerializer(
             try:
                 tpe_m2m.index = index
                 tpe_m2m.movement_duration = int(exercise['movement_duration'])
-                tpe_m2m.repeat = int(exercise['repeat'])
+                tpe_m2m.repetition = int(exercise['repetition'])
                 tpe_m2m.pause = int(exercise['pause'])
             except (ValueError, KeyError):
                 raise serializers.ValidationError('Invalid values')

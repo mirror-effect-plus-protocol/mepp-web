@@ -51,7 +51,7 @@ const ExerciseContext = createContext({
   pause: () => {},
   skip: () => {},
   wait: () => {},
-  repeat: () => {},
+  repetition: () => {},
   complete: () => {},
   next: () => {},
   restart: () => {},
@@ -228,7 +228,7 @@ const ExerciseProvider = ({ children }) => {
         length: exercisesData.exercises.length,
         durationTime: current.movement_duration || 10,
         pauseTime: current.pause || 5,
-        repeatTime: current.repeat || 3,
+        repeatTime: current.repetition || 3,
         text: current.i18n,
       });
     } else {

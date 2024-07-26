@@ -189,7 +189,7 @@ class Session(BaseModel):
         for exercise_through in exercises_through:
             exercise = {
                 'movement_duration': exercise_through.movement_duration,
-                'repeat': exercise_through.repeat,
+                'repetition': exercise_through.repetition,
                 'pause': exercise_through.pause,
                 'i18n': {},
                 'status': StatusEnum.default.name,

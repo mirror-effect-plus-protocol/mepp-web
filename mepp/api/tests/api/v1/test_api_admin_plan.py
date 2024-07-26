@@ -97,7 +97,7 @@ class AdminTreatmentPlanCreateAPITestCase(BaseV1TestCase):
                     'index': 0,
                     'movement_duration': 1,
                     'pause': 1,
-                    'repeat': 1,
+                    'repetition': 1,
                 }
             ],
             'i18n': {
@@ -108,7 +108,7 @@ class AdminTreatmentPlanCreateAPITestCase(BaseV1TestCase):
             },
             'movement_duration': 1,
             'pause': 1,
-            'repeat': 1,
+            'repetition': 1,
             'is_system': kwargs.get('is_system', False),
             'clinician_uid': user.uid,
         }

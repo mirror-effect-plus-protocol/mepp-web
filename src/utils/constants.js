@@ -23,6 +23,10 @@
 export const Language = {
   FR: 'fr',
   EN: 'en',
+  IT: 'it',
+  DE: 'de',
+  ES: 'es',
+  PT: 'pt',
 };
 
 export const RequestMethod = {

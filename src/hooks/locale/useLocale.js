@@ -48,7 +48,7 @@ const useLocale = () => {
       i18n.changeLanguage(lang);
       document.documentElement.lang = lang;
     },
-    [i18n.language],
+    [i18n.language]
   );
 
   return { locale, setLocale };

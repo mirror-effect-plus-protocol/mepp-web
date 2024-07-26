@@ -51,7 +51,7 @@ class Exercise(BaseModel, Archivable, Template, Searchable):
         SubCategory, related_name='exercises'
     )
     movement_duration = models.PositiveSmallIntegerField(null=False, default=5)
-    repeat = models.PositiveSmallIntegerField(null=False, default=3)
+    repetition = models.PositiveSmallIntegerField(null=False, default=3)
     pause = models.PositiveSmallIntegerField(null=False, default=5)
 
     def __str__(self):
@@ -72,5 +72,3 @@ class ExerciseI18n(I18nSearchable):
 
     def __str__(self):
         return f'{self.description} ({self.language})'
-
-

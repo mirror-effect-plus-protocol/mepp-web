@@ -192,7 +192,7 @@ class TreatmentPlanExerciseM2M(BaseModel):
     treatment_plan = models.ForeignKey(TreatmentPlan, on_delete=models.CASCADE)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     movement_duration = models.PositiveSmallIntegerField(null=False)
-    repeat = models.PositiveSmallIntegerField(null=False)
+    repetition = models.PositiveSmallIntegerField(null=False)
     pause = models.PositiveSmallIntegerField(null=False)
     index = models.PositiveSmallIntegerField(null=False)
 
@@ -204,8 +204,8 @@ class TreatmentPlanExerciseM2M(BaseModel):
         if self.pk is None:
             if self.movement_duration is None:
                 self.movement_duration = self.exercise.movement_duration
-            if self.repeat is None:
-                self.repeat = self.exercise.repeat
+            if self.repetition is None:
+                self.repetition = self.exercise.repetition
             if self.pause is None:
                 self.pause = self.exercise.pause
             if self.index is None:

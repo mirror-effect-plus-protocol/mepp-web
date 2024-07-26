@@ -70,7 +70,7 @@ class ExerciseSerializer(
             'i18n',
             'movement_duration',
             'pause',
-            'repeat',
+            'repetition',
             'created_at',
             'modified_at',
             'sub_categories',

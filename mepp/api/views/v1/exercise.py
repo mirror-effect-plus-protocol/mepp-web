@@ -50,7 +50,7 @@ class ExerciseViewSet(UUIDLookupFieldViewSet):
         'i18n__description',
         'movement_duration',
         'pause',
-        'repeat',
+        'repetition',
         'clinician__first_name',
         'clinician__last_name',
     ]

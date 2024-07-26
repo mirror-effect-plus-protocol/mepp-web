@@ -56,7 +56,7 @@ const ExerciseRow = (props) => {
   const [uid, setUid] = useState('');
   const [movementDuration, setMovementDuration] = useState(5);
   const [pause, setPause] = useState(5);
-  const [repeat, setRepeat] = useState(5);
+  const [repetition, setRepetition] = useState(10);
   const [description, setDescription] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
   const [category, setCategory] = useState(null);
@@ -102,13 +102,13 @@ const ExerciseRow = (props) => {
     setUid(exercise.id);
     setMovementDuration(exercise.movement_duration);
     setPause(exercise.pause);
-    setRepeat(exercise.repeat);
+    setRepetition(exercise.repetition);
   };
   const handleSelectExercise = () => {
     form.setValue(`${props.source}.i18n.description.${locale}`, description);
     form.setValue(`${props.source}.movement_duration`, movementDuration);
     form.setValue(`${props.source}.pause`, pause);
-    form.setValue(`${props.source}.repeat`, repeat);
+    form.setValue(`${props.source}.repetition`, repetition);
     form.setValue(`${props.source}.id`, uid);
     setOpenDialog(false);
   };
@@ -139,11 +139,13 @@ const ExerciseRow = (props) => {
           source={`${props.source}.pause`}
           validate={validateNumber}
           label={t('resources.plans.fields.exercise.pause')}
+          defaultValue="5"
         />
         <NumberInput
-          source={`${props.source}.repeat`}
+          source={`${props.source}.repetition`}
           validate={validateNumber}
-          label={t('resources.plans.fields.exercise.repeat')}
+          label={t('resources.plans.fields.exercise.repetition')}
+          defaultValue="10"
         />
       </div>
       <Dialog

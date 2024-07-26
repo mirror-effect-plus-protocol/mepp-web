@@ -34,12 +34,14 @@ import { makeStyles } from '@mui/styles';
 import { RequestEndpoint } from '@utils/constants';
 
 import { LANGUAGES } from '../../../../locales';
+import {useLocale} from "@hooks/locale/useLocale";
 
 const LocaleSwitcher = () => {
   const t = useTranslate();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [locale, setLocale] = useLocaleState();
+  // const [locale, setLocale] = useLocaleState();
+  const {locale, setLocale} = useLocale();
   const notify = useNotify();
 
   const languages = LANGUAGES.map((item) => {
@@ -65,8 +67,8 @@ const LocaleSwitcher = () => {
           type: 'error',
         });
       });
-
-    return setLocale(newLanguage);
+    setLocale(newLanguage);
+    return newLanguage;
   };
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);

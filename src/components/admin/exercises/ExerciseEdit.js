@@ -170,7 +170,7 @@ export const ExerciseEdit = () => {
             label={t('resources.exercises.fields.pause')}
           />
           <NumberInput
-            source="repeat"
+            source="repetition"
             validate={validateNumber}
             label={t('resources.exercises.fields.repeat')}
           />

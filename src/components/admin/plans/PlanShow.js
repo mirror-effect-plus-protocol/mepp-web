@@ -131,8 +131,8 @@ export const PlanShow = (props) => {
               label={t('resources.plans.fields.exercise.pause')}
             />
             <NumberField
-              source="repeat"
-              label={t('resources.plans.fields.exercise.repeat')}
+              source="repetition"
+              label={t('resources.plans.fields.exercise.repetition')}
             />
           </Datagrid>
         </ArrayField>

@@ -93,7 +93,7 @@ class AdminExerciseCreateAPITestCase(BaseV1TestCase):
             },
             'movement_duration': 1,
             'pause': 1,
-            'repeat': 1,
+            'repetition': 1,
             'sub_categories': [
                 {'uid': sub_category.uid}
             ],

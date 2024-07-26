@@ -184,7 +184,7 @@ export default {
         'i18n.description': 'Description',
         movement_duration: 'Duration',
         pause: 'Pause',
-        repeat: 'Repetitions',
+        repetition: 'Repetitions',
         clinician_uid: 'Clinician',
         category__uid: 'Category',
         uid: 'Sub-category',
@@ -306,7 +306,7 @@ export default {
           description: 'Description',
           movement_duration: 'Duration',
           pause: 'Pause',
-          repeat: 'Repetitions'
+          repetition: 'Repetitions'
         }
       },
       list: {

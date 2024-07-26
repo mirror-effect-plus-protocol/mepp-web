@@ -44,5 +44,5 @@ i18n
     },
   });
 
-export const LANGUAGES = Object.freeze([Language.FR, Language.EN]);
+export const LANGUAGES = Object.freeze([Language.FR, Language.EN, Language.ES, Language.DE, Language.IT, Language.PT]);
 export default i18n;

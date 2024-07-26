@@ -158,9 +158,9 @@ export const ExerciseCreate = () => {
             label={t('resources.exercises.fields.pause')}
           />
           <NumberInput
-            source="repeat"
+            source="repetition"
             validate={validateNumber}
-            label={t('resources.exercises.fields.repeat')}
+            label={t('resources.exercises.fields.repetition')}
           />
         </Div>
         <Typography variant="h6" gutterBottom gutterTop={true}>
