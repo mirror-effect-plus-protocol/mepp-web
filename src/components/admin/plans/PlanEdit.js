@@ -37,8 +37,11 @@ import {
   useTranslate,
 } from 'react-admin';
 
+import GTranslateIcon from '@mui/icons-material/GTranslate';
+
 import { useLocale } from '@hooks/locale/useLocale';
 import IsSystemInput from '@components/admin/plans/IsSystem';
+import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
 import { validateExercises } from '@components/admin/plans/validators';
 import { Typography } from '@components/admin/shared/dom/sanitize';
@@ -61,10 +64,12 @@ export const PlanEdit = () => {
   const [asTemplate, setAsTemplate] = useState(true);
   const t = useTranslate();
   const { locale } = useLocale();
+  const record = useRecordContext();
   const redirect = useCallback(
     () => contextualRedirect(patientUid),
     [patientUid]
   );
+
   const transform = useCallback(
     (record) => preSave(record, locale, patientUid, asTemplate),
     [patientUid, asTemplate]
@@ -93,12 +98,15 @@ export const PlanEdit = () => {
       transform={transform}
       mutationOptions={{ onError: onError }}
     >
-      <SimplePlanEditForm locale={locale} asTemplate={asTemplate}/>
+      <SimplePlanEditForm
+        locale={locale}
+        asTemplate={asTemplate}
+      />
     </Edit>
   )
 };
 
-const SimplePlanEditForm = ({locale, asTemplate}) => {
+const SimplePlanEditForm = ({locale, asTemplate, setI18nOverwrite}) => {
   const record = useRecordContext();
   const { permissions } = usePermissions();
   const t = useTranslate();
@@ -133,6 +141,23 @@ const SimplePlanEditForm = ({locale, asTemplate}) => {
           sx={translatorInputStyle}
         >
           <TextInput source="i18n.name" validate={validateI18n} fullWidth />
+          <div style={{
+            fontSize: '0.7em',
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gridGap: '10px', /* Adjust the value to add space between the image and text */
+            alignItems: 'center'
+          }}>
+            <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
+          </div>
+          <div style={{
+            fontSize: '0.7em',
+          }}>
+            <FormDataConsumer>
+              {({ formData, ...rest }) => <AutoTranslate data={formData}/>}
+            </FormDataConsumer>
+          </div>
+
         </TranslatableInputs>
         {permissions === 'admin' && asTemplate && (
           <FormDataConsumer>

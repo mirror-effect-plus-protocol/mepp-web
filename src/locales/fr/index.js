@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import ReactAdminFr from 'ra-language-french';
+import RaLanguage from 'ra-language-french';
 
 import a11y from './a11y';
 import admin from './admin';
@@ -31,15 +31,15 @@ import form from './form';
 import intro from './intro';
 import settings from './settings';
 
-const reactAdminFrOverride = { ...ReactAdminFr };
-reactAdminFrOverride.ra.action.show = 'Voir';
-reactAdminFrOverride.ra.action.edit = 'Modifier';
-reactAdminFrOverride.ra.notification.updated =
+const RaLanguageOverride = { ...RaLanguage };
+RaLanguageOverride.ra.action.show = 'Voir';
+RaLanguageOverride.ra.action.edit = 'Modifier';
+RaLanguageOverride.ra.notification.updated =
   'Élément mis à jour avec succès |||| %{smart_count} élements mis à jour avec succès';
-reactAdminFrOverride.ra.notification.created = 'Élément créé avec succès';
+RaLanguageOverride.ra.notification.created = 'Élément créé avec succès';
 
 export default {
-  ...reactAdminFrOverride,
+  ...RaLanguageOverride,
   ...admin,
   ...a11y,
   ...cta,

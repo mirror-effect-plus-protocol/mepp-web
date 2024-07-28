@@ -135,6 +135,10 @@ export default {
   languages: {
     'en': 'English',
     'fr': 'Français',
+    'it': 'Italiano',
+    'es': 'Español',
+    'de': 'Deutsch',
+    'pt': 'Português',
   },
 
   resources: {
@@ -353,5 +357,11 @@ export default {
         }
       }
     },
+    shared: {
+      labels: {
+        translate_on_save: 'Ce champ sera traduit automatique dans les autres (non manuellement renseignées) langues  lors de la sauvegarde',
+        overwrite_existing_translations: 'Remplacer les traductions existantes'
+      }
+    }
   },
 };

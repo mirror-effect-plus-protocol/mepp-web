@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import ReactAdminEn from 'ra-language-english';
+import RaLanguage from 'ra-language-english';
 
 import a11y from './a11y';
 import admin from './admin';
@@ -32,7 +32,7 @@ import intro from './intro';
 import settings from './settings';
 
 export default {
-  ...ReactAdminEn,
+  ...RaLanguage,
   ...admin,
   ...a11y,
   ...cta,

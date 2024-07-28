@@ -53,6 +53,7 @@ class Exercise(BaseModel, Archivable, Template, Searchable):
     movement_duration = models.PositiveSmallIntegerField(null=False, default=5)
     repetition = models.PositiveSmallIntegerField(null=False, default=3)
     pause = models.PositiveSmallIntegerField(null=False, default=5)
+    auto_translate = models.BooleanField(default=True)
 
     def __str__(self):
         name = (

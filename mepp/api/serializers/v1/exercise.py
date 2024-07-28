@@ -76,6 +76,7 @@ class ExerciseSerializer(
             'sub_categories',
             'archived',
             'is_system',
+            'auto_translate',
         ]
         read_only_fields = [
             'clinician',

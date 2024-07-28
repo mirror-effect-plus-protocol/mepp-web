@@ -26,15 +26,19 @@ import { initReactI18next } from 'react-i18next';
 
 import { Language } from '@utils/constants';
 
+import de from './de';
 import en from './en';
+import es from './es';
 import fr from './fr';
+import it from './it';
+import pt from './pt';
 
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     fallbackLng: 'fr',
-    resources: { fr, en },
+    resources: { fr, en, de, es, it, pt },
     react: {
       wait: true,
     },

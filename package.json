@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@mui/styles": "5.11.16",
+    "axios": "^1.7.2",
     "date-fns": "^2.23.0",
     "deepar": "^5.2.0",
     "detect-browser": "^5.3.0",
@@ -29,6 +30,10 @@
     "ra-i18n-polyglot": "^4.9.1",
     "ra-language-english": "^4.9.1",
     "ra-language-french": "^4.9.1",
+    "ra-language-german": "^3.13.5",
+    "ra-language-italian": "^3.13.1",
+    "ra-language-portuguese": "^1.6.0",
+    "ra-language-spanish": "^1.0.0",
     "react": "18.2.0",
     "react-admin": "^4.14.3",
     "react-dom": "18.2.0",
