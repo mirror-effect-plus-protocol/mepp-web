@@ -40,8 +40,9 @@ const useLocale = () => {
   // set new locale
   const setLocale = useCallback(
     (newLocale) => {
+      const validCodes = Object.values(Language);
       const lang =
-        newLocale === Language.FR || newLocale === Language.EN
+        validCodes.indexOf(newLocale) > -1
           ? newLocale
           : Language.FR;
       setLocaleRAdmin(lang);

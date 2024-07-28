@@ -40,7 +40,6 @@ const LocaleSwitcher = () => {
   const t = useTranslate();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  // const [locale, setLocale] = useLocaleState();
   const {locale, setLocale} = useLocale();
   const notify = useNotify();
 
