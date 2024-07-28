@@ -31,7 +31,8 @@ import {
   TextInput,
   TranslatableInputs,
   usePermissions,
-  useRecordContext, useResourceContext, useStore,
+  useResourceContext,
+  useStore,
   useTranslate,
 } from 'react-admin';
 
@@ -53,7 +54,8 @@ import { LANGUAGES } from '../../../locales';
 import {
   categoriesSelectorStyle,
   translatorInputStyle
-} from "@components/admin/shared/styles/shared";
+} from '@components/admin/shared/styles/shared';
+import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 export const PlanCreate = () => {
   const t = useTranslate();
@@ -112,14 +114,23 @@ export const PlanCreate = () => {
           defaultLocale={locale}
           sx={translatorInputStyle}
         >
-          <TextInput source="i18n.name" validate={validateI18n} fullWidth />
+          <TextInput source="i18n.name" validate={validateI18n} fullWidth/>
+          <div style={{
+            fontSize: '0.7em',
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gridGap: '10px', /* Adjust the value to add space between the image and text */
+            alignItems: 'center'
+          }}>
+            <GTranslateIcon/> {t('resources.shared.labels.translate_on_save')}
+          </div>
         </TranslatableInputs>
         {permissions === 'admin' && asTemplate && (
           <FormDataConsumer>
-            {({ formData, ...rest }) => <IsSystemInput data={formData} />}
+            {({formData, ...rest}) => <IsSystemInput data={formData}/>}
           </FormDataConsumer>
         )}
-        <NumberInput source="daily_repeat" validate={validateNumber} />
+        <NumberInput source="daily_repeat" validate={validateNumber}/>
 
         <Typography
           variant="h6"

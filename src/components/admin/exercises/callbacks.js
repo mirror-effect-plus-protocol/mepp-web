@@ -20,9 +20,9 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import { LANGUAGES } from '../../../locales';
+import {translate} from '@components/admin/shared/utils';
 
-export const preSave = (record, locale) => {
-  /* ToDo plug translation API */
+export const preSave = async (record, locale) => {
   let localizedDescription = '';
 
   try {
@@ -41,11 +41,12 @@ export const preSave = (record, locale) => {
   });
 
   // Assign missing translations
-  LANGUAGES.forEach((language) => {
-    if (!record.i18n.description.hasOwnProperty(language) || !record.i18n.description[language]) {
-      record.i18n.description[language] = `(${language.toUpperCase()}) - ${localizedDescription}`;
+  const promises = LANGUAGES.map(async (language) => {
+    if (record.auto_translate || !record.i18n.description.hasOwnProperty(language) || !record.i18n.description[language]) {
+      record.i18n.description[language] = await translate(localizedDescription, language);
     }
   });
+  await Promise.all(promises);
 
   // ensure record is not archived (useful when duplicating a record)
   record.archived = false;

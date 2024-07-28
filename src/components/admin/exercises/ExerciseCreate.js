@@ -56,7 +56,8 @@ import { LANGUAGES } from '../../../locales';
 import {
   categoriesSelectorStyle,
   translatorInputStyle
-} from "@components/admin/shared/styles/shared";
+} from '@components/admin/shared/styles/shared';
+import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 export const ExerciseCreate = () => {
   const { permissions } = usePermissions();
@@ -144,23 +145,35 @@ export const ExerciseCreate = () => {
             fullWidth={true}
             validate={validateI18n}
           />
+          <div style={{
+            fontSize: '0.7em',
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gridGap: '10px', /* Adjust the value to add space between the image and text */
+            alignItems: 'center'
+          }}>
+            <GTranslateIcon/> {t('resources.shared.labels.translate_on_save')}
+          </div>
         </TranslatableInputs>
-        {permissions === 'admin' && <BooleanInput source="is_system" />}
+        {permissions === 'admin' && <BooleanInput source="is_system"/>}
         <Div className={numberClasses.numbers}>
           <NumberInput
             source="movement_duration"
             validate={validateNumber}
             label={t('resources.exercises.fields.movement_duration')}
+            defaultValue="10"
           />
           <NumberInput
             source="pause"
             validate={validateNumber}
             label={t('resources.exercises.fields.pause')}
+            defaultValue="10"
           />
           <NumberInput
             source="repetition"
             validate={validateNumber}
             label={t('resources.exercises.fields.repetition')}
+            defaultValue="5"
           />
         </Div>
         <Typography variant="h6" gutterBottom gutterTop={true}>

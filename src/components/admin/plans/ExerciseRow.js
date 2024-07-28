@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React, { Fragment, useState } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {
   NumberInput,
   TextInput,
@@ -77,6 +77,7 @@ const ExerciseRow = (props) => {
     setExerciseOptions(response.json.results);
     setLoadingExercises(false);
   };
+
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
@@ -134,6 +135,7 @@ const ExerciseRow = (props) => {
           source={`${props.source}.movement_duration`}
           validate={validateNumber}
           label={t('resources.plans.fields.exercise.movement_duration')}
+          defaultValue="10"
         />
         <NumberInput
           source={`${props.source}.pause`}

@@ -21,7 +21,7 @@
  */
 
 import { LANGUAGES } from '../../../locales';
-import axios from 'axios';
+import {translate} from '@components/admin/shared/utils';
 
 export const contextualRedirect = (patientUid) => {
   return patientUid
@@ -29,32 +29,9 @@ export const contextualRedirect = (patientUid) => {
     : `plans`;
 };
 
-const translate = async (text, language) => {
-  let res = await axios.post(
-  `https://translation.googleapis.com/language/translate/v2?key=${process.env['GOOGLE_TRANSLATE_API_KEY']}`,
-  { q: text, target: language }
-  );
-  let translation = res.data.data.translations[0].translatedText;
-  return translation;
-};
-
-
-/*
-export const preSave = (record) => {
-  const text = 'text à traduire';
-  LANGUAGES.forEach((language) => {
-    if (!record.i18n.name.hasOwnProperty(language) || !record.i18n.name[language]) {
-      const translated = translate('', language);
-      record.i18n.name[language] = translated;
-    }
-  });
-  return record;
-};*/
-
 
 export const preSave = async (record, locale, patientUid, asTemplate) => {
   let localizedName = '';
-  let localizedDescription = '';
 
   // Try to get i18n field from current language
   try {

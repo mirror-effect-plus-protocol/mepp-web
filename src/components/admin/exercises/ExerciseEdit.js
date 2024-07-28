@@ -34,7 +34,8 @@ import {
   TextInput,
   TranslatableInputs,
   useGetList,
-  usePermissions, useResourceDefinition,
+  usePermissions,
+  useResourceDefinition,
   useTranslate,
 } from 'react-admin';
 
@@ -57,6 +58,8 @@ import { useLocale } from '@hooks/locale/useLocale';
 import { translatorInputStyle, categoriesSelectorStyle } from '@components/admin/shared/styles/shared';
 
 import { LANGUAGES } from '../../../locales';
+import GTranslateIcon from '@mui/icons-material/GTranslate';
+import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
 
 export const ExerciseEdit = () => {
   const t = useTranslate();
@@ -156,8 +159,24 @@ export const ExerciseEdit = () => {
             fullWidth={true}
             validate={validateI18n}
           />
+          <div style={{
+            fontSize: '0.7em',
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gridGap: '10px', /* Adjust the value to add space between the image and text */
+            alignItems: 'center'
+          }}>
+            <GTranslateIcon/> {t('resources.shared.labels.translate_on_save')}
+          </div>
+          <div style={{
+            fontSize: '0.7em',
+          }}>
+            <FormDataConsumer>
+              {({formData, ...rest}) => <AutoTranslate data={formData}/>}
+            </FormDataConsumer>
+          </div>
         </TranslatableInputs>
-        {permissions === 'admin' && <BooleanInput source="is_system" />}
+        {permissions === 'admin' && <BooleanInput source="is_system"/>}
         <Div className={numberClasses.numbers}>
           <NumberInput
             source="movement_duration"

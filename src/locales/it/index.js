@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import RaLanguage from 'ra-lingua-francese';
+import RaLanguage from 'ra-language-italian';
 
 import a11y from './a11y';
 import admin from './admin';
