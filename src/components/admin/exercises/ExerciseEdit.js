@@ -191,7 +191,7 @@ export const ExerciseEdit = () => {
           <NumberInput
             source="repetition"
             validate={validateNumber}
-            label={t('resources.exercises.fields.repeat')}
+            label={t('resources.exercises.fields.repetition')}
           />
         </Div>
         <Typography variant="h6" gutterBottom gutterTop={true}>

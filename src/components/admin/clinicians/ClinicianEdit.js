@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import { RaBox } from 'ra-compact-ui';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   BooleanInput,
   Edit,
@@ -34,7 +34,7 @@ import {
   useTranslate,
   useNotify,
   useResourceDefinition,
-  useRedirect
+  useRedirect,
 } from 'react-admin';
 import { useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
@@ -94,6 +94,7 @@ export const ClinicianEdit = () => {
     }
     notify(message, { type: 'error' });
   };
+
   const onSuccess = (data) => {
     if (identity?.uid === data.id) {
       const backUrl = decodeURIComponent(searchParams.get('back'));

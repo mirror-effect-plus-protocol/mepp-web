@@ -28,6 +28,7 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from mepp.api.enums.language import LanguageEnum
+from mepp.api.models.category import CategoryI18n, SubCategoryI18n
 
 
 class Command(BaseCommand):
@@ -37,8 +38,9 @@ class Command(BaseCommand):
     API_URL = f'https://translation.googleapis.com/language/translate/v2?key={API_KEY}'
 
     def handle(self, *args, **kwargs):
-        # self.create_react_files()
+        self.create_react_files()
         self.create_django_files()
+        self.update_categories_i18n()
 
     def create_django_files(self):
         fr_locale_path = os.path.join(
@@ -147,3 +149,34 @@ class Command(BaseCommand):
             translated_file.write(file_content)
 
         print(f'Translated file: {translated_file_path}')
+
+    def update_categories_i18n(self):
+        categories = CategoryI18n.objects.filter(language=LanguageEnum.FR.value)
+        sub_categories = SubCategoryI18n.objects.filter(language=LanguageEnum.FR.value)
+
+        for category in categories:
+            for language in LanguageEnum:
+                if CategoryI18n.objects.filter(
+                    language=language.value, parent_id=category.parent_id
+                ).exists():
+                    continue
+
+                category.pk = None
+                category.name = self.translate_text(
+                    category.name, language.value
+                )
+                category.language = language.value
+                category.save()
+
+        for sub_category in sub_categories:
+            for language in LanguageEnum:
+                if SubCategoryI18n.objects.filter(
+                    language=language.value, parent_id=sub_category.parent_id
+                ).exists():
+                    continue
+                sub_category.pk = None
+                sub_category.name = self.translate_text(
+                    sub_category.name, language.value
+                )
+                sub_category.language = language.value
+                sub_category.save()
