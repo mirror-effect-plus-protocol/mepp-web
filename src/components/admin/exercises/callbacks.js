@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import { LANGUAGES } from '../../../locales';
-import {translate} from '@components/admin/shared/utils';
+import {google_translate} from '@components/admin/shared/utils';
 
 export const preSave = async (record, locale) => {
   let localizedDescription = '';
@@ -43,7 +43,7 @@ export const preSave = async (record, locale) => {
   // Assign missing translations
   const promises = LANGUAGES.map(async (language) => {
     if (record.auto_translate || !record.i18n.description.hasOwnProperty(language) || !record.i18n.description[language]) {
-      record.i18n.description[language] = await translate(localizedDescription, language);
+      record.i18n.description[language] = await google_translate(localizedDescription, language);
     }
   });
   await Promise.all(promises);

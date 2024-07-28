@@ -21,7 +21,7 @@
  */
 
 import { LANGUAGES } from '../../../locales';
-import {translate} from '@components/admin/shared/utils';
+import {google_translate} from '@components/admin/shared/utils';
 
 export const contextualRedirect = (patientUid) => {
   return patientUid
@@ -49,7 +49,7 @@ export const preSave = async (record, locale, patientUid, asTemplate) => {
 
   const promises = LANGUAGES.map(async (language) => {
     if (record.auto_translate || !record.i18n.name.hasOwnProperty(language) || !record.i18n.name[language]) {
-      record.i18n.name[language] = await translate(localizedName, language);
+      record.i18n.name[language] = await google_translate(localizedName, language);
     }
   });
   await Promise.all(promises);
