@@ -37,6 +37,8 @@ RaLanguageOverride.ra.action.edit = 'Modificador';
 RaLanguageOverride.ra.notification.updated =
   'Artículo actualizado correctamente |||| %{smart_count} elementos actualizados correctamente';
 RaLanguageOverride.ra.notification.created = 'Artículo creado exitosamente';
+RaLanguageOverride.ra.page.dashboard = 'Salpicadero';
+
 
 export default {
   ...RaLanguageOverride,

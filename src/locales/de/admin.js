@@ -133,12 +133,12 @@ export default {
   },
 
   languages: {
-    'In': 'Englisch',
-    'fr': 'Französisch',
-    'Es': 'Italienisch',
-    'Ist': 'Spanisch',
-    'von': 'Deutsch',
-    'pt': 'Portugiesisch',
+    'en': 'English',
+    'fr': 'Français',
+    'it': 'Italiano',
+    'es': 'Español',
+    'de': 'Deutsch',
+    'pt': 'Português',
   },
 
   resources: {

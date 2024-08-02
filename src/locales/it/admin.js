@@ -133,20 +133,20 @@ export default {
   },
 
   languages: {
-    'In': 'Inglese',
-    'fr': 'Francese',
-    'Esso': 'Italiano',
-    'È': 'spagnolo',
-    'Di': 'Tedesco',
-    'punto': 'portoghese',
+    'en': 'English',
+    'fr': 'Français',
+    'it': 'Italiano',
+    'es': 'Español',
+    'de': 'Deutsch',
+    'pt': 'Português',
   },
 
   resources: {
     categories: {
       name: 'Categoria |||| Categorie',
       fields: {
-        'i18n.nome.fr': 'Nome',
-        'i18n.nome': 'Nome'
+        'i18n.name.fr': 'Nome',
+        'i18n.name': 'Nome'
       },
       labels: {
         category: 'Categoria',
@@ -188,8 +188,8 @@ export default {
       name: 'Esercizio |||| Esercizi',
       fields: {
         archived: 'Archivi',
-        'i18n.description.fr': 'Descrizione',
-        'i18n.descrizione': 'Descrizione',
+        'i18n.description.it': 'Descrizione',
+        'i18n.description': 'Descrizione',
         movement_duration: 'Durata',
         pause: 'Pausa',
         repetition: 'Prove',
@@ -299,10 +299,10 @@ export default {
       name: 'Piano d’intervento |||| Piani di intervento',
       fields: {
         name: 'Nome',
-        'i18n.nome.fr': 'Nome',
-        'i18n.nome': 'Nome',
-        'i18n.description.fr': 'Ulteriori informazioni',
-        'i18n.descrizione': 'Ulteriori informazioni',
+        'i18n.name.it': 'Nome',
+        'i18n.name': 'Nome',
+        'i18n.description.it': 'Ulteriori informazioni',
+        'i18n.description': 'Ulteriori informazioni',
         clinician_uid: 'Clinico',
         archived: 'Archivi',
         daily_repeat: 'Frequenze giornaliere',

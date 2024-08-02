@@ -37,6 +37,7 @@ RaLanguageOverride.ra.action.edit = 'Modificatore';
 RaLanguageOverride.ra.notification.updated =
   'Elemento aggiornato con successo |||| %{smart_count} elementi aggiornati correttamente';
 RaLanguageOverride.ra.notification.created = 'Articolo creato con successo';
+RaLanguageOverride.ra.page.dashboard = 'Pannello di controllo';
 
 export default {
   ...RaLanguageOverride,

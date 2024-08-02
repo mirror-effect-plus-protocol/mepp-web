@@ -38,6 +38,7 @@ RaLanguageOverride.ra.notification.updated =
   'Element erfolgreich aktualisiert |||| %{smart_count} Elemente wurden erfolgreich aktualisiert';
 RaLanguageOverride.ra.notification.created = 'Artikel erfolgreich erstellt';
 
+
 export default {
   ...RaLanguageOverride,
   ...admin,

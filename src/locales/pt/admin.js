@@ -133,12 +133,12 @@ export default {
   },
 
   languages: {
-    'em': 'Inglês',
-    'franco': 'Francês',
-    'isto': 'italiano',
-    'é': 'Espanhol',
-    'de': 'Alemão',
-    'ponto': 'Português',
+    'en': 'English',
+    'fr': 'Français',
+    'it': 'Italiano',
+    'es': 'Español',
+    'de': 'Deutsch',
+    'pt': 'Português',
   },
 
   resources: {
@@ -299,10 +299,10 @@ export default {
       name: 'Plano de intervenção |||| Planos de intervenção',
       fields: {
         name: 'Nome',
-        'i18n.name.fr': 'Nome',
-        'i18n.nome': 'Nome',
-        'i18n.descrição.fr': 'Informação extra',
-        'i18n.descrição': 'Informação extra',
+        'i18n.name.pt': 'Nome',
+        'i18n.name': 'Nome',
+        'i18n.description.pt': 'Informação extra',
+        'i18n.description': 'Informação extra',
         clinician_uid: 'Clínico',
         archived: 'Arquivos',
         daily_repeat: 'Frequências diárias',

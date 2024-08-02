@@ -21,12 +21,32 @@
  */
 
 import i18n from 'locales';
-import en from 'locales/en';
+import de from 'locales/de';
 import fr from 'locales/fr';
+import en from 'locales/en';
+import es from 'locales/es';
+import it from 'locales/it';
+import pt from 'locales/pt';
+
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 
 export default polyglotI18nProvider((locale) => {
   localStorage.setItem('language', locale);
+  if (locale === 'de') {
+    return de;
+  }
+  if (locale === 'en') {
+    return en;
+  }
+  if (locale === 'es') {
+    return es;
+  }
+  if (locale === 'it') {
+    return it;
+  }
+  if (locale === 'pt') {
+    return pt;
+  }
   if (locale === 'en') {
     return en;
   }

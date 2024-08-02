@@ -133,20 +133,20 @@ export default {
   },
 
   languages: {
-    'en': 'Inglés',
-    'fr': 'Francés',
-    'él': 'italiano',
+    'en': 'English',
+    'fr': 'Français',
+    'it': 'Italiano',
     'es': 'Español',
-    'de': 'Alemán',
-    'pt': 'portugués',
+    'de': 'Deutsch',
+    'pt': 'Português',
   },
 
   resources: {
     categories: {
       name: 'Categoría |||| Categorías',
       fields: {
-        'i18n.nombre.fr': 'apellido',
-        'i18n.nombre': 'apellido'
+        'i18n.name.fr': 'apellido',
+        'i18n.name': 'apellido'
       },
       labels: {
         category: 'Categoría',
@@ -189,7 +189,7 @@ export default {
       fields: {
         archived: 'Archivo',
         'i18n.description.fr': 'Descripción',
-        'i18n.descripción': 'Descripción',
+        'i18n.description': 'Descripción',
         movement_duration: 'Duración',
         pause: 'Pausa',
         repetition: 'Ensayos',
