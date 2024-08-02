@@ -22,8 +22,10 @@
 
 import React, {Fragment, useEffect, useState} from 'react';
 import {
+  FormDataConsumer,
   NumberInput,
   TextInput,
+  useRecordContext,
   useTranslate,
 } from 'react-admin';
 import { useLocale } from '@hooks/locale/useLocale';
@@ -49,6 +51,7 @@ import DropDown from '@components/admin/shared/inputs/Dropdown';
 
 
 const ExerciseRow = (props) => {
+
   const t = useTranslate();
   const { locale } = useLocale();
   const numberClasses = useNumberStyles();
@@ -64,6 +67,22 @@ const ExerciseRow = (props) => {
   const [loadingExercises, setLoadingExercises] = useState(undefined);
   const [exerciseOptions, setExerciseOptions] = useState([]);
   const form = useFormContext();
+  const record = useRecordContext();
+  const exercises = form.watch('exercises', []);
+
+  useEffect(() => {
+    const sourceIndex = props.source.split('.')[1];
+    exercises.forEach((exercise, index) => {
+      if (index == sourceIndex && exercise === '') {
+        form.setValue(`${props.source}.i18n.description.${locale}`, '');
+        form.setValue(`${props.source}.movement_duration`, 18);
+        form.setValue(`${props.source}.pause`, 70);
+        form.setValue(`${props.source}.repetition`, 230);
+        form.setValue(`${props.source}.id`, '');
+      }
+    });
+  }, [exercises]);
+
   const getExercises = async (categoryUid, subCategoryUid) => {
     let url = `${process.env.API_ENDPOINT}/exercises/?page=1&page_size=9999&archived=false&language=${locale}&ordering=i18n__name`;
     if (categoryUid) {
@@ -77,6 +96,16 @@ const ExerciseRow = (props) => {
     setExerciseOptions(response.json.results);
     setLoadingExercises(false);
   };
+
+  useEffect(() => {
+    const index = props.source.split('.')[1];
+
+    if (record && record.exercises[index]) {
+      const exerciseUid = record.exercises[index].id;
+      setUid(exerciseUid);
+    }
+
+  }, [record]);
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -116,12 +145,17 @@ const ExerciseRow = (props) => {
 
   return (
     <div>
-      <TextInput
-        type="hidden"
-        label=""
-        source={`${props.source}.id`}
-        style={{display: 'none'}}
-      />
+      <FormDataConsumer>
+        {({ formData }) => {
+          return (
+            <input
+                type="hidden"
+                name={`${props.source}.id`}
+                value={uid}
+            />
+          );
+        }}
+      </FormDataConsumer>
       <TextInput
         source={`${props.source}.i18n.description.${locale}`}
         label={t('resources.plans.fields.exercise.description')}

@@ -35,7 +35,7 @@
     "ra-language-portuguese": "^1.6.0",
     "ra-language-spanish": "^1.0.0",
     "react": "18.2.0",
-    "react-admin": "^4.14.3",
+    "react-admin": "4.16",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.12.2",
     "react-hot-loader": "4.12.19",

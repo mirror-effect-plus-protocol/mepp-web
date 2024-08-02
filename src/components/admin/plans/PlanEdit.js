@@ -56,6 +56,7 @@ import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
 import ExerciseRow from './ExerciseRow';
+import { useFormContext } from 'react-hook-form';
 import { translatorInputStyle, categoriesSelectorStyle } from '@components/admin/shared/styles/shared';
 
 export const PlanEdit = () => {
@@ -64,12 +65,10 @@ export const PlanEdit = () => {
   const [asTemplate, setAsTemplate] = useState(true);
   const t = useTranslate();
   const { locale } = useLocale();
-  const record = useRecordContext();
   const redirect = useCallback(
     () => contextualRedirect(patientUid),
     [patientUid]
   );
-
   const transform = useCallback(
     (record) => preSave(record, locale, patientUid, asTemplate),
     [patientUid, asTemplate]
@@ -106,7 +105,7 @@ export const PlanEdit = () => {
   )
 };
 
-const SimplePlanEditForm = ({locale, asTemplate, setI18nOverwrite}) => {
+const SimplePlanEditForm = ({locale, asTemplate}) => {
   const record = useRecordContext();
   const { permissions } = usePermissions();
   const t = useTranslate();

@@ -21,6 +21,7 @@
 import json
 import re
 import os
+import html
 
 import polib
 import requests
@@ -98,7 +99,7 @@ class Command(BaseCommand):
             response = requests.post(self.API_URL, data={'q': text, 'target': target_language})
             response.raise_for_status()
             translated_text = response.json()['data']['translations'][0]['translatedText']
-            return translated_text
+            return html.unescape(translated_text)
         except requests.exceptions.RequestException as e:
             print(f'Translation error: {e}')
             return text
