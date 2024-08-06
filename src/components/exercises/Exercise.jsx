@@ -52,7 +52,10 @@ const Exercise = () => {
   return (
     <Container>
       <Background
-        show={exerciseStep !== ExerciseStep.STARTED}
+        show={
+          exerciseStep !== ExerciseStep.STARTED &&
+          exerciseStep !== ExerciseStep.INITIATED
+        }
         opaque={exerciseStep === ExerciseStep.EMPTY}
       />
       <ExerciseWrapper>
