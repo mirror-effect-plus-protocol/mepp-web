@@ -19,11 +19,14 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import i18n from 'i18next';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useLogout } from 'react-admin';
+import { useTranslate } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 import { temporaryProfil } from '@admin/authProvider';
 
@@ -35,9 +38,9 @@ import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
 import { FlexAlignMiddle, FlexDisplay } from '@styles/tools';
 
-import { useLocale } from '@hooks/locale/useLocale';
+import { theme } from '@themes/index';
 
-import { Language } from '@utils/constants';
+import { useLocale } from '@hooks/locale/useLocale';
 
 import {
   ExerciseStep,
@@ -47,6 +50,8 @@ import Button from '@components/generics/buttons/Button';
 import { ButtonSideLabelTypes } from '@components/generics/buttons/Button';
 import { OverlayContext } from '@components/overlays/OverlayProvider';
 import { SettingsOverlay } from '@components/overlays/SettingsOverlay';
+
+import { LANGUAGES } from '../../locales';
 
 /**
  * Header with Logo and login navigation
@@ -81,21 +86,9 @@ const LeftSide = () => {
 };
 
 const RightSideWithoutLogout = () => {
-  const { locale, setLocale } = useLocale();
-
-  const switchLanguage = useCallback(() => {
-    const lang = i18n.language == Language.FR ? Language.EN : Language.FR;
-    setLocale(lang);
-  }, [locale, i18n.language]);
-
   return (
     <RightWrapper>
-      <Button.Transparent
-        label={i18n.language == Language.FR ? 'English ' : 'Français'}
-        icon={<IconEarth width="100%" height="100%" />}
-        sideLabelType={ButtonSideLabelTypes.LEFT}
-        onClick={switchLanguage}
-      />
+      <LocaleSwitcher />
     </RightWrapper>
   );
 };
@@ -159,6 +152,71 @@ const RightSideWithLogout = () => {
       />
       <Button.Outline label={t('cta:logout')} onClick={handleLogoutClick} />
     </RightWrapper>
+  );
+};
+
+const LocaleSwitcher = () => {
+  const t = useTranslate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const { locale, setLocale } = useLocale();
+
+  const onOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
+  const onChange = (event, language) => {
+    setLocale(language);
+    onClose();
+  };
+
+  return (
+    <>
+      <Button.Transparent
+        label={t('languages.' + locale)}
+        icon={<IconEarth width="100%" height="100%" />}
+        sideLabelType={ButtonSideLabelTypes.LEFT}
+        onClick={onOpen}
+      />
+
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={onClose}
+        anchorOrigin={{
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          horizontal: 'right',
+        }}
+        MenuListProps={{
+          sx: {
+            '&& .Mui-disabled': {
+              backgroundColor: theme.colors.primary,
+              color: '#fff',
+              opacity: 1,
+            },
+          },
+        }}
+      >
+        {LANGUAGES.map((language) => (
+          <MenuItem
+            key={language}
+            disabled={language === locale}
+            onClick={(event) => onChange(event, language)}
+          >
+            {t('languages.' + language)}
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
   );
 };
 
