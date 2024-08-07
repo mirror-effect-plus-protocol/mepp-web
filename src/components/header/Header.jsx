@@ -51,9 +51,9 @@ import { SettingsOverlay } from '@components/overlays/SettingsOverlay';
 /**
  * Header with Logo and login navigation
  */
-const Header = ({ isLogged }) => {
+const Header = ({ isLogged, hidden }) => {
   return (
-    <Container>
+    <Container hidden={hidden}>
       <LeftSide />
       {!isLogged ? (
         <RightSideWithoutLogout />
@@ -167,6 +167,8 @@ const Container = styled.header`
   box-sizing: border-box;
   padding: ${spacings.default * 2}px;
   width: 100%;
+
+  ${({ hidden }) => hidden && `visibility:hidden;`}
 
   ${media.xsOnly`
     padding: ${spacings.default}px;
