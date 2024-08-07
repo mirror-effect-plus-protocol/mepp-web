@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -33,7 +32,7 @@ import { rem } from '@styles/utils/rem';
 
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
 
-const Timer = ({ value, showvalue, start, done }) => {
+const Timer = ({ value, showvalue, start, done, hidden }) => {
   const [time, setTime] = useState(value);
   const [progress, setProgress] = useState(0);
   const [started, setStarted] = useState(false);
@@ -112,17 +111,25 @@ const Timer = ({ value, showvalue, start, done }) => {
   }, [value]);
 
   return (
-    <Container>
-      {exerciseStep === ExerciseStep.COMPLETED && (
-        <Thumbup width="100%" height="100%" />
+    <>
+      {!hidden && (
+        <Container>
+          {exerciseStep === ExerciseStep.COMPLETED && (
+            <Thumbup width="100%" height="100%" />
+          )}
+          {!showvalue && <Center />}
+          {showvalue && <Value>{time}</Value>}
+          <Bar aria-hidden progress={progress ?? 0} circ={circumference} />
+          <VisibleHidden as="div">
+            <meter
+              value={Math.floor((progress ?? 0) * 100)}
+              min="0"
+              max="100"
+            />
+          </VisibleHidden>
+        </Container>
       )}
-      {!showvalue && <Center />}
-      {showvalue && <Value>{time}</Value>}
-      <Bar aria-hidden progress={progress ?? 0} circ={circumference} />
-      <VisibleHidden as="div">
-        <meter value={Math.floor((progress ?? 0) * 100)} min="0" max="100" />
-      </VisibleHidden>
-    </Container>
+    </>
   );
 };
 

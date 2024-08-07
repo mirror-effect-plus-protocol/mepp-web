@@ -35,7 +35,7 @@ import { rem } from '@styles/utils/rem';
 import { useLocale } from '@hooks/locale/useLocale';
 
 import { LoadingCircle } from '@components/generics/LoadingCircle';
-import { P } from '@components/generics/basics';
+import { P, H2 } from '@components/generics/basics';
 import { SpacerHorizontal } from '@components/generics/basics/Spacer';
 import Button from '@components/generics/buttons/Button';
 
@@ -60,14 +60,21 @@ const Exercise = () => {
       />
       <ExerciseWrapper>
         <ExerciseInner
-          alignBottom={exerciseStep === ExerciseStep.STARTED}
+          alignBottom={
+            exerciseStep === ExerciseStep.STARTED ||
+            exerciseStep === ExerciseStep.INITIATED
+          }
           type={exerciseStep}
         >
-          {exerciseReady ? (
-            exerciseStep === ExerciseStep.INITIATED ||
-            exerciseStep === ExerciseStep.STARTED ||
-            exerciseStep === ExerciseStep.PAUSED ? (
-              <CurrentExercise />
+          {exerciseReady &&
+            (exerciseStep === ExerciseStep.INITIATED ? (
+              <InitExercise />
+            ) : exerciseStep === ExerciseStep.STARTED ? (
+              <StartExercise />
+            ) : exerciseStep === ExerciseStep.TIMER ? (
+              <TimerExercise />
+            ) : exerciseStep === ExerciseStep.PAUSED ? (
+              <PauseExercise />
             ) : exerciseStep === ExerciseStep.WAITED ? (
               <WaitingExercise />
             ) : exerciseStep === ExerciseStep.COMPLETED ? (
@@ -76,65 +83,127 @@ const Exercise = () => {
               <EmptyExercise />
             ) : (
               <EndingExercise />
-            )
-          ) : (
-            (exerciseLoading || !exerciseReady) && <LoadingCircle />
-          )}
+            ))}
         </ExerciseInner>
+        {(exerciseLoading || !exerciseReady) && <LoadingCircle />}
       </ExerciseWrapper>
     </Container>
   );
 };
 
 /**
- * Current Exercise (active exercise)
+ * Init Exercise (first exercise)
  */
-const CurrentExercise = () => {
+const InitExercise = () => {
   const { t } = useTranslation();
-  const { start, pause, skip, wait, exercise, exerciseStep } =
-    useContext(ExerciseContext);
+  const { start, skip, exercise, exerciseStep } = useContext(ExerciseContext);
   const { locale } = useLocale();
+
+  const video = exercise.videoUrl && <VideoExercise />;
+
+  const text = <Text>{exercise.text[locale]}</Text>;
+
+  const progress = (
+    <Progress>
+      {t('exercise:name')}&nbsp;{exercise.number}
+      &nbsp;/&nbsp;
+      {exercise.length}
+    </Progress>
+  );
+
+  const buttons = (
+    <ButtonsWrapper>
+      <Button.Outline label={t('cta:skip_exercise')} onClick={skip} />
+      <SpacerHorizontal />
+      <Button.Default label={t('cta:start_exercise')} onClick={start} />
+    </ButtonsWrapper>
+  );
 
   return (
     <>
-      <TextExercise type={exerciseStep}>
-        <TimerWrapper>
-          <Timer
-            value={exercise.durationTime}
-            start={exerciseStep === ExerciseStep.STARTED}
-            done={wait}
-          />
-        </TimerWrapper>
-
-        <TextWrapper>
-          <Progress>
-            {t('exercise:name')}&nbsp;{exercise.number}
-            &nbsp;/&nbsp;
-            {exercise.length}
-          </Progress>
-          <Text>{exercise.text[locale]}</Text>
-        </TextWrapper>
-
-        <ButtonsWrapper>
-          <Button.Outline label={t('cta:skip_exercise')} onClick={skip} />
-          <SpacerHorizontal />
-          {exerciseStep === ExerciseStep.INITIATED && (
-            <Button.Default label={t('cta:start_exercise')} onClick={start} />
-          )}
-          {exerciseStep === ExerciseStep.PAUSED && (
-            <Button.Default label={t('cta:restart_exercise')} onClick={start} />
-          )}
-          {exerciseStep === ExerciseStep.STARTED && (
-            <Button.Outline label={t('cta:pause_exercise')} onClick={pause} />
-          )}
-        </ButtonsWrapper>
-      </TextExercise>
+      {exercise.cognitive && exercise.videoUrl ? (
+        <TextExercise type={exerciseStep}>
+          {video}
+          {progress}
+          {buttons}
+        </TextExercise>
+      ) : (
+        <>
+          {video}
+          <TextExercise type={exerciseStep}>
+            <TextWrapper>
+              {progress}
+              {text}
+            </TextWrapper>
+            {buttons}
+          </TextExercise>
+        </>
+      )}
     </>
   );
 };
 
 /**
- * Waiting Exercise (pause exercise)
+ * Timer at the beginning
+ */
+const TimerExercise = () => {
+  const { start } = useContext(ExerciseContext);
+
+  return (
+    <TimerWrapper>
+      <Timer value={5} showvalue start done={start} />
+    </TimerWrapper>
+  );
+};
+
+/**
+ * Start Exercise
+ */
+const StartExercise = () => {
+  const { t } = useTranslation();
+  const { pause, skip, wait, exercise, exerciseStep } =
+    useContext(ExerciseContext);
+
+  return (
+    <>
+      <TextExercise type={exerciseStep}>
+        <Timer
+          value={exercise.durationTime}
+          start={exerciseStep === ExerciseStep.STARTED}
+          done={wait}
+          hidden
+        />
+
+        <ButtonsWrapper>
+          <Button.Outline label={t('cta:skip_exercise')} onClick={skip} />
+          <SpacerHorizontal />
+          <Button.Outline label={t('cta:pause_exercise')} onClick={pause} />
+        </ButtonsWrapper>
+      </TextExercise>
+
+      <ProgressBars />
+    </>
+  );
+};
+
+/**
+ * Pause Exercise
+ */
+const PauseExercise = () => {
+  const { t } = useTranslation();
+  const { start } = useContext(ExerciseContext);
+
+  return (
+    <TextCentredWrapper>
+      <Title>Vous êtes en pause</Title>
+      <Text>Lorem ipsum</Text>
+      <Button.Default label={t('cta:restart_exercise')} onClick={start} />
+    </TextCentredWrapper>
+  );
+};
+
+/**
+ * Waiting Exercise (rest step)
  */
 const WaitingExercise = () => {
   const { t } = useTranslation();
@@ -143,19 +212,18 @@ const WaitingExercise = () => {
   return (
     <>
       <TextExercise type={exerciseStep}>
-        <TimerWrapper>
-          <Timer value={exercise.pauseTime} showvalue start done={repeat} />
-        </TimerWrapper>
-
         <TextWrapper>
           <Progress>
             {t('exercise:name')}&nbsp;{exercise.number}
             &nbsp;/&nbsp;
             {exercise.length}
           </Progress>
-          <Text>{t('exercise:rest')}</Text>
+          <Title>{t('exercise:rest')}</Title>
         </TextWrapper>
       </TextExercise>
+      <TimerWrapper>
+        <Timer value={exercise.pauseTime} showvalue start done={repeat} />
+      </TimerWrapper>
     </>
   );
 };
@@ -165,28 +233,22 @@ const WaitingExercise = () => {
  */
 const CompletingExercise = () => {
   const { t } = useTranslation();
-  const { next, exercise, exerciseStep } = useContext(ExerciseContext);
+  const { next, exercise } = useContext(ExerciseContext);
 
   return (
     <>
-      <TextExercise type={exerciseStep}>
+      <TextCentredWrapper>
         <TimerWrapper>
           <Timer showvalue={false} />
         </TimerWrapper>
-
-        <TextWrapper>
-          <Progress>
-            {t('exercise:name')}&nbsp;{exercise.number}
-            &nbsp;/&nbsp;
-            {exercise.length}
-          </Progress>
-          <Text>{t('exercise:complete')}</Text>
-        </TextWrapper>
-
-        <ButtonsWrapper>
-          <Button.Outline label={t('cta:next_exercise')} onClick={next} />
-        </ButtonsWrapper>
-      </TextExercise>
+        <Progress>
+          {t('exercise:name')}&nbsp;{exercise.number}
+          &nbsp;/&nbsp;
+          {exercise.length}
+        </Progress>
+        <Title>{t('exercise:complete')}</Title>
+        <Button.Outline label={t('cta:next_exercise')} onClick={next} />
+      </TextCentredWrapper>
     </>
   );
 };
@@ -238,7 +300,7 @@ const Background = styled.div`
 
   transition: background-color 0.5s linear;
   background-color: ${({ theme, show }) =>
-    !show ? `${theme.colors.background}00` : `${theme.colors.background}f5`};
+    !show ? `${theme.colors.background}00` : `${theme.colors.background}cc`};
   ${({ theme, opaque }) =>
     opaque && `background-color: ${theme.colors.background}`};
 
@@ -258,7 +320,6 @@ const ExerciseInner = styled(FlexDisplay.Component)`
   position: relative;
   box-sizing: border-box;
   padding: 0 ${spacings.default * 2}px;
-  max-width: 1200px;
 
   ${({ type }) =>
     type !== ExerciseStep.ENDED &&
@@ -283,6 +344,13 @@ const ExerciseInner = styled(FlexDisplay.Component)`
   `}
 `;
 
+const VideoExercise = styled(FlexDisplay.Component)`
+  width: 360px;
+  height: 360px;
+  background: #fff;
+  border-radius: 50%;
+`;
+
 const TextExercise = styled(FlexDisplay.Component)`
   width: 100%;
 
@@ -305,7 +373,6 @@ const TimerWrapper = styled.div`
 
 const TextWrapper = styled.div`
   align-self: center;
-  margin: 0 ${spacings.default * 2}px;
 
   ${media.xsOnly`
     margin: 0 0 0 20px;
@@ -321,6 +388,18 @@ const TextCentredWrapper = styled(TextWrapper)`
   `}
 `;
 
+const Title = styled(H2)``;
+
+const Text = styled.p`
+  font-weight: 700;
+  font-size: ${rem(24)};
+  max-width: 600px;
+
+  ${media.xsOnly`
+    font-size: ${rem(15)};
+  `}
+`;
+
 const Progress = styled.h3`
   font-weight: 700;
   font-size: ${rem(14)};
@@ -331,14 +410,10 @@ const Progress = styled.h3`
   margin-bottom: ${spacings.default}px;
 `;
 
-const Text = styled.p`
-  font-weight: 700;
-  font-size: ${rem(24)};
-  max-width: 600px;
-
-  ${media.xsOnly`
-    font-size: ${rem(15)};
-  `}
+const ProgressBars = styled.div`
+  width: 100%;
+  height: 30px;
+  background: ${({ theme }) => theme.colors.primary};
 `;
 
 const ButtonsWrapper = styled(FlexAlignCenter.Component)`
