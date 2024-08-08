@@ -20,8 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useLogout } from 'react-admin';
-import { useTranslate } from 'react-admin';
+import { useLogout, useTranslate } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -30,6 +29,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { temporaryProfil } from '@admin/authProvider';
 
+import IconDropArrow from '@assets/icons/drop-arrow.svg';
 import IconEarth from '@assets/icons/earth.svg';
 import IconSettings from '@assets/icons/settings.svg';
 import Logo from '@assets/logos/logo.svg';
@@ -42,6 +42,8 @@ import { theme } from '@themes/index';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
+import { Languages } from '@utils/constants';
+
 import {
   ExerciseStep,
   ExerciseContext,
@@ -50,8 +52,6 @@ import Button from '@components/generics/buttons/Button';
 import { ButtonSideLabelTypes } from '@components/generics/buttons/Button';
 import { OverlayContext } from '@components/overlays/OverlayProvider';
 import { SettingsOverlay } from '@components/overlays/SettingsOverlay';
-
-import { LANGUAGES } from '../../locales';
 
 /**
  * Header with Logo and login navigation
@@ -159,7 +159,6 @@ const LocaleSwitcher = () => {
   const t = useTranslate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
-
   const { locale, setLocale } = useLocale();
 
   const onOpen = (event) => {
@@ -182,6 +181,7 @@ const LocaleSwitcher = () => {
       <Button.Transparent
         label={t('languages.' + locale)}
         icon={<IconEarth width="100%" height="100%" />}
+        secondaryIcon={<IconStyledDropArrow width="100%" height="100%" />}
         sideLabelType={ButtonSideLabelTypes.LEFT}
         onClick={onOpen}
       />
@@ -191,9 +191,11 @@ const LocaleSwitcher = () => {
         open={open}
         onClose={onClose}
         anchorOrigin={{
+          vertical: 'top',
           horizontal: 'right',
         }}
         transformOrigin={{
+          vertical: 'top',
           horizontal: 'right',
         }}
         MenuListProps={{
@@ -206,7 +208,7 @@ const LocaleSwitcher = () => {
           },
         }}
       >
-        {LANGUAGES.map((language) => (
+        {Languages.map((language) => (
           <MenuItem
             key={language}
             disabled={language === locale}
@@ -258,6 +260,15 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
     ${media.xsOnly`
       margin: 0 ${spacings.default / 2}px;
     `}
+  }
+`;
+
+const IconStyledDropArrow = styled(IconDropArrow)`
+  && {
+    width: 12px;
+    height: 12px;
+    margin-top: 5px;
+    fill: ${({ theme }) => theme.colors.primary};
   }
 `;
 

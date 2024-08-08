@@ -22,12 +22,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-
-
 import { media } from '@styles/configs/breakpoints';
 import { HoverOrActive } from '@styles/utils/HoverOrActive';
 import { rem } from '@styles/utils/rem';
-
 
 /**
  * BUTTON SIDE LABEL TYPES ALLOWED
@@ -42,7 +39,7 @@ const ButtonSideLabelTypes = {
  */
 const ButtonFactory = (Button) => {
   const Component = (props) => {
-    const { label, icon } = props;
+    const { label, icon, secondaryIcon } = props;
     return (
       <Button
         {...props}
@@ -54,6 +51,7 @@ const ButtonFactory = (Button) => {
           : {})}
         disabled={props.disabled}
       >
+        {secondaryIcon && secondaryIcon}
         {label && label}
         {icon && icon}
       </Button>
