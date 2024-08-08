@@ -99,7 +99,7 @@ const InitExercise = () => {
   const { start, skip, exercise, exerciseStep } = useContext(ExerciseContext);
   const { locale } = useLocale();
 
-  const video = exercise.videoUrl && <VideoExercise />;
+  const video = exercise.videoUrl && <Video src={exercise.videoUrl} />;
 
   const text = <Text>{exercise.text[locale]}</Text>;
 
@@ -284,6 +284,15 @@ const EmptyExercise = () => {
   );
 };
 
+const Video = ({ src }) => {
+  return (
+    <VideoWrapper>
+      <video autoPlay muted loop>
+        <source src={src} type="video/mp4" />
+      </video>
+    </VideoWrapper>
+  );
+};
 const Container = styled.div`
   position: absolute;
   top: 0;
@@ -344,11 +353,18 @@ const ExerciseInner = styled(FlexDisplay.Component)`
   `}
 `;
 
-const VideoExercise = styled(FlexDisplay.Component)`
+const VideoWrapper = styled(FlexDisplay.Component)`
   width: 360px;
   height: 360px;
-  background: #fff;
+  background: ${({ theme }) => theme.colors.tertiary};
   border-radius: 50%;
+  overflow: hidden;
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const TextExercise = styled(FlexDisplay.Component)`

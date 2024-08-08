@@ -246,7 +246,8 @@ const ExerciseProvider = ({ children }) => {
           ? current.video_url
           : null;
       // TODO: temporary set value
-      data.videoUrl = 'Url de la video';
+      data.videoUrl =
+        'https://videos.pexels.com/video-files/4363834/4363834-sd_640_360_25fps.mp4';
 
       setExercise(data);
     } else {
