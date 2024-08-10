@@ -20,6 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { createContext, useEffect, useState } from 'react';
+import { useGetIdentity } from 'react-admin';
 
 import { useApi } from '@hooks/useApi';
 
@@ -33,6 +34,7 @@ import { log } from '@utils/log';
 const ExerciseStep = {
   'INITIATED': 'INIT',
   'STARTED': 'START',
+  'TIMER': 'TIMER',
   'PAUSED': 'PAUSE',
   'SKIPPED': 'SKIP',
   'RESUMED': 'RESUME',
@@ -84,6 +86,7 @@ const ExerciseProvider = ({ children }) => {
     loading: exerciseLoading,
     get,
   } = useApi(RequestEndpoint.SESSION);
+  const { identity } = useGetIdentity();
 
   /**
    * Log Step  - API call
@@ -121,7 +124,11 @@ const ExerciseProvider = ({ children }) => {
   const start = () => {
     if (exerciseStep === ExerciseStep.INITIATED) logs(ExerciseStep.STARTED);
     else logs(ExerciseStep.RESUMED);
-    setExerciseStep(ExerciseStep.STARTED);
+    if (exerciseStep === ExerciseStep.INITIATED && exerciseRepeat === 0) {
+      setExerciseStep(ExerciseStep.TIMER);
+    } else {
+      setExerciseStep(ExerciseStep.STARTED);
+    }
   };
 
   /**
@@ -213,6 +220,8 @@ const ExerciseProvider = ({ children }) => {
    */
   useEffect(() => {
     if (!exercisesData) return;
+    if (!identity) return;
+
     if (exercisesData.detail === 'Not found.' || !exercisesData.exercises) {
       setExerciseStep(ExerciseStep.EMPTY);
       return;
@@ -221,7 +230,7 @@ const ExerciseProvider = ({ children }) => {
     const current = exercisesData.exercises[exerciseCurrent];
 
     if (current) {
-      setExercise({
+      const data = {
         index: exerciseCurrent,
         number: exerciseCurrent + 1,
         next: exerciseCurrent + 1,
@@ -230,11 +239,21 @@ const ExerciseProvider = ({ children }) => {
         pauseTime: current.pause || 5,
         repeatTime: current.repetition || 3,
         text: current.i18n,
-      });
+        cognitive: identity.cognitive,
+      };
+      data.videoUrl =
+        current.video_url && current.video_url !== ''
+          ? current.video_url
+          : null;
+      // TODO: temporary set value
+      data.videoUrl =
+        'https://videos.pexels.com/video-files/4363834/4363834-sd_640_360_25fps.mp4';
+
+      setExercise(data);
     } else {
       log('Exercise not found: ', exerciseCurrent);
     }
-  }, [exerciseCurrent, exercisesData]);
+  }, [exerciseCurrent, exercisesData, identity]);
 
   /**
    * Log start session

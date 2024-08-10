@@ -19,12 +19,10 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Circle from '@assets/graphics/circle.svg';
-import IconThumbup from '@assets/icons/thumbup.svg';
 
 import { media } from '@styles/configs/breakpoints';
 import { FlexAlignMiddle } from '@styles/tools/index';
@@ -33,7 +31,7 @@ import { rem } from '@styles/utils/rem';
 
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
 
-const Timer = ({ value, showvalue, start, done }) => {
+const Timer = ({ value, showvalue, start, done, hidden }) => {
   const [time, setTime] = useState(value);
   const [progress, setProgress] = useState(0);
   const [started, setStarted] = useState(false);
@@ -112,17 +110,22 @@ const Timer = ({ value, showvalue, start, done }) => {
   }, [value]);
 
   return (
-    <Container>
-      {exerciseStep === ExerciseStep.COMPLETED && (
-        <Thumbup width="100%" height="100%" />
+    <>
+      {!hidden && (
+        <Container>
+          {!showvalue && <Center />}
+          {showvalue && <Value>{time}</Value>}
+          <Bar aria-hidden progress={progress ?? 0} circ={circumference} />
+          <VisibleHidden as="div">
+            <meter
+              value={Math.floor((progress ?? 0) * 100)}
+              min="0"
+              max="100"
+            />
+          </VisibleHidden>
+        </Container>
       )}
-      {!showvalue && <Center />}
-      {showvalue && <Value>{time}</Value>}
-      <Bar aria-hidden progress={progress ?? 0} circ={circumference} />
-      <VisibleHidden as="div">
-        <meter value={Math.floor((progress ?? 0) * 100)} min="0" max="100" />
-      </VisibleHidden>
-    </Container>
+    </>
   );
 };
 
@@ -151,24 +154,6 @@ const Center = styled.div`
   `}
 `;
 
-const Thumbup = styled(IconThumbup)`
-  position: absolute;
-  top: calc(50% - 25px);
-  left: calc(50% - 25px);
-
-  width: 50px;
-  height: 50px;
-
-  fill: ${({ theme }) => theme.colors.primary};
-
-  ${media.xsOnly`
-    top: calc(50% - 12px);
-    left: calc(50% - 12px);
-    width: 24px;
-    height: 24px;
-  `}
-`;
-
 const Value = styled.h4`
   ${FlexAlignMiddle.CSS}
 
@@ -180,13 +165,9 @@ const Value = styled.h4`
   height: 100%;
 
   font-weight: 700;
-  font-size: ${rem(35)};
+  font-size: ${rem(50)};
 
   color: ${({ theme }) => theme.colors.white};
-
-  ${media.xsOnly`
-    font-size: ${rem(20)};
-  `}
 `;
 
 const Bar = styled(Circle)`

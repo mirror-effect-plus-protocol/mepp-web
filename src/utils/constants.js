@@ -29,6 +29,15 @@ export const Language = {
   PT: 'pt',
 };
 
+export const Languages = [
+  Language.FR,
+  Language.EN,
+  Language.ES,
+  Language.DE,
+  Language.IT,
+  Language.PT,
+];
+
 export const RequestMethod = {
   GET: 'GET',
   POST: 'POST',

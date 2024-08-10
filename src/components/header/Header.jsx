@@ -19,14 +19,17 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import i18n from 'i18next';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useLogout } from 'react-admin';
+import { useLogout, useTranslate } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 import { temporaryProfil } from '@admin/authProvider';
 
+import IconDropArrow from '@assets/icons/drop-arrow.svg';
 import IconEarth from '@assets/icons/earth.svg';
 import IconSettings from '@assets/icons/settings.svg';
 import Logo from '@assets/logos/logo.svg';
@@ -35,9 +38,11 @@ import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
 import { FlexAlignMiddle, FlexDisplay } from '@styles/tools';
 
+import { theme } from '@themes/index';
+
 import { useLocale } from '@hooks/locale/useLocale';
 
-import { Language } from '@utils/constants';
+import { Languages } from '@utils/constants';
 
 import {
   ExerciseStep,
@@ -51,9 +56,9 @@ import { SettingsOverlay } from '@components/overlays/SettingsOverlay';
 /**
  * Header with Logo and login navigation
  */
-const Header = ({ isLogged }) => {
+const Header = ({ isLogged, hidden }) => {
   return (
-    <Container>
+    <Container hidden={hidden}>
       <LeftSide />
       {!isLogged ? (
         <RightSideWithoutLogout />
@@ -81,21 +86,9 @@ const LeftSide = () => {
 };
 
 const RightSideWithoutLogout = () => {
-  const { locale, setLocale } = useLocale();
-
-  const switchLanguage = useCallback(() => {
-    const lang = i18n.language == Language.FR ? Language.EN : Language.FR;
-    setLocale(lang);
-  }, [locale, i18n.language]);
-
   return (
     <RightWrapper>
-      <Button.Transparent
-        label={i18n.language == Language.FR ? 'English ' : 'Français'}
-        icon={<IconEarth width="100%" height="100%" />}
-        sideLabelType={ButtonSideLabelTypes.LEFT}
-        onClick={switchLanguage}
-      />
+      <LocaleSwitcher />
     </RightWrapper>
   );
 };
@@ -162,11 +155,80 @@ const RightSideWithLogout = () => {
   );
 };
 
+const LocaleSwitcher = () => {
+  const t = useTranslate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+  const { locale, setLocale } = useLocale();
+
+  const onOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
+  const onChange = (event, language) => {
+    setLocale(language);
+    onClose();
+  };
+
+  return (
+    <>
+      <Button.Transparent
+        label={t('languages.' + locale)}
+        icon={<IconEarth width="100%" height="100%" />}
+        secondaryIcon={<IconStyledDropArrow width="100%" height="100%" />}
+        sideLabelType={ButtonSideLabelTypes.LEFT}
+        onClick={onOpen}
+      />
+
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={onClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        MenuListProps={{
+          sx: {
+            '&& .Mui-disabled': {
+              backgroundColor: theme.colors.primary,
+              color: '#fff',
+              opacity: 1,
+            },
+          },
+        }}
+      >
+        {Languages.map((language) => (
+          <MenuItem
+            key={language}
+            disabled={language === locale}
+            onClick={(event) => onChange(event, language)}
+          >
+            {t('languages.' + language)}
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
+};
+
 const Container = styled.header`
   ${FlexDisplay.CSS}
   box-sizing: border-box;
   padding: ${spacings.default * 2}px;
   width: 100%;
+
+  ${({ hidden }) => hidden && `visibility:hidden;`}
 
   ${media.xsOnly`
     padding: ${spacings.default}px;
@@ -198,6 +260,15 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
     ${media.xsOnly`
       margin: 0 ${spacings.default / 2}px;
     `}
+  }
+`;
+
+const IconStyledDropArrow = styled(IconDropArrow)`
+  && {
+    width: 12px;
+    height: 12px;
+    margin-top: 5px;
+    fill: ${({ theme }) => theme.colors.primary};
   }
 `;
 

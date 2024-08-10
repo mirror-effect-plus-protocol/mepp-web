@@ -24,8 +24,12 @@ export default {
   exercise: {
     name: 'Exercício',
     rest: 'Descanse por um momento.',
+    pause: 'Está de folga',
+    pauseMessage:
+      'Não tenha pressa e quando estiver pronto pressione o botão abaixo.',
     complete: 'Exercício concluído.',
     end: 'Parabéns! Você está no final da sua sessão de exercícios. Continue com o bom trabalho: a perseverança é uma condição essencial para o seu sucesso.',
-    empty: 'Ainda não foi criado nenhum plano de intervenção para você. Consulte seu médico para ativar seu perfil de exercícios.',
+    empty:
+      'Ainda não foi criado nenhum plano de intervenção para você. Consulte seu médico para ativar seu perfil de exercícios.',
   },
 };
