@@ -58,7 +58,7 @@ import { SettingsOverlay } from '@components/overlays/SettingsOverlay';
  */
 const Header = ({ isLogged, hidden }) => {
   return (
-    <Container hidden={hidden}>
+    <Container hide={hidden}>
       <LeftSide />
       {!isLogged ? (
         <RightSideWithoutLogout />
@@ -109,6 +109,7 @@ const RightSideWithLogout = () => {
   const handleSettingsClick = useCallback(() => {
     // if exercises page and it is running, pause current exercise
     if (
+      exerciseStep !== ExerciseStep.INITIATED &&
       exerciseStep !== ExerciseStep.ENDED &&
       exerciseStep !== ExerciseStep.EMPTY &&
       exerciseStep !== ExerciseStep.COMPLETED &&
@@ -227,8 +228,11 @@ const Container = styled.header`
   box-sizing: border-box;
   padding: ${spacings.default * 2}px;
   width: 100%;
+  position: relative;
+  transition: top 0.5s ease;
+  top: 0;
 
-  ${({ hidden }) => hidden && `visibility:hidden;`}
+  ${({ hide }) => hide && `top:-130px;`}
 
   ${media.xsOnly`
     padding: ${spacings.default}px;

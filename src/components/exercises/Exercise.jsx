@@ -233,6 +233,7 @@ const WaitingExercise = () => {
             &nbsp;/&nbsp;
             {exercise.length}
           </Progress>
+          <SpacerVertical size={`${spacings.default}px`}></SpacerVertical>
           <Title>{t('exercise:rest')}</Title>
         </TextWrapper>
       </TextExercise>
@@ -254,12 +255,13 @@ const CompletingExercise = () => {
     <>
       <TextCentredWrapper>
         <Thumbup></Thumbup>
-        <SpacerVertical size={`${spacings.default}px`}></SpacerVertical>
+        <SpacerVertical size={`${spacings.default * 2}px`}></SpacerVertical>
         <Progress>
           {t('exercise:name')}&nbsp;{exercise.number}
           &nbsp;/&nbsp;
           {exercise.length}
         </Progress>
+        <SpacerVertical size={`${spacings.default}px`}></SpacerVertical>
         <Title>{t('exercise:complete')}</Title>
         <Button.Outline label={t('cta:next_exercise')} onClick={next} />
       </TextCentredWrapper>
@@ -305,6 +307,7 @@ const Video = ({ src, cognitive }) => {
         <video autoPlay muted loop>
           <source src={src} type="video/mp4" />
         </video>
+        <LoadingCircle />
       </VideoInner>
     </VideoWrapper>
   );
@@ -397,6 +400,7 @@ const VideoWrapper = styled(FlexDisplay.Component)`
 `;
 
 const VideoInner = styled(FlexDisplay.Component)`
+  position: relative;
   width: 360px;
   height: 360px;
   min-width: 360px;
@@ -411,9 +415,11 @@ const VideoInner = styled(FlexDisplay.Component)`
   `}
 
   video {
+    position: relative;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    z-index: 1000;
   }
 `;
 
