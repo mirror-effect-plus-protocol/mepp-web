@@ -24,8 +24,12 @@ export default {
   exercise: {
     name: 'Übung',
     rest: 'Ruhen Sie sich einen Moment aus.',
+    pause: 'Du bist in der Pause',
+    pauseMessage:
+      'Nehmen Sie sich Zeit und wenn Sie bereit sind, klicken Sie auf die Schaltfläche unten.',
     complete: 'Übung abgeschlossen.',
     end: 'Glückwunsch! Sie sind am Ende Ihrer Trainingseinheit angelangt. Machen Sie weiter so: Ausdauer ist eine wesentliche Voraussetzung für Ihren Erfolg.',
-    empty: 'Es wurde noch kein Interventionsplan für Sie erstellt. Wenden Sie sich an Ihren Arzt, um Ihr Trainingsprofil zu aktivieren.',
+    empty:
+      'Es wurde noch kein Interventionsplan für Sie erstellt. Wenden Sie sich an Ihren Arzt, um Ihr Trainingsprofil zu aktivieren.',
   },
 };

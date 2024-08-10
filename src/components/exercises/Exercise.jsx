@@ -23,6 +23,8 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
+import IconThumbup from '@assets/icons/thumbup.svg';
+
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
 import {
@@ -36,7 +38,10 @@ import { useLocale } from '@hooks/locale/useLocale';
 
 import { LoadingCircle } from '@components/generics/LoadingCircle';
 import { P, H2 } from '@components/generics/basics';
-import { SpacerHorizontal } from '@components/generics/basics/Spacer';
+import {
+  SpacerHorizontal,
+  SpacerVertical,
+} from '@components/generics/basics/Spacer';
 import Button from '@components/generics/buttons/Button';
 
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
@@ -99,12 +104,18 @@ const InitExercise = () => {
   const { start, skip, exercise, exerciseStep } = useContext(ExerciseContext);
   const { locale } = useLocale();
 
-  const video = exercise.videoUrl && <Video src={exercise.videoUrl} />;
+  const video = exercise.videoUrl && (
+    <Video src={exercise.videoUrl} cognitive={exercise.cognitive} />
+  );
 
-  const text = <Text>{exercise.text[locale]}</Text>;
+  const text = (
+    <Text type={exerciseStep} cognitive={exercise.cognitive}>
+      {exercise.text[locale]}
+    </Text>
+  );
 
   const progress = (
-    <Progress>
+    <Progress cognitive={exercise.cognitive}>
       {t('exercise:name')}&nbsp;{exercise.number}
       &nbsp;/&nbsp;
       {exercise.length}
@@ -112,7 +123,7 @@ const InitExercise = () => {
   );
 
   const buttons = (
-    <ButtonsWrapper>
+    <ButtonsWrapper type={exerciseStep} cognitive={exercise.cognitive}>
       <Button.Outline label={t('cta:skip_exercise')} onClick={skip} />
       <SpacerHorizontal />
       <Button.Default label={t('cta:start_exercise')} onClick={start} />
@@ -124,18 +135,22 @@ const InitExercise = () => {
       {exercise.cognitive && exercise.videoUrl ? (
         <TextExercise type={exerciseStep}>
           {video}
-          {progress}
-          {buttons}
+          <InitExerciseWrapper cognitive={exercise.cognitive}>
+            {progress}
+            {buttons}
+          </InitExerciseWrapper>
         </TextExercise>
       ) : (
         <>
-          {video}
           <TextExercise type={exerciseStep}>
-            <TextWrapper>
-              {progress}
-              {text}
-            </TextWrapper>
-            {buttons}
+            {video}
+            <InitExerciseWrapper cognitive={exercise.cognitive}>
+              <TextWrapper type={exerciseStep} cognitive={exercise.cognitive}>
+                {progress}
+                {text}
+              </TextWrapper>
+              {buttons}
+            </InitExerciseWrapper>
           </TextExercise>
         </>
       )}
@@ -174,10 +189,10 @@ const StartExercise = () => {
           hidden
         />
 
-        <ButtonsWrapper>
+        <ButtonsWrapper type={exerciseStep}>
           <Button.Outline label={t('cta:skip_exercise')} onClick={skip} />
           <SpacerHorizontal />
-          <Button.Outline label={t('cta:pause_exercise')} onClick={pause} />
+          <Button.Default label={t('cta:pause_exercise')} onClick={pause} />
         </ButtonsWrapper>
       </TextExercise>
 
@@ -195,8 +210,8 @@ const PauseExercise = () => {
 
   return (
     <TextCentredWrapper>
-      <Title>Vous êtes en pause</Title>
-      <Text>Lorem ipsum</Text>
+      <Title>{t('exercise:pause')}</Title>
+      <PauseMessage>{t('exercise:pauseMessage')}</PauseMessage>
       <Button.Default label={t('cta:restart_exercise')} onClick={start} />
     </TextCentredWrapper>
   );
@@ -238,9 +253,8 @@ const CompletingExercise = () => {
   return (
     <>
       <TextCentredWrapper>
-        <TimerWrapper>
-          <Timer showvalue={false} />
-        </TimerWrapper>
+        <Thumbup></Thumbup>
+        <SpacerVertical size={`${spacings.default}px`}></SpacerVertical>
         <Progress>
           {t('exercise:name')}&nbsp;{exercise.number}
           &nbsp;/&nbsp;
@@ -284,15 +298,18 @@ const EmptyExercise = () => {
   );
 };
 
-const Video = ({ src }) => {
+const Video = ({ src, cognitive }) => {
   return (
-    <VideoWrapper>
-      <video autoPlay muted loop>
-        <source src={src} type="video/mp4" />
-      </video>
+    <VideoWrapper cognitive={cognitive}>
+      <VideoInner>
+        <video autoPlay muted loop>
+          <source src={src} type="video/mp4" />
+        </video>
+      </VideoInner>
     </VideoWrapper>
   );
 };
+
 const Container = styled.div`
   position: absolute;
   top: 0;
@@ -333,12 +350,14 @@ const ExerciseInner = styled(FlexDisplay.Component)`
   ${({ type }) =>
     type !== ExerciseStep.ENDED &&
     type !== ExerciseStep.EMPTY &&
+    type !== ExerciseStep.TIMER &&
     type !== ExerciseStep.WAITED &&
     `width: 100%;`}
 
   ${({ type }) =>
     (type === ExerciseStep.ENDED ||
       type === ExerciseStep.EMPTY ||
+      type === ExerciseStep.TIMER ||
       type === ExerciseStep.WAITED) &&
     `justify-content: center;`}
 
@@ -353,12 +372,43 @@ const ExerciseInner = styled(FlexDisplay.Component)`
   `}
 `;
 
+const InitExerciseWrapper = styled(FlexDisplay.Component)`
+  ${({ cognitive }) => cognitive && `justify-content: flex-end;`}
+  ${({ cognitive }) => cognitive && `align-items: center;`}
+    ${media.xsToMd`
+    display: block ;
+  `};
+`;
+
 const VideoWrapper = styled(FlexDisplay.Component)`
+  margin: 0 0 ${spacings.default}px 0;
+  ${({ cognitive }) => cognitive && `margin: 0 0 0 0;`}
+  ${({ cognitive }) => cognitive && `position: absolute;`}
+  ${({ cognitive }) => cognitive && `bottom: 0;`}
+
+  ${media.xsToMd`
+    margin: 0 ${spacings.default}px 0 0;
+    ${({ cognitive }) => cognitive && `position: relative;`}
+  `}
+  ${media.xxsOnly`
+    margin: 0 0 ${spacings.default}px 0;
+    ${({ cognitive }) => cognitive && `position: relative;`}
+  `}
+`;
+
+const VideoInner = styled(FlexDisplay.Component)`
   width: 360px;
   height: 360px;
+  min-width: 360px;
   background: ${({ theme }) => theme.colors.tertiary};
   border-radius: 50%;
   overflow: hidden;
+
+  ${media.xsToMd`
+    width: 180px;
+    height: 180px;
+    min-width: 180px;
+  `}
 
   video {
     width: 100%;
@@ -367,53 +417,63 @@ const VideoWrapper = styled(FlexDisplay.Component)`
   }
 `;
 
-const TextExercise = styled(FlexDisplay.Component)`
+const TextExercise = styled('div')`
   width: 100%;
+  ${({ type }) => type === ExerciseStep.WAITED && `text-align: center;`}
 
-  ${media.xsOnly`
-    flex-wrap: wrap;
+  ${media.xsToMd`
+    display: flex ;
     ${({ type }) => type === ExerciseStep.WAITED && `flex-wrap: nowrap;`}
+    ${({ type }) => type === ExerciseStep.STARTED && `justify-content: center;`}
+  `}
+  ${media.xxsOnly`
+    display: block ;
   `}
 `;
 
-const TimerWrapper = styled.div`
-  width: 100px;
-  height: 100px;
+const TimerWrapper = styled(FlexDisplay.Component)`
+  width: 180px;
+  height: 180px;
   align-self: center;
-
-  ${media.xsOnly`
-    width: 67px;
-    height: 67px;
-  `}
+  justify-content: center;
 `;
 
 const TextWrapper = styled.div`
-  align-self: center;
+  width: 100%;
 
-  ${media.xsOnly`
-    margin: 0 0 0 20px;
-    width: 70%;
-  `}
+  ${({ type, cognitive }) =>
+    type === ExerciseStep.INITIATED && !cognitive && `max-width: 700px;`}
+
+  ${media.xsOnly``}
 `;
 
 const TextCentredWrapper = styled(TextWrapper)`
+  flex-wrap: wrap;
+  text-align: center;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  max-width: 650px;
 
   ${media.xsOnly`
     width: 100%;
   `}
 `;
 
-const Title = styled(H2)``;
+const Title = styled(H2)`
+  width: 100%;
+`;
 
 const Text = styled.p`
   font-weight: 700;
   font-size: ${rem(24)};
-  max-width: 600px;
 
   ${media.xsOnly`
     font-size: ${rem(15)};
   `}
+
+  ${({ type }) =>
+    type === ExerciseStep.INITIATED && `margin-top: ${spacings.default}px;`}
 `;
 
 const Progress = styled.h3`
@@ -423,7 +483,6 @@ const Progress = styled.h3`
   text-transform: uppercase;
 
   margin: 0;
-  margin-bottom: ${spacings.default}px;
 `;
 
 const ProgressBars = styled.div`
@@ -433,14 +492,28 @@ const ProgressBars = styled.div`
 `;
 
 const ButtonsWrapper = styled(FlexAlignCenter.Component)`
-  align-self: center;
+  align-self: end;
   margin: 0 0 0 auto;
+  ${({ cognitive }) => cognitive && `margin: 0 0 0 ${spacings.default}px;`}
 
-  ${media.xsOnly`
-    justify-content: flex-start;
-    margin: 20px 0 0 0;
-    width:100%;
-  `}
+  ${({ type }) =>
+    type === ExerciseStep.STARTED && `margin: 0 0 ${spacings.default}px 0;`}
+  ${media.xsToMd`
+  margin: 0 0 ${spacings.default}px 0;
+
+  ${({ type }) =>
+    type === ExerciseStep.INITIATED && `margin: ${spacings.default}px 0 0 0;`}
+  ${({ type }) =>
+    type === ExerciseStep.INITIATED && `justify-content:flex-start;`}
+  `};
+`;
+
+const PauseMessage = styled(P)`
+  width: 100%;
+  text-align: center;
+  font-weight: 400;
+
+  margin: auto auto ${spacings.default * 2}px;
 `;
 
 const EndingMessage = styled(P)`
@@ -453,6 +526,11 @@ const EndingMessage = styled(P)`
 
 const ButtonExit = styled(Button.Default)`
   margin: 0 auto;
+`;
+
+const Thumbup = styled(IconThumbup)`
+  width: 136px;
+  height: 136px;
 `;
 
 export default Exercise;

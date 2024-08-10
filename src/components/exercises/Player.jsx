@@ -111,8 +111,10 @@ const Player = () => {
     const onResize = () => {
       clearTimeout(time);
       time = setTimeout(() => {
-        canvas.current.width = window.innerWidth;
-        canvas.current.height = window.innerHeight;
+        if (canvas.current) {
+          canvas.current.width = window.innerWidth;
+          canvas.current.height = window.innerHeight;
+        }
       }, 100);
     };
 

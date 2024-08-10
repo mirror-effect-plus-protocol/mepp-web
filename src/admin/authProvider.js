@@ -110,8 +110,6 @@ const authProvider = {
         temporaryProfil || JSON.parse(localStorage.getItem('profile'));
       // React-admin expect `fullName` instead of `full_name` to display it.
       profile['fullName'] = profile.full_name;
-      // TODO: temporary set value
-      //profile['cognitive'] = true;
       return Promise.resolve(profile);
     } catch (error) {
       return Promise.reject(error);
