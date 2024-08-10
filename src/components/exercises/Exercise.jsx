@@ -44,7 +44,7 @@ import {
 } from '@components/generics/basics/Spacer';
 import Button from '@components/generics/buttons/Button';
 
-import ExercicesProgress from './ExercicesProgress';
+import ExerciceProgress from './ExerciceProgress';
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
 import { Timer } from './Timer';
 
@@ -197,7 +197,7 @@ const StartExercise = () => {
         </ButtonsWrapper>
       </TextExercise>
 
-      <ExercicesProgress />
+      <ExerciceProgress />
     </>
   );
 };
@@ -378,7 +378,8 @@ ${({ type }) =>
     padding: 0 0;
     `}
   ${media.xsOnly`
-    padding: 0 ${spacings.default}px;
+  ${({ type }) =>
+    type !== ExerciseStep.STARTED && `padding: 0 ${spacings.default}px;`}
   `}
 `;
 

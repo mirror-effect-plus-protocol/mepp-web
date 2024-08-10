@@ -19,31 +19,30 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
+import styled, { keyframes } from 'styled-components';
 
 import { ExerciseContext } from './ExerciseProvider';
 
 /**
- * Exercises Progress Bars
+ * Exercise Progress Bars
  */
-const ExercisesProgress = () => {
+const ExerciseProgress = () => {
   const { exercise, exerciseRepeat } = useContext(ExerciseContext);
-  console.log(exerciseRepeat);
+
   const progessBars = () => {
     const items = [];
     for (let i = 0; i <= exercise.repeatTime; i++) {
-      let initProgress = 1;
-      let activeProgress = false;
-      if (i >= exerciseRepeat) initProgress = 0;
-      if (i === exerciseRepeat) activeProgress = true;
-
+      let progress = 1;
+      let active = false;
+      if (i >= exerciseRepeat) progress = 0;
+      if (i === exerciseRepeat) active = true;
       items.push(
         <ProgressBarWrapper key={i}>
-          <ProgressBarShape
-            initProgress={initProgress}
-            initTime={exercise.durationTime}
-            activeProgress={activeProgress}
+          <ProgressBar
+            progress={progress * 100}
+            active={active}
+            time={exercise.durationTime}
           />
           <ProgressBarBackground />
         </ProgressBarWrapper>,
@@ -55,33 +54,11 @@ const ExercisesProgress = () => {
   return <ProgressBarsWrapper>{progessBars()}</ProgressBarsWrapper>;
 };
 
-const ProgressBarShape = ({ initProgress, initTime, activeProgress }) => {
-  const [time, setTime] = useState(initTime);
-  const [progress, setProgress] = useState(initProgress);
-
-  useEffect(() => {
-    if (!activeProgress) return;
-
-    const onTime = () => {
-      const newtime = time - 1;
-      const newprogress = 1 - (newtime - 1) / initTime;
-
-      if (newtime <= 0) console.log('done');
-      else {
-        setTime(newtime);
-        setProgress(newprogress);
-      }
-    };
-
-    const timer = setTimeout(onTime, 1000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [time]);
-
-  return <ProgressBar progress={progress} />;
-};
+const ProgressBarsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 18px;
+`;
 
 const ProgressBarWrapper = styled.div`
   position: relative;
@@ -89,25 +66,30 @@ const ProgressBarWrapper = styled.div`
   height: 100%;
 `;
 
-const ProgressBarsWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 18px;
-`;
-
 const ProgressBar = styled.div`
   position: absolute;
-  ${({ progress }) => `width: ${progress * 100}%;`}
   height: 100%;
   background: ${({ theme }) => theme.colors.primary};
-  transition: width 1s linear;
+  animation-name: ${keyframes`
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: calc(100% - 1px);
+    }
+  `};
+  ${({ active }) => active && `animation-fill-mode: forwards;`}
+  ${({ active }) => active && `animation-timing-function: linear;`}
+  ${({ active, time }) => active && time && `animation-duration: ${time}s;`}
+  ${({ progress }) => progress && `width: calc(${progress}% - 1px);`};
   z-index: 1;
 `;
 
 const ProgressBarBackground = styled.div`
-  width: 100%;
+  width: calc(100% - 1px);
   height: 100%;
+  opacity: 0.3;
   background: ${({ theme }) => theme.colors.grey};
 `;
 
-export default ExercisesProgress;
+export default ExerciseProgress;
