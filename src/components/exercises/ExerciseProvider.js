@@ -291,6 +291,7 @@ const ExerciseProvider = ({ children }) => {
         exerciseStep,
         exerciseLoading,
         exerciseReady,
+        exerciseRepeat,
       }}
     >
       {children}

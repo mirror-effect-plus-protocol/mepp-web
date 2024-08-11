@@ -44,6 +44,7 @@ import {
 } from '@components/generics/basics/Spacer';
 import Button from '@components/generics/buttons/Button';
 
+import ExerciceProgress from './ExerciceProgress';
 import { ExerciseStep, ExerciseContext } from './ExerciseProvider';
 import { Timer } from './Timer';
 
@@ -196,7 +197,7 @@ const StartExercise = () => {
         </ButtonsWrapper>
       </TextExercise>
 
-      <ProgressBars />
+      <ExerciceProgress />
     </>
   );
 };
@@ -355,7 +356,8 @@ const ExerciseInner = styled(FlexDisplay.Component)`
     type !== ExerciseStep.EMPTY &&
     type !== ExerciseStep.TIMER &&
     type !== ExerciseStep.WAITED &&
-    `width: 100%;`}
+    `width: 100%;
+    `}
 
   ${({ type }) =>
     (type === ExerciseStep.ENDED ||
@@ -370,8 +372,14 @@ const ExerciseInner = styled(FlexDisplay.Component)`
       bottom:${spacings.default * 1.5}px;`
       : ``}
 
+${({ type }) =>
+    type === ExerciseStep.STARTED &&
+    `bottom:0px;
+    padding: 0 0;
+    `}
   ${media.xsOnly`
-    padding: 0 ${spacings.default}px;
+  ${({ type }) =>
+    type !== ExerciseStep.STARTED && `padding: 0 ${spacings.default}px;`}
   `}
 `;
 
@@ -489,12 +497,6 @@ const Progress = styled.h3`
   text-transform: uppercase;
 
   margin: 0;
-`;
-
-const ProgressBars = styled.div`
-  width: 100%;
-  height: 30px;
-  background: ${({ theme }) => theme.colors.primary};
 `;
 
 const ButtonsWrapper = styled(FlexAlignCenter.Component)`
