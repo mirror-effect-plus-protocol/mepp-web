@@ -105,7 +105,7 @@ export default () => {
       dashboard={Dashboard}
     >
       <CustomRoutes noLayout>
-        <Route exact path="/" element={<HomePage />} />
+        <Route exact path="/home" element={<HomePage />} />
         <Route exact path="/privacy" element={<PrivacyPage />} />
         <Route exact path="/termsofuse" element={<TermsPage />} />
         <Route exact path="/support" element={<HelpPage />} />
@@ -163,7 +163,7 @@ export default () => {
             />
           )}
           ,
-          {permissions !== 'user' && (
+          {permissions !== 'user' && permissions !== 'guest' && (
             <Resource
               name="categories"
               list={CategoryList}
@@ -173,9 +173,16 @@ export default () => {
           ,
           {permissions === 'user' && (
             <CustomRoutes noLayout>
-              <Route path="*" element={<Navigate to="/intro" />} />
+              <Route path="*" element={<Navigate to="/home" />} />
             </CustomRoutes>
           )}
+          ,
+          {permissions === 'guest' && (
+            <CustomRoutes noLayout>
+              <Route exact path="/" element={<HomePage />} />
+            </CustomRoutes>
+          )}
+          ,
         </>
       )}
     </Admin>

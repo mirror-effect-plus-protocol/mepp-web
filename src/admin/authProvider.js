@@ -47,6 +47,13 @@ const authProvider = {
       if (data.token) localStorage.setItem('token', data.token);
       if (data.profile)
         localStorage.setItem('profile', JSON.stringify(data.profile));
+      document.body.style.visibility = 'hidden';
+      if (data.permissions === 'admin') {
+        window.location.href = '/';
+      } else {
+        window.location.href = '#/intro';
+        window.location.reload();
+      }
     } else {
       throw new Error(`Service ${response.statusText} error`);
     }

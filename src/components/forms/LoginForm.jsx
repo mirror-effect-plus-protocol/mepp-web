@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useState } from 'react';
 import { useLogin, useNotify } from 'react-admin';
 import { useTranslation } from 'react-i18next';
@@ -47,7 +46,7 @@ const LoginForm = ({ onSwitch }) => {
     setLoading(true);
     login(data).catch(() => {
       setLoading(false);
-      notify('form.field.error.login_invalid', {type: 'error'});
+      notify('form.field.error.login_invalid', { type: 'error' });
     });
   };
 

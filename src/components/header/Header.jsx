@@ -122,9 +122,9 @@ const RightSideWithLogout = () => {
       // timeout to prevent logs request cancel
       // logs will be canceled if taken more than .5s
       setTimeout(() => {
-        logout(true);
+        logout();
       }, 500);
-    } else logout(true);
+    } else logout();
   };
 
   return (
