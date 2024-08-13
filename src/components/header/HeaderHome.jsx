@@ -19,20 +19,16 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useLogout } from 'react-admin';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-import { temporaryProfil } from '@admin/authProvider';
-
 import IconDropArrow from '@assets/icons/drop-arrow.svg';
 import IconEarth from '@assets/icons/earth.svg';
-import IconSettings from '@assets/icons/settings.svg';
-import Logo from '@assets/logos/logo.svg';
+import Logo from '@assets/logos/logo-inverse.svg';
 
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
@@ -44,29 +40,17 @@ import { useLocale } from '@hooks/locale/useLocale';
 
 import { Languages } from '@utils/constants';
 
-import {
-  ExerciseStep,
-  ExerciseContext,
-} from '@components/exercises/ExerciseProvider';
 import Button from '@components/generics/buttons/Button';
 import { ButtonSideLabelTypes } from '@components/generics/buttons/Button';
-import { OverlayContext } from '@components/overlays/OverlayProvider';
-import { SettingsOverlay } from '@components/overlays/SettingsOverlay';
 
 /**
  * Header with Logo and login navigation
  */
-const Header = ({ isLogged, hidden }) => {
+const HeaderHome = () => {
   return (
-    <Container hide={hidden}>
+    <Container>
       <LeftSide />
-      {!isLogged ? (
-        <RightSideWithoutLogout />
-      ) : !temporaryProfil ? (
-        <RightSideWithLogout />
-      ) : (
-        <></>
-      )}
+      <RightSide />
     </Container>
   );
 };
@@ -74,84 +58,30 @@ const Header = ({ isLogged, hidden }) => {
 const LeftSide = () => {
   return (
     <LeftWrapper>
-      <a href="/" tabIndex="-1">
-        <Logo
-          width="100%"
-          height="100%"
-          aria-label="Mirror effect plus protocol logo"
-        />
-      </a>
+      <Logo
+        width="100%"
+        height="100%"
+        aria-label="Mirror effect plus protocol logo"
+      />
     </LeftWrapper>
   );
 };
 
-const RightSideWithoutLogout = () => {
+const RightSide = () => {
+  const { t } = useTranslation();
+
   return (
     <RightWrapper>
       <LocaleSwitcher />
-    </RightWrapper>
-  );
-};
 
-const RightSideWithLogout = () => {
-  const { t } = useTranslation();
-  const logout = useLogout();
-  const { content, open, close } = useContext(OverlayContext);
-  const [isSettingsActive, setIsSettingsActive] = useState(false);
-  const { pause, logs, exerciseStep } = useContext(ExerciseContext);
-
-  // watch overlay close to deactivate settings click state
-  useEffect(() => {
-    if (!content) setIsSettingsActive(false);
-  }, [content]);
-
-  // setting click handler
-  const handleSettingsClick = useCallback(() => {
-    // if exercises page and it is running, pause current exercise
-    if (
-      exerciseStep !== ExerciseStep.INITIATED &&
-      exerciseStep !== ExerciseStep.ENDED &&
-      exerciseStep !== ExerciseStep.EMPTY &&
-      exerciseStep !== ExerciseStep.COMPLETED &&
-      pause
-    ) {
-      pause();
-    }
-    isSettingsActive ? close() : open(<SettingsOverlay />);
-    setIsSettingsActive(!isSettingsActive);
-  }, [exerciseStep, isSettingsActive]);
-
-  const handleSupportClick = (e) => {
-    e.preventDefault();
-    window.location.href = '#/support';
-  };
-
-  // logout click handler
-  const handleLogoutClick = () => {
-    if (logs) {
-      logs('LOGOUT');
-      // timeout to prevent logs request cancel
-      // logs will be canceled if taken more than .5s
-      setTimeout(() => {
-        logout(true);
-      }, 500);
-    } else logout(true);
-  };
-
-  return (
-    <RightWrapper>
-      <Button.Rounded
-        aria-label={t('a11y:support')}
-        label="?"
-        onClick={handleSupportClick}
+      <Button.Default label={t('cta:donate')} onClick={() => {}} />
+      <Button.Outline
+        label={t('cta:connexion')}
+        inverse
+        onClick={() => {
+          window.location.href = '#/login';
+        }}
       />
-      <Button.Transparent
-        aria-label={t('a11y:settings')}
-        icon={<IconSettings width="100%" height="100%" />}
-        selected={isSettingsActive}
-        onClick={handleSettingsClick}
-      />
-      <Button.Outline label={t('cta:logout')} onClick={handleLogoutClick} />
     </RightWrapper>
   );
 };
@@ -181,9 +111,10 @@ const LocaleSwitcher = () => {
     <>
       <Button.Transparent
         label={t('languages:' + locale)}
-        icon={<IconEarth width="100%" height="100%" />}
+        icon={<IconStyledEarth width="100%" height="100%" />}
         secondaryIcon={<IconStyledDropArrow width="100%" height="100%" />}
         sideLabelType={ButtonSideLabelTypes.LEFT}
+        inverse
         onClick={onOpen}
       />
 
@@ -229,10 +160,6 @@ const Container = styled.header`
   padding: ${spacings.default * 2}px;
   width: 100%;
   position: relative;
-  transition: top 0.5s ease;
-  top: 0;
-
-  ${({ hide }) => hide && `top:-130px;`}
 
   ${media.xsOnly`
     padding: ${spacings.default}px;
@@ -276,4 +203,10 @@ const IconStyledDropArrow = styled(IconDropArrow)`
   }
 `;
 
-export { Header };
+const IconStyledEarth = styled(IconEarth)`
+  && {
+    fill: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+export { HeaderHome };

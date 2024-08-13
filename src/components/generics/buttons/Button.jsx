@@ -70,7 +70,9 @@ const button = css`
   justify-content: center;
   align-items: center;
 
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme, inverse }) =>
+    inverse ? theme.colors.black : theme.colors.white};
+
   background: ${({ theme }) => theme.colors.primary};
   border-radius: 35px;
 
@@ -163,7 +165,9 @@ const Outline = styled.button`
 
   background: transparent;
   border: 2px solid ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
+
+  color: ${({ theme, inverse }) =>
+    inverse ? theme.colors.black : theme.colors.white};
 
   ${HoverOrActive`
     color: ${({ theme }) => theme.colors.white};

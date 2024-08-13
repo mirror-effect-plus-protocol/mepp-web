@@ -27,6 +27,7 @@ import { Route } from 'react-router-dom';
 import UserIcon from '@mui/icons-material/People';
 
 import Help from '@pages/Help';
+import Home from '@pages/Home';
 import Intro from '@pages/Intro';
 import Login from '@pages/Login';
 import Mirror from '@pages/Mirror';
@@ -84,6 +85,7 @@ export default () => {
   const MirrorSettingsPage = withPage(MirrorSettings);
 
   // without auth pages
+  const HomePage = withPage(Home);
   const LoginPage = withPage(Login);
   const PrivacyPage = withPage(Privacy);
   const TermsPage = withPage(Terms);
@@ -103,6 +105,7 @@ export default () => {
       dashboard={Dashboard}
     >
       <CustomRoutes noLayout>
+        <Route exact path="/" element={<HomePage />} />
         <Route exact path="/privacy" element={<PrivacyPage />} />
         <Route exact path="/termsofuse" element={<TermsPage />} />
         <Route exact path="/support" element={<HelpPage />} />

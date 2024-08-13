@@ -19,40 +19,30 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import i18n from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import { initReactI18next } from 'react-i18next';
+import React from 'react';
+import styled from 'styled-components';
 
-import { Language } from '@utils/constants';
+import { media } from '@styles/configs/breakpoints';
+import { spacings } from '@styles/configs/spacings';
+import { FlexDisplay } from '@styles/tools';
 
-import de from './de';
-import en from './en';
-import es from './es';
-import fr from './fr';
-import it from './it';
-import pt from './pt';
+/**
+ * Footer Home
+ */
+const FooterHome = () => {
+  return <Container>Footer Home</Container>;
+};
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    fallbackLng: 'fr',
-    resources: { fr, en, de, es, it, pt },
-    react: {
-      wait: true,
-    },
-    detection: {
-      order: ['localStorage', 'cookie'],
-      lookupLocalStorage: 'language',
-    },
-  });
+const Container = styled.footer`
+  ${FlexDisplay.CSS}
+  box-sizing: border-box;
+  padding: ${spacings.default * 2}px;
+  width: 100%;
+  position: relative;
 
-export const LANGUAGES = Object.freeze([
-  Language.FR,
-  Language.EN,
-  Language.ES,
-  Language.DE,
-  Language.IT,
-  Language.PT,
-]);
-export default i18n;
+  ${media.xsOnly`
+    padding: ${spacings.default}px;
+  `}
+`;
+
+export { FooterHome };
