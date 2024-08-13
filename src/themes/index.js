@@ -36,6 +36,7 @@ export const theme = {
     white: '#ffffff',
     black: '#000000',
     grey: '#4D4D4D',
+    bluelight: '#D8EBF6',
 
     background: '#000000',
     error: '#f52a2a',

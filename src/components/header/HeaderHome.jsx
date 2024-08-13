@@ -19,29 +19,18 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-
-import IconDropArrow from '@assets/icons/drop-arrow.svg';
-import IconEarth from '@assets/icons/earth.svg';
 import Logo from '@assets/logos/logo-inverse.svg';
 
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
 import { FlexAlignMiddle, FlexDisplay } from '@styles/tools';
 
-import { theme } from '@themes/index';
-
-import { useLocale } from '@hooks/locale/useLocale';
-
-import { Languages } from '@utils/constants';
-
+import LocaleSwitcher from '@components/generics/LocaleSwitcher';
 import Button from '@components/generics/buttons/Button';
-import { ButtonSideLabelTypes } from '@components/generics/buttons/Button';
 
 /**
  * Header with Logo and login navigation
@@ -72,7 +61,7 @@ const RightSide = () => {
 
   return (
     <RightWrapper>
-      <LocaleSwitcher />
+      <LocaleSwitcher inverse />
 
       <Button.Default label={t('cta:donate')} onClick={() => {}} />
       <Button.Outline
@@ -83,74 +72,6 @@ const RightSide = () => {
         }}
       />
     </RightWrapper>
-  );
-};
-
-const LocaleSwitcher = () => {
-  const { t } = useTranslation();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
-  const { locale, setLocale } = useLocale();
-
-  const onOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setAnchorEl(null);
-    setOpen(false);
-  };
-
-  const onChange = (event, language) => {
-    setLocale(language);
-    onClose();
-  };
-
-  return (
-    <>
-      <Button.Transparent
-        label={t('languages:' + locale)}
-        icon={<IconStyledEarth width="100%" height="100%" />}
-        secondaryIcon={<IconStyledDropArrow width="100%" height="100%" />}
-        sideLabelType={ButtonSideLabelTypes.LEFT}
-        inverse
-        onClick={onOpen}
-      />
-
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={onClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        MenuListProps={{
-          sx: {
-            '&& .Mui-disabled': {
-              backgroundColor: theme.colors.primary,
-              color: '#fff',
-              opacity: 1,
-            },
-          },
-        }}
-      >
-        {Languages.map((language) => (
-          <MenuItem
-            key={language}
-            disabled={language === locale}
-            onClick={(event) => onChange(event, language)}
-          >
-            {t('languages:' + language)}
-          </MenuItem>
-        ))}
-      </Menu>
-    </>
   );
 };
 
@@ -191,21 +112,6 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
     ${media.xsOnly`
       margin: 0 ${spacings.default / 2}px;
     `}
-  }
-`;
-
-const IconStyledDropArrow = styled(IconDropArrow)`
-  && {
-    width: 12px;
-    height: 12px;
-    margin-top: 5px;
-    fill: ${({ theme }) => theme.colors.primary};
-  }
-`;
-
-const IconStyledEarth = styled(IconEarth)`
-  && {
-    fill: ${({ theme }) => theme.colors.primary};
   }
 `;
 

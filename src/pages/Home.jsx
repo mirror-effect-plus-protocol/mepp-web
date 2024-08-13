@@ -22,11 +22,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Wrapper } from '@styles/tools';
+import { WrapperFull } from '@styles/tools/index';
+
+import { theme } from '@themes/index';
 
 import HomeLayout from '@layouts/Home';
 
 import { FooterHome } from '@components/footer/FooterHome';
+import { GridOneColumn } from '@components/grids/GridOneColumn';
+import { GridTwoColumn } from '@components/grids/GridTwoColumn';
 import { HeaderHome } from '@components/header/HeaderHome';
 
 /**
@@ -38,7 +42,32 @@ const HomePage = () => {
       header={<HeaderHome />}
       content={
         <ContainerWrapper>
-          <ContainerInner>Home Page</ContainerInner>
+          <ContainerInner>
+            <GridTwoColumn
+              left={<div>GridTwoColumn-HOME:Left</div>}
+              right={<div>GridTwoColumn-HOME:Right</div>}
+            />
+            <GridOneColumn
+              content={<div>GridOneColumn-LOGOS:Aide financière + Logo</div>}
+            />
+            <GridTwoColumn
+              left={<div>GridTwoColumn-DESCRIPTION:Left</div>}
+              right={<div>GridTwoColumn-DESCRIPTION:Right</div>}
+            />
+            <GridTwoColumn
+              left={<div>GridTwoColumn-HISTORY:Left</div>}
+              right={<div>GridTwoColumn-HISTORY:Right</div>}
+            />
+            <GridTwoColumn
+              left={<div>GridTwoColumn-PERSONS:Left</div>}
+              right={<div>GridTwoColumn-PERSONS:Right</div>}
+            />
+            <GridTwoColumn
+              left={<div>GridTwoColumn-DONATE:Left</div>}
+              right={<div>GridTwoColumn-DONATE:Right</div>}
+              background={theme.colors.bluelight}
+            />
+          </ContainerInner>
         </ContainerWrapper>
       }
       footer={<FooterHome />}
@@ -46,7 +75,7 @@ const HomePage = () => {
   );
 };
 
-const ContainerWrapper = styled(Wrapper)``;
+const ContainerWrapper = styled(WrapperFull)``;
 
 const ContainerInner = styled.div``;
 

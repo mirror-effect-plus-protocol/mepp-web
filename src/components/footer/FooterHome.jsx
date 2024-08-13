@@ -20,29 +20,65 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
-import { FlexDisplay } from '@styles/tools';
+import { FlexAlignMiddle, FlexDisplay } from '@styles/tools';
+
+import { Copyright } from '@components/generics/Copyright';
+import LocaleSwitcher from '@components/generics/LocaleSwitcher';
+import { Href } from '@components/generics/basics';
 
 /**
  * Footer Home
  */
 const FooterHome = () => {
-  return <Container>Footer Home</Container>;
+  return (
+    <Container>
+      <LeftSide />
+      <RightSide />
+    </Container>
+  );
+};
+
+const LeftSide = () => {
+  const { t } = useTranslation();
+
+  return (
+    <LeftWrapper>
+      <Copyright />
+      <Href href="#/privacy">{t('footer:privacy')}</Href>
+      <Href href="#/termsofuse">{t('footer:termsofuse')}</Href>
+    </LeftWrapper>
+  );
+};
+
+const RightSide = () => {
+  return (
+    <RightWrapper>
+      <LocaleSwitcher inverse />
+    </RightWrapper>
+  );
 };
 
 const Container = styled.footer`
   ${FlexDisplay.CSS}
   box-sizing: border-box;
-  padding: ${spacings.default * 2}px;
+  padding: ${spacings.default}px ${spacings.default * 2}px;
   width: 100%;
   position: relative;
 
   ${media.xsOnly`
-    padding: ${spacings.default}px;
+    padding: ${spacings.default}px ${spacings.default}px;
   `}
+`;
+
+const LeftWrapper = styled.div``;
+
+const RightWrapper = styled(FlexAlignMiddle.Component)`
+  margin-left: auto;
 `;
 
 export { FooterHome };
