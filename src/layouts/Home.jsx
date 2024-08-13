@@ -67,6 +67,7 @@ const CellHeader = styled(Cell)`
   width: 100%;
   color: ${({ theme }) => theme.colors.textInverse};
   background-color: ${({ theme }) => theme.colors.white};
+  z-index: 2;
 `;
 
 const CellContent = styled(Cell)`

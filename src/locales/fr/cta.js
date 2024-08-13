@@ -26,7 +26,9 @@ export default {
     login: 'Se connecter',
     logout: 'Se déconnecter',
     send: 'Envoyer',
-    donate: 'Donner',
+    donate: 'Donnez',
+    description: 'Description',
+    history: 'Historique',
 
     goto_forgot_password: 'Mot de passe oublié?',
     goto_login: 'Revenir à l’écran de connexion',

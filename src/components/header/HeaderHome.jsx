@@ -59,15 +59,39 @@ const LeftSide = () => {
 const RightSide = () => {
   const { t } = useTranslation();
 
+  const gotoAnchor = (id) => {
+    var elem = document.getElementById(id);
+    if (elem) {
+      window.scrollTo(elem.offsetLeft, elem.offsetTop - 150);
+    }
+  };
+
   return (
     <RightWrapper>
+      <Button.Transparent
+        label={t('cta:description')}
+        onClick={() => {
+          gotoAnchor('description');
+        }}
+      />
+      <Button.Transparent
+        label={t('cta:history')}
+        onClick={() => {
+          gotoAnchor('history');
+        }}
+      />
       <LocaleSwitcher />
-      <Button.Default label={t('cta:donate')} onClick={() => {}} />
+      <Button.Default
+        label={t('cta:donate')}
+        onClick={() => {
+          gotoAnchor('donate');
+        }}
+      />
       <Button.Outline
         label={t('cta:connexion')}
         inverse
         onClick={() => {
-          window.location.href = '#/login';
+          window.location.href = '#/intro';
         }}
       />
     </RightWrapper>
@@ -100,7 +124,6 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
 
   button {
     margin: 0 ${spacings.default}px;
-    &:first-child,
     &:last-child {
       margin-right: 0;
     }

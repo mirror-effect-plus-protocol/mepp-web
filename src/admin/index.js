@@ -163,7 +163,7 @@ export default () => {
             />
           )}
           ,
-          {permissions !== 'user' && permissions !== 'guest' && (
+          {permissions !== 'user' && (
             <Resource
               name="categories"
               list={CategoryList}

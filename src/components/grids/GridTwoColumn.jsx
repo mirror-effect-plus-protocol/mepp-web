@@ -20,10 +20,7 @@ const GridTwoColumn = ({ left, right, background }) => {
   );
 };
 
-const GridWrapper = styled(Grid)`
-  height: 500px;
-  ${({ background }) => `background-color: ${background}`};
-`;
+const GridWrapper = styled(Grid)``;
 
 const CellItem = styled(Cell)``;
 

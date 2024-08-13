@@ -73,7 +73,7 @@ const ResetPasswordForm = () => {
             <Button.Default
               label={t('cta:goto_login')}
               onClick={() => {
-                window.location.href = '/';
+                window.location.href = '#/login';
               }}
             />
           </ButtonsWrapper>
@@ -142,7 +142,7 @@ const ResetPasswordForm = () => {
                       href="#"
                       onClick={(e) => {
                         e.preventDefault();
-                        window.location.href = '/';
+                        window.location.href = '#/login';
                       }}
                     >
                       {t('cta:goto_login')}

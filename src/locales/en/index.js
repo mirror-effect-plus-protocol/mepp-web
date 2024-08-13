@@ -28,6 +28,7 @@ import cta from './cta';
 import exercise from './exercise';
 import footer from './footer';
 import form from './form';
+import home from './home';
 import intro from './intro';
 import settings from './settings';
 
@@ -42,6 +43,7 @@ export default {
   ...exercise,
   ...settings,
   ...api,
+  ...home,
 
   temporaryProfile: {
     label: 'You are connected a temporary session',

@@ -27,6 +27,8 @@ export default {
     logout: 'Desconectarse',
     send: 'enviar a',
     donate: 'Haz una donación',
+    description: 'Description',
+    history: 'Historique',
 
     goto_forgot_password: '¿Contraseña olvidada?',
     goto_login: 'Volver a la pantalla de inicio de sesión',

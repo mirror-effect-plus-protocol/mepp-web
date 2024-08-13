@@ -25,12 +25,11 @@ import styled from 'styled-components';
 
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
-import { Cell, Grid } from '@styles/tools';
 import { FlexAlignMiddle } from '@styles/tools/index';
-import { HoverOrActive } from '@styles/utils/HoverOrActive';
 import { rem } from '@styles/utils/rem';
 
 import { Copyright } from '@components/generics/Copyright';
+import { FinancialAid } from '@components/generics/FinancialAid';
 import { Href, P, H5 } from '@components/generics/basics';
 
 /**
@@ -39,53 +38,11 @@ import { Href, P, H5 } from '@components/generics/basics';
 const Footer = () => {
   const { t } = useTranslation();
 
-  const items = [
-    {
-      img: './assets/logos/logo_ciusssnim.png',
-      link: 'https://www.ciusssnordmtl.ca/',
-    },
-    {
-      img: './assets/logos/logo_ciussseim.png',
-      link: 'https://ciusss-estmtl.gouv.qc.ca/',
-    },
-    {
-      img: './assets/logos/logo_repar.png',
-      link: 'https://repar.ca/',
-    },
-    {
-      img: './assets/logos/logo_qc2.png',
-      link: 'https://frq.gouv.qc.ca/',
-    },
-    {
-      img: './assets/logos/logo_invent.png',
-      link: 'https://inven-t.umontreal.ca/accueil/',
-    },
-    {
-      img: '/assets/logos/logo_umtl.png',
-      link: 'https://www.umontreal.ca/',
-    },
-  ];
-
   return (
     <Container>
       <ContainerInter>
         <Title>{t('footer:title')}</Title>
-
-        <Grid
-          columns={`repeat(${items.length}, minmax(0px, 1fr));`}
-          responsiveTemplate={{ xxsOnly: 'repeat(2, minmax(0px, 1fr));' }}
-          gap={`${spacings.default * 2}px`}
-          as="ul"
-        >
-          {items.map((item, key) => (
-            <CellLogo key={key} as="li">
-              <Href href={item.link} target="_blank">
-                <img src={item.img} width="100%" />
-              </Href>
-            </CellLogo>
-          ))}
-        </Grid>
-
+        <FinancialAid />
         <CopyrightWrapper>
           <CopyrightInner>
             <Copyright />
@@ -128,20 +85,6 @@ const Title = styled(H5)`
   font-size: ${rem(12)};
   letter-spacing: 0.2rem;
   color: ${({ theme }) => theme.colors.white};
-`;
-
-const CellLogo = styled(Cell)`
-  ${FlexAlignMiddle.CSS}
-  opacity: 0.6;
-
-  img {
-    max-width: 170px;
-  }
-
-  ${HoverOrActive`
-    opacity: 1;
-    transition: opacity 0.2s ease;
-  `}
 `;
 
 const CopyrightWrapper = styled(FlexAlignMiddle.Component)`

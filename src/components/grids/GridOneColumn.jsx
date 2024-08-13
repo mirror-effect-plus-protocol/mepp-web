@@ -18,10 +18,7 @@ const GridOneColumn = ({ content, background }) => {
   );
 };
 
-const GridWrapper = styled(Grid)`
-  height: 200px;
-  ${({ background }) => `background-color: ${background}`};
-`;
+const GridWrapper = styled(Grid)``;
 
 const CellItem = styled(Cell)``;
 

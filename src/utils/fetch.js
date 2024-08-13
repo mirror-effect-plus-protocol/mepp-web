@@ -56,7 +56,10 @@ const fetchData = async (
     const hasToken = localStorage.getItem('token');
     localStorage.removeItem('profile');
     localStorage.removeItem('token');
-    if (hasToken) window.location.href = '/'; // go to login
+    if (hasToken) {
+      window.location.href = '#/login';
+      window.location.reload();
+    }
   }
   if (response.status == 404) log(`Service ${endpoint} not found`);
   if (response.status == 400) log(`Service ${endpoint} error`);

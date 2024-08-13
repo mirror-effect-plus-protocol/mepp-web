@@ -211,7 +211,8 @@ const ExerciseProvider = ({ children }) => {
     // timeout to prevent logs request cancel
     // logs will be canceled if taken more than .5s
     setTimeout(() => {
-      window.location.href = '/';
+      window.location.href = '#/intro';
+      window.location.reload();
     }, 500);
   };
 

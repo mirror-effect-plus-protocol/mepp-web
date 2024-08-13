@@ -27,6 +27,8 @@ export default {
     logout: 'Abmelden',
     send: 'Schicken',
     donate: 'Machen Sie eine Spende',
+    description: 'Description',
+    history: 'Historique',
 
     goto_forgot_password: 'Haben Sie Ihr Passwort vergessen?',
     goto_login: 'Kehren Sie zum Anmeldebildschirm zurück',
