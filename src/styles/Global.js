@@ -72,7 +72,7 @@ const GlobalStyles = createGlobalStyle`
       background-color: ${theme.colors.white};
     }
 
-    &.app{
+    &.basic{
       color: ${theme.colors.text};
       background-color: ${theme.colors.background};
     }
