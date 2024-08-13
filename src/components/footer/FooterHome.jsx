@@ -58,7 +58,7 @@ const LeftSide = () => {
 const RightSide = () => {
   return (
     <RightWrapper>
-      <LocaleSwitcher inverse />
+      <LocaleSwitcher />
     </RightWrapper>
   );
 };

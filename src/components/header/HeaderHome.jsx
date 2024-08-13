@@ -61,8 +61,7 @@ const RightSide = () => {
 
   return (
     <RightWrapper>
-      <LocaleSwitcher inverse />
-
+      <LocaleSwitcher />
       <Button.Default label={t('cta:donate')} onClick={() => {}} />
       <Button.Outline
         label={t('cta:connexion')}

@@ -70,8 +70,7 @@ const button = css`
   justify-content: center;
   align-items: center;
 
-  color: ${({ theme, inverse }) =>
-    inverse ? theme.colors.black : theme.colors.white};
+  color: ${({ theme }) => theme.colors.white};
 
   background: ${({ theme }) => theme.colors.primary};
   border-radius: 35px;
@@ -166,8 +165,11 @@ const Outline = styled.button`
   background: transparent;
   border: 2px solid ${({ theme }) => theme.colors.primary};
 
-  color: ${({ theme, inverse }) =>
-    inverse ? theme.colors.black : theme.colors.white};
+  color: ${({ theme }) => theme.colors.white};
+
+  body.light & {
+    color: ${({ theme }) => theme.colors.black};
+  }
 
   ${HoverOrActive`
     color: ${({ theme }) => theme.colors.white};
@@ -200,6 +202,10 @@ const Transparent = styled.button`
 
   padding: 0px 0px;
   min-height: auto;
+
+  body.light & {
+    color: ${({ theme }) => theme.colors.black};
+  }
 
   ${media.xsOnly`
     padding: 0px 0px;

@@ -67,12 +67,12 @@ const GlobalStyles = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
 
-    &.home{
+    &.light{
       color: ${theme.colors.black};
       background-color: ${theme.colors.white};
     }
 
-    &.basic{
+    &.dark{
       color: ${theme.colors.text};
       background-color: ${theme.colors.background};
     }
@@ -163,6 +163,15 @@ const GlobalStyles = createGlobalStyle`
 
   .MuiScopedCssBaseline-root {
     background-color: ${theme.colors.background};
+
+    body.light & {
+      background-color: ${theme.colors.white};
+    }
+
+    body.dark & {
+      background-color: ${theme.colors.background};
+    }
+
     color: ${theme.colors.text};
     font-family: 'Inter', Helvetica, Arial, sans-serif;
     line-height: 1;

@@ -22,6 +22,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
+import { media } from '@styles/configs/breakpoints';
 import { Cell, Grid } from '@styles/tools/index';
 
 /**
@@ -34,7 +35,7 @@ import { Cell, Grid } from '@styles/tools/index';
  */
 const HomeLayout = ({ header, content, footer }) => {
   useEffect(() => {
-    document.body.className = 'home';
+    document.body.className = 'light';
   }, []);
 
   return (
@@ -44,23 +45,26 @@ const HomeLayout = ({ header, content, footer }) => {
       areas={['header', 'content', 'footer']}
       gap="0"
     >
-      <CellHeader width={1} area="header" id="header">
-        {header}
-      </CellHeader>
+      <div>
+        <CellHeader width={1} area="header" id="header">
+          {header}
+        </CellHeader>
 
-      <CellContent width={1} area="content" id="content">
-        {content}
-      </CellContent>
+        <CellContent width={1} area="content" id="content">
+          {content}
+        </CellContent>
 
-      <CellFooter width={1} area="footer" id="footer">
-        {footer}
-      </CellFooter>
+        <CellFooter width={1} area="footer" id="footer">
+          {footer}
+        </CellFooter>
+      </div>
     </Grid>
   );
 };
 
 const CellHeader = styled(Cell)`
-  position: sticky;
+  position: fixed;
+  width: 100%;
   color: ${({ theme }) => theme.colors.textInverse};
   background-color: ${({ theme }) => theme.colors.white};
 `;
@@ -68,6 +72,11 @@ const CellHeader = styled(Cell)`
 const CellContent = styled(Cell)`
   color: ${({ theme }) => theme.colors.textInverse};
   background-color: ${({ theme }) => theme.colors.white};
+  margin-top: 152px;
+
+  ${media.xsOnly`
+    margin-top: 105px;
+  `}
 `;
 
 const CellFooter = styled(Cell)`

@@ -38,7 +38,7 @@ import { Languages } from '@utils/constants';
 import Button from '@components/generics/buttons/Button';
 import { ButtonSideLabelTypes } from '@components/generics/buttons/Button';
 
-const LocaleSwitcher = ({ inverse }) => {
+const LocaleSwitcher = () => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
@@ -63,16 +63,9 @@ const LocaleSwitcher = ({ inverse }) => {
     <>
       <Button.Transparent
         label={t('languages:' + locale)}
-        icon={
-          <IconStyledEarth
-            width="100%"
-            height="100%"
-            inverse={inverse && inverse.toString()}
-          />
-        }
+        icon={<IconStyledEarth width="100%" height="100%" />}
         secondaryIcon={<IconStyledDropArrow width="100%" height="100%" />}
         sideLabelType={ButtonSideLabelTypes.LEFT}
-        inverse={inverse}
         onClick={onOpen}
       />
 
@@ -123,7 +116,9 @@ const IconStyledDropArrow = styled(IconDropArrow)`
 
 const IconStyledEarth = styled(IconEarth)`
   && {
-    fill: ${({ theme, inverse }) => inverse === 'true' && theme.colors.primary};
+    body.light & {
+      fill: ${({ theme }) => theme.colors.primary};
+    }
   }
 `;
 

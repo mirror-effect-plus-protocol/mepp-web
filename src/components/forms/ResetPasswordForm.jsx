@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useRef } from 'react';
 import { useNotify } from 'react-admin';
 import { useTranslation } from 'react-i18next';
@@ -56,10 +55,10 @@ const ResetPasswordForm = () => {
 
     const { response } = await post(payload);
     if (response.status === 404 || response.status === 400) {
-      notify('api.error.token_invalid', {type: 'error'});
+      notify('api.error.token_invalid', { type: 'error' });
     }
     if (response.status === 500) {
-      notify('api:error:generic', {type: 'error'});
+      notify('api:error:generic', { type: 'error' });
     }
   };
 

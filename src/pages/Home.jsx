@@ -34,7 +34,7 @@ import { GridTwoColumn } from '@components/grids/GridTwoColumn';
 import { HeaderHome } from '@components/header/HeaderHome';
 
 /**
- * HomePage page with HomeLayout
+ * HomePage with HomeLayout
  */
 const HomePage = () => {
   return (

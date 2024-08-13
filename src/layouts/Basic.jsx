@@ -36,7 +36,7 @@ import { Cell, Grid } from '@styles/tools/index';
  */
 const BasicLayout = ({ header, content, footer }) => {
   useEffect(() => {
-    document.body.className = 'basic';
+    document.body.className = 'dark';
   }, []);
 
   return (
