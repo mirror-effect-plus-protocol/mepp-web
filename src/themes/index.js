@@ -30,11 +30,13 @@ export const theme = {
     tertiary: '#000000',
 
     text: '#D2D2D2',
+    textInverse: '#000000',
     accent: '#81D1FF',
 
     white: '#ffffff',
     black: '#000000',
     grey: '#4D4D4D',
+    bluelight: '#D8EBF6',
 
     background: '#000000',
     error: '#f52a2a',

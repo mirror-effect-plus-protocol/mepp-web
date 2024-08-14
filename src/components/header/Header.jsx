@@ -20,17 +20,12 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useLogout, useTranslate } from 'react-admin';
+import { useLogout } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-
 import { temporaryProfil } from '@admin/authProvider';
 
-import IconDropArrow from '@assets/icons/drop-arrow.svg';
-import IconEarth from '@assets/icons/earth.svg';
 import IconSettings from '@assets/icons/settings.svg';
 import Logo from '@assets/logos/logo.svg';
 
@@ -38,18 +33,12 @@ import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
 import { FlexAlignMiddle, FlexDisplay } from '@styles/tools';
 
-import { theme } from '@themes/index';
-
-import { useLocale } from '@hooks/locale/useLocale';
-
-import { Languages } from '@utils/constants';
-
 import {
   ExerciseStep,
   ExerciseContext,
 } from '@components/exercises/ExerciseProvider';
+import LocaleSwitcher from '@components/generics/LocaleSwitcher';
 import Button from '@components/generics/buttons/Button';
-import { ButtonSideLabelTypes } from '@components/generics/buttons/Button';
 import { OverlayContext } from '@components/overlays/OverlayProvider';
 import { SettingsOverlay } from '@components/overlays/SettingsOverlay';
 
@@ -133,9 +122,9 @@ const RightSideWithLogout = () => {
       // timeout to prevent logs request cancel
       // logs will be canceled if taken more than .5s
       setTimeout(() => {
-        logout(true);
+        logout();
       }, 500);
-    } else logout(true);
+    } else logout();
   };
 
   return (
@@ -153,73 +142,6 @@ const RightSideWithLogout = () => {
       />
       <Button.Outline label={t('cta:logout')} onClick={handleLogoutClick} />
     </RightWrapper>
-  );
-};
-
-const LocaleSwitcher = () => {
-  const t = useTranslate();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
-  const { locale, setLocale } = useLocale();
-
-  const onOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setAnchorEl(null);
-    setOpen(false);
-  };
-
-  const onChange = (event, language) => {
-    setLocale(language);
-    onClose();
-  };
-
-  return (
-    <>
-      <Button.Transparent
-        label={t('languages.' + locale)}
-        icon={<IconEarth width="100%" height="100%" />}
-        secondaryIcon={<IconStyledDropArrow width="100%" height="100%" />}
-        sideLabelType={ButtonSideLabelTypes.LEFT}
-        onClick={onOpen}
-      />
-
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={onClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        MenuListProps={{
-          sx: {
-            '&& .Mui-disabled': {
-              backgroundColor: theme.colors.primary,
-              color: '#fff',
-              opacity: 1,
-            },
-          },
-        }}
-      >
-        {Languages.map((language) => (
-          <MenuItem
-            key={language}
-            disabled={language === locale}
-            onClick={(event) => onChange(event, language)}
-          >
-            {t('languages.' + language)}
-          </MenuItem>
-        ))}
-      </Menu>
-    </>
   );
 };
 
@@ -264,15 +186,6 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
     ${media.xsOnly`
       margin: 0 ${spacings.default / 2}px;
     `}
-  }
-`;
-
-const IconStyledDropArrow = styled(IconDropArrow)`
-  && {
-    width: 12px;
-    height: 12px;
-    margin-top: 5px;
-    fill: ${({ theme }) => theme.colors.primary};
   }
 `;
 

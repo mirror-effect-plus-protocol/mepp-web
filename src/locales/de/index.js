@@ -28,6 +28,7 @@ import cta from './cta';
 import exercise from './exercise';
 import footer from './footer';
 import form from './form';
+import home from './home';
 import intro from './intro';
 import settings from './settings';
 
@@ -37,7 +38,6 @@ RaLanguageOverride.ra.action.edit = 'Modifikator';
 RaLanguageOverride.ra.notification.updated =
   'Element erfolgreich aktualisiert |||| %{smart_count} Elemente wurden erfolgreich aktualisiert';
 RaLanguageOverride.ra.notification.created = 'Artikel erfolgreich erstellt';
-
 
 export default {
   ...RaLanguageOverride,
@@ -50,6 +50,7 @@ export default {
   ...exercise,
   ...settings,
   ...api,
+  ...home,
 
   temporaryProfile: {
     label: 'Sie sind in einer temporären Sitzung angemeldet',
@@ -88,7 +89,8 @@ export default {
       default: 'Standardwerte',
     },
     confirm: {
-      title: 'Sind Sie sicher, dass Sie den Vorgang beenden möchten, ohne zu speichern?',
+      title:
+        'Sind Sie sicher, dass Sie den Vorgang beenden möchten, ohne zu speichern?',
     },
   },
 };

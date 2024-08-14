@@ -22,10 +22,13 @@
 
 export default {
   cta: {
+    connexion: 'Login',
     login: 'Connect',
     logout: 'Logout',
-
     send: 'Send',
+    donate: 'Donate',
+    description: 'Description',
+    history: 'Historique',
 
     goto_forgot_password: 'Forgot your password?',
     goto_login: 'Back to login',

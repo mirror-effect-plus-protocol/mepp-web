@@ -23,20 +23,19 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { media } from '@styles/configs/breakpoints';
-import { zindex } from '@styles/configs/zindex';
 import { Cell, Grid } from '@styles/tools/index';
 
 /**
- * Basic Layout Slots - can receive three slots type
+ * Home Layout Slots - can receive three slots type
  * - 1 slot for headder
  * - 1 slot for content
  * - 1 slot for footer
- * @param {header, content} props JSX.Element
+ * @param {header, content, footer} props JSX.Element
  * @returns JSX.Element
  */
-const BasicLayout = ({ header, content, footer }) => {
+const HomeLayout = ({ header, content, footer }) => {
   useEffect(() => {
-    document.body.className = 'dark';
+    document.body.className = 'light';
   }, []);
 
   return (
@@ -46,56 +45,44 @@ const BasicLayout = ({ header, content, footer }) => {
       areas={['header', 'content', 'footer']}
       gap="0"
     >
-      <CellHeader width={1} area="header" id="header">
-        {header}
-      </CellHeader>
+      <div>
+        <CellHeader width={1} area="header" id="header">
+          {header}
+        </CellHeader>
 
-      <CellContent width={1} area="content" id="content">
-        {content}
-      </CellContent>
+        <CellContent width={1} area="content" id="content">
+          {content}
+        </CellContent>
 
-      <CellFooter width={1} area="footer" id="footer">
-        {footer}
-      </CellFooter>
+        <CellFooter width={1} area="footer" id="footer">
+          {footer}
+        </CellFooter>
+      </div>
     </Grid>
   );
 };
 
 const CellHeader = styled(Cell)`
   position: fixed;
-  top: 0;
   width: 100%;
-  z-index: ${zindex.header};
-
-  ${media.xsOnly`
-    position: relative;
-
-  `}
-
-  /* fix for increase fonts values for a11y */
-  @media screen and (max-height: 850px) {
-    position: relative;
-  }
+  color: ${({ theme }) => theme.colors.textInverse};
+  background-color: ${({ theme }) => theme.colors.white};
+  z-index: 2;
 `;
 
 const CellContent = styled(Cell)`
-  width: 100vw;
-  min-height: calc(100vh - 155px);
-  color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.textInverse};
+  background-color: ${({ theme }) => theme.colors.white};
+  margin-top: 152px;
 
   ${media.xsOnly`
-    min-height: calc(100vh - 210px);
+    margin-top: 105px;
   `}
-
-  /* fix for increase fonts values for a11y */
-  @media screen and (max-height: 850px) {
-    height: 100%;
-  }
 `;
 
 const CellFooter = styled(Cell)`
-  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.textInverse};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
-export default React.memo(BasicLayout);
+export default React.memo(HomeLayout);

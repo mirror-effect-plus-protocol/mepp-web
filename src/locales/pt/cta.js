@@ -22,9 +22,13 @@
 
 export default {
   cta: {
+    connexion: 'Conexão',
     login: 'Entrar',
     logout: 'sair',
     send: 'Enviar',
+    donate: 'Faça uma doação',
+    description: 'Description',
+    history: 'Historique',
 
     goto_forgot_password: 'Esqueceu sua senha?',
     goto_login: 'Voltar para a tela de login',

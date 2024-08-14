@@ -54,7 +54,7 @@ const GlobalStyles = createGlobalStyle`
 
   body{
     position: relative;
-    background-color: ${theme.colors.background};
+
     color: ${theme.colors.text};
     font-family: 'Inter', Helvetica, Arial, sans-serif;
     line-height: 1;
@@ -66,6 +66,16 @@ const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+
+    &.light{
+      color: ${theme.colors.black};
+      background-color: ${theme.colors.white};
+    }
+
+    &.dark{
+      color: ${theme.colors.text};
+      background-color: ${theme.colors.background};
+    }
   }
 
   h1 {
@@ -153,6 +163,15 @@ const GlobalStyles = createGlobalStyle`
 
   .MuiScopedCssBaseline-root {
     background-color: ${theme.colors.background};
+
+    body.light & {
+      background-color: ${theme.colors.white};
+    }
+
+    body.dark & {
+      background-color: ${theme.colors.background};
+    }
+
     color: ${theme.colors.text};
     font-family: 'Inter', Helvetica, Arial, sans-serif;
     line-height: 1;
