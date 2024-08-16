@@ -30,7 +30,6 @@ export const theme = {
     tertiary: '#000000',
 
     text: '#D2D2D2',
-    textInverse: '#000000',
     accent: '#81D1FF',
 
     white: '#ffffff',

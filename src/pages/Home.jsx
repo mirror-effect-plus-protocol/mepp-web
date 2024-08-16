@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
 import { FlexDisplay, WrapperFull } from '@styles/tools/index';
+import { rem } from '@styles/utils/rem';
 
 import { theme } from '@themes/index';
 
@@ -33,6 +34,7 @@ import HomeLayout from '@layouts/Home';
 
 import { FooterHome } from '@components/footer/FooterHome';
 import { FinancialAid } from '@components/generics/FinancialAid';
+import ImageRounded from '@components/generics/ImageRounded';
 import { H1, H3, LI, P, UL, Href } from '@components/generics/basics/index';
 import Button from '@components/generics/buttons/Button';
 import { GridOneColumn } from '@components/grids/GridOneColumn';
@@ -48,8 +50,10 @@ const HomePage = () => {
       header={<HeaderHome />}
       content={
         <ContainerWrapper>
-          <GridInner>
+          <GridHeroInner>
             <GridTwoColumn left={<IntroText />} right={<IntroImage />} />
+          </GridHeroInner>
+          <GridInner>
             <GridOneColumn content={<IntroFinancial />} />
           </GridInner>
           <Liner />
@@ -77,13 +81,13 @@ const IntroText = () => {
   const { t } = useTranslation();
   return (
     <>
-      <H1>{t('home:intro:title')}</H1>
-      <P>{t('home:intro:text')}</P>
+      <TitleH1>{t('home:intro:title')}</TitleH1>
+      <TextP>{t('home:intro:text')}</TextP>
     </>
   );
 };
 const IntroImage = () => {
-  return <img src="/assets/home-intro.jpg" width="100%" />;
+  return <ImageRounded src="/assets/home-intro.jpg" height="100%" />;
 };
 const IntroFinancial = () => {
   const { t } = useTranslation();
@@ -208,12 +212,25 @@ const DonateWidget = () => {
 
 const ContainerWrapper = styled(WrapperFull)``;
 
+const GridHeroInner = styled(WrapperFull)`
+  padding: 0 0 ${spacings.default * 2}px ${spacings.default * 2}px;
+  ${({ background }) => `background-color: ${background}`};
+
+  ${media.xsOnly`
+    padding: 0 ${spacings.default}px;
+  `}
+
+  ${media.smOnly`
+    padding: 0 ${spacings.default}px;
+  `}
+`;
+
 const GridInner = styled.div`
   padding: ${spacings.default * 2}px;
   ${({ background }) => `background-color: ${background}`};
 
   ${media.xsOnly`
-    padding: ${spacings.default}px;
+    padding: 0 ${spacings.default}px;
   `}
 `;
 
@@ -221,6 +238,29 @@ const Liner = styled.div`
   width: 100%;
   height: 1px;
   background: #000000;
+`;
+
+const TitleH1 = styled(H1)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 300;
+  line-height: 1.2;
+  font-size: ${rem(60)};
+
+  ${media.xxsOnly`
+    font-size: ${rem(32)};
+  `}
+`;
+
+const TextP = styled(P)`
+  color: ${() => '#595959'};
+
+  font-weight: 400;
+  line-height: 1.5;
+  font-size: ${rem(20)};
+
+  ${media.xxsOnly`
+    font-size: ${rem(15)};
+  `}
 `;
 
 export default HomePage;
