@@ -85,29 +85,35 @@ const LeftWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   color: ${() => '#595959'};
+
   a {
     color: ${() => '#595959'};
   }
+  ${media.xsOnly`
+      display: block;
+  `}
 `;
 
 const RightWrapper = styled(FlexAlignMiddle.Component)`
   margin-left: auto;
-  ${media.xsOnly`
+  ${media.xxsOnly`
     display: none;
   `}
 `;
 
 const CopyrightWrapper = styled.div`
   margin: 0 ${spacings.default * 2}px 0 0;
-  ${media.xsToSm`
+  ${media.xsOnly`
     margin: 0 ${spacings.default}px 0 0;
   `}
 `;
 
 const LinkStyled = styled(Href)`
   margin: 0 ${spacings.default * 2}px 0 0;
-  ${media.xsToSm`
-    margin: 0 ${spacings.default}px 0 0;
+
+  ${media.xsOnly`
+      margin: ${spacings.default / 2}px 0 0 0;
+      display: block;
   `}
 `;
 export { FooterHome };

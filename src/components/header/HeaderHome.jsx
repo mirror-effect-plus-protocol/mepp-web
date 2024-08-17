@@ -149,7 +149,7 @@ const ButtonNav = styled(Button.Transparent)`
 `;
 
 const ButtonDonate = styled(Button.Default)`
-  @media screen and (max-width: 640px) {
+  @media screen and (max-width: 520px) {
     display: none;
   }
 `;

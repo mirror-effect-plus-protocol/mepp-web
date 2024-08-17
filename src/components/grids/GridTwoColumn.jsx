@@ -14,7 +14,7 @@ const GridTwoColumn = ({ left, right, background }) => {
       columns="repeat(auto-fit, minmax(0px, 1fr));"
       responsiveTemplate={{ smOnly: '1fr', xsOnly: '1fr' }}
       background={background}
-      gap={`${spacings.default * 2}px`}
+      gap={`${spacings.default}px`}
     >
       <CellItem>{left}</CellItem>
       <CellItem>{right}</CellItem>
@@ -26,10 +26,6 @@ const GridWrapper = styled(Grid)`
   min-height: calc(100vh - 200px);
 `;
 
-const CellItem = styled(Cell)`
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-`;
+const CellItem = styled(Cell)``;
 
 export { GridTwoColumn };

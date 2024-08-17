@@ -24,7 +24,7 @@ import styled from 'styled-components';
 
 import { spacings } from '@styles/configs/spacings';
 import { Cell, Grid } from '@styles/tools';
-import { FlexAlignMiddle } from '@styles/tools/index';
+import { FlexAlignLeft } from '@styles/tools/index';
 import { HoverOrActive } from '@styles/utils/HoverOrActive';
 
 import { Href } from '@components/generics/basics';
@@ -79,12 +79,16 @@ const FinancialAid = () => {
 };
 
 const CellLogo = styled(Cell)`
-  ${FlexAlignMiddle.CSS}
+  ${FlexAlignLeft.CSS}
   opacity: 0.6;
 
-  background: #000;
   img {
     max-width: 170px;
+  }
+
+  body.light & img {
+    -webkit-filter: invert(1);
+    filter: invert(1);
   }
 
   ${HoverOrActive`
