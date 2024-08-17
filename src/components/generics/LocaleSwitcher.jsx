@@ -38,7 +38,7 @@ import { Languages } from '@utils/constants';
 import Button from '@components/generics/buttons/Button';
 import { ButtonSideLabelTypes } from '@components/generics/buttons/Button';
 
-const LocaleSwitcher = () => {
+const LocaleSwitcher = ({ iconOnly }) => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
@@ -62,9 +62,11 @@ const LocaleSwitcher = () => {
   return (
     <>
       <Button.Transparent
-        label={t('languages:' + locale)}
+        label={!iconOnly && t('languages:' + locale)}
         icon={<IconStyledEarth width="100%" height="100%" />}
-        secondaryIcon={<IconStyledDropArrow width="100%" height="100%" />}
+        secondaryIcon={
+          !iconOnly && <IconStyledDropArrow width="100%" height="100%" />
+        }
         sideLabelType={ButtonSideLabelTypes.LEFT}
         onClick={onOpen}
       />

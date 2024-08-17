@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { spacings } from '@styles/configs/spacings';
 import { Cell, Grid } from '@styles/tools/index';
 
 /**
@@ -13,6 +14,7 @@ const GridTwoColumn = ({ left, right, background }) => {
       columns="repeat(auto-fit, minmax(0px, 1fr));"
       responsiveTemplate={{ smOnly: '1fr', xsOnly: '1fr' }}
       background={background}
+      gap={`${spacings.default}px`}
     >
       <CellItem>{left}</CellItem>
       <CellItem>{right}</CellItem>
@@ -20,7 +22,9 @@ const GridTwoColumn = ({ left, right, background }) => {
   );
 };
 
-const GridWrapper = styled(Grid)``;
+const GridWrapper = styled(Grid)`
+  min-height: calc(100vh - 200px);
+`;
 
 const CellItem = styled(Cell)``;
 

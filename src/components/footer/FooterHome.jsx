@@ -48,9 +48,13 @@ const LeftSide = () => {
 
   return (
     <LeftWrapper>
-      <Copyright />
-      <Href href="#/privacy">{t('footer:privacy')}</Href>
-      <Href href="#/termsofuse">{t('footer:termsofuse')}</Href>
+      <CopyrightWrapper>
+        <Copyright />
+      </CopyrightWrapper>
+      <div>
+        <LinkStyled href="#/privacy">{t('footer:privacy')}</LinkStyled>
+        <LinkStyled href="#/termsofuse">{t('footer:termsofuse')}</LinkStyled>
+      </div>
     </LeftWrapper>
   );
 };
@@ -65,20 +69,51 @@ const RightSide = () => {
 
 const Container = styled.footer`
   ${FlexDisplay.CSS}
+
   box-sizing: border-box;
   padding: ${spacings.default}px ${spacings.default * 2}px;
   width: 100%;
   position: relative;
 
   ${media.xsOnly`
-    padding: ${spacings.default}px ${spacings.default}px;
+    flex-wrap: wrap;
+     padding: ${spacings.default}px ${spacings.default}px;
   `}
 `;
 
-const LeftWrapper = styled.div``;
+const LeftWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  color: ${() => '#595959'};
+
+  a {
+    color: ${() => '#595959'};
+  }
+  ${media.xsOnly`
+      display: block;
+  `}
+`;
 
 const RightWrapper = styled(FlexAlignMiddle.Component)`
   margin-left: auto;
+  ${media.xxsOnly`
+    display: none;
+  `}
 `;
 
+const CopyrightWrapper = styled.div`
+  margin: 0 ${spacings.default * 2}px 0 0;
+  ${media.xsOnly`
+    margin: 0 ${spacings.default}px 0 0;
+  `}
+`;
+
+const LinkStyled = styled(Href)`
+  margin: 0 ${spacings.default * 2}px 0 0;
+
+  ${media.xsOnly`
+      margin: ${spacings.default / 2}px 0 0 0;
+      display: block;
+  `}
+`;
 export { FooterHome };

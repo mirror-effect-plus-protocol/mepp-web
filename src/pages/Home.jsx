@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
 import { FlexDisplay, WrapperFull } from '@styles/tools/index';
+import { rem } from '@styles/utils/rem';
 
 import { theme } from '@themes/index';
 
@@ -33,7 +34,8 @@ import HomeLayout from '@layouts/Home';
 
 import { FooterHome } from '@components/footer/FooterHome';
 import { FinancialAid } from '@components/generics/FinancialAid';
-import { H1, H3, LI, P, UL, Href } from '@components/generics/basics/index';
+import ImageRounded from '@components/generics/ImageRounded';
+import { H1, H2, H3, LI, P, UL, Href } from '@components/generics/basics/index';
 import Button from '@components/generics/buttons/Button';
 import { GridOneColumn } from '@components/grids/GridOneColumn';
 import { GridTwoColumn } from '@components/grids/GridTwoColumn';
@@ -48,8 +50,10 @@ const HomePage = () => {
       header={<HeaderHome />}
       content={
         <ContainerWrapper>
-          <GridInner>
-            <GridTwoColumn left={<IntroText />} right={<IntroImage />} />
+          <GridHeroInner id="intro">
+            <GridTwoColumn left={<IntroLeft />} right={<IntroRight />} />
+          </GridHeroInner>
+          <GridInner id="financial">
             <GridOneColumn content={<IntroFinancial />} />
           </GridInner>
           <Liner />
@@ -73,23 +77,32 @@ const HomePage = () => {
   );
 };
 
-const IntroText = () => {
+const IntroLeft = () => {
   const { t } = useTranslation();
   return (
-    <>
-      <H1>{t('home:intro:title')}</H1>
-      <P>{t('home:intro:text')}</P>
-    </>
+    <IntroLeftWrapper>
+      <TitleH1>{t('home:intro:title')}</TitleH1>
+      <TextP>{t('home:intro:text')}</TextP>
+      <ButtonDonate
+        label={t('cta:donate')}
+        onClick={() => {
+          var elem = document.getElementById('donate');
+          if (elem) {
+            window.scrollTo(elem.offsetLeft, elem.offsetTop - 150);
+          }
+        }}
+      />
+    </IntroLeftWrapper>
   );
 };
-const IntroImage = () => {
-  return <img src="/assets/home-intro.jpg" width="100%" />;
+const IntroRight = () => {
+  return <ImageRounded src="/assets/home-intro.jpg" height="100%" />;
 };
 const IntroFinancial = () => {
   const { t } = useTranslation();
   return (
     <>
-      <H1 as="h2">{t('home:intro:financialTitle')}</H1>
+      <TitleH2Financial>{t('home:intro:financialTitle')}</TitleH2Financial>
       <FinancialAid />
     </>
   );
@@ -208,19 +221,85 @@ const DonateWidget = () => {
 
 const ContainerWrapper = styled(WrapperFull)``;
 
+const GridHeroInner = styled(WrapperFull)`
+  padding: 0 0 ${spacings.default * 2}px ${spacings.default * 2}px;
+
+  ${media.xsOnly`
+    padding: 0 ${spacings.default}px;
+  `}
+
+  ${media.smOnly`
+    padding: 0 ${spacings.default}px;
+  `}
+`;
+
 const GridInner = styled.div`
   padding: ${spacings.default * 2}px;
   ${({ background }) => `background-color: ${background}`};
 
   ${media.xsOnly`
-    padding: ${spacings.default}px;
+    padding: ${spacings.default * 2}px ${spacings.default}px;
   `}
+
+  ${media.smOnly`
+    padding: ${spacings.default * 2}px ${spacings.default}px;
+  `}
+`;
+
+const IntroLeftWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  height: 100%;
 `;
 
 const Liner = styled.div`
   width: 100%;
   height: 1px;
-  background: #000000;
+  background: #d2d2d2;
+`;
+
+const TitleH1 = styled(H1)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 300;
+  line-height: 1.2;
+  font-size: ${rem(60)};
+
+  ${media.xxsOnly`
+    font-size: ${rem(32)};
+  `}
+`;
+const TitleH2Financial = styled(H2)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 300;
+  line-height: 1.2;
+  font-size: ${rem(32)};
+
+  ${media.xxsOnly`
+    font-size: ${rem(24)};
+    margin: 0 0 ${rem(spacings.default)} 0;
+  `}
+`;
+
+const TextP = styled(P)`
+  color: ${() => '#595959'};
+  font-weight: 400;
+  line-height: 1.5;
+  font-size: ${rem(20)};
+
+  ${media.xxsOnly`
+    font-size: ${rem(15)};
+  `}
+`;
+
+const ButtonDonate = styled(Button.Default)`
+  width: 100%;
+  margin: ${spacings.default}px 0 0 0;
+  display: none;
+
+  @media screen and (max-width: 520px) {
+    display: block;
+  }
 `;
 
 export default HomePage;

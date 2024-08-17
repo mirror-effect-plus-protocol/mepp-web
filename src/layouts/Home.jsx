@@ -65,13 +65,13 @@ const HomeLayout = ({ header, content, footer }) => {
 const CellHeader = styled(Cell)`
   position: fixed;
   width: 100%;
-  color: ${({ theme }) => theme.colors.textInverse};
+  color: ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.white};
   z-index: 2;
 `;
 
 const CellContent = styled(Cell)`
-  color: ${({ theme }) => theme.colors.textInverse};
+  color: ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.white};
   margin-top: 152px;
 
@@ -81,7 +81,7 @@ const CellContent = styled(Cell)`
 `;
 
 const CellFooter = styled(Cell)`
-  color: ${({ theme }) => theme.colors.textInverse};
+  color: ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.white};
 `;
 

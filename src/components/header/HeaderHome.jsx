@@ -68,20 +68,22 @@ const RightSide = () => {
 
   return (
     <RightWrapper>
-      <Button.Transparent
+      <ButtonNav
         label={t('cta:description')}
         onClick={() => {
           gotoAnchor('description');
         }}
       />
-      <Button.Transparent
+      <ButtonNav
         label={t('cta:history')}
         onClick={() => {
           gotoAnchor('history');
         }}
       />
-      <LocaleSwitcher />
-      <Button.Default
+      <ButtonLocalSwitcher>
+        <LocaleSwitcher />
+      </ButtonLocalSwitcher>
+      <ButtonDonate
         label={t('cta:donate')}
         onClick={() => {
           gotoAnchor('donate');
@@ -94,6 +96,9 @@ const RightSide = () => {
           window.location.href = '#/intro';
         }}
       />
+      <ButtonLocalSwitcherIcon>
+        <LocaleSwitcher iconOnly />
+      </ButtonLocalSwitcherIcon>
     </RightWrapper>
   );
 };
@@ -134,6 +139,30 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
     ${media.xsOnly`
       margin: 0 ${spacings.default / 2}px;
     `}
+  }
+`;
+
+const ButtonNav = styled(Button.Transparent)`
+  @media screen and (max-width: 1200px) {
+    display: none;
+  }
+`;
+
+const ButtonDonate = styled(Button.Default)`
+  @media screen and (max-width: 520px) {
+    display: none;
+  }
+`;
+
+const ButtonLocalSwitcherIcon = styled.div`
+  @media screen and (min-width: 640px) {
+    display: none;
+  }
+`;
+
+const ButtonLocalSwitcher = styled.div`
+  @media screen and (max-width: 640px) {
+    display: none;
   }
 `;
 
