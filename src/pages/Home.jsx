@@ -23,9 +23,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
+import IconArrow from '@assets/icons/arrow.svg';
+
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
-import { FlexDisplay, WrapperFull } from '@styles/tools/index';
+import { Cell, Grid, WrapperFull } from '@styles/tools/index';
+import { HoverOrActive } from '@styles/utils/HoverOrActive';
 import { rem } from '@styles/utils/rem';
 
 import { theme } from '@themes/index';
@@ -51,7 +54,11 @@ const HomePage = () => {
       content={
         <ContainerWrapper>
           <GridHeroInner id="intro">
-            <GridTwoColumn left={<IntroLeft />} right={<IntroRight />} />
+            <GridTwoColumn
+              left={<IntroLeft />}
+              right={<IntroRight />}
+              fullHeight
+            />
           </GridHeroInner>
           <GridInner id="financial">
             <GridOneColumn content={<IntroFinancial />} />
@@ -84,6 +91,7 @@ const IntroLeft = () => {
       <TitleH1>{t('home:intro:title')}</TitleH1>
       <TextP>{t('home:intro:text')}</TextP>
       <ButtonDonate
+        hide
         label={t('cta:donate')}
         onClick={() => {
           var elem = document.getElementById('donate');
@@ -132,41 +140,73 @@ const DescriptionText = () => {
 
   return (
     <>
-      <H1 as="h2">{t('home:description:title')}</H1>
-      <P>{t('home:description:text')}</P>
-      <Button.Default
+      <TitleH2>{t('home:description:title')}</TitleH2>
+      <TextP>{t('home:description:text')}</TextP>
+      <ButtonDonate
         label={t('cta:donate')}
         onClick={() => {
           var elem = document.getElementById('donate');
           if (elem) {
-            window.scrollTo(elem.offsetLeft, elem.offsetTop);
+            window.scrollTo(elem.offsetLeft, elem.offsetTop - 150);
           }
         }}
       />
-
-      <FlexDisplay.Component as="ul">
+      <DescriptionLogosWrapper
+        columns="repeat(auto-fit, minmax(0px, 1fr));"
+        responsiveTemplate={{ xxsOnly: 'repeat(2, minmax(0px, 1fr));' }}
+        gap={`${spacings.default / 2}px`}
+        as="ul"
+      >
         {items.map((item, key) => (
-          <LI key={key}>
+          <DescriptionLogo key={key} as="li">
             <Href href={item.link} target="_blank">
               <img src={item.img} width="100%" />
             </Href>
-          </LI>
+          </DescriptionLogo>
         ))}
-      </FlexDisplay.Component>
+      </DescriptionLogosWrapper>
     </>
   );
 };
 const DescriptionList = () => {
   const { t } = useTranslation();
+
+  const items = [
+    {
+      text: t('home:description:list:item1:text'),
+      link: 'https://www.google.ca/',
+    },
+    {
+      text: t('home:description:list:item2:text'),
+      link: 'https://www.google.ca/',
+    },
+    {
+      text: t('home:description:list:item3:text'),
+      link: 'https://www.google.ca/',
+    },
+    {
+      text: t('home:description:list:item4:text'),
+      link: 'https://www.google.ca/',
+    },
+  ];
+
   return (
     <>
-      <H3>{t('home:description:list:title')}</H3>
-      <UL>
-        <LI>{t('home:description:list:item1:text')}</LI>
-        <LI>{t('home:description:list:item2:text')}</LI>
-        <LI>{t('home:description:list:item3:text')}</LI>
-        <LI>{t('home:description:list:item4:text')}</LI>
-      </UL>
+      <TitleH3Etudes>{t('home:description:list:title')}</TitleH3Etudes>
+      <Liner />
+      <DescriptionListWrapper>
+        {items.map((item, key) => (
+          <>
+            <DescriptionLink key={key} as="li">
+              <Href href="#" target="_blank">
+                {t('home:description:list:item1:text')}
+              </Href>
+              <IconArrowStyled />
+            </DescriptionLink>
+            {key !== items.length - 1 && <Liner />}
+          </>
+        ))}
+      </DescriptionListWrapper>
     </>
   );
 };
@@ -269,6 +309,16 @@ const TitleH1 = styled(H1)`
     font-size: ${rem(32)};
   `}
 `;
+const TitleH2 = styled(H2)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 300;
+  line-height: 1.2;
+  font-size: ${rem(60)};
+  margin: 0 0 ${rem(spacings.default)} 0;
+  ${media.xxsOnly`
+    font-size: ${rem(32)};
+  `}
+`;
 const TitleH2Financial = styled(H2)`
   color: ${({ theme }) => theme.colors.black};
   font-weight: 300;
@@ -278,6 +328,16 @@ const TitleH2Financial = styled(H2)`
   ${media.xxsOnly`
     font-size: ${rem(24)};
     margin: 0 0 ${rem(spacings.default)} 0;
+  `}
+`;
+const TitleH3Etudes = styled(H3)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 700;
+  line-height: 1.6;
+  font-size: ${rem(18)};
+  margin: 0 0 ${rem(spacings.default)} 0;
+  ${media.xxsOnly`
+
   `}
 `;
 
@@ -292,12 +352,59 @@ const TextP = styled(P)`
   `}
 `;
 
-const ButtonDonate = styled(Button.Default)`
-  width: 100%;
+const DescriptionLogosWrapper = styled(Grid)`
   margin: ${spacings.default}px 0 0 0;
-  display: none;
+  max-width: 600px;
+
+  ${media.xxsOnly`
+    max-width: 300px;
+  `}
+`;
+const DescriptionLogo = styled(Cell)`
+  list-style: none;
+  padding: 0;
+  opacity: 0.6;
+  align-content: center;
+  margin: 0 ${spacings.default / 2}px 0 0;
+
+  img {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+  }
+
+  ${HoverOrActive`
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  `}
+`;
+const DescriptionListWrapper = styled(UL)`
+  margin: 0;
+`;
+const DescriptionLink = styled(LI)`
+  position: relative;
+  list-style: none;
+  padding: ${spacings.default}px ${spacings.default}px ${spacings.default}px 0;
+  a {
+    display: block;
+    width: 90%;
+    color ${theme.colors.primary};
+
+    ${HoverOrActive`
+      color: ${theme.colors.black};
+    `}
+  }
+`;
+const IconArrowStyled = styled(IconArrow)`
+  position: absolute;
+  right: 0;
+  top: ${spacings.default}px;
+`;
+const ButtonDonate = styled(Button.Default)`
+  margin: ${spacings.default}px 0 0 0;
+  ${({ hide }) => hide && `display: none;`};
 
   @media screen and (max-width: 520px) {
+    width: 100%;
     display: block;
   }
 `;
