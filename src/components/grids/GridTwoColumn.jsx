@@ -7,7 +7,7 @@ import { Cell, Grid } from '@styles/tools/index';
 /**
  * HomePage grid section
  */
-const GridTwoColumn = ({ left, right, background }) => {
+const GridTwoColumn = ({ left, right, background, fullHeight }) => {
   return (
     <GridWrapper
       as="section"
@@ -15,6 +15,7 @@ const GridTwoColumn = ({ left, right, background }) => {
       responsiveTemplate={{ smOnly: '1fr', xsOnly: '1fr' }}
       background={background}
       gap={`${spacings.default}px`}
+      fullHeight={fullHeight}
     >
       <CellItem>{left}</CellItem>
       <CellItem>{right}</CellItem>
@@ -23,7 +24,7 @@ const GridTwoColumn = ({ left, right, background }) => {
 };
 
 const GridWrapper = styled(Grid)`
-  min-height: calc(100vh - 200px);
+  ${({ fullHeight }) => fullHeight && `  min-height: calc(100vh - 200px);`}
 `;
 
 const CellItem = styled(Cell)``;
