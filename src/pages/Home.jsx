@@ -23,6 +23,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
+import IconArrow from '@assets/icons/arrow.svg';
+
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
 import { Cell, Grid, WrapperFull } from '@styles/tools/index';
@@ -168,15 +170,43 @@ const DescriptionText = () => {
 };
 const DescriptionList = () => {
   const { t } = useTranslation();
+
+  const items = [
+    {
+      text: t('home:description:list:item1:text'),
+      link: 'https://www.google.ca/',
+    },
+    {
+      text: t('home:description:list:item2:text'),
+      link: 'https://www.google.ca/',
+    },
+    {
+      text: t('home:description:list:item3:text'),
+      link: 'https://www.google.ca/',
+    },
+    {
+      text: t('home:description:list:item4:text'),
+      link: 'https://www.google.ca/',
+    },
+  ];
+
   return (
     <>
-      <H3>{t('home:description:list:title')}</H3>
-      <UL>
-        <LI>{t('home:description:list:item1:text')}</LI>
-        <LI>{t('home:description:list:item2:text')}</LI>
-        <LI>{t('home:description:list:item3:text')}</LI>
-        <LI>{t('home:description:list:item4:text')}</LI>
-      </UL>
+      <TitleH3Etudes>{t('home:description:list:title')}</TitleH3Etudes>
+      <Liner />
+      <DescriptionListWrapper>
+        {items.map((item, key) => (
+          <>
+            <DescriptionLink key={key} as="li">
+              <Href href="#" target="_blank">
+                {t('home:description:list:item1:text')}
+              </Href>
+              <IconArrowStyled />
+            </DescriptionLink>
+            {key !== items.length - 1 && <Liner />}
+          </>
+        ))}
+      </DescriptionListWrapper>
     </>
   );
 };
@@ -300,6 +330,16 @@ const TitleH2Financial = styled(H2)`
     margin: 0 0 ${rem(spacings.default)} 0;
   `}
 `;
+const TitleH3Etudes = styled(H3)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 700;
+  line-height: 1.6;
+  font-size: ${rem(18)};
+  margin: 0 0 ${rem(spacings.default)} 0;
+  ${media.xxsOnly`
+
+  `}
+`;
 
 const TextP = styled(P)`
   color: ${() => '#595959'};
@@ -337,7 +377,28 @@ const DescriptionLogo = styled(Cell)`
     transition: opacity 0.2s ease;
   `}
 `;
+const DescriptionListWrapper = styled(UL)`
+  margin: 0;
+`;
+const DescriptionLink = styled(LI)`
+  position: relative;
+  list-style: none;
+  padding: ${spacings.default}px ${spacings.default}px ${spacings.default}px 0;
+  a {
+    display: block;
+    width: 90%;
+    color ${theme.colors.primary};
 
+    ${HoverOrActive`
+      color: ${theme.colors.black};
+    `}
+  }
+`;
+const IconArrowStyled = styled(IconArrow)`
+  position: absolute;
+  right: 0;
+  top: ${spacings.default}px;
+`;
 const ButtonDonate = styled(Button.Default)`
   margin: ${spacings.default}px 0 0 0;
   ${({ hide }) => hide && `display: none;`};
