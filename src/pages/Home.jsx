@@ -215,39 +215,43 @@ const HistoryList = () => {
   const { t } = useTranslation();
   return (
     <>
-      <TitleH2>{t('home:history:title')}</TitleH2>
+      <TitleH2
+        dangerouslySetInnerHTML={{
+          __html: t('home:history:title'),
+        }}
+      ></TitleH2>
       <HistoryListWrapper>
         <HistoryPerson>
           <HistoryPersonImage>
-            <ImageRounded src="/assets/home-intro.jpg" />
+            <ImageRounded src="/assets/photo-sarah.jpg" />
           </HistoryPersonImage>
           <HistoryPersonText>
             <TitleH3Person>
               {t('home:history:persons:person1:name')}
             </TitleH3Person>
-            <TextP>{t('home:history:persons:person1:title')}</TextP>
+            <TextPersonP>{t('home:history:persons:person1:title')}</TextPersonP>
           </HistoryPersonText>
         </HistoryPerson>
         <HistoryPerson>
           <HistoryPersonImage>
-            <ImageRounded src="/assets/home-intro.jpg" />
+            <ImageRounded src="/assets/photo-karine.jpg" />
           </HistoryPersonImage>
           <HistoryPersonText>
             <TitleH3Person>
               {t('home:history:persons:person2:name')}
             </TitleH3Person>
-            <TextP>{t('home:history:persons:person2:title')}</TextP>
+            <TextPersonP>{t('home:history:persons:person2:title')}</TextPersonP>
           </HistoryPersonText>
         </HistoryPerson>
         <HistoryPerson>
           <HistoryPersonImage>
-            <ImageRounded src="/assets/home-intro.jpg" />
+            <ImageRounded src="/assets/photo-akram.jpg" />
           </HistoryPersonImage>
           <HistoryPersonText>
             <TitleH3Person>
               {t('home:history:persons:person3:name')}
             </TitleH3Person>
-            <TextP>{t('home:history:persons:person3:title')}</TextP>
+            <TextPersonP>{t('home:history:persons:person3:title')}</TextPersonP>
           </HistoryPersonText>
         </HistoryPerson>
       </HistoryListWrapper>
@@ -335,7 +339,7 @@ const TitleH2 = styled(H2)`
   margin: 0 0 ${rem(spacings.default)} 0;
 
   ${media.xxsOnly`
-    font-size: ${rem(21)};
+    font-size: ${rem(32)};
   `}
 `;
 const TitleH2Financial = styled(H2)`
@@ -363,11 +367,14 @@ const TitleH3Person = styled(H3)`
   color: ${({ theme }) => theme.colors.black};
   font-weight: 300;
   line-height: 1;
-  font-size: ${rem(50)};
+  font-size: ${rem(48)};
   margin: 0 0 ${rem(spacings.default)} 0;
   max-width: 250px;
+
   ${media.xxsOnly`
-    font-size: ${rem(32)};
+    max-width: 100%;
+    font-size: ${rem(24)};
+    margin: 0 0 ${rem(spacings.default / 2)} 0;
   `}
 `;
 
@@ -378,8 +385,11 @@ const TextP = styled(P)`
   font-size: ${rem(20)};
 
   ${media.xxsOnly`
-    font-size: ${rem(15)};
+    font-size: ${rem(18)};
   `}
+`;
+const TextPersonP = styled(TextP)`
+  max-width: 90%;
 `;
 
 const IntroImageRounded = ({ src }) => {
@@ -450,7 +460,12 @@ const DescriptionLink = styled(LI)`
   }
 `;
 
-const HistoryListWrapper = styled(UL)``;
+const HistoryListWrapper = styled(UL)`
+  margin: ${spacings.default * 3}px 0 ${spacings.default}px 0;
+  ${media.xxsOnly`
+    margin: ${spacings.default * 2}px 0 ${spacings.default}px 0;
+  `}
+`;
 const HistoryPerson = styled(LI)`
   ${FlexDisplay.CSS}
   align-items: center;
@@ -461,14 +476,28 @@ const HistoryPerson = styled(LI)`
   &:last-child {
     margin: 0;
   }
+
+  ${media.xxsOnly`
+    flex-wrap: wrap;
+  `}
 `;
+
 const HistoryPersonImage = styled.div`
   width: 100%;
   height: 220px;
   max-width: 220px;
   margin: 0 ${spacings.default * 2}px 0 0;
+
+  ${media.xxsOnly`
+    width: 100%;
+    height: calc(100vw - ${spacings.default * 2}px);;
+    max-width: 100%;
+    margin: 0px 0px ${spacings.default}px 0px;
+  `}
 `;
-const HistoryPersonText = styled.div``;
+const HistoryPersonText = styled.div`
+  width: 100%;
+`;
 
 const IconArrowStyled = styled(IconArrow)`
   position: absolute;
