@@ -271,14 +271,20 @@ const HistoryText = () => {
 const DonateText = () => {
   const { t } = useTranslation();
   return (
-    <>
-      <H1 as="h2">{t('home:donate:title')}</H1>
-      <P>{t('home:donate:text')}</P>
-    </>
+    <DonateLeftWrapper>
+      <TitleH2>{t('home:donate:title')}</TitleH2>
+      <TextP>{t('home:donate:text')}</TextP>
+    </DonateLeftWrapper>
   );
 };
 const DonateWidget = () => {
-  return <>Donate Widget</>;
+  return (
+    <DonateRightWrapper>
+      <DonateWidgetWrapper>
+        <TextP>Donation Widget</TextP>
+      </DonateWidgetWrapper>
+    </DonateRightWrapper>
+  );
 };
 
 const ContainerWrapper = styled(WrapperFull)``;
@@ -312,6 +318,19 @@ const IntroLeftWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-content: center;
+  height: 100%;
+`;
+
+const DonateLeftWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  height: 100%;
+`;
+const DonateRightWrapper = styled.div`
+  display: flex;
+  align-content: center;
+  justify-content: center;
   height: 100%;
 `;
 
@@ -497,6 +516,14 @@ const HistoryPersonImage = styled.div`
 `;
 const HistoryPersonText = styled.div`
   width: 100%;
+`;
+
+const DonateWidgetWrapper = styled.div`
+  width: 312px;
+  height: 512px;
+  background: #fff;
+  border-radius: 10px;
+  color: #000;
 `;
 
 const IconArrowStyled = styled(IconArrow)`
