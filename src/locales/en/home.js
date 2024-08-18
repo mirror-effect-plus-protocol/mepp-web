@@ -50,7 +50,7 @@ export default {
     },
     history: {
       title:
-        'Environ 15,4 millions de personnes par année dans le monde auront une paralysie faciale, occasionnée par la paralysie de Bell ou un AVC.',
+        'Environ <span style="color:#008EDE;">15,4 millions</span> de personnes par année dans le monde auront une paralysie faciale, occasionnée par la paralysie de Bell ou un AVC.',
       text1:
         'Environ 15,4 millions (M) de personnes par année dans le monde auront une paralysie faciale, occasionnée par la paralysie de Bell ou un AVC (Feigin et al, 2022). Ceci représente ≈110,000 et ≈23,000 personnes chaque année au Canada et au Québec. Pour ces personnes, la réadaptation est donc essentielle pour favoriser la récupération des fonctions et pour améliorer leur qualité de vie. La réadaptation se fait grâce au travail conjoint des patients.tes avec des professionnels.les de la santé, spécialisés.es dans la l’évaluation et la rééducation de la paralysie faciale. Or, pour ces professionnels.les, très peu d’outils spécialisés et basés sur les données probantes sont actuellement disponibles. Ils doivent donc principalement travailler en explorant, à tâtons, une littérature foisonnante et disparate, ce qui entrave l’efficacité de leurs interventions, et peut mener à de moins bons résultats cliniques.',
       text2:

@@ -27,7 +27,7 @@ import IconArrow from '@assets/icons/arrow.svg';
 
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
-import { Cell, Grid, WrapperFull } from '@styles/tools/index';
+import { Cell, FlexDisplay, Grid, WrapperFull } from '@styles/tools/index';
 import { HoverOrActive } from '@styles/utils/HoverOrActive';
 import { rem } from '@styles/utils/rem';
 
@@ -104,7 +104,7 @@ const IntroLeft = () => {
   );
 };
 const IntroRight = () => {
-  return <ImageRounded src="/assets/home-intro.jpg" height="100%" />;
+  return <IntroImageRounded src="/assets/home-intro.jpg" height="100%" />;
 };
 const IntroFinancial = () => {
   const { t } = useTranslation();
@@ -215,24 +215,46 @@ const HistoryList = () => {
   const { t } = useTranslation();
   return (
     <>
-      <H1 as="h2">{t('home:history:title')}</H1>
-      <UL>
-        <LI>
-          <img src="/assets/home-intro.jpg" width="220" />
-          <H3>{t('home:history:persons:person1:name')}</H3>
-          <P>{t('home:history:persons:person1:title')}</P>
-        </LI>
-        <LI>
-          <img src="/assets/home-intro.jpg" width="220" />
-          <H3>{t('home:history:persons:person2:name')}</H3>
-          <P>{t('home:history:persons:person2:title')}</P>
-        </LI>
-        <LI>
-          <img src="/assets/home-intro.jpg" width="220" />
-          <H3>{t('home:history:persons:person3:name')}</H3>
-          <P>{t('home:history:persons:person3:title')}</P>
-        </LI>
-      </UL>
+      <TitleH2
+        dangerouslySetInnerHTML={{
+          __html: t('home:history:title'),
+        }}
+      ></TitleH2>
+      <HistoryListWrapper>
+        <HistoryPerson>
+          <HistoryPersonImage>
+            <ImageRounded src="/assets/photo-sarah.jpg" />
+          </HistoryPersonImage>
+          <HistoryPersonText>
+            <TitleH3Person>
+              {t('home:history:persons:person1:name')}
+            </TitleH3Person>
+            <TextPersonP>{t('home:history:persons:person1:title')}</TextPersonP>
+          </HistoryPersonText>
+        </HistoryPerson>
+        <HistoryPerson>
+          <HistoryPersonImage>
+            <ImageRounded src="/assets/photo-karine.jpg" />
+          </HistoryPersonImage>
+          <HistoryPersonText>
+            <TitleH3Person>
+              {t('home:history:persons:person2:name')}
+            </TitleH3Person>
+            <TextPersonP>{t('home:history:persons:person2:title')}</TextPersonP>
+          </HistoryPersonText>
+        </HistoryPerson>
+        <HistoryPerson>
+          <HistoryPersonImage>
+            <ImageRounded src="/assets/photo-akram.jpg" />
+          </HistoryPersonImage>
+          <HistoryPersonText>
+            <TitleH3Person>
+              {t('home:history:persons:person3:name')}
+            </TitleH3Person>
+            <TextPersonP>{t('home:history:persons:person3:title')}</TextPersonP>
+          </HistoryPersonText>
+        </HistoryPerson>
+      </HistoryListWrapper>
     </>
   );
 };
@@ -240,8 +262,8 @@ const HistoryText = () => {
   const { t } = useTranslation();
   return (
     <>
-      <P>{t('home:history:text1')}</P>
-      <P>{t('home:history:text2')}</P>
+      <TextP>{t('home:history:text1')}</TextP>
+      <TextP>{t('home:history:text2')}</TextP>
     </>
   );
 };
@@ -313,8 +335,9 @@ const TitleH2 = styled(H2)`
   color: ${({ theme }) => theme.colors.black};
   font-weight: 300;
   line-height: 1.2;
-  font-size: ${rem(60)};
+  font-size: ${rem(48)};
   margin: 0 0 ${rem(spacings.default)} 0;
+
   ${media.xxsOnly`
     font-size: ${rem(32)};
   `}
@@ -340,6 +363,20 @@ const TitleH3Etudes = styled(H3)`
 
   `}
 `;
+const TitleH3Person = styled(H3)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 300;
+  line-height: 1;
+  font-size: ${rem(48)};
+  margin: 0 0 ${rem(spacings.default)} 0;
+  max-width: 250px;
+
+  ${media.xxsOnly`
+    max-width: 100%;
+    font-size: ${rem(24)};
+    margin: 0 0 ${rem(spacings.default / 2)} 0;
+  `}
+`;
 
 const TextP = styled(P)`
   color: ${() => '#595959'};
@@ -348,7 +385,35 @@ const TextP = styled(P)`
   font-size: ${rem(20)};
 
   ${media.xxsOnly`
-    font-size: ${rem(15)};
+    font-size: ${rem(18)};
+  `}
+`;
+const TextPersonP = styled(TextP)`
+  max-width: 90%;
+`;
+
+const IntroImageRounded = ({ src }) => {
+  return <Image src={src} />;
+};
+
+const Image = styled.div`
+  border-radius: ${spacings.default * 1.5}px 0 0 ${spacings.default * 1.5}px;
+  background-image: ${({ src }) => `url('${src}')`};
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+
+  ${media.xsOnly`
+    border-radius: ${spacings.default}px;
+    min-height: 400px;
+  `}
+
+  ${media.smOnly`
+    border-radius: ${spacings.default}px;
+    min-height: 400px;
   `}
 `;
 
@@ -394,6 +459,46 @@ const DescriptionLink = styled(LI)`
     `}
   }
 `;
+
+const HistoryListWrapper = styled(UL)`
+  margin: ${spacings.default * 3}px 0 ${spacings.default}px 0;
+  ${media.xxsOnly`
+    margin: ${spacings.default * 2}px 0 ${spacings.default}px 0;
+  `}
+`;
+const HistoryPerson = styled(LI)`
+  ${FlexDisplay.CSS}
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 ${spacings.default * 2}px 0;
+
+  &:last-child {
+    margin: 0;
+  }
+
+  ${media.xxsOnly`
+    flex-wrap: wrap;
+  `}
+`;
+
+const HistoryPersonImage = styled.div`
+  width: 100%;
+  height: 220px;
+  max-width: 220px;
+  margin: 0 ${spacings.default * 2}px 0 0;
+
+  ${media.xxsOnly`
+    width: 100%;
+    height: calc(100vw - ${spacings.default * 2}px);;
+    max-width: 100%;
+    margin: 0px 0px ${spacings.default}px 0px;
+  `}
+`;
+const HistoryPersonText = styled.div`
+  width: 100%;
+`;
+
 const IconArrowStyled = styled(IconArrow)`
   position: absolute;
   right: 0;

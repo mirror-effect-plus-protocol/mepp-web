@@ -9,23 +9,20 @@ const ImageRounded = ({ src }) => {
 };
 
 const Image = styled.div`
-  border-radius: ${spacings.default * 1.5}px 0 0 ${spacings.default * 1.5}px;
+  border-radius: ${spacings.default * 1.5}px;
   background-image: ${({ src }) => `url('${src}')`};
   background-size: cover;
   background-position: center center;
   overflow: hidden;
   width: 100%;
   height: 100%;
-  min-height: 500px;
 
   ${media.xsOnly`
     border-radius: ${spacings.default}px;
-    min-height: 400px;
   `}
 
   ${media.smOnly`
     border-radius: ${spacings.default}px;
-    min-height: 400px;
   `}
 `;
 
