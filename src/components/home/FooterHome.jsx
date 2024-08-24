@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
 import { FlexAlignMiddle, FlexDisplay } from '@styles/tools';
+import { HoverOrActive } from '@styles/utils/HoverOrActive';
 
 import { Copyright } from '@components/generics/Copyright';
 import LocaleSwitcher from '@components/generics/LocaleSwitcher';
@@ -52,8 +53,8 @@ const LeftSide = () => {
         <Copyright />
       </CopyrightWrapper>
       <div>
-        <LinkStyled href="#/privacy">{t('footer:privacy')}</LinkStyled>
-        <LinkStyled href="#/termsofuse">{t('footer:termsofuse')}</LinkStyled>
+        <Link href="#/privacy">{t('footer:privacy')}</Link>
+        <Link href="#/termsofuse">{t('footer:termsofuse')}</Link>
       </div>
     </LeftWrapper>
   );
@@ -77,20 +78,24 @@ const Container = styled.footer`
 
   ${media.xsOnly`
     flex-wrap: wrap;
-     padding: ${spacings.default}px ${spacings.default}px;
+    padding: ${spacings.default}px ${spacings.default}px;
   `}
 `;
 
 const LeftWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  color: ${() => '#595959'};
+  color: ${({ theme }) => theme.colors.greyMedium};
 
   a {
-    color: ${() => '#595959'};
+    color: ${({ theme }) => theme.colors.greyMedium};
+    ${HoverOrActive`
+      color: ${({ theme }) => theme.colors.primary};
+    `}
   }
+
   ${media.xsOnly`
-      display: block;
+    display: block;
   `}
 `;
 
@@ -108,7 +113,7 @@ const CopyrightWrapper = styled.div`
   `}
 `;
 
-const LinkStyled = styled(Href)`
+const Link = styled(Href)`
   margin: 0 ${spacings.default * 2}px 0 0;
 
   ${media.xsOnly`
@@ -116,4 +121,5 @@ const LinkStyled = styled(Href)`
       display: block;
   `}
 `;
+
 export { FooterHome };

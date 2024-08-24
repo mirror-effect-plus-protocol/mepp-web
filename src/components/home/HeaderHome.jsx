@@ -20,6 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import { usePermissions } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -33,7 +34,7 @@ import LocaleSwitcher from '@components/generics/LocaleSwitcher';
 import Button from '@components/generics/buttons/Button';
 
 /**
- * Header with Logo and login navigation
+ * Header Home with Logo, Anchors and Donate/Login navigation
  */
 const HeaderHome = () => {
   return (
@@ -58,23 +59,22 @@ const LeftSide = () => {
 
 const RightSide = () => {
   const { t } = useTranslation();
+  const { permissions } = usePermissions();
 
   const gotoAnchor = (id) => {
     var elem = document.getElementById(id);
-    if (elem) {
-      window.scrollTo(elem.offsetLeft, elem.offsetTop - 150);
-    }
+    if (elem) window.scrollTo(elem.offsetLeft, elem.offsetTop - 150);
   };
 
   return (
     <RightWrapper>
-      <ButtonNav
+      <ButtonAnchor
         label={t('cta:description')}
         onClick={() => {
           gotoAnchor('description');
         }}
       />
-      <ButtonNav
+      <ButtonAnchor
         label={t('cta:history')}
         onClick={() => {
           gotoAnchor('history');
@@ -89,13 +89,24 @@ const RightSide = () => {
           gotoAnchor('donate');
         }}
       />
-      <Button.Outline
-        label={t('cta:connexion')}
-        inverse
-        onClick={() => {
-          window.location.href = '#/intro';
-        }}
-      />
+      {permissions === 'user' ? (
+        <Button.Outline
+          label={t('cta:start_exercise')}
+          inverse
+          onClick={() => {
+            window.location.href = '#/intro';
+          }}
+        />
+      ) : (
+        <Button.Outline
+          label={t('cta:connexion')}
+          inverse
+          onClick={() => {
+            window.location.href = '#/intro';
+          }}
+        />
+      )}
+
       <ButtonLocalSwitcherIcon>
         <LocaleSwitcher iconOnly />
       </ButtonLocalSwitcherIcon>
@@ -105,6 +116,7 @@ const RightSide = () => {
 
 const Container = styled.header`
   ${FlexDisplay.CSS}
+
   box-sizing: border-box;
   padding: ${spacings.default * 2}px;
   width: 100%;
@@ -129,6 +141,7 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
 
   button {
     margin: 0 ${spacings.default}px;
+
     &:last-child {
       margin-right: 0;
     }
@@ -142,7 +155,7 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
   }
 `;
 
-const ButtonNav = styled(Button.Transparent)`
+const ButtonAnchor = styled(Button.Transparent)`
   @media screen and (max-width: 1200px) {
     display: none;
   }

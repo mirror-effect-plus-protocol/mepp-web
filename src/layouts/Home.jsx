@@ -45,19 +45,17 @@ const HomeLayout = ({ header, content, footer }) => {
       areas={['header', 'content', 'footer']}
       gap="0"
     >
-      <div>
-        <CellHeader width={1} area="header" id="header">
-          {header}
-        </CellHeader>
+      <CellHeader width={1} area="header" id="header">
+        {header}
+      </CellHeader>
 
-        <CellContent width={1} area="content" id="content">
-          {content}
-        </CellContent>
+      <CellContent width={1} area="content" id="content">
+        {content}
+      </CellContent>
 
-        <CellFooter width={1} area="footer" id="footer">
-          {footer}
-        </CellFooter>
-      </div>
+      <CellFooter width={1} area="footer" id="footer">
+        {footer}
+      </CellFooter>
     </Grid>
   );
 };
