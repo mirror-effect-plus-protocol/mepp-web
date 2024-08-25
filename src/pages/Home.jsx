@@ -27,7 +27,7 @@ import IconArrow from '@assets/icons/arrow.svg';
 
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
-import { Cell, FlexDisplay, Grid, WrapperFull } from '@styles/tools/index';
+import { Cell, FlexDisplay, Grid, WrapperFull } from '@styles/tools';
 import { HoverOrActive } from '@styles/utils/HoverOrActive';
 import { rem } from '@styles/utils/rem';
 
@@ -36,11 +36,12 @@ import { theme } from '@themes/index';
 import HomeLayout from '@layouts/Home';
 
 import { FinancialAid } from '@components/generics/FinancialAid';
-import ImageRounded from '@components/generics/ImageRounded';
 import { H1, H2, H3, LI, P, UL, Href } from '@components/generics/basics/index';
 import Button from '@components/generics/buttons/Button';
+import DonationWidget from '@components/home/DonationWidget';
 import { FooterHome } from '@components/home/FooterHome';
 import { HeaderHome } from '@components/home/HeaderHome';
+import ImageRounded from '@components/home/ImageRounded';
 
 /**
  * HomePage with HomeLayout
@@ -97,7 +98,7 @@ const IntroLeft = () => {
         label={t('cta:donate')}
         onClick={() => {
           var elem = document.getElementById('donate');
-          if (elem) window.scrollTo(elem.offsetLeft, elem.offsetTop - 150);
+          if (elem) window.scrollTo(elem.offsetLeft, elem.offsetTop - 105);
         }}
       />
     </IntroLeftWrapper>
@@ -203,7 +204,7 @@ const DescriptionLeft = () => {
         label={t('cta:donate')}
         onClick={() => {
           var elem = document.getElementById('donate');
-          if (elem) window.scrollTo(elem.offsetLeft, elem.offsetTop - 150);
+          if (elem) window.scrollTo(elem.offsetLeft, elem.offsetTop - 105);
         }}
       />
       <DescriptionLogosWrapper
@@ -459,9 +460,7 @@ const DonateLeft = () => {
 const DonateRight = () => {
   return (
     <DonateRightWrapper>
-      <DonateWidgetWrapper>
-        <Text>Donation Widget Here</Text>
-      </DonateWidgetWrapper>
+      <DonationWidget />
     </DonateRightWrapper>
   );
 };
@@ -483,16 +482,7 @@ const DonateRightWrapper = styled.div`
   justify-content: center;
   height: 100%;
 `;
-/**
- * Donate Widget Wrapper
- */
-const DonateWidgetWrapper = styled.div`
-  width: 312px;
-  height: 512px;
-  color: ${({ theme }) => theme.colors.black};
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: ${spacings.default / 2}px;
-`;
+
 /***********/
 
 /**

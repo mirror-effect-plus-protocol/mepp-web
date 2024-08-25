@@ -23,6 +23,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { media } from '@styles/configs/breakpoints';
+import { zindex } from '@styles/configs/zindex';
 import { Cell, Grid } from '@styles/tools/index';
 
 /**
@@ -62,16 +63,17 @@ const HomeLayout = ({ header, content, footer }) => {
 
 const CellHeader = styled(Cell)`
   position: fixed;
+  top: 0;
   width: 100%;
   color: ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.white};
-  z-index: 2;
+  z-index: ${zindex.header};
 `;
 
 const CellContent = styled(Cell)`
+  margin-top: 151px;
   color: ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.white};
-  margin-top: 152px;
 
   ${media.xsOnly`
     margin-top: 105px;
