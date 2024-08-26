@@ -33,6 +33,8 @@ import { rem } from '@styles/utils/rem';
 
 import { theme } from '@themes/index';
 
+import { useTrackingView } from '@hooks/useTrackingView';
+
 import HomeLayout from '@layouts/Home';
 
 import { FinancialAid } from '@components/generics/FinancialAid';
@@ -47,6 +49,8 @@ import ImageRounded from '@components/home/ImageRounded';
  * HomePage with HomeLayout
  */
 const HomePage = () => {
+  useTrackingView('/home');
+
   return (
     <HomeLayout
       header={<HeaderHome />}
