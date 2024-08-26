@@ -62,7 +62,7 @@ const LocaleSwitcher = ({ iconOnly }) => {
   return (
     <>
       <Button.Transparent
-        label={!iconOnly && t('languages:' + locale)}
+        label={iconOnly ? '' : t('languages:' + locale)}
         icon={<IconStyledEarth width="100%" height="100%" />}
         secondaryIcon={
           !iconOnly && <IconStyledDropArrow width="100%" height="100%" />
@@ -87,7 +87,7 @@ const LocaleSwitcher = ({ iconOnly }) => {
           sx: {
             '&& .Mui-disabled': {
               backgroundColor: theme.colors.primary,
-              color: '#fff',
+              color: theme.colors.white,
               opacity: 1,
             },
           },

@@ -52,7 +52,7 @@ const ButtonFactory = (Button) => {
         disabled={props.disabled}
       >
         {secondaryIcon && secondaryIcon}
-        {label && label}
+        {label && label !== '' && label}
         {icon && icon}
       </Button>
     );
@@ -205,6 +205,11 @@ const Transparent = styled.button`
 
   body.light & {
     color: ${({ theme }) => theme.colors.black};
+
+    ${HoverOrActive`
+      color: ${({ theme }) => theme.colors.primary};
+      background-color: transparent;
+    `}
   }
 
   ${media.xsOnly`

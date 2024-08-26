@@ -27,85 +27,96 @@ import IconArrow from '@assets/icons/arrow.svg';
 
 import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
-import { Cell, FlexDisplay, Grid, WrapperFull } from '@styles/tools/index';
+import { Cell, FlexDisplay, Grid, WrapperFull } from '@styles/tools';
 import { HoverOrActive } from '@styles/utils/HoverOrActive';
 import { rem } from '@styles/utils/rem';
 
 import { theme } from '@themes/index';
 
+import { useTrackingView } from '@hooks/useTrackingView';
+
 import HomeLayout from '@layouts/Home';
 
-import { FooterHome } from '@components/footer/FooterHome';
 import { FinancialAid } from '@components/generics/FinancialAid';
-import ImageRounded from '@components/generics/ImageRounded';
 import { H1, H2, H3, LI, P, UL, Href } from '@components/generics/basics/index';
 import Button from '@components/generics/buttons/Button';
-import { GridOneColumn } from '@components/grids/GridOneColumn';
-import { GridTwoColumn } from '@components/grids/GridTwoColumn';
-import { HeaderHome } from '@components/header/HeaderHome';
+import DonationWidget from '@components/home/DonationWidget';
+import { FooterHome } from '@components/home/FooterHome';
+import { HeaderHome } from '@components/home/HeaderHome';
+import ImageRounded from '@components/home/ImageRounded';
 
 /**
  * HomePage with HomeLayout
  */
 const HomePage = () => {
+  useTrackingView('/home');
+
   return (
     <HomeLayout
       header={<HeaderHome />}
       content={
-        <ContainerWrapper>
-          <GridHeroInner id="intro">
+        <WrapperFull>
+          <GridIntroInner id="intro">
             <GridTwoColumn
               left={<IntroLeft />}
               right={<IntroRight />}
               fullHeight
             />
-          </GridHeroInner>
+          </GridIntroInner>
           <GridInner id="financial">
             <GridOneColumn content={<IntroFinancial />} />
           </GridInner>
           <Liner />
           <GridInner id="description">
             <GridTwoColumn
-              left={<DescriptionText />}
-              right={<DescriptionList />}
+              left={<DescriptionLeft />}
+              right={<DescriptionRight />}
             />
           </GridInner>
           <Liner />
           <GridInner id="history">
-            <GridTwoColumn left={<HistoryList />} right={<HistoryText />} />
+            <GridTwoColumn left={<HistoryLeft />} right={<HistoryRight />} />
           </GridInner>
           <GridInner background={theme.colors.bluelight} id="donate">
-            <GridTwoColumn left={<DonateText />} right={<DonateWidget />} />
+            <GridTwoColumn left={<DonateLeft />} right={<DonateRight />} />
           </GridInner>
-        </ContainerWrapper>
+        </WrapperFull>
       }
       footer={<FooterHome />}
     />
   );
 };
 
+/**
+ * INTRO SECTION
+ * Intro Left side (text)
+ */
 const IntroLeft = () => {
   const { t } = useTranslation();
   return (
     <IntroLeftWrapper>
       <TitleH1>{t('home:intro:title')}</TitleH1>
-      <TextP>{t('home:intro:text')}</TextP>
+      <Text>{t('home:intro:text')}</Text>
       <ButtonDonate
         hide
         label={t('cta:donate')}
         onClick={() => {
           var elem = document.getElementById('donate');
-          if (elem) {
-            window.scrollTo(elem.offsetLeft, elem.offsetTop - 150);
-          }
+          if (elem) window.scrollTo(elem.offsetLeft, elem.offsetTop - 105);
         }}
       />
     </IntroLeftWrapper>
   );
 };
+/**
+ * Intro Right side (image)
+ */
 const IntroRight = () => {
   return <IntroImageRounded src="/assets/home-intro.jpg" height="100%" />;
 };
+/**
+ * Intro Financial section (logos)
+ */
 const IntroFinancial = () => {
   const { t } = useTranslation();
   return (
@@ -115,11 +126,62 @@ const IntroFinancial = () => {
     </>
   );
 };
+/**
+ * Intro Grid
+ */
+const GridIntroInner = styled(WrapperFull)`
+  padding: 0 0 ${spacings.default * 2}px ${spacings.default * 2}px;
 
-const DescriptionText = () => {
+  ${media.xsOnly`
+    padding: 0 ${spacings.default}px;
+  `}
+
+  ${media.smOnly`
+    padding: 0 ${spacings.default}px;
+  `}
+`;
+/**
+ * Intro Wrapper (left)
+ */
+const IntroLeftWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  height: 100%;
+`;
+/**
+ * Intro Image (right)
+ */
+const IntroImageRounded = styled.div`
+  border-radius: ${spacings.default * 1.5}px 0 0 ${spacings.default * 1.5}px;
+  background-image: ${({ src }) => `url('${src}')`};
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+
+  ${media.xsOnly`
+    border-radius: ${spacings.default}px;
+    min-height: 400px;
+  `}
+
+  ${media.smOnly`
+    border-radius: ${spacings.default}px;
+    min-height: 400px;
+  `}
+`;
+/***********/
+
+/**
+ * DESCRIPTION SECTION
+ * Description Left side (text)
+ */
+const DescriptionLeft = () => {
   const { t } = useTranslation();
 
-  const items = [
+  const logos = [
     {
       img: './assets/logos/logo-nih.png',
       link: 'https://www.nih.gov/',
@@ -141,14 +203,12 @@ const DescriptionText = () => {
   return (
     <>
       <TitleH2>{t('home:description:title')}</TitleH2>
-      <TextP>{t('home:description:text')}</TextP>
+      <Text>{t('home:description:text')}</Text>
       <ButtonDonate
         label={t('cta:donate')}
         onClick={() => {
           var elem = document.getElementById('donate');
-          if (elem) {
-            window.scrollTo(elem.offsetLeft, elem.offsetTop - 150);
-          }
+          if (elem) window.scrollTo(elem.offsetLeft, elem.offsetTop - 105);
         }}
       />
       <DescriptionLogosWrapper
@@ -157,7 +217,7 @@ const DescriptionText = () => {
         gap={`${spacings.default / 2}px`}
         as="ul"
       >
-        {items.map((item, key) => (
+        {logos.map((item, key) => (
           <DescriptionLogo key={key} as="li">
             <Href href={item.link} target="_blank">
               <img src={item.img} width="100%" />
@@ -168,10 +228,13 @@ const DescriptionText = () => {
     </>
   );
 };
-const DescriptionList = () => {
+/**
+ * Description Right side (links)
+ */
+const DescriptionRight = () => {
   const { t } = useTranslation();
 
-  const items = [
+  const links = [
     {
       text: t('home:description:list:item1:text'),
       link: 'https://www.google.ca/',
@@ -192,250 +255,27 @@ const DescriptionList = () => {
 
   return (
     <>
-      <TitleH3Etudes>{t('home:description:list:title')}</TitleH3Etudes>
+      <TitleH3Case>{t('home:description:list:title')}</TitleH3Case>
       <Liner />
-      <DescriptionListWrapper>
-        {items.map((item, key) => (
-          <>
+      <DescriptionLinksWrapper>
+        {links.map((item, key) => (
+          <div key={key}>
             <DescriptionLink key={key} as="li">
               <Href href="#" target="_blank">
                 {t('home:description:list:item1:text')}
               </Href>
-              <IconArrowStyled />
+              <IconArrowLink />
             </DescriptionLink>
-            {key !== items.length - 1 && <Liner />}
-          </>
+            {key !== links.length - 1 && <Liner />}
+          </div>
         ))}
-      </DescriptionListWrapper>
+      </DescriptionLinksWrapper>
     </>
   );
 };
-
-const HistoryList = () => {
-  const { t } = useTranslation();
-  return (
-    <>
-      <TitleH2
-        dangerouslySetInnerHTML={{
-          __html: t('home:history:title'),
-        }}
-      ></TitleH2>
-      <HistoryListWrapper>
-        <HistoryPerson>
-          <HistoryPersonImage>
-            <ImageRounded src="/assets/photo-sarah.jpg" />
-          </HistoryPersonImage>
-          <HistoryPersonText>
-            <TitleH3Person>
-              {t('home:history:persons:person1:name')}
-            </TitleH3Person>
-            <TextPersonP>{t('home:history:persons:person1:title')}</TextPersonP>
-          </HistoryPersonText>
-        </HistoryPerson>
-        <HistoryPerson>
-          <HistoryPersonImage>
-            <ImageRounded src="/assets/photo-karine.jpg" />
-          </HistoryPersonImage>
-          <HistoryPersonText>
-            <TitleH3Person>
-              {t('home:history:persons:person2:name')}
-            </TitleH3Person>
-            <TextPersonP>{t('home:history:persons:person2:title')}</TextPersonP>
-          </HistoryPersonText>
-        </HistoryPerson>
-        <HistoryPerson>
-          <HistoryPersonImage>
-            <ImageRounded src="/assets/photo-akram.jpg" />
-          </HistoryPersonImage>
-          <HistoryPersonText>
-            <TitleH3Person>
-              {t('home:history:persons:person3:name')}
-            </TitleH3Person>
-            <TextPersonP>{t('home:history:persons:person3:title')}</TextPersonP>
-          </HistoryPersonText>
-        </HistoryPerson>
-      </HistoryListWrapper>
-    </>
-  );
-};
-const HistoryText = () => {
-  const { t } = useTranslation();
-  return (
-    <>
-      <TextP>{t('home:history:text1')}</TextP>
-      <TextP>{t('home:history:text2')}</TextP>
-    </>
-  );
-};
-
-const DonateText = () => {
-  const { t } = useTranslation();
-  return (
-    <DonateLeftWrapper>
-      <TitleH2>{t('home:donate:title')}</TitleH2>
-      <TextP>{t('home:donate:text')}</TextP>
-    </DonateLeftWrapper>
-  );
-};
-const DonateWidget = () => {
-  return (
-    <DonateRightWrapper>
-      <DonateWidgetWrapper>
-        <TextP>Donation Widget</TextP>
-      </DonateWidgetWrapper>
-    </DonateRightWrapper>
-  );
-};
-
-const ContainerWrapper = styled(WrapperFull)``;
-
-const GridHeroInner = styled(WrapperFull)`
-  padding: 0 0 ${spacings.default * 2}px ${spacings.default * 2}px;
-
-  ${media.xsOnly`
-    padding: 0 ${spacings.default}px;
-  `}
-
-  ${media.smOnly`
-    padding: 0 ${spacings.default}px;
-  `}
-`;
-
-const GridInner = styled.div`
-  padding: ${spacings.default * 2}px;
-  ${({ background }) => `background-color: ${background}`};
-
-  ${media.xsOnly`
-    padding: ${spacings.default * 2}px ${spacings.default}px;
-  `}
-
-  ${media.smOnly`
-    padding: ${spacings.default * 2}px ${spacings.default}px;
-  `}
-`;
-
-const IntroLeftWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  height: 100%;
-`;
-
-const DonateLeftWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  height: 100%;
-`;
-const DonateRightWrapper = styled.div`
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  height: 100%;
-`;
-
-const Liner = styled.div`
-  width: 100%;
-  height: 1px;
-  background: #d2d2d2;
-`;
-
-const TitleH1 = styled(H1)`
-  color: ${({ theme }) => theme.colors.black};
-  font-weight: 300;
-  line-height: 1.2;
-  font-size: ${rem(60)};
-
-  ${media.xxsOnly`
-    font-size: ${rem(32)};
-  `}
-`;
-const TitleH2 = styled(H2)`
-  color: ${({ theme }) => theme.colors.black};
-  font-weight: 300;
-  line-height: 1.2;
-  font-size: ${rem(48)};
-  margin: 0 0 ${rem(spacings.default)} 0;
-
-  ${media.xxsOnly`
-    font-size: ${rem(32)};
-  `}
-`;
-const TitleH2Financial = styled(H2)`
-  color: ${({ theme }) => theme.colors.black};
-  font-weight: 300;
-  line-height: 1.2;
-  font-size: ${rem(32)};
-
-  ${media.xxsOnly`
-    font-size: ${rem(24)};
-    margin: 0 0 ${rem(spacings.default)} 0;
-  `}
-`;
-const TitleH3Etudes = styled(H3)`
-  color: ${({ theme }) => theme.colors.black};
-  font-weight: 700;
-  line-height: 1.6;
-  font-size: ${rem(18)};
-  margin: 0 0 ${rem(spacings.default)} 0;
-  ${media.xxsOnly`
-
-  `}
-`;
-const TitleH3Person = styled(H3)`
-  color: ${({ theme }) => theme.colors.black};
-  font-weight: 300;
-  line-height: 1;
-  font-size: ${rem(48)};
-  margin: 0 0 ${rem(spacings.default)} 0;
-  max-width: 250px;
-
-  ${media.xxsOnly`
-    max-width: 100%;
-    font-size: ${rem(24)};
-    margin: 0 0 ${rem(spacings.default / 2)} 0;
-  `}
-`;
-
-const TextP = styled(P)`
-  color: ${() => '#595959'};
-  font-weight: 400;
-  line-height: 1.5;
-  font-size: ${rem(20)};
-
-  ${media.xxsOnly`
-    font-size: ${rem(18)};
-  `}
-`;
-const TextPersonP = styled(TextP)`
-  max-width: 90%;
-`;
-
-const IntroImageRounded = ({ src }) => {
-  return <Image src={src} />;
-};
-
-const Image = styled.div`
-  border-radius: ${spacings.default * 1.5}px 0 0 ${spacings.default * 1.5}px;
-  background-image: ${({ src }) => `url('${src}')`};
-  background-size: cover;
-  background-position: center center;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  min-height: 500px;
-
-  ${media.xsOnly`
-    border-radius: ${spacings.default}px;
-    min-height: 400px;
-  `}
-
-  ${media.smOnly`
-    border-radius: ${spacings.default}px;
-    min-height: 400px;
-  `}
-`;
-
+/**
+ * Description Logo Wrapper
+ */
 const DescriptionLogosWrapper = styled(Grid)`
   margin: ${spacings.default}px 0 0 0;
   max-width: 600px;
@@ -444,6 +284,9 @@ const DescriptionLogosWrapper = styled(Grid)`
     max-width: 300px;
   `}
 `;
+/**
+ * Description Logo
+ */
 const DescriptionLogo = styled(Cell)`
   list-style: none;
   padding: 0;
@@ -452,7 +295,7 @@ const DescriptionLogo = styled(Cell)`
   margin: 0 ${spacings.default / 2}px 0 0;
 
   img {
-    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
   }
 
@@ -461,13 +304,20 @@ const DescriptionLogo = styled(Cell)`
     transition: opacity 0.2s ease;
   `}
 `;
-const DescriptionListWrapper = styled(UL)`
+/**
+ * Description Links Wrapper
+ */
+const DescriptionLinksWrapper = styled(UL)`
   margin: 0;
 `;
+/**
+ * Description Links
+ */
 const DescriptionLink = styled(LI)`
   position: relative;
   list-style: none;
   padding: ${spacings.default}px ${spacings.default}px ${spacings.default}px 0;
+
   a {
     display: block;
     width: 90%;
@@ -478,13 +328,82 @@ const DescriptionLink = styled(LI)`
     `}
   }
 `;
+/***********/
 
-const HistoryListWrapper = styled(UL)`
+/**
+ * HISTORY SECTION
+ * Left side (persons)
+ */
+const HistoryLeft = () => {
+  const { t } = useTranslation();
+
+  const persons = [
+    {
+      img: './assets/photo-sarah.jpg',
+      name: t('home:history:persons:person1:name'),
+      title: t('home:history:persons:person1:title'),
+    },
+    {
+      img: './assets/photo-karine.jpg',
+      name: t('home:history:persons:person2:name'),
+      title: t('home:history:persons:person2:title'),
+    },
+    {
+      img: './assets/photo-akram.jpg',
+      name: t('home:history:persons:person3:name'),
+      title: t('home:history:persons:person3:title'),
+    },
+  ];
+
+  return (
+    <>
+      <TitleH2
+        dangerouslySetInnerHTML={{
+          __html: t('home:history:title'),
+        }}
+      ></TitleH2>
+      <HistoryPersonWrapper>
+        {persons.map((item, key) => (
+          <HistoryPerson key={key}>
+            <HistoryPersonImage>
+              <ImageRounded src={item.img} />
+            </HistoryPersonImage>
+            <HistoryPersonText>
+              <TitleH3Person>{item.name}</TitleH3Person>
+              <TextPerson>{item.title}</TextPerson>
+            </HistoryPersonText>
+          </HistoryPerson>
+        ))}
+      </HistoryPersonWrapper>
+    </>
+  );
+};
+/**
+ * Right side (text)
+ */
+const HistoryRight = () => {
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <Text>{t('home:history:text1')}</Text>
+      <Text>{t('home:history:text2')}</Text>
+    </>
+  );
+};
+/**
+ * History Left Wrapper
+ */
+const HistoryPersonWrapper = styled(UL)`
   margin: ${spacings.default * 3}px 0 ${spacings.default}px 0;
+
   ${media.xxsOnly`
     margin: ${spacings.default * 2}px 0 ${spacings.default}px 0;
   `}
 `;
+/**
+ * History Person Wrapper
+ */
 const HistoryPerson = styled(LI)`
   ${FlexDisplay.CSS}
   align-items: center;
@@ -500,7 +419,9 @@ const HistoryPerson = styled(LI)`
     flex-wrap: wrap;
   `}
 `;
-
+/**
+ * History Person Image Wrapper
+ */
 const HistoryPersonImage = styled.div`
   width: 100%;
   height: 220px;
@@ -514,23 +435,198 @@ const HistoryPersonImage = styled.div`
     margin: 0px 0px ${spacings.default}px 0px;
   `}
 `;
+/**
+ * History Person Text Wrapper
+ */
 const HistoryPersonText = styled.div`
   width: 100%;
 `;
+/***********/
 
-const DonateWidgetWrapper = styled.div`
-  width: 312px;
-  height: 512px;
-  background: #fff;
-  border-radius: 10px;
-  color: #000;
+/**
+ * DONATE SECTION
+ * Left side (text)
+ */
+const DonateLeft = () => {
+  const { t } = useTranslation();
+
+  return (
+    <DonateLeftWrapper>
+      <TitleH2>{t('home:donate:title')}</TitleH2>
+      <Text>{t('home:donate:text')}</Text>
+    </DonateLeftWrapper>
+  );
+};
+/**
+ * Right side (widget)
+ * #TODO add widget script
+ */
+const DonateRight = () => {
+  return (
+    <DonateRightWrapper>
+      <DonationWidget />
+    </DonateRightWrapper>
+  );
+};
+/**
+ * Donate Left Wrapper
+ */
+const DonateLeftWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  height: 100%;
+`;
+/**
+ * Donate Right Wrapper
+ */
+const DonateRightWrapper = styled.div`
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  height: 100%;
 `;
 
-const IconArrowStyled = styled(IconArrow)`
+/***********/
+
+/**
+ * GENERIC HOME GRIDS AND INNERS
+ * Home generic Layout Grip / Inner
+ */
+const GridOneColumn = ({ content, background }) => {
+  return (
+    <Grid
+      as="section"
+      columns="repeat(auto-fit, minmax(0px, 1fr));"
+      background={background}
+    >
+      <Cell>{content}</Cell>
+    </Grid>
+  );
+};
+
+const GridTwoColumn = ({ left, right, background, fullHeight }) => {
+  return (
+    <GridWrapper
+      as="section"
+      columns="repeat(auto-fit, minmax(0px, 1fr));"
+      responsiveTemplate={{ smOnly: '1fr', xsOnly: '1fr' }}
+      background={background}
+      gap={`${spacings.default}px`}
+      fullHeight={fullHeight}
+    >
+      <Cell>{left}</Cell>
+      <Cell>{right}</Cell>
+    </GridWrapper>
+  );
+};
+
+const GridWrapper = styled(Grid)`
+  ${({ fullHeight }) => fullHeight && `  min-height: calc(100vh - 200px);`}
+`;
+
+const GridInner = styled.div`
+  padding: ${spacings.default * 2}px;
+  ${({ background }) => `background-color: ${background}`};
+
+  ${media.xsOnly`
+    padding: ${spacings.default * 2}px ${spacings.default}px;
+  `}
+
+  ${media.smOnly`
+    padding: ${spacings.default * 2}px ${spacings.default}px;
+  `}
+`;
+
+const Liner = styled.div`
+  width: 100%;
+  height: 1px;
+  background: ${({ theme }) => theme.colors.greyLight};
+`;
+/***********/
+
+/**
+ * GENERIC HOME TITLE / TEXT / BUTTONS / ICONS
+ */
+const TitleH1 = styled(H1)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 300;
+  line-height: 1.2;
+  font-size: ${rem(60)};
+
+  ${media.xxsOnly`
+    font-size: ${rem(32)};
+  `}
+`;
+
+const TitleH2 = styled(H2)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 300;
+  line-height: 1.2;
+  font-size: ${rem(48)};
+  margin: 0 0 ${rem(spacings.default)} 0;
+
+  ${media.xxsOnly`
+    font-size: ${rem(32)};
+  `}
+`;
+
+const TitleH2Financial = styled(H2)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 300;
+  line-height: 1.2;
+  font-size: ${rem(32)};
+
+  ${media.xxsOnly`
+    font-size: ${rem(24)};
+    margin: 0 0 ${rem(spacings.default)} 0;
+  `}
+`;
+
+const TitleH3Case = styled(H3)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 700;
+  line-height: 1.6;
+  font-size: ${rem(18)};
+  margin: 0 0 ${rem(spacings.default)} 0;
+`;
+
+const TitleH3Person = styled(H3)`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 300;
+  line-height: 1;
+  font-size: ${rem(48)};
+  margin: 0 0 ${rem(spacings.default)} 0;
+  max-width: 250px;
+
+  ${media.xxsOnly`
+    max-width: 100%;
+    font-size: ${rem(24)};
+    margin: 0 0 ${rem(spacings.default / 2)} 0;
+  `}
+`;
+
+const Text = styled(P)`
+  color: ${({ theme }) => theme.colors.greyMedium};
+  font-weight: 400;
+  line-height: 1.5;
+  font-size: ${rem(20)};
+
+  ${media.xxsOnly`
+    font-size: ${rem(18)};
+  `}
+`;
+
+const TextPerson = styled(Text)`
+  max-width: 90%;
+`;
+
+const IconArrowLink = styled(IconArrow)`
   position: absolute;
   right: 0;
   top: ${spacings.default}px;
 `;
+
 const ButtonDonate = styled(Button.Default)`
   margin: ${spacings.default}px 0 0 0;
   ${({ hide }) => hide && `display: none;`};
@@ -540,5 +636,6 @@ const ButtonDonate = styled(Button.Default)`
     display: block;
   }
 `;
+/***********/
 
 export default HomePage;
