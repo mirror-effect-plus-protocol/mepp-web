@@ -140,7 +140,7 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
   margin-left: auto;
 
   button {
-    margin: 0 ${spacings.default}px;
+    margin: 0 ${spacings.default / 2}px;
 
     &:last-child {
       margin-right: 0;
@@ -156,6 +156,10 @@ const RightWrapper = styled(FlexAlignMiddle.Component)`
 `;
 
 const ButtonAnchor = styled(Button.Transparent)`
+  && {
+    margin: 0 ${spacings.default}px;
+  }
+
   @media screen and (max-width: 1200px) {
     display: none;
   }
@@ -174,6 +178,7 @@ const ButtonLocalSwitcherIcon = styled.div`
 `;
 
 const ButtonLocalSwitcher = styled.div`
+  margin: 0 ${spacings.default}px;
   @media screen and (max-width: 640px) {
     display: none;
   }
