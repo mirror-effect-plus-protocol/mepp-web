@@ -109,7 +109,7 @@ export default {
           card_header: 'Frecuencias diarias alcanzadas'
         },
         sessions: {
-          card_header: 'Sesiones abiertas',
+          card_header: 'Sesiones',
         },
         choices: {
           one_week: 'los últimos 7 días',

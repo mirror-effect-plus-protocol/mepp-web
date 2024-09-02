@@ -109,7 +109,7 @@ export default {
           card_header: 'Completed repetitions'
         },
         sessions: {
-          card_header: 'Open sessions'
+          card_header: 'Sessions'
         },
         choices: {
           one_week: 'the last 7 days',

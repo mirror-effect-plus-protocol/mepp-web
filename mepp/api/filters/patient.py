@@ -57,6 +57,13 @@ class PatientFilter(BaseFilterBackend):
         else:
             queryset = queryset.filter(use_audio=use_audio)
 
+        try:
+            uid = request.query_params['uid']
+        except KeyError:
+            pass
+        else:
+            queryset = queryset.filter(uid=uid)
+
         return queryset
 
 

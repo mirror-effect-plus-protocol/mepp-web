@@ -37,7 +37,7 @@ export default {
     settings: 'Configurer l’effet',
     start_exercise: 'Commencer',
     restart: 'Recommencer',
-    restart_exercise: 'Continuer l’exercices',
+    restart_exercise: 'Continuer l’exercice',
     pause_exercise: 'Pause',
     skip_exercise: 'Sauter',
     next_exercise: 'Suivant',

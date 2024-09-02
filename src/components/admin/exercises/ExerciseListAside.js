@@ -45,7 +45,7 @@ import { ASide } from '@components/admin/shared/cards/ASide';
 const ExerciseListAside = ({permissions}) => {
   const { locale } = useLocale();
   const [selectedCategory, setSelectedCategory] = useState(-1);
-  const { identity} = useGetIdentity();
+  const { identity } = useGetIdentity();
   const {
     data: clinicians,
     loading: isLoading,

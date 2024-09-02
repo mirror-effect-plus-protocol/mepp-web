@@ -79,19 +79,18 @@ const widgetTooptipWrapperStyle = {
 };
 
 
-export const DashboardWidget = ({widget}) => {
+export const PatientWidget = ({widget, patientUid}) => {
   const t = useTranslate();
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [weekRange, setWeekRange] = useState('one_week');
-  const [widgetHeight, setWidgetHeight] = useState(400);
+  const [widgetHeight, setWidgetHeight] = useState(100);
   const fetchData = async () => {
     setLoading(true);
     const options = {
-      ordering: 'full_name',
-      archived: false,
       week_range: weekRange,
+      uid: patientUid,
     };
     const qs = new URLSearchParams(options).toString();
     const url = `${process.env.API_ENDPOINT}/patients/widgets/${widget}/?${qs}`;
@@ -99,7 +98,7 @@ export const DashboardWidget = ({widget}) => {
     const data = response.json;
     setData(data);
     setLoading(false);
-    setWidgetHeight(Math.max(data.length * 40, 400));
+    // setWidgetHeight(Math.max(data.length * 40, 400));
   };
   const handleChange = (event) => {
     setWeekRange(event.target.value);

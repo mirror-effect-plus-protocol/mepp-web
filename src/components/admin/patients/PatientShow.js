@@ -69,6 +69,7 @@ import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import {useRaBoxStyles} from "@components/admin/shared/styles/shared";
+import {PatientWidget} from "@components/admin/patients/PatientWidget";
 
 
 const useArchivesStyles = makeStyles((theme) => ({
@@ -326,8 +327,10 @@ export const PatientShowLayout = ({ record }) => {
             </Datagrid>
           </ListContextProvider>
         )}
+        <div>
+          <PatientWidget widget="sessions" patientUid={record.id} />
+        </div>
       </div>
-
       <ShowToolBar />
     </BoxedShowLayout>
   );
