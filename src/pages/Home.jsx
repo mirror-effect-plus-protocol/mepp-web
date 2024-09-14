@@ -157,7 +157,7 @@ const IntroVideoRounded = () => {
   const ref = useRef(null);
   const videoView = useInView(ref, {
     root: document,
-    rootMargin: '-150px 0px -50% 0px',
+    rootMargin: '-150px 0px 0px 0px',
   });
 
   useEffect(() => {
@@ -184,6 +184,7 @@ const IntroVideoWrapper = styled.div`
   width: 100%;
   height: 100%;
   min-height: 500px;
+  max-height: calc(100vh - 150px);
   overflow: hidden;
 
   video {
