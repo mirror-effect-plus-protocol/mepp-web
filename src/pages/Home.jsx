@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -33,6 +33,7 @@ import { rem } from '@styles/utils/rem';
 
 import { theme } from '@themes/index';
 
+import { useInView } from '@hooks/useInView';
 import { useTrackingView } from '@hooks/useTrackingView';
 
 import HomeLayout from '@layouts/Home';
@@ -112,7 +113,7 @@ const IntroLeft = () => {
  * Intro Right side (image)
  */
 const IntroRight = () => {
-  return <IntroImageRounded src="/assets/home-intro.jpg" height="100%" />;
+  return <IntroVideoRounded />;
 };
 /**
  * Intro Financial section (logos)
@@ -150,17 +151,49 @@ const IntroLeftWrapper = styled.div`
   height: 100%;
 `;
 /**
- * Intro Image (right)
+ * Intro Video (right)
  */
-const IntroImageRounded = styled.div`
+const IntroVideoRounded = () => {
+  const ref = useRef(null);
+  const videoView = useInView(ref, {
+    root: document,
+    rootMargin: '-150px 0px 0px 0px',
+  });
+
+  useEffect(() => {
+    if (videoView && ref.current) {
+      ref.current.play();
+    } else if (ref.current) {
+      ref.current.pause();
+    }
+  }, [videoView]);
+
+  return (
+    <IntroVideoWrapper>
+      <video muted loop ref={ref}>
+        <source src="/assets/mirror-effect.mp4" type="video/mp4" />
+      </video>
+    </IntroVideoWrapper>
+  );
+};
+/**
+ * Intro Video Wrapper
+ */
+const IntroVideoWrapper = styled.div`
   border-radius: ${spacings.default * 1.5}px 0 0 ${spacings.default * 1.5}px;
-  background-image: ${({ src }) => `url('${src}')`};
-  background-size: cover;
-  background-position: center center;
-  overflow: hidden;
   width: 100%;
   height: 100%;
   min-height: 500px;
+  max-height: calc(100vh - 150px);
+  overflow: hidden;
+
+  video {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 700;
+  }
 
   ${media.xsOnly`
     border-radius: ${spacings.default}px;
