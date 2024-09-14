@@ -32,7 +32,7 @@ const ExerciseProgress = () => {
 
   const progessBars = () => {
     const items = [];
-    for (let i = 0; i <= exercise.repeatTime; i++) {
+    for (let i = 0; i < exercise.repeatTime; i++) {
       let progress = 1;
       let active = false;
       if (i >= exerciseRepeat) progress = 0;
@@ -75,21 +75,21 @@ const ProgressBar = styled.div`
       width: 0%;
     }
     100% {
-      width: calc(100% - 1px);
+      width: calc(100% - 2px);
     }
   `};
   ${({ active }) => active && `animation-fill-mode: forwards;`}
   ${({ active }) => active && `animation-timing-function: linear;`}
   ${({ active, time }) => active && time && `animation-duration: ${time}s;`}
-  ${({ progress }) => progress && `width: calc(${progress}% - 1px);`};
+  ${({ progress }) => progress && `width: calc(${progress}% - 2px);`};
   z-index: 1;
 `;
 
 const ProgressBarBackground = styled.div`
-  width: calc(100% - 1px);
+  width: calc(100% - 2px);
   height: 100%;
   opacity: 0.3;
-  background: ${({ theme }) => theme.colors.grey};
+  background: ${({ theme }) => theme.colors.white};
 `;
 
 export default ExerciseProgress;

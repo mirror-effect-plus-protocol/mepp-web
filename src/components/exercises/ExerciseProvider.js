@@ -153,7 +153,7 @@ const ExerciseProvider = ({ children }) => {
    */
   const wait = () => {
     if (!exercise) return;
-    if (exerciseRepeat < exercise.repeatTime)
+    if (exerciseRepeat < exercise.repeatTime - 1)
       setExerciseStep(ExerciseStep.WAITED);
     else {
       logs(ExerciseStep.COMPLETED);
@@ -166,7 +166,7 @@ const ExerciseProvider = ({ children }) => {
    */
   const repeat = () => {
     if (!exercise) return;
-    if (exerciseRepeat >= exercise.repeatTime) {
+    if (exerciseRepeat > exercise.repeatTime) {
       logs(ExerciseStep.COMPLETED);
       setExerciseStep(ExerciseStep.COMPLETED);
     } else {
