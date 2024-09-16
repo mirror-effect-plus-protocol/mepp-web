@@ -62,7 +62,7 @@ const GUIContext = createContext({
 /**
  * GUI PROVIDER
  */
-const GUIProvider = ({ children }) => {
+const GUIProvider = ({ children, withoutProfilButtons }) => {
   const { t } = useTranslation();
   const notify = useNotify();
   const navigate = useNavigate();
@@ -72,6 +72,7 @@ const GUIProvider = ({ children }) => {
   const [position, setPosition] = useState({ ...defaultPosition });
   const [rotation, setRotation] = useState({ ...defaultRotation });
   const [scale, setScale] = useState({ ...defaultScale });
+  const [exportVideo, setExportVideo] = useState(false);
   const [ready, setReady] = useState(false);
   const guiRef = useRef(null);
 
@@ -167,9 +168,8 @@ const GUIProvider = ({ children }) => {
     return {
       'x': controllers[t(`GUI:labels:${folder}:x`)],
       'y': controllers[t(`GUI:labels:${folder}:y`)],
-      'z': controllers[t(`GUI:labels:${folder}:z`)]
+      'z': controllers[t(`GUI:labels:${folder}:z`)],
     };
-
   };
 
   const getMappedCoordinates = (obj, folder) => {
@@ -208,6 +208,15 @@ const GUIProvider = ({ children }) => {
 
     send();
   }, [patch, notify, t]);
+
+  const onSaveVideo = useCallback(() => {
+    console.log('export video');
+    setExportVideo(true);
+  }, []);
+  const onStopSaveVideo = useCallback(() => {
+    console.log('stop export video');
+    setExportVideo(false);
+  }, []);
 
   const valuesAreEqual = (a, b) => {
     return JSON.stringify(a) === JSON.stringify(b);
@@ -274,14 +283,14 @@ const GUIProvider = ({ children }) => {
       .add(position, 'y', -1, 1)
       .name(t('GUI:labels:position:y'))
       .onChange(() => {
-      onChangePosition(position);
-    });
+        onChangePosition(position);
+      });
     positionFolder
       .add(position, 'z', -3, 3)
       .name(t('GUI:labels:position:z'))
       .onChange(() => {
-      onChangePosition(position);
-    });
+        onChangePosition(position);
+      });
 
     const rotationFolder = gui.addFolder(t('GUI:folders:rotation'));
     rotationFolder
@@ -308,14 +317,14 @@ const GUIProvider = ({ children }) => {
       .add(scale, 'x', 0.5, 1.5)
       .name(t('GUI:labels:scale:x'))
       .onChange(() => {
-      onChangeScale(scale);
-    });
+        onChangeScale(scale);
+      });
     scaleFolder
       .add(scale, 'y', 0.5, 1.5)
       .name(t('GUI:labels:scale:y'))
       .onChange(() => {
-      onChangeScale(scale);
-    });
+        onChangeScale(scale);
+      });
     scaleFolder
       .add(scale, 'z', 0.5, 1.5)
       .onChange(() => {
@@ -331,23 +340,43 @@ const GUIProvider = ({ children }) => {
   }, [identity, ready]);
 
   return (
-    <GUIContext.Provider value={{ position, rotation, scale }}>
+    <GUIContext.Provider value={{ position, rotation, scale, exportVideo }}>
       {children}
-      <ButtonWrapper>
-        <Button.Outline label={t('GUI:cta:profile')} onClick={onApplyProfile} />
-        <Button.Outline label={t('GUI:cta:default')} onClick={onApplyDefault} />
-        <Button.Secondary
-          label={t('cta:close')}
-          onClick={() => {
-            formUnchanged() ? navigate('/intro') : closeWithoutSaveConfirm();
-          }}
-        />
-        <Button.Default
-          disabled={formUnchanged() ? true : false}
-          label={t('cta:save')}
-          onClick={onSave}
-        />
-      </ButtonWrapper>
+      {!withoutProfilButtons && (
+        <ButtonWrapper>
+          <Button.Outline
+            label={t('GUI:cta:profile')}
+            onClick={onApplyProfile}
+          />
+          <Button.Outline
+            label={t('GUI:cta:default')}
+            onClick={onApplyDefault}
+          />
+          <Button.Secondary
+            label={t('cta:close')}
+            onClick={() => {
+              formUnchanged() ? navigate('/intro') : closeWithoutSaveConfirm();
+            }}
+          />
+          <Button.Default
+            disabled={formUnchanged() ? true : false}
+            label={t('cta:save')}
+            onClick={onSave}
+          />
+        </ButtonWrapper>
+      )}
+      {withoutProfilButtons && (
+        <ButtonWrapper>
+          <Button.Default
+            label={
+              exportVideo
+                ? 'Enregidtrement en cours...cliquez pour sauvegarder'
+                : 'Enregistrer'
+            }
+            onClick={exportVideo ? onStopSaveVideo : onSaveVideo}
+          />
+        </ButtonWrapper>
+      )}
       {(loading || identityLoading) && <LoadingCircle opaque />}
     </GUIContext.Provider>
   );

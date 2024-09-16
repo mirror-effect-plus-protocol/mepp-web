@@ -31,6 +31,7 @@ import Home from '@pages/Home';
 import Intro from '@pages/Intro';
 import Login from '@pages/Login';
 import Mirror from '@pages/Mirror';
+import MirrorEffectStandalonePage from '@pages/MirrorEffectStandAlone';
 import MirrorSettings from '@pages/MirrorSettings';
 import PlayerStandalonePage from '@pages/PlayerStandAlone';
 import Privacy from '@pages/Privacy';
@@ -92,6 +93,7 @@ export default () => {
   const HelpPage = withPage(Help);
   const ResetPasswordPage = withPage(ResetPassword);
   const PlayerAlone = withPage(PlayerStandalonePage);
+  const MirrorEffectAlone = withPage(MirrorEffectStandalonePage);
 
   return (
     <Admin
@@ -115,6 +117,13 @@ export default () => {
         <Route exact path="/mirror-settings" element={<MirrorSettingsPage />} />
         {process.env.ENVIRONMENT !== 'production' ? (
           <Route exact path="/playerstandalone" element={<PlayerAlone />} />
+        ) : null}
+        {process.env.ENVIRONMENT !== 'production' ? (
+          <Route
+            exact
+            path="/mirroreffectstandalone"
+            element={<MirrorEffectAlone />}
+          />
         ) : null}
       </CustomRoutes>
       {(permissions) => (
