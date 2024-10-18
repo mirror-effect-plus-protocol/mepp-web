@@ -60,7 +60,7 @@ const ExerciseDatagrid = ({ locale, permissions, ...props }) => {
           <TextField source="full_name" />
         </ReferenceField>
       )}
-      <RowActionToolbar permissions={permissions} clonable={true} />
+      <RowActionToolbar permissions={permissions} clonable />
     </Datagrid>
   );
 };

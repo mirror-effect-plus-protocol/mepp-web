@@ -54,7 +54,7 @@ const ExportButton = (props) => {
     (token) => {
       const data = {
         ...filterValues,
-        ...{ selectedIds: selectedIds },
+        ...{ selectedIds },
         ...{ language: locale },
         ...{ t: token },
       };

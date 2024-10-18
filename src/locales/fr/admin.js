@@ -206,7 +206,11 @@ export default {
         },
         labels: {
           definition: 'Caractéristiques',
-          classification: 'Classification'
+          classification: 'Classification',
+          video: 'Vidéo'
+        },
+        text: {
+          no_video_available: 'Aucune vidéo disponible'
         }
       },
       list: {

@@ -19,9 +19,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
+import os
 
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.urls.static import static
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -33,3 +36,6 @@ urlpatterns = [
     ),
     path('api/', include('mepp.api.urls')),
 ]
+
+# if os.getenv('ENVIRONMENT') == 'dev':
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

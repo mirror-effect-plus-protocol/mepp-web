@@ -286,12 +286,14 @@ export const meppTheme = {
         },
       },
     },
-    RaSimpleFormIterator: {
+    RaFileInput: {
       styleOverrides: {
-        root: {
-          '&>ul>li': { borderBottom: 'none' },
+        removeButton: {
+          display: 'flex',
+          backgroundColor: 'blue',
         },
       },
     },
+
   },
 };

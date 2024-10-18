@@ -130,7 +130,7 @@ export const PatientWidget = ({widget, patientUid}) => {
   return (
     <Card className={classes.widget}>
       <header>
-        <Typography variant="h6" gutterTop={true} gutterBottom>
+        <Typography variant="h6" gutterTop gutterBottom>
           {t(`admin.dashboard.widgets.${widget}.card_header`)}
         </Typography>
         <span>{t(`admin.dashboard.widgets.labels.since`)}</span>

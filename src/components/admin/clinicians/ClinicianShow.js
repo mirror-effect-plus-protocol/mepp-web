@@ -165,7 +165,7 @@ export const ClinicianShowLayout = ({ record }) => {
             </RaBox>
           </RaBox>
         </RaBox>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.informations')}
         </Typography>
         <RaBox>

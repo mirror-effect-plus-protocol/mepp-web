@@ -49,9 +49,6 @@ class ClinicianOrderingFilter(PatientOrderingFilter):
             fields = [param.strip() for param in params.split(',')]
             if 'profile' in fields:
                 current_clinician_uid = request.query_params.get('clinician_uid')
-                print('request.query_params', request.query_params, flush=True)
-                print('current_clinician_uid', current_clinician_uid, flush=True)
-                print('request.user.uid', request.user.uid, flush=True)
                 if request.user.uid == current_clinician_uid:
                     queryset = queryset.alias(
                         ordering_priority=Case(

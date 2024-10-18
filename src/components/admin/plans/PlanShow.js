@@ -94,7 +94,7 @@ export const PlanShow = (props) => {
         <BooleanField source="is_system" />
         <Typography
           variant="h6"
-          gutterTop={true}
+          gutterTop
           sx={{
             display: 'flex',
             justifyContent: 'flex-start',

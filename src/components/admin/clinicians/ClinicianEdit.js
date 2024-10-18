@@ -117,7 +117,7 @@ export const ClinicianEdit = () => {
   return (
     <Edit
       mutationMode="pessimistic"
-      mutationOptions={{ onSuccess: onSuccess, onError: onError }}
+      mutationOptions={{ onSuccess, onError }}
       actions={<TopToolbar hasShow={hasShow} identity={identity} />}
       redirect="list"
     >
@@ -139,7 +139,7 @@ export const ClinicianEdit = () => {
           <TextInput source="email" fullWidth validate={validateEmail} />
         </RaBox>
         <ProfileRow identity={identity} identityLoading={identityLoading}>
-          <Typography variant="h6" gutterBottom gutterTop={true}>
+          <Typography variant="h6" gutterBottom gutterTop>
             {t('admin.shared.labels.card.informations')}
           </Typography>
           <RaBox className={classes.root}>
@@ -156,7 +156,7 @@ export const ClinicianEdit = () => {
             />
           </RaBox>
         </ProfileRow>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.reset_password')}
         </Typography>
         <RaBox className={classes.root}>

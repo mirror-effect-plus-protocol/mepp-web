@@ -77,8 +77,8 @@ const useGetClinicians = (permissions, useProfileFirst = false) => {
         name: clinician.full_name,
         id: clinician.id
       })),
-      loading: loading,
-      loaded: loaded,
+      loading,
+      loaded,
       refetch: sortData,
     };
   }, [data, loading, loaded]);

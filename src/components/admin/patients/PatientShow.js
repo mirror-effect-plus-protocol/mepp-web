@@ -84,7 +84,7 @@ export const PatientShow = () => {
   return (
     <Show
       actions={
-        <TopToolbar showExport={true} hasEdit={hasEdit} hasShow={false} />
+        <TopToolbar showExport hasEdit={hasEdit} hasShow={false} />
       }
     >
       <PatientShowRecord />
@@ -280,10 +280,10 @@ export const PatientShowLayout = ({ record }) => {
         {!isLoading && (
           <ListContextProvider
             value={{
-              data: data,
+              data,
               total,
-              sort: sort,
-              resource: resource,
+              sort,
+              resource,
               selectedIds: [],
             }}
           >
@@ -321,8 +321,8 @@ export const PatientShowLayout = ({ record }) => {
                 rowResource="plans"
                 record={record}
                 context={{ patientUid: record.id }}
-                activable={true}
-                clonable={true}
+                activable
+                clonable
               />
             </Datagrid>
           </ListContextProvider>

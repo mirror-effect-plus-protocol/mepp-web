@@ -23,6 +23,7 @@
 module.exports = {
   parser: '@babel/eslint-parser',
   parserOptions: {
+    ecmaVersion: 9,
     babelOptions: {
       'presets': ['@babel/preset-react'],
     },

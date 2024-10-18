@@ -75,7 +75,7 @@ const PlanDatagrid = ({ permissions }) => {
         source="randomize"
         textAlign="center"
       />
-      <RowActionToolbar permissions={permissions} clonable={true} />
+      <RowActionToolbar permissions={permissions} clonable />
     </Datagrid>
   );
 };

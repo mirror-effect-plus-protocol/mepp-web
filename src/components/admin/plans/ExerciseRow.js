@@ -160,8 +160,8 @@ const ExerciseRow = (props) => {
         source={`${props.source}.i18n.description.${locale}`}
         label={t('resources.plans.fields.exercise.description')}
         onClick={handleOpenDialog}
-        multiline={true}
-        fullWidth={true}
+        multiline
+        fullWidth
         sx={{ minWidth: '500px' }}
       />
       <div className={numberClasses.numbers}>

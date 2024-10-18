@@ -161,8 +161,8 @@ const SimpleFormToolBar = ({ identity }) => {
           resource={resource}
           record={record}
           className=""
-          showLabel={true}
-          showLocation={true}
+          showLabel
+          showLocation
           variant="outlined"
         />
       )}

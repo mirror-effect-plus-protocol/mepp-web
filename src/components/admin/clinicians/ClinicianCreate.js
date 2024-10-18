@@ -78,7 +78,7 @@ export const ClinicianCreate = () => {
   };
 
   return (
-    <Create mutationOptions={{ onError: onError }} redirect="list">
+    <Create mutationOptions={{ onError }} redirect="list">
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />} >
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
@@ -94,7 +94,7 @@ export const ClinicianCreate = () => {
         <RaBox className={classes.root}>
           <TextInput source="email" fullWidth validate={validateEmail} />
         </RaBox>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.informations')}
         </Typography>
         <RaBox className={classes.root}>
@@ -106,7 +106,7 @@ export const ClinicianCreate = () => {
           />
           <BooleanInput source="is_superuser" />
         </RaBox>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.create_password')}
         </Typography>
         <RaBox className={classes.root}>

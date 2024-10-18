@@ -81,7 +81,7 @@ export const PatientCreate = () => {
   };
 
   return (
-    <Create mutationOptions={{ onError: onError }} redirect="list">
+    <Create mutationOptions={{ onError }} redirect="list">
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />} >
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
@@ -146,7 +146,7 @@ export const PatientCreate = () => {
             />
           </RaBox>
         )}
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.create_password')}
         </Typography>
         <RaBox className={classes.root}>

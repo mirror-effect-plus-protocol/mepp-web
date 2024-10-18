@@ -95,7 +95,7 @@ export const PlanEdit = () => {
       mutationMode="pessimistic"
       redirect={redirect}
       transform={transform}
-      mutationOptions={{ onError: onError }}
+      mutationOptions={{ onError }}
     >
       <SimplePlanEditForm
         locale={locale}
@@ -168,7 +168,7 @@ const SimplePlanEditForm = ({locale, asTemplate}) => {
         <Typography
           variant="h6"
           gutterBottom
-          gutterTop={true}
+          gutterTop
           sx={{
             display: 'flex',
             justifyContent: 'space-between',

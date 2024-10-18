@@ -247,6 +247,7 @@ services:
       - DJANGO_SETTINGS_MODULE=mepp.settings.dev
     volumes:
       - ./.vols/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./media:/www/media
     extra_hosts:
       - mepp.local:{self.__ip_address}
     ports:
@@ -277,9 +278,15 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Forwarded-Host $host:9090;
     proxy_redirect off;
+    client_max_body_size 100M;
 
     location ~ ^/(admin|api|static) {
         proxy_pass http://mepp.local:8000;
+    }
+
+    location /media {
+        sendfile on;
+        root /www/media;
     }
 
     location / {

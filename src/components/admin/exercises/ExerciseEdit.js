@@ -25,6 +25,8 @@ import {
   BooleanInput,
   Edit,
   FormDataConsumer,
+  FileInput,
+  FileField,
   NumberInput,
   ReferenceField,
   SelectInput,
@@ -60,6 +62,7 @@ import { translatorInputStyle, categoriesSelectorStyle } from '@components/admin
 import { LANGUAGES } from '../../../locales';
 import GTranslateIcon from '@mui/icons-material/GTranslate';
 import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
+import VideoInput from '@components/admin/shared/inputs/VideoInput';
 
 export const ExerciseEdit = () => {
   const t = useTranslate();
@@ -129,7 +132,7 @@ export const ExerciseEdit = () => {
     <Edit
       transform={transform}
       actions={<TopToolbar hasShow={hasShow} />}
-      mutationOptions={{ onError: onError }}
+      mutationOptions={{ onError }}
       mutationMode="pessimistic"
     >
       <SimpleForm
@@ -155,8 +158,8 @@ export const ExerciseEdit = () => {
         >
           <TextInput
             source="i18n.description"
-            multiline={true}
-            fullWidth={true}
+            multiline
+            fullWidth
             validate={validateI18n}
           />
           <div style={{
@@ -194,7 +197,11 @@ export const ExerciseEdit = () => {
             label={t('resources.exercises.fields.repetition')}
           />
         </Div>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
+          {t('resources.exercises.card.labels.video')}
+        </Typography>
+        <VideoInput source="video" label={false}/>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
         {!isLoading && (
@@ -205,7 +212,7 @@ export const ExerciseEdit = () => {
           >
             <SimpleFormIterator
               sx={categoriesSelectorStyle}
-              disableReordering={true}
+              disableReordering
               inline
             >
               <SelectInput

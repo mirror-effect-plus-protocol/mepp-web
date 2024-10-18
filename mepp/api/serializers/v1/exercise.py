@@ -1,5 +1,3 @@
-# coding: utf-8
-
 # MEPP - A web application to guide patients and clinicians in the process of
 # facial palsy rehabilitation, with the help of the mirror effect and principles
 # of motor learning
@@ -19,7 +17,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
+import base64
+import os
 
+from django.core.files.base import ContentFile
 from rest_framework import serializers
 
 from mepp.api.enums.language import LanguageEnum
@@ -34,6 +35,46 @@ from mepp.api.serializers import (
     I18nSerializer,
     HyperlinkedModelUUIDSerializer,
 )
+
+
+class Base64FileField(serializers.FileField):
+    def to_internal_value(self, data):
+
+        if isinstance(data, dict) and data.get('base64', '').startswith('data:'):
+            return self._convert_base64_to_file(data['base64'], data['filename'])
+
+        if isinstance(data, str) and data.startswith('data:'):
+            return self._convert_base64_to_file(data['base64'])
+
+        return super().to_internal_value(data)
+
+    def to_representation(self, value):
+        if not value:
+            return None
+
+        try:
+            url = value.url
+        except AttributeError:
+            request = self.context.get('request', None)
+            url = value.path
+            if request is not None:
+                url = request.build_absolute_uri(url)
+
+        return {
+            'title': os.path.basename(value.name),
+            'src': url,
+        }
+
+    def _convert_base64_to_file(self, base64_data: str, filename: str = None) -> ContentFile:
+
+        mimetype, base64_str = base64_data.split(';base64,')
+        if not filename:
+            ext = mimetype.split('/')[-1]
+            filename = f'upload.{ext}'
+
+        decoded_file = base64.b64decode(base64_str)
+
+        return ContentFile(decoded_file, name=filename)
 
 
 class ExerciseI18nSerializer(serializers.ModelSerializer):
@@ -59,6 +100,7 @@ class ExerciseSerializer(
     clinician_uid = serializers.SerializerMethodField()
     i18n = ExerciseI18nSerializer(many=True)
     sub_categories = serializers.SerializerMethodField()
+    video = Base64FileField(allow_null=True)
 
     class Meta:
         model = Exercise
@@ -77,6 +119,7 @@ class ExerciseSerializer(
             'archived',
             'is_system',
             'auto_translate',
+            'video',
         ]
         read_only_fields = [
             'clinician',
@@ -109,6 +152,16 @@ class ExerciseSerializer(
 
     def get_sub_categories(self, exercise):
         return list(exercise.sub_categories.values('uid', 'category__uid').all())
+
+    # def validate_video(self, video):
+    #     print('VIDEO', video, flush=True)
+    #     if not video:
+    #         return
+    #
+    #     try:
+    #         return self._base64_to_file(video)
+    #     except Exception:
+    #         raise serializers.ValidationError('File format not recognized')
 
     def validate(self, attrs):
         self.validate_clinician_uid(attrs)
@@ -182,6 +235,13 @@ class ExerciseSerializer(
             self._update_i18n(instance, i18n)
 
         return super().update(instance, validated_data)
+
+    def _base64_to_file(self, base64_string, file_name):
+        format_, img_str = base64_string.split(';base64,')
+        ext = format_.split('/')[-1]
+        data = ContentFile(base64.b64decode(img_str))
+        data.name = f'{file_name}.{ext}'
+        return data
 
     def _validate_sub_categories(self):
         request = self.context['request']

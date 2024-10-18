@@ -19,9 +19,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
-
-import os
-
 from .base import *
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -43,3 +40,6 @@ MIRROR_SESSION_TIMEOUT = 60 * 10  # 10 minutes
 HTTP_HOST = os.environ.get('HTTP_HOST', 'http://mepp.local:9090')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

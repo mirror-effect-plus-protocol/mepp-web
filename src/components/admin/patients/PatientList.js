@@ -45,11 +45,11 @@ export const PatientList = () => {
       filterDefaultValues={{ archived: false }}
       aside={<PatientListAside permissions={permissions} />}
       perPage={25}
-      actions={<ListActions showExport={true} />}
+      actions={<ListActions showExport />}
     >
       <Datagrid
         bulkActionButtons={
-          <BulkActionButtons permissions={permissions} showExport={true} />
+          <BulkActionButtons permissions={permissions} showExport />
         }
       >
         <TextField source="full_name" />

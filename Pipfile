@@ -28,6 +28,7 @@ ua-parser = "*"
 user-agents = "*"
 jsonschema = "*"
 requests = "*"
+django-storages = {extras = ["s3"], version = "*"}
 
 [requires]
 python_version = "3.10"

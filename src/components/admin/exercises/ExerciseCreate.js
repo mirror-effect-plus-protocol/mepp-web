@@ -129,7 +129,7 @@ export const ExerciseCreate = () => {
   };
 
   return (
-    <Create transform={transform} mutationOptions={{ onError: onError }} redirect="list">
+    <Create transform={transform} mutationOptions={{ onError }} redirect="list">
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}
@@ -141,8 +141,8 @@ export const ExerciseCreate = () => {
         >
           <TextInput
             source="i18n.description"
-            multiline={true}
-            fullWidth={true}
+            multiline
+            fullWidth
             validate={validateI18n}
           />
           <div style={{
@@ -176,7 +176,7 @@ export const ExerciseCreate = () => {
             defaultValue="5"
           />
         </Div>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
         {!isLoading && (
@@ -187,7 +187,7 @@ export const ExerciseCreate = () => {
           >
             <SimpleFormIterator
               sx={categoriesSelectorStyle}
-              disableReordering={true}
+              disableReordering
               inline
             >
               <SelectInput

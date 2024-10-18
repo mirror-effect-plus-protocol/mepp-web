@@ -79,7 +79,7 @@ const AddPlanButton = ({ patientUid }) => {
   const handleConfirmClick = () => {
     if (treatmentPlanChoice === 'new') {
       redirect('create', '/plans', undefined, undefined, {
-        patientUid: patientUid,
+        patientUid,
       });
     } else {
       const updatedRecord = { treatment_plan_uid: selectedPlan.id };

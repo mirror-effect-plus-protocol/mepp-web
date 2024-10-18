@@ -23,14 +23,15 @@ import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import React from 'react';
 import {
   BooleanField,
-  Show,
   NumberField,
+  Show,
   TextField,
   TranslatableFields,
   useGetList,
   usePermissions,
   useRecordContext,
-  useTranslate, useResourceDefinition,
+  useResourceDefinition,
+  useTranslate,
 } from 'react-admin';
 
 import { useLocale } from '@hooks/locale/useLocale';
@@ -46,6 +47,7 @@ import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
 import { LANGUAGES } from '../../../locales';
 import {translatorInputStyle} from "@components/admin/shared/styles/shared";
+import VideoField from "@components/admin/shared/inputs/VideoField";
 
 const CategoryChips = (props) => {
   const classes = useCategoryChipsStyles();
@@ -103,7 +105,7 @@ export const ExerciseShow = () => {
           defaultLocale={locale}
           sx={translatorInputStyle}
         >
-          <TextField source="i18n.description" fullWidth={true} />
+          <TextField source="i18n.description" fullWidth />
         </TranslatableFields>
         <RaBox>
           <NumberField
@@ -112,7 +114,11 @@ export const ExerciseShow = () => {
           <NumberField source="pause" />
           <NumberField source="repetition" />
         </RaBox>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
+          {t('resources.exercises.card.labels.video')}
+        </Typography>
+        <VideoField source="video" label={false}/>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
         <CategoryChips categories={categories} subCategories={subCategories} />

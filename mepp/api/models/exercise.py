@@ -19,6 +19,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
+import os
 
 from django.conf import settings
 from django.db import models
@@ -33,6 +34,10 @@ from mepp.api.mixins.models.searchable import (
 )
 from .base import BaseModel
 from .category import SubCategory
+
+
+def upload_to(instance, filename):
+    return os.path.join('__exercises', 'videos', instance.uid, filename)
 
 
 class Exercise(BaseModel, Archivable, Template, Searchable):
@@ -54,6 +59,7 @@ class Exercise(BaseModel, Archivable, Template, Searchable):
     repetition = models.PositiveSmallIntegerField(null=False, default=3)
     pause = models.PositiveSmallIntegerField(null=False, default=5)
     auto_translate = models.BooleanField(default=True)
+    video = models.FileField(upload_to=upload_to, null=True, blank=True)
 
     def __str__(self):
         name = (

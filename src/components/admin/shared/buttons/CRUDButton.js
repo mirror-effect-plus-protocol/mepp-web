@@ -45,7 +45,7 @@ const CRUDButton = (props) => {
 
   const resource = rest.resource || useResourceContext();
   const createPath = useCreatePath();
-  const link = createPath({type: type, resource: resource, id: record.id });
+  const link = createPath({type, resource, id: record.id });
   const icon = type === 'show' ? <ImageEye /> : <ContentCreate />;
   const state = { _scrollToTop: scrollToTop };
   const context =

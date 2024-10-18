@@ -86,7 +86,7 @@ export const PatientEdit = () => {
 
   return (
     <Edit
-      mutationOptions={{ onError: onError }}
+      mutationOptions={{ onError }}
       actions={<TopToolbar hasShow={hasShow}/>}
       mutationMode="pessimistic"
     >
@@ -157,7 +157,7 @@ export const PatientEdit = () => {
             />
           </Box>
         )}
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.reset_password')}
         </Typography>
         <Box className={classes.root}>

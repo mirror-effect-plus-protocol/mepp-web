@@ -104,7 +104,7 @@ export const PlanCreate = () => {
   };
 
   return (
-    <Create transform={transform} redirect={redirect} mutationOptions={{ onError: onError }}>
+    <Create transform={transform} redirect={redirect} mutationOptions={{ onError }}>
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}
@@ -135,7 +135,7 @@ export const PlanCreate = () => {
         <Typography
           variant="h6"
           gutterBottom
-          gutterTop={true}
+          gutterTop
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
