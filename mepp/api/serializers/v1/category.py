@@ -24,37 +24,12 @@ from rest_framework import serializers
 
 from mepp.api.models.category import (
     Category,
-    SubCategory,
-    SubCategoryI18n,
     CategoryI18n,
 )
 from mepp.api.serializers import (
     I18nSerializer,
     HyperlinkedModelUUIDSerializer,
 )
-
-
-class SubCategoryI18nSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = SubCategoryI18n
-        fields = [
-            'name',
-            'language',
-        ]
-        list_serializer_class = I18nSerializer
-
-
-class SubCategorySerializer(HyperlinkedModelUUIDSerializer):
-
-    i18n = SubCategoryI18nSerializer(many=True)
-
-    class Meta:
-        model = SubCategory
-        fields = [
-            'id',
-            'i18n',
-        ]
 
 
 class CategoryI18nSerializer(serializers.ModelSerializer):
@@ -71,7 +46,7 @@ class CategoryI18nSerializer(serializers.ModelSerializer):
 class CategorySerializer(HyperlinkedModelUUIDSerializer):
 
     i18n = CategoryI18nSerializer(many=True)
-    sub_categories = SubCategorySerializer(many=True)
+    children = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
@@ -79,5 +54,11 @@ class CategorySerializer(HyperlinkedModelUUIDSerializer):
             'id',
             'url',
             'i18n',
-            'sub_categories',
+            'children',
         ]
+
+    def get_children(self, category):
+        children = category.children.all()
+        if children.exists():
+            return CategorySerializer(children, many=True, context=self.context).data
+        return []

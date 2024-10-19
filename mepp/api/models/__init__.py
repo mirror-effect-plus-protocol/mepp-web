@@ -24,8 +24,6 @@ from .base import BaseModel
 from .category import (
     Category,
     CategoryI18n,
-    SubCategory,
-    SubCategoryI18n,
 )
 from .exercise import (
     Exercise,

@@ -18,7 +18,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
-import json
 import re
 import os
 import html
@@ -153,7 +152,6 @@ class Command(BaseCommand):
 
     def update_categories_i18n(self):
         categories = CategoryI18n.objects.filter(language=LanguageEnum.FR.value)
-        sub_categories = SubCategoryI18n.objects.filter(language=LanguageEnum.FR.value)
 
         for category in categories:
             for language in LanguageEnum:
@@ -168,16 +166,3 @@ class Command(BaseCommand):
                 )
                 category.language = language.value
                 category.save()
-
-        for sub_category in sub_categories:
-            for language in LanguageEnum:
-                if SubCategoryI18n.objects.filter(
-                    language=language.value, parent_id=sub_category.parent_id
-                ).exists():
-                    continue
-                sub_category.pk = None
-                sub_category.name = self.translate_text(
-                    sub_category.name, language.value
-                )
-                sub_category.language = language.value
-                sub_category.save()

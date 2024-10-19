@@ -39,14 +39,7 @@ class ExerciseFilter(BaseFilterBackend):
         except KeyError:
             pass
         else:
-            queryset = queryset.filter(sub_categories__category__uid=category__uid)
-
-        try:
-            sub_category__uid = request.query_params['sub_category__uid']
-        except KeyError:
-            pass
-        else:
-            queryset = queryset.filter(sub_categories__uid=sub_category__uid)
+            queryset = queryset.filter(category_uid=category__uid)
 
         return queryset.distinct()
 

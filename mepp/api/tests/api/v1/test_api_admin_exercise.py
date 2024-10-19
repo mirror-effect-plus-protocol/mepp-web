@@ -20,8 +20,8 @@
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 from rest_framework import status
 
+from mepp.api.models.category import Category
 from mepp.api.models.exercise import Exercise, ExerciseI18n
-from mepp.api.models.category import SubCategory
 from . import BaseV1TestCase
 
 
@@ -40,7 +40,9 @@ class AdminExerciseListAPITestCase(BaseV1TestCase):
     def test_list_exercises_as_clinician_not_system(self):
         url = self.reverse('exercise-list') + '?is_system=false'
         token = self.login(self.helen.username, self.common_password)
-        exercises_count = Exercise.objects.filter(clinician=self.helen, is_system=False).count()
+        exercises_count = Exercise.objects.filter(
+            clinician=self.helen, is_system=False
+        ).count()
         response = self.client.get(
             url,
             **self.get_token_header(token),
@@ -82,7 +84,7 @@ class AdminExerciseListAPITestCase(BaseV1TestCase):
 class AdminExerciseCreateAPITestCase(BaseV1TestCase):
 
     def get_exercise_dict(self, user, **kwargs):
-        sub_category = SubCategory.objects.first()
+        category = Category.objects.first()
         return {
             'archived': False,
             'i18n': {
@@ -94,8 +96,8 @@ class AdminExerciseCreateAPITestCase(BaseV1TestCase):
             'movement_duration': 1,
             'pause': 1,
             'repetition': 1,
-            'sub_categories': [
-                {'uid': sub_category.uid}
+            'categories': [
+                {'uid': category.uid}
             ],
             'is_system': kwargs.get('is_system', False),
             'clinician_uid': user.uid,

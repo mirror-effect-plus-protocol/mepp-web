@@ -33,7 +33,7 @@ from mepp.api.mixins.models.searchable import (
     Searchable,
 )
 from .base import BaseModel
-from .category import SubCategory
+from .category import Category
 
 
 def upload_to(instance, filename):
@@ -47,14 +47,7 @@ class Exercise(BaseModel, Archivable, Template, Searchable):
     ]
 
     uid = UUIDField('e')
-    clinician = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name='exercises',
-        on_delete=models.CASCADE,
-    )
-    sub_categories = models.ManyToManyField(
-        SubCategory, related_name='exercises'
-    )
+    categories = models.ManyToManyField(Category, related_name='exercises')
     movement_duration = models.PositiveSmallIntegerField(null=False, default=5)
     repetition = models.PositiveSmallIntegerField(null=False, default=3)
     pause = models.PositiveSmallIntegerField(null=False, default=5)

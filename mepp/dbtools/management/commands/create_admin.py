@@ -23,21 +23,6 @@
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 
-from mepp.api.models import (
-    Category,
-    CategoryI18n,
-    SubCategory,
-    SubCategoryI18n,
-    Exercise,
-    ExerciseI18n,
-    Log,
-    Session,
-    TreatmentPlan,
-    TreatmentPlanI18n,
-)
-from mepp.api.models.plan import TreatmentPlanExerciseM2M
-from mepp.api.enums.side import SideEnum
-
 
 class Command(BaseCommand):
 
