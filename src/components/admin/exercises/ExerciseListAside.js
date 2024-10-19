@@ -24,8 +24,11 @@ import React, {useEffect, useState} from 'react';
 import {
   FilterList,
   FilterListItem,
-  FilterLiveSearch, useGetIdentity,
+  FilterLiveSearch,
+  useGetIdentity,
+  useListContext,
   useListFilterContext,
+  useGetList,
 } from 'react-admin';
 
 import { useLocale } from '@hooks/locale/useLocale';
@@ -35,133 +38,135 @@ import {
   ClinicianIcon,
   SubCategoryIcon,
 } from '@components/admin/shared/icons';
-import {
-  useGetCategories,
-  useGetClinicians,
-  useGetSubCategories,
-} from "@components/admin/shared/hook";
 import { ASide } from '@components/admin/shared/cards/ASide';
 
+const styles = {
+  asideContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
+    gap: '1rem',
+    marginBottom: '1rem',
+  },
+  searchContainer: {
+    width: '100%',  // Conteneur pleine largeur
+    marginBottom: '1rem',
+  },
+  categoryFiltersContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: '1rem',
+  },
+  filterListWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: '1rem',
+  },
+  cardContent: {
+    padding: 0,
+  },
+};
+
+// Composant pour les listes de filtres dynamiques avec indexation
+const DynamicCategoryFilterList = ({ categories, locale, level, onCategoryClick, activeParentId }) => {
+  const [subCategory, setSubCategory] = useState(null);
+
+  const handleCategoryClick = (category) => {
+
+    if (activeParentId !== category.id) {
+      console.log('ACTIVE APRENT ID', activeParentId);
+      setSubCategory(null);
+      console.log('category.id', category.id);
+    }
+
+    onCategoryClick(category, level);
+
+    if (category.children && category.children.length > 0) {
+      setSubCategory(category);
+    }
+  };
+
+  return (
+    <div style={styles.filterListWrapper}>
+      <CardContent style={styles.cardContent}>
+        <FilterList>
+          {categories.map((category) => {
+            const filterKey = `category${level}__uid`;
+            return (
+              <FilterListItem
+                label={category.i18n.name[locale]}
+                key={category.id}
+                value={{ [filterKey]: category.id }}
+                onClick={() => handleCategoryClick(category)}
+              />
+            );
+          })}
+        </FilterList>
+      </CardContent>
+      {/* Afficher les sous-catégories si la catégorie est développée */}
+      {subCategory && (
+        <DynamicCategoryFilterList
+          categories={subCategory.children}
+          locale={locale}
+          level={level + 1}
+          onCategoryClick={onCategoryClick}
+          activeParentId={subCategory.id}
+        />
+      )}
+    </div>
+  );
+};
+
+
 const ExerciseListAside = ({permissions}) => {
+  const {filterValues, setFilters} = useListFilterContext();
   const { locale } = useLocale();
-  const [selectedCategory, setSelectedCategory] = useState(-1);
-  const { identity } = useGetIdentity();
-  const {
-    data: clinicians,
-    loading: isLoading,
-    loaded: isLoaded,
-    refetch
-  } = useGetClinicians(permissions, true);
-  const [defaultClinician, setDefaultClinician] = useState(true);
-  const [clickClinician, setClickClinician] = useState(false);
-  const categories = useGetCategories(locale);
-  const subCategories = useGetSubCategories(locale);
-  const { filterValues, setFilters } = useListFilterContext();
+  const { data: categories, isLoading } = useGetList('categories', {
+    pagination: { page: 1, perPage: 100 },
+    sort: { field: 'name', order: 'ASC' },
+  });
+  const [localFilters, setLocalFilters] = useState(filterValues);
+  const [activeParentId, setActiveParentId] = useState(null);
+
+  const handleCategorySelect = (category, index = 0) => {
+    const filterKey = `category${index}__uid`;
+    const newFilters = { ...localFilters, [filterKey]: category.id };
+
+    if (activeParentId !== category.id) {
+      setActiveParentId(category.id);
+    }
+    setLocalFilters(newFilters);
+    setFilters(newFilters, null);
+
+    console.log('index', index);
+    console.log('category.id', category.id);
+    console.log('filterKey', filterKey);
+  };
 
   useEffect(() => {
-    if (permissions !== 'admin') return;
-
-    if (defaultClinician && identity?.uid) {
-      if (!filterValues?.clinician_uid) {
-        setFilters({
-          ...filterValues,
-          'clinician_uid': identity.uid
-        });
-      }
-    }
-  }, [identity, defaultClinician]);
-
-  useEffect(() => {
-
-    if (permissions !== 'admin') return;
-
-     if (identity?.uid && isLoaded) {
-       if (filterValues?.clinician_uid) {
-         refetch(identity?.uid, filterValues.clinician_uid);
-       }
-     }
-  }, [identity, isLoaded]);
-
-
-  useEffect(() => {
-
-    if (clickClinician) {
-      refetch(identity?.uid, filterValues.clinician_uid);
-      setTimeout(() => setClickClinician(false), 200);
-    }
-
-    if (filterValues && filterValues.category__uid) {
-      setSelectedCategory(filterValues.category__uid);
-    } else {
-      setSelectedCategory('all');
-      if (filterValues && filterValues.sub_category__uid) {
-        setFilters({
-          ...filterValues,
-          'sub_category__uid': undefined
-        });
-      }
-    }
+    console.log('filterValues updated:', filterValues);
+    setLocalFilters(filterValues); // Sync local state with global filterValues
   }, [filterValues]);
 
   return (
-    <ASide>
-      <CardContent>
-        <FilterLiveSearch source="fulltext_search" />
-
-        <FilterList
-          label="resources.exercises.fields.category__uid"
-          icon={<CategoryIcon/>}
-        >
-          {
-            categories.map((category) => (
-              <FilterListItem
-                label={category.name}
-                key={category.id}
-                value={{ category__uid: category.id }}
-              />
-            ))
-          }
-        </FilterList>
-
-        {subCategories.hasOwnProperty(selectedCategory) &&
-          <FilterList
-            label="resources.exercises.fields.uid"
-            icon={<SubCategoryIcon/>}
-          >
-            {
-              subCategories[selectedCategory].map((sub_category) => (
-                <FilterListItem
-                  label={sub_category.name}
-                  key={sub_category.id}
-                  value={{sub_category__uid: sub_category.id}}
-                />
-              ))
-            }
-          </FilterList>
-        }
-
-        {permissions === 'admin' && (
-          <FilterList
-            label="resources.exercises.fields.clinician_uid"
-            icon={<ClinicianIcon />}
-          >
-            {!isLoading &&
-              clinicians.map((clinician) => (
-                <FilterListItem
-                  label={clinician.name}
-                  key={clinician.id}
-                  value={{ clinician_uid: clinician.id }}
-                  onMouseUp={() => {
-                    setDefaultClinician(false);
-                    setClickClinician(true);
-                  }}
-                />
-              ))
-            }
-          </FilterList>
+    <div style={styles.asideContainer}>
+      <div style={styles.searchContainer}>
+        <FilterLiveSearch source="fulltext_search"/>
+      </div>
+      <div style={styles.categoryFiltersContainer}>
+        {!isLoading && (
+          <DynamicCategoryFilterList
+            categories={categories}
+            locale={locale}
+            level={0}
+            onCategoryClick={handleCategorySelect}
+            activeParentId={activeParentId}
+          />
         )}
-      </CardContent>
-    </ASide>
+      </div>
+    </div>
   );
 };
 

@@ -35,7 +35,6 @@ class CategoryViewSet(UUIDLookupFieldViewSet):
     API endpoint that allows categories/sub categories to be viewed or edited.
     """
     serializer_class = CategorySerializer
-    pagination_class = None
 
     filter_backends = [
         MeppAPIFilter,
@@ -48,5 +47,5 @@ class CategoryViewSet(UUIDLookupFieldViewSet):
     ]
 
     def get_queryset(self):
-        queryset = Category.objects.all()
+        queryset = Category.objects.filter(parent_id__isnull=True)
         return queryset

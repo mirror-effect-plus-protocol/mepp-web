@@ -20,13 +20,11 @@
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import csv
-import html
 import time
 
 from pathlib import Path
 
 import openai
-import requests
 from django.core.management.base import BaseCommand
 
 openai.api_key = 'CHANGEME'
