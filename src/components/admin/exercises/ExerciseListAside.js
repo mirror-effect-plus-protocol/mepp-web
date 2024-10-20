@@ -70,22 +70,18 @@ const styles = {
 };
 
 // Composant pour les listes de filtres dynamiques avec indexation
-const DynamicCategoryFilterList = ({ categories, locale, level, onCategoryClick, activeParentId }) => {
+const DynamicCategoryFilterList = ({ categories, locale, level, onCategoryClick, activePath }) => {
   const [subCategory, setSubCategory] = useState(null);
+
+  const isActiveLevel = activePath[level] !== undefined;
 
   const handleCategoryClick = (category) => {
 
-    if (activeParentId !== category.id) {
-      console.log('ACTIVE APRENT ID', activeParentId);
-      setSubCategory(null);
-      console.log('category.id', category.id);
-    }
-
     onCategoryClick(category, level);
 
-    if (category.children && category.children.length > 0) {
+    /*if (category.children && category.children.length > 0) {
       setSubCategory(category);
-    }
+    }*/
   };
 
   return (
@@ -106,13 +102,13 @@ const DynamicCategoryFilterList = ({ categories, locale, level, onCategoryClick,
         </FilterList>
       </CardContent>
       {/* Afficher les sous-catégories si la catégorie est développée */}
-      {subCategory && (
+      {isActiveLevel && activePath[level]?.children?.length > 0 && (
         <DynamicCategoryFilterList
-          categories={subCategory.children}
+          categories={activePath[level].children}
           locale={locale}
           level={level + 1}
           onCategoryClick={onCategoryClick}
-          activeParentId={subCategory.id}
+          activePath={activePath}
         />
       )}
     </div>
@@ -128,25 +124,25 @@ const ExerciseListAside = ({permissions}) => {
     sort: { field: 'name', order: 'ASC' },
   });
   const [localFilters, setLocalFilters] = useState(filterValues);
-  const [activeParentId, setActiveParentId] = useState(null);
+  const [activePath, setActivePath] = useState([]);
 
   const handleCategorySelect = (category, index = 0) => {
     const filterKey = `category${index}__uid`;
-    const newFilters = { ...localFilters, [filterKey]: category.id };
-
-    if (activeParentId !== category.id) {
-      setActiveParentId(category.id);
-    }
+    const newFilters = {
+      ...localFilters,
+      [filterKey]: category.id,
+      category__uid: category.children.length ? false : category.id
+    };
     setLocalFilters(newFilters);
     setFilters(newFilters, null);
-
-    console.log('index', index);
-    console.log('category.id', category.id);
-    console.log('filterKey', filterKey);
+    setActivePath((prev) => {
+      const newPath = [...prev.slice(0, index), category];
+      return newPath;
+    });
   };
 
   useEffect(() => {
-    console.log('filterValues updated:', filterValues);
+    console.log('filterValues', filterValues);
     setLocalFilters(filterValues); // Sync local state with global filterValues
   }, [filterValues]);
 
@@ -162,7 +158,7 @@ const ExerciseListAside = ({permissions}) => {
             locale={locale}
             level={0}
             onCategoryClick={handleCategorySelect}
-            activeParentId={activeParentId}
+            activePath={activePath}
           />
         )}
       </div>
