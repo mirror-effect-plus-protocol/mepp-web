@@ -182,6 +182,10 @@ export default {
     },
     exercises: {
       name: 'Exercise |||| Exercises',
+      empty: {
+        title: 'No exercises',
+        description: 'Please filter the categories by clicking on the Filter button',
+      },
       fields: {
         archived: 'Archives',
         'i18n.description.en': 'Description',

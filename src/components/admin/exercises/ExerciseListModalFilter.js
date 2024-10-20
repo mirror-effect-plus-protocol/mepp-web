@@ -2,14 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {
   useListContext,
   useGetList,
-  TopToolbar,
+  useStore,
 } from 'react-admin';
 import {
   Modal,
   Box,
-  Button,
   IconButton,
-  CardContent,
   Typography,
   Paper,
   List,
@@ -98,19 +96,20 @@ const ExerciseListModalFilter = () => {
   const { locale } = useLocale();
   const { data: categories, isLoading } = useGetList('categories', {
     pagination: { page: 1, perPage: 100 },
-    sort: { field: 'name', order: 'ASC' },
-  });
-
+    sort: { field: `i18n.name.${locale}`, order: 'ASC' },
+    filter: { language: locale },
+  })
   const [open, setOpen] = useState(false);
-  const [activePath, setActivePath] = useState([]);
+  const [activePath, setActivePath] = useStore('categoriesActivePath', []);
 
   const handleOpen = () => setOpen(true);
+
   const handleClose = () => setOpen(false);
 
   const handleCategorySelect = (category, level) => {
     const filterKey = `category${level}__uid`;
 
-    // Appliquer le filtre et mettre à jour le chemin actif
+    // Apply filter and update path to category
     setFilters({ ...filterValues, [filterKey]: category.id }, null);
     setFilters({
       ...filterValues,
@@ -118,7 +117,7 @@ const ExerciseListModalFilter = () => {
       category__uid: category.children.length ? false : category.id
     }, null);
 
-    // Mettre à jour le chemin actif jusqu'au niveau actuel
+    // Update the active path up to current level
     setActivePath((prev) => {
       const newPath = [...prev.slice(0, level), category];
       return newPath;

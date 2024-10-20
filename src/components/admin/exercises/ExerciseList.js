@@ -19,31 +19,64 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Datagrid,
+  Empty,
   List,
   TextField,
   usePermissions,
   useStore,
+  useTranslate,
 } from 'react-admin';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import {Box, Typography, IconButton} from '@mui/material';
 
-import { useLocale } from '@hooks/locale/useLocale';
+import {useLocale} from '@hooks/locale/useLocale';
 
 import Spinner from '@components/admin/shared/Spinner';
 import ArchivableFilter from '@components/admin/shared/filters/ArchivableFilter';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
+import ExerciseListModalFilter from './ExerciseListModalFilter';
 
 export const ExerciseList = () => {
-  const { permissions } = usePermissions();
-  const { locale } = useLocale();
+  const {permissions} = usePermissions();
+  const {locale} = useLocale();
 
   const [patientUid, setPatientUid] = useStore('patient.uid', false);
   useEffect(() => {
     setPatientUid(false);
   }, []);
+
+  const CustomEmpty = () => {
+    const t = useTranslate();
+
+    return (
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        height="100%"
+        padding="2rem"
+      >
+        <Typography variant="h6">
+          {t('resources.exercises.empty.title')}
+        </Typography>
+        <Typography
+          variant="body1"
+          align="center"
+          color="textSecondary"
+          style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}
+        >
+          {t('resources.exercises.empty.description')}
+          <ExerciseListModalFilter />
+        </Typography>
+      </Box>
+    );
+  };
 
   return (
     <List
@@ -52,16 +85,17 @@ export const ExerciseList = () => {
         language: locale,
         category__uid: -1,
       }}
-      filters={<ArchivableFilter />}
-      sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
+      filters={<ArchivableFilter/>}
+      sort={{field: `i18n.description.${locale}`, order: 'ASC'}}
       perPage={25}
       actions={<ListActions showExercisesFilter={true}/>}
     >
       <Datagrid
-        bulkActionButtons={<BulkActionButtons permissions={permissions} />}
+        bulkActionButtons={<BulkActionButtons permissions={permissions}/>}
+        empty={<CustomEmpty/>}
       >
-        <TextField source={`i18n.description.${locale}`} />
-        <RowActionToolbar permissions={permissions} clonable />
+        <TextField source={`i18n.description.${locale}`}/>
+        <RowActionToolbar permissions={permissions} clonable/>
       </Datagrid>
     </List>
   );

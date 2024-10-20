@@ -163,14 +163,6 @@ export default () => {
             />
           )}
           ,
-          {permissions !== 'user' && (
-            <Resource
-              name="categories"
-              list={CategoryList}
-              icon={CategoryIcon}
-            />
-          )}
-          ,
           {permissions === 'user' && (
             <CustomRoutes noLayout>
               <Route path="*" element={<Navigate to="/home" />} />

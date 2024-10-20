@@ -186,6 +186,10 @@ export default {
     },
     exercises: {
       name: 'Exercice |||| Exercices',
+      empty: {
+        title: 'Aucun exercice',
+        description: 'Veuillez choisir une catégorie en cliquant sur le bouton Filtrer',
+      },
       fields: {
         archived: 'Archives',
         'i18n.description.fr': 'Description',
