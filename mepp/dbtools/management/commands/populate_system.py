@@ -212,14 +212,14 @@ class Command(BaseCommand):
         categories = []
 
         cpt = 10
-        for i in range(0, 6):
+        for i in range(0, 4):
             categories.append({
                 'fr': row[cpt + i].strip().replace("'", '’'),
-                'en': row[cpt + i + 1].strip().replace("'", '’'),
-                'de': row[cpt + i + 2].strip().replace("'", '’'),
-                'es': row[cpt + i + 3].strip().replace("'", '’'),
-                'it': row[cpt + i + 4].strip().replace("'", '’'),
-                'pt': row[cpt + i + 5].strip().replace("'", '’'),
+                'en': row[cpt + i + 4].strip().replace("'", '’'),
+                'de': row[cpt + i + 8].strip().replace("'", '’'),
+                'es': row[cpt + i + 12].strip().replace("'", '’'),
+                'it': row[cpt + i + 16].strip().replace("'", '’'),
+                'pt': row[cpt + i + 20].strip().replace("'", '’'),
             })
 
         return categories

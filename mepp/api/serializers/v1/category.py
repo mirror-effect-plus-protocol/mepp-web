@@ -22,6 +22,7 @@
 
 from rest_framework import serializers
 
+from mepp.api.enums.language import LanguageEnum
 from mepp.api.models.category import (
     Category,
     CategoryI18n,
@@ -58,7 +59,13 @@ class CategorySerializer(HyperlinkedModelUUIDSerializer):
         ]
 
     def get_children(self, category):
-        children = category.children.all()
+        request = self.context.get('request')
+        language = request.query_params.get(
+            'language', LanguageEnum.default.value
+        )
+        children = category.children.filter(i18n__language=language).order_by(
+            'i18n__name'
+        )
         if children.exists():
             return CategorySerializer(children, many=True, context=self.context).data
         return []
