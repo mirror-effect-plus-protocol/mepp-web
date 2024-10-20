@@ -134,7 +134,31 @@ class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
         return exercise.clinician.uid
 
     def get_categories(self, exercise):
-        return list(exercise.categories.values('uid', 'parent__uid').all())
+        categories = []
+
+        for category in exercise.categories.all():
+            category_dict = {
+                'uid': category.uid,
+                'i18n': {
+                    i18n.language: i18n.name
+                    for i18n in category.i18n.all()
+                },
+                'parents': [],
+            }
+            current_category = category
+            while parent := current_category.parent:
+                i18n = {}
+                for category_i18n in parent.i18n.all():
+                    i18n[category_i18n.language] = category_i18n.name
+                category_dict['parents'].insert(0, {
+                    'uid': parent.uid,
+                    'i18n': i18n,
+                })
+                current_category = current_category.parent
+
+            categories.append(category_dict)
+
+        return categories
 
     def validate(self, attrs):
         categories = self._validate_categories()

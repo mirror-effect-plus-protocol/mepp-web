@@ -45,8 +45,9 @@ export const useCategoryChipsStyles = makeStyles((theme) => {
       marginBottom: theme.spacing(2),
       '& div': {
         width: '200px',
-        '&:first-child': {
-          marginRight: theme.spacing(2),
+        marginRight: theme.spacing(2),
+        '&:last-child': {
+          marginRight: 0,
         }
       }
     }

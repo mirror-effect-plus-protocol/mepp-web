@@ -49,23 +49,25 @@ import { LANGUAGES } from '../../../locales';
 import {translatorInputStyle} from "@components/admin/shared/styles/shared";
 import VideoField from "@components/admin/shared/inputs/VideoField";
 
-const CategoryChips = (props) => {
+const CategoryChips = ({locale}) => {
   const classes = useCategoryChipsStyles();
   const record = useRecordContext();
   if (!record) return null;
-  return record.sub_categories.map((subCategory) => (
+  return record.categories.map((category) => (
     <div
-      key={`${subCategory.uid}.${subCategory.category__uid}`}
+      key={category.category__uid}
       data-name="chip-row"
       className={classes.root}
     >
+      {category.parents.map((parent) => (
+        <Chip
+          color="secondary"
+          label={parent.i18n[locale]}
+        />
+      ))}
       <Chip
         color="secondary"
-        label={props.categories[subCategory.category__uid]}
-      />
-      <Chip
-        color="secondary"
-        label={props.subCategories[subCategory.uid]}
+        label={category.i18n[locale]}
         variant="outlined"
       />
     </div>
@@ -77,29 +79,13 @@ export const ExerciseShow = () => {
   const { hasEdit } = useResourceDefinition();
   const t = useTranslate();
   const { locale } = useLocale();
-  const categories = {};
-  const subCategories = {};
-  const { data, isLoading } = useGetList('categories', {
-    pagination: { page: 1, perPage: 9999 },
-    sort: { field: 'i18n__name', order: 'ASC' },
-    filter: { language: locale },
-  });
 
-  if (!isLoading) {
-    data.forEach((category) => {
-      categories[category.id] = category.i18n.name[locale];
-      category.sub_categories.forEach((subCategory) => {
-        subCategories[subCategory.id] = subCategory.i18n.name[locale];
-      });
-    });
-  }
   return (
     <Show actions={<TopToolbar hasEdit={hasEdit} />}>
       <BoxedShowLayout>
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}
         </Typography>
-        <ClinicianTextField show={permissions === 'admin'} />
         <TranslatableFields
           locales={LANGUAGES}
           defaultLocale={locale}
@@ -121,8 +107,7 @@ export const ExerciseShow = () => {
         <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
-        <CategoryChips categories={categories} subCategories={subCategories} />
-        <BooleanField source="is_system" />
+        <CategoryChips locale={locale} />
         <ShowToolBar />
       </BoxedShowLayout>
     </Show>
