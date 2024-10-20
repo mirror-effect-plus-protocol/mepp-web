@@ -18,13 +18,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
-import os
 import csv
-import html
 import sys
 from pathlib import Path
 
-import requests
 from django.db import connection, transaction
 from django.core.management.base import BaseCommand
 
@@ -38,9 +35,6 @@ from mepp.api.models import (
 
 class Command(BaseCommand):
     help = 'Populate categories and exercises'
-
-    API_KEY = os.getenv('GOOGLE_TRANSLATE_API_KEY')
-    API_URL = f'https://translation.googleapis.com/language/translate/v2?key={API_KEY}'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -70,14 +64,14 @@ class Command(BaseCommand):
             and (Exercise.objects.exists() or Category.objects.exists())
         ):
             self.stdout.write('Database is not empty...')
-            print('RUN:')
-            print(
+            self.stdout.write('RUN:')
+            self.stdout.write(
                 f'{sql_keywords} `{ExerciseI18n._meta.db_table}`;')  # noqa
-            print(
+            self.stdout.write(
                 f'{sql_keywords} `{Exercise._meta.db_table}`;')  # noqa
-            print(
+            self.stdout.write(
                 f'{sql_keywords} `{CategoryI18n._meta.db_table}`;')  # noqa
-            print(
+            self.stdout.write(
                 f'{sql_keywords} `{Category._meta.db_table}`;')  # noqa
             sys.exit(1)
 
@@ -85,10 +79,11 @@ class Command(BaseCommand):
 
         with transaction.atomic():
 
-            Category.objects.all().delete()
-            Exercise.objects.all().delete()
+            if force:
+                Category.objects.all().delete()
+                Exercise.objects.all().delete()
 
-            with open(f'{base_dir}/data/exercises.csv') as csvfile:
+            with open(f'{base_dir}/data/exercises_final_chatgpt.csv') as csvfile:
                 exercises = csv.reader(csvfile, delimiter=',', quotechar='"')
                 for idx, row in enumerate(exercises):
                     if idx == 0:
@@ -101,9 +96,9 @@ class Command(BaseCommand):
 
                     descriptions = self._get_descriptions(row)
                     categories = self._get_categories(row)
-                    movement = int(row[11].strip())
-                    repeat = int(row[12].strip())
-                    pause = int(row[13].strip())
+                    movement = int(row[1].strip())
+                    repetition = int(row[2].strip())
+                    pause = int(row[3].strip())
 
                     parent = None
                     for level in range(0, 4):
@@ -118,15 +113,15 @@ class Command(BaseCommand):
                             parent = category_i18n.parent
                         else:
                             category = Category.objects.create(parent=parent)
-                            for language in ['fr', 'en', 'es', 'ge', 'it', 'pt']:
+                            for language in ['fr', 'en', 'de', 'es', 'it', 'pt']:
                                 CategoryI18n.objects.create(
                                     parent=category,
                                     name=categories[level][language],
                                     language=language
                                 )
                             self.stdout.write(
-                                f'\tCreating category {category} with parent '
-                                f'{parent}…'
+                                f'New category `{category}` with parent '
+                                f'`{parent}` has been created.'
                             )
                             parent = category
 
@@ -135,104 +130,96 @@ class Command(BaseCommand):
                             pk=exercise_pk
                         )
                         if created:
-                            exercise.movement_duration = movement
-                            exercise.pause = pause
-                            exercise.repetition = repeat
-                            exercise.save()
-
-                            for language in ['fr', 'en', 'es', 'ge', 'it', 'pt']:
-                                description = descriptions[language]
-                                if not description.endswith('.'):
-                                    description += '.'
-                                ExerciseI18n.objects.create(
-                                    parent=exercise,
-                                    description=description,
-                                    language=language,
-                                )
+                            exercise = self._create_exercise(
+                                movement, pause, repetition, descriptions, exercise
+                            )
+                        elif not exercise.i18n.filter(
+                            description=descriptions['fr'], language='fr'
+                        ).exists():
+                            self.stdout.write(
+                                f'\t⚠️ Different description detected for `{exercise}`!'
+                            )
+                            exercise = self._create_exercise(
+                                movement, pause, repetition, descriptions
+                            )
                     else:
-                        description = descriptions['fr']
-                        if not description.endswith('.'):
-                            description += '.'
                         if exercise_i18n := ExerciseI18n.objects.filter(
-                            description=description,
+                            description=descriptions['fr'],
                             language='fr',
                         ).first():
                             exercise = exercise_i18n.parent
                         else:
-                            exercise = Exercise.objects.create(
-                                movement_duration=movement,
-                                pause=pause,
-                                repetition=repeat,
+                            exercise = self._create_exercise(
+                                movement, pause, repetition, descriptions
                             )
-                            for language in ['fr', 'en', 'es', 'ge', 'it', 'pt']:
-                                description = descriptions[language]
-                                if not description.endswith('.'):
-                                    description += '.'
-                                ExerciseI18n.objects.create(
-                                    parent=exercise,
-                                    description=description,
-                                    language=language,
-                                )
 
                     exercise.categories.add(parent)
                     self.stdout.write(
-                        f"Exercise `{exercise}` attached to {parent} "
-                        f"at level {level - 1}"
+                        f'\tExercise `{exercise}` attached to `{parent}` at level '
+                        f'{level - 1}'
                     )
-                    if exercise_pk == 53:
-                        breakpoint()
 
         self.stdout.write('Done!')
 
+    def _create_exercise(
+        self,
+        movement: int,
+        pause: int,
+        repetition: int,
+        descriptions: dict,
+        exercise: Exercise = None,
+    ) -> Exercise:
+
+        if not exercise:
+            exercise = Exercise.objects.create(
+                movement_duration=movement,
+                pause=pause,
+                repetition=repetition,
+            )
+        else:
+            exercise.movement_duration = movement
+            exercise.pause = pause
+            exercise.repetition = repetition
+            exercise.save()
+
+        for language in ['fr', 'en', 'de', 'es', 'it', 'pt']:
+            ExerciseI18n.objects.create(
+                parent=exercise,
+                description=descriptions[language],
+                language=language,
+            )
+
+        self.stdout.write(f"New `{exercise}` has been created!")
+        return exercise
+
     def _get_descriptions(self, row) -> dict:
-        description_base = row[1].strip().replace("'", '’')
+        def _add_punctuation(value):
+            value = value.strip().replace("'", '’')
+            if value.endswith(('.', '!')):
+                return value
+            return f'{value}.'
+
         return {
-            'fr': description_base,
-            'en': row[2].strip().replace("'", '’'),
-            'es': row[14].strip().replace("'", '’'),
-            'it': row[15].strip().replace("'", '’'),
-            'ge': row[16].strip().replace("'", '’'),
-            'pt': self._translate_text(description_base, 'pt', 'description')
+            'fr': _add_punctuation(row[4]),
+            'en': _add_punctuation(row[5]),
+            'de': _add_punctuation(row[6]),
+            'es': _add_punctuation(row[7]),
+            'it': _add_punctuation(row[8]),
+            'pt': _add_punctuation(row[9]),
         }
 
     def _get_categories(self, row) -> list:
         categories = []
 
-        for i in range(0, 4):
-            base_text = row[(i * 2) + 3].strip().replace("'", '’')
+        cpt = 10
+        for i in range(0, 6):
             categories.append({
-                'fr': base_text,
-                'en': row[(i * 2) + 4].strip().replace("'", '’'),
-                'es': self._translate_text(base_text, 'es', 'category'),
-                'it': self._translate_text(base_text, 'it', 'category'),
-                'ge': self._translate_text(base_text, 'ge', 'category'),
-                'pt': self._translate_text(base_text, 'pt', 'category'),
+                'fr': row[cpt + i].strip().replace("'", '’'),
+                'en': row[cpt + i + 1].strip().replace("'", '’'),
+                'de': row[cpt + i + 2].strip().replace("'", '’'),
+                'es': row[cpt + i + 3].strip().replace("'", '’'),
+                'it': row[cpt + i + 4].strip().replace("'", '’'),
+                'pt': row[cpt + i + 5].strip().replace("'", '’'),
             })
 
         return categories
-
-    def _translate_text(self, text: str, target_language: str, type_: str) -> str:
-        if not text:
-            return ''
-
-        key = f'{type_}-{target_language}-{text}'
-        if key in self._translations:
-            # print('--->> Already translated!')
-            return self._translations[key]
-
-        try:
-            self._translations[key] = 'TO BE TRANSLATED!'
-            return self._translations[key]
-
-            response = requests.post(
-                self.API_URL, data={'q': text, 'target': target_language}
-            )
-            response.raise_for_status()
-            translated_text = response.json()['data']['translations'][0][
-                'translatedText'
-            ]
-            self._translations[key] = html.unescape(translated_text)
-            return self._translations[key]
-        except requests.exceptions.RequestException as e:
-            print(f'Translation error: {e}')
-            return f'{target_language.upper()} - {text}'

@@ -19,32 +19,22 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Datagrid,
   List,
-  ListContextProvider,
-  ReferenceField,
   TextField,
-  FilterContext,
-  useListContext,
   usePermissions,
-  useResourceContext, useStore,
-  useTranslate,
+  useStore,
 } from 'react-admin';
 
 import { useLocale } from '@hooks/locale/useLocale';
-import {Divider, Tabs, Tab, Card, CardContent} from '@mui/material';
-import { Typography } from '@components/admin/shared/dom/sanitize';
 
 import Spinner from '@components/admin/shared/Spinner';
 import ArchivableFilter from '@components/admin/shared/filters/ArchivableFilter';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
-
-import ExerciseListAside from './ExerciseListAside';
-
 
 export const ExerciseList = () => {
   const { permissions } = usePermissions();
@@ -55,39 +45,24 @@ export const ExerciseList = () => {
     setPatientUid(false);
   }, []);
 
-
   return (
-    <div>
-      <List
-        filterDefaultValues={{
-          archived: false,
-          language: locale,
-        }}
-        filters={<ArchivableFilter />}
-        sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
-        perPage={25}
-        actions={<ListActions />}
+    <List
+      filterDefaultValues={{
+        archived: false,
+        language: locale,
+        category__uid: -1,
+      }}
+      filters={<ArchivableFilter />}
+      sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
+      perPage={25}
+      actions={<ListActions showExercisesFilter={true}/>}
+    >
+      <Datagrid
+        bulkActionButtons={<BulkActionButtons permissions={permissions} />}
       >
-        {/* Ajout du composant Aside au-dessus de la liste */}
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>Filtres</Typography>
-            <FilterContext.Provider value={{}}>
-              <ExerciseListAside permissions={permissions} />
-            </FilterContext.Provider>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent>
-            <Datagrid
-              bulkActionButtons={<BulkActionButtons permissions={permissions} />}
-            >
-              <TextField source={`i18n.description.${locale}`} />
-              <RowActionToolbar permissions={permissions} clonable />
-            </Datagrid>
-          </CardContent>
-        </Card>
-      </List>
-    </div>
+        <TextField source={`i18n.description.${locale}`} />
+        <RowActionToolbar permissions={permissions} clonable />
+      </Datagrid>
+    </List>
   );
 };
