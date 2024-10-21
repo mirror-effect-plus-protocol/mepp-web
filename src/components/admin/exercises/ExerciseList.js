@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useCallback, useState} from 'react';
 import {
   Datagrid,
   Empty,
@@ -50,7 +50,7 @@ export const ExerciseList = () => {
     setPatientUid(false);
   }, []);
 
-  const CustomEmpty = () => {
+  const CustomEmpty = useCallback(() => {
     const t = useTranslate();
 
     return (
@@ -76,7 +76,7 @@ export const ExerciseList = () => {
         </Typography>
       </Box>
     );
-  };
+  },[]);
 
   return (
     <List
