@@ -65,16 +65,17 @@ class MeppAPIFilter(BaseFilterBackend):
             queryset = queryset.filter(patient__uid=patient_id)
 
         # Filter clinicians
-        try:
-            clinician_uid = request.query_params['clinician_uid']
-        except KeyError:
-            pass
-        else:
-            queryset = queryset.filter(clinician__uid=clinician_uid)
+        print('viewmane', view, flush=True)
+        if view.__class__.__name__ != 'ExerciseViewSet':
+            try:
+                clinician_uid = request.query_params['clinician_uid']
+            except KeyError:
+                pass
+            else:
+                queryset = queryset.filter(clinician__uid=clinician_uid)
 
         # Filter templates
         if view.action == 'list' and issubclass(queryset.model, Template):
-
             try:
                 is_template = request.query_params['is_template']
             except KeyError:

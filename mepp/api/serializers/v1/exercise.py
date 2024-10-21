@@ -116,9 +116,6 @@ class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
         ]
 
     def create(self, validated_data):
-        request = self.context['request']
-        validated_data['clinician'] = request.user
-
         # Remove both relationship objects before creating the `Exercise` instance
         categories = validated_data.pop('categories')
         i18n = validated_data.pop('i18n')
@@ -129,9 +126,6 @@ class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
         self._update_categories(instance, categories)
         self._update_i18n(instance, i18n)
         return instance
-
-    def get_clinician_uid(self, exercise):
-        return exercise.clinician.uid
 
     def get_categories(self, exercise):
         categories = []
@@ -192,11 +186,6 @@ class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
     def update(self, instance, validated_data):
 
         # Ensure that the owner is not overwritten by `PATCH` request
-        try:
-            del validated_data['clinician']
-        except KeyError:
-            pass
-
         try:
             categories = validated_data.pop('categories')
         except KeyError:

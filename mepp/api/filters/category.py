@@ -67,7 +67,6 @@ class CategoryOrderingFilter(OrderingFilter):
 
             ordering = self.remove_invalid_fields(queryset, fields, view, request)
             if ordering:
-                print('ORDERING', ordering, flush=True)
                 return ordering
 
         # No ordering was included, or all the ordering fields were invalid
