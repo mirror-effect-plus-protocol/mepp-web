@@ -286,7 +286,7 @@ server {
 
     location /media {
         sendfile on;
-        root /www/media;
+        root /www;
     }
 
     location / {
