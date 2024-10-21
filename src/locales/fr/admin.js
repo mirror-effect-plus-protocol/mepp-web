@@ -367,8 +367,8 @@ export default {
     },
     shared: {
       labels: {
-        translate_on_save: 'Ce champ sera traduit automatique dans les autres (non manuellement renseignées) langues  lors de la sauvegarde',
-        overwrite_existing_translations: 'Remplacer les traductions existantes'
+        translate_on_save: 'Lors de la sauvegarde, ce champ sera traduit automatiquement dans les langues pour lesquelles aucune saisie manuelle n\'a été effectuée',
+        overwrite_existing_translations: 'Remplacer aussi les traductions existantes'
       }
     }
   },
