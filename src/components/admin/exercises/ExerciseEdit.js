@@ -41,28 +41,31 @@ import {
   useTranslate,
 } from 'react-admin';
 
+import GTranslateIcon from '@mui/icons-material/GTranslate';
+
+import { useLocale } from '@hooks/locale/useLocale';
+
 import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
 import { preSave } from '@components/admin/exercises/callbacks';
-import {
-  useNumberStyles,
-} from '@components/admin/exercises/styles';
+import { useNumberStyles } from '@components/admin/exercises/styles';
 import {
   validateCategory,
   validateSubCategory,
   validateSubCategories,
 } from '@components/admin/exercises/validators';
 import { Typography, Div } from '@components/admin/shared/dom/sanitize';
+import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
+import VideoInput from '@components/admin/shared/inputs/VideoInput';
+import {
+  translatorInputStyle,
+  categoriesSelectorStyle,
+} from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
-import { useLocale } from '@hooks/locale/useLocale';
-import { translatorInputStyle, categoriesSelectorStyle } from '@components/admin/shared/styles/shared';
 
 import { LANGUAGES } from '../../../locales';
-import GTranslateIcon from '@mui/icons-material/GTranslate';
-import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
-import VideoInput from '@components/admin/shared/inputs/VideoInput';
 
 export const ExerciseEdit = () => {
   const t = useTranslate();
@@ -162,24 +165,29 @@ export const ExerciseEdit = () => {
             fullWidth
             validate={validateI18n}
           />
-          <div style={{
-            fontSize: '0.7em',
-            display: 'grid',
-            gridTemplateColumns: 'auto 1fr',
-            gridGap: '10px', /* Adjust the value to add space between the image and text */
-            alignItems: 'center'
-          }}>
-            <GTranslateIcon/> {t('resources.shared.labels.translate_on_save')}
+          <div
+            style={{
+              fontSize: '0.7em',
+              display: 'grid',
+              gridTemplateColumns: 'auto 1fr',
+              gridGap:
+                '10px' /* Adjust the value to add space between the image and text */,
+              alignItems: 'center',
+            }}
+          >
+            <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
           </div>
-          <div style={{
-            fontSize: '0.7em',
-          }}>
+          <div
+            style={{
+              fontSize: '0.7em',
+            }}
+          >
             <FormDataConsumer>
-              {({formData, ...rest}) => <AutoTranslate data={formData}/>}
+              {({ formData, ...rest }) => <AutoTranslate data={formData} />}
             </FormDataConsumer>
           </div>
         </TranslatableInputs>
-        {permissions === 'admin' && <BooleanInput source="is_system"/>}
+        {permissions === 'admin' && <BooleanInput source="is_system" />}
         <Div className={numberClasses.numbers}>
           <NumberInput
             source="movement_duration"
@@ -200,7 +208,7 @@ export const ExerciseEdit = () => {
         <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.video')}
         </Typography>
-        <VideoInput source="video" label={false}/>
+        <VideoInput source="video" label={false} />
         <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>

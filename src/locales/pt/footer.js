@@ -26,6 +26,6 @@ export default {
     copyright: 'Todos os direitos reservados © MEPP 2021',
     privacy: 'Privacidade',
     termsofuse: 'Termos de uso',
-    license: 'Licença'
+    license: 'Licença',
   },
 };

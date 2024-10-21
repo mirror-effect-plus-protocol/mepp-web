@@ -79,7 +79,7 @@ export const ClinicianCreate = () => {
 
   return (
     <Create mutationOptions={{ onError }} redirect="list">
-      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />} >
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>

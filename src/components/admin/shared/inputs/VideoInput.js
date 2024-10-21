@@ -19,9 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useEffect, useState } from 'react';
-import {FileInput, useInput} from 'react-admin';
+import { FileInput, useInput } from 'react-admin';
 
 const VideoInput = (props) => {
   const handleFileChange = (files) => {
@@ -43,13 +42,13 @@ const VideoInput = (props) => {
         },
       }}
     >
-      <VideoPreview source="src" uploadedFile={uploadedFile}/>
+      <VideoPreview source="src" uploadedFile={uploadedFile} />
     </FileInput>
   );
 };
 
 // Aperçu pour les vidéos et les images
-const VideoPreview = ({source, uploadedFile}) => {
+const VideoPreview = ({ source, uploadedFile }) => {
   const { field } = useInput({ source });
   const [previewUrl, setPreviewUrl] = useState(null);
   const [key, setKey] = useState(0); // force video re-render
@@ -70,13 +69,13 @@ const VideoPreview = ({source, uploadedFile}) => {
   }, [uploadedFile, field.value]);
 
   if (!previewUrl) {
-      return null;
+    return null;
   }
 
   return (
     <div>
       <video key={key} width="240" height="240" controls>
-        <source src={previewUrl}  type="video/mp4"/>
+        <source src={previewUrl} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>

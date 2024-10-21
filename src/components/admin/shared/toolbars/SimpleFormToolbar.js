@@ -25,7 +25,8 @@ import {
   Toolbar,
   useRecordContext,
   useRedirect,
-  useResourceContext, useStore,
+  useResourceContext,
+  useStore,
   useTranslate,
 } from 'react-admin';
 import { useFormState } from 'react-hook-form';
@@ -108,7 +109,7 @@ const SimpleFormToolBar = ({ identity }) => {
         return '/';
       }
     } else {
-      return (patientUid && resource !== 'patients')
+      return patientUid && resource !== 'patients'
         ? `/patients/${patientUid}/show`
         : `/${resource}`;
     }

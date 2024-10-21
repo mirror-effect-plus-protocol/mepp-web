@@ -19,9 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {useMemo, useState, useEffect } from 'react';
-import {fetchJsonWithAuthToken} from "ra-data-django-rest-framework";
+import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
+import React, { useMemo, useState, useEffect } from 'react';
 
 const useGetClinicians = (permissions, useProfileFirst = false) => {
   const [loaded, setLoaded] = useState(false);
@@ -47,18 +46,24 @@ const useGetClinicians = (permissions, useProfileFirst = false) => {
   const sortData = (userUid, selectedUid) => {
     if (userUid && data && data.length) {
       setLoading(true);
-      const user = data.splice(data.findIndex(c => c.id === userUid), 1)[0];
+      const user = data.splice(
+        data.findIndex((c) => c.id === userUid),
+        1,
+      )[0];
       if (selectedUid && selectedUid !== userUid) {
-        const selected = data.splice(data.findIndex(c => c.id === selectedUid), 1)[0];
+        const selected = data.splice(
+          data.findIndex((c) => c.id === selectedUid),
+          1,
+        )[0];
         setData([
           user,
           selected,
-          ...data.sort((a, b) => (a.full_name.localeCompare(b.full_name)))
+          ...data.sort((a, b) => a.full_name.localeCompare(b.full_name)),
         ]);
       } else {
         setData([
           user,
-          ...data.sort((a, b) => (a.full_name.localeCompare(b.full_name)))
+          ...data.sort((a, b) => a.full_name.localeCompare(b.full_name)),
         ]);
       }
       setLoading(false);
@@ -75,7 +80,7 @@ const useGetClinicians = (permissions, useProfileFirst = false) => {
     return {
       data: Object.values(data).map((clinician) => ({
         name: clinician.full_name,
-        id: clinician.id
+        id: clinician.id,
       })),
       loading,
       loaded,

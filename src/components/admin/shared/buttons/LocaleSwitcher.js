@@ -31,16 +31,17 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { makeStyles } from '@mui/styles';
 
+import { useLocale } from '@hooks/locale/useLocale';
+
 import { RequestEndpoint } from '@utils/constants';
 
 import { LANGUAGES } from '../../../../locales';
-import {useLocale} from "@hooks/locale/useLocale";
 
 const LocaleSwitcher = () => {
   const t = useTranslate();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const {locale, setLocale} = useLocale();
+  const { locale, setLocale } = useLocale();
   const notify = useNotify();
 
   const languages = LANGUAGES.map((item) => {

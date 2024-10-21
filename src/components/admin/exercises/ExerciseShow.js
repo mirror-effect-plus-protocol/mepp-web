@@ -34,22 +34,21 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import { Chip } from '@mui/material';
 
+import { useLocale } from '@hooks/locale/useLocale';
+
 import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
-import {
-  useCategoryChipsStyles,
-} from '@components/admin/exercises/styles';
+import { useCategoryChipsStyles } from '@components/admin/exercises/styles';
 import { Typography } from '@components/admin/shared/dom/sanitize';
+import VideoField from '@components/admin/shared/inputs/VideoField';
+import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
 import { LANGUAGES } from '../../../locales';
-import {translatorInputStyle} from "@components/admin/shared/styles/shared";
-import VideoField from "@components/admin/shared/inputs/VideoField";
 
-const CategoryChips = ({locale}) => {
+const CategoryChips = ({ locale }) => {
   const classes = useCategoryChipsStyles();
   const record = useRecordContext();
   if (!record) return null;
@@ -60,10 +59,7 @@ const CategoryChips = ({locale}) => {
       className={classes.root}
     >
       {category.parents.map((parent) => (
-        <Chip
-          color="secondary"
-          label={parent.i18n[locale]}
-        />
+        <Chip color="secondary" label={parent.i18n[locale]} />
       ))}
       <Chip
         color="secondary"
@@ -94,16 +90,14 @@ export const ExerciseShow = () => {
           <TextField source="i18n.description" fullWidth />
         </TranslatableFields>
         <RaBox>
-          <NumberField
-            source="movement_duration"
-          />
+          <NumberField source="movement_duration" />
           <NumberField source="pause" />
           <NumberField source="repetition" />
         </RaBox>
         <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.video')}
         </Typography>
-        <VideoField source="video" label={false}/>
+        <VideoField source="video" label={false} />
         <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>

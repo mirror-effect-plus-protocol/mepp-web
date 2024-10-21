@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import React from 'react';
 
 import { makeStyles } from '@mui/styles';
-import React from 'react';
 
 import BackButton from '../buttons/BackButton';
 

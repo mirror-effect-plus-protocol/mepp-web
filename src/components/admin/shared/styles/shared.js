@@ -19,16 +19,15 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import {makeStyles} from "@mui/styles";
+import { makeStyles } from '@mui/styles';
 
 export const translatorInputStyle = { width: 'calc(2*256px + 1em)' };
 
 export const categoriesSelectorStyle = {
-    '>ul>li': {
-      borderBottom: 'none'
-    }
+  '>ul>li': {
+    borderBottom: 'none',
+  },
 };
-
 
 export const useRaBoxStyles = makeStyles((theme) => ({
   root: {

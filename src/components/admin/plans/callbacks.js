@@ -19,16 +19,13 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import { google_translate } from '@components/admin/shared/utils';
 
 import { LANGUAGES } from '../../../locales';
-import {google_translate} from '@components/admin/shared/utils';
 
 export const contextualRedirect = (patientUid) => {
-  return patientUid
-    ? `patients/${patientUid}/show`
-    : `plans`;
+  return patientUid ? `patients/${patientUid}/show` : `plans`;
 };
-
 
 export const preSave = async (record, locale, patientUid, asTemplate) => {
   let localizedName = '';
@@ -48,8 +45,15 @@ export const preSave = async (record, locale, patientUid, asTemplate) => {
   });
 
   const promises = LANGUAGES.map(async (language) => {
-    if (record.auto_translate || !record.i18n.name.hasOwnProperty(language) || !record.i18n.name[language]) {
-      record.i18n.name[language] = await google_translate(localizedName, language);
+    if (
+      record.auto_translate ||
+      !record.i18n.name.hasOwnProperty(language) ||
+      !record.i18n.name[language]
+    ) {
+      record.i18n.name[language] = await google_translate(
+        localizedName,
+        language,
+      );
     }
   });
   await Promise.all(promises);

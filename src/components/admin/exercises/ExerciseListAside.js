@@ -19,8 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FilterList,
   FilterListItem,
@@ -31,14 +30,16 @@ import {
   useGetList,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import { Card as MuiCard, CardContent } from '@mui/material';
+
+import { useLocale } from '@hooks/locale/useLocale';
+
+import { ASide } from '@components/admin/shared/cards/ASide';
 import {
   CategoryIcon,
   ClinicianIcon,
   SubCategoryIcon,
 } from '@components/admin/shared/icons';
-import { ASide } from '@components/admin/shared/cards/ASide';
 
 const styles = {
   asideContainer: {
@@ -49,7 +50,7 @@ const styles = {
     marginBottom: '1rem',
   },
   searchContainer: {
-    width: '100%',  // Conteneur pleine largeur
+    width: '100%', // Conteneur pleine largeur
     marginBottom: '1rem',
   },
   categoryFiltersContainer: {
@@ -70,13 +71,18 @@ const styles = {
 };
 
 // Composant pour les listes de filtres dynamiques avec indexation
-const DynamicCategoryFilterList = ({ categories, locale, level, onCategoryClick, activePath }) => {
+const DynamicCategoryFilterList = ({
+  categories,
+  locale,
+  level,
+  onCategoryClick,
+  activePath,
+}) => {
   const [subCategory, setSubCategory] = useState(null);
 
   const isActiveLevel = activePath[level] !== undefined;
 
   const handleCategoryClick = (category) => {
-
     onCategoryClick(category, level);
 
     /*if (category.children && category.children.length > 0) {
@@ -115,9 +121,8 @@ const DynamicCategoryFilterList = ({ categories, locale, level, onCategoryClick,
   );
 };
 
-
-const ExerciseListAside = ({permissions}) => {
-  const {filterValues, setFilters} = useListFilterContext();
+const ExerciseListAside = ({ permissions }) => {
+  const { filterValues, setFilters } = useListFilterContext();
   const { locale } = useLocale();
   const { data: categories, isLoading } = useGetList('categories', {
     pagination: { page: 1, perPage: 100 },
@@ -131,7 +136,7 @@ const ExerciseListAside = ({permissions}) => {
     const newFilters = {
       ...localFilters,
       [filterKey]: category.id,
-      category__uid: category.children.length ? false : category.id
+      category__uid: category.children.length ? false : category.id,
     };
     setLocalFilters(newFilters);
     setFilters(newFilters, null);
@@ -149,7 +154,7 @@ const ExerciseListAside = ({permissions}) => {
   return (
     <div style={styles.asideContainer}>
       <div style={styles.searchContainer}>
-        <FilterLiveSearch source="fulltext_search"/>
+        <FilterLiveSearch source="fulltext_search" />
       </div>
       <div style={styles.categoryFiltersContainer}>
         {!isLoading && (

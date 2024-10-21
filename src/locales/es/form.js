@@ -44,7 +44,8 @@ export default {
         placeholder: '',
       },
       error: {
-        login_invalid: 'Dirección de correo electrónico o contraseña no válidos',
+        login_invalid:
+          'Dirección de correo electrónico o contraseña no válidos',
         email_invalid: 'Dirección de correo electrónico no válida',
         pwd_not_match: 'Las contraseñas no son idénticas',
         pwd: 'Debe contener una letra minúscula, una letra mayúscula, un número y un carácter especial (-_ @$!%*#?&amp;)',

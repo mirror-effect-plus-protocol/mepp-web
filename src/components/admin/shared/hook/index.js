@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import useGetCategories from '@components/admin/shared/hook/useGetCategories';
 import useGetClinicians from '@components/admin/shared/hook/useGetClinicians';
 import useGetSubCategories from '@components/admin/shared/hook/useGetSubCategories';

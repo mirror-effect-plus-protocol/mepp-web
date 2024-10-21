@@ -19,8 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {Fragment, useEffect, useState} from 'react';
+import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
+import React, { Fragment, useEffect, useState } from 'react';
 import {
   FormDataConsumer,
   NumberInput,
@@ -28,30 +28,31 @@ import {
   useRecordContext,
   useTranslate,
 } from 'react-admin';
-import { useLocale } from '@hooks/locale/useLocale';
-import {
-  useAutocompleteStyles,
-  useNumberStyles
-} from '@components/admin/plans/styles';
 import { useFormContext } from 'react-hook-form';
-import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
+
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import {
   Button,
   CircularProgress,
-  Dialog, DialogActions,
+  Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
-  TextField as TextFieldMui
+  TextField as TextFieldMui,
 } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import CheckCircle from '@mui/icons-material/CheckCircle';
-import { validateNumber } from '@components/admin/shared/validators';
-import DropDown from '@components/admin/shared/inputs/Dropdown';
 
+import { useLocale } from '@hooks/locale/useLocale';
+
+import {
+  useAutocompleteStyles,
+  useNumberStyles,
+} from '@components/admin/plans/styles';
+import DropDown from '@components/admin/shared/inputs/Dropdown';
+import { validateNumber } from '@components/admin/shared/validators';
 
 const ExerciseRow = (props) => {
-
   const t = useTranslate();
   const { locale } = useLocale();
   const numberClasses = useNumberStyles();
@@ -104,7 +105,6 @@ const ExerciseRow = (props) => {
       const exerciseUid = record.exercises[index].id;
       setUid(exerciseUid);
     }
-
   }, [record]);
 
   const handleOpenDialog = () => {
@@ -148,11 +148,7 @@ const ExerciseRow = (props) => {
       <FormDataConsumer>
         {({ formData }) => {
           return (
-            <input
-                type="hidden"
-                name={`${props.source}.id`}
-                value={uid}
-            />
+            <input type="hidden" name={`${props.source}.id`} value={uid} />
           );
         }}
       </FormDataConsumer>
@@ -184,22 +180,28 @@ const ExerciseRow = (props) => {
           defaultValue="10"
         />
       </div>
-      <Dialog
-        open={openDialog}
-      >
-        <DialogTitle>{t('resources.plans.card.exercise_dialog.title')}</DialogTitle>
+      <Dialog open={openDialog}>
+        <DialogTitle>
+          {t('resources.plans.card.exercise_dialog.title')}
+        </DialogTitle>
         <DialogContent>
           <div>
             <DropDown
               choices={props.categories}
               onChange={handleCategoryChange}
-              label={t('resources.plans.card.exercise_dialog.labels.autocomplete.category')}
+              label={t(
+                'resources.plans.card.exercise_dialog.labels.autocomplete.category',
+              )}
             />
             <DropDown
               choices={subCategories}
               onChange={handleSubCategoryChange}
-              label={t('resources.plans.card.exercise_dialog.labels.autocomplete.sub_category')}
-              emptyLabel={t('resources.plans.card.exercise_dialog.labels.autocomplete.sub_category_empty_label')}
+              label={t(
+                'resources.plans.card.exercise_dialog.labels.autocomplete.sub_category',
+              )}
+              emptyLabel={t(
+                'resources.plans.card.exercise_dialog.labels.autocomplete.sub_category_empty_label',
+              )}
             />
             <Autocomplete
               classes={autocompleteClasses}
@@ -209,14 +211,19 @@ const ExerciseRow = (props) => {
               onChange={handleExerciseChange}
               getOptionLabel={(option) => option.i18n.description[locale]}
               renderInput={(params) => (
-                <TextFieldMui {...params}
-                  label={t('resources.plans.card.exercise_dialog.labels.autocomplete.exercise')}
+                <TextFieldMui
+                  {...params}
+                  label={t(
+                    'resources.plans.card.exercise_dialog.labels.autocomplete.exercise',
+                  )}
                   variant="filled"
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: (
                       <Fragment>
-                        {loadingExercises ? <CircularProgress color="inherit" size={20} /> : null}
+                        {loadingExercises ? (
+                          <CircularProgress color="inherit" size={20} />
+                        ) : null}
                         {params.InputProps.endAdornment}
                       </Fragment>
                     ),

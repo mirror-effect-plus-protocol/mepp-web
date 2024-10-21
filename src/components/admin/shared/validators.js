@@ -75,7 +75,10 @@ export const validateNumber = [required(), greaterThanZero];
 export const validatePasswordOptional = [securePasswordOptional];
 export const validatePasswordRequired = [securePasswordRequired];
 export const validatePasswords = (confirm_password, record) => {
-  if ((record.new_password || confirm_password) && record.new_password !== confirm_password) {
+  if (
+    (record.new_password || confirm_password) &&
+    record.new_password !== confirm_password
+  ) {
     return 'admin.shared.errors.password_mismatch';
   }
   return undefined;

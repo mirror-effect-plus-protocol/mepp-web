@@ -19,8 +19,14 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, {useEffect} from 'react';
-import {List, ReferenceField, TextField, usePermissions, useStore} from 'react-admin';
+import React, { useEffect } from 'react';
+import {
+  List,
+  ReferenceField,
+  TextField,
+  usePermissions,
+  useStore,
+} from 'react-admin';
 
 import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 

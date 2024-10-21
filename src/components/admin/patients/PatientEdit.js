@@ -31,7 +31,8 @@ import {
   useRefresh,
   useResourceContext,
   useTranslate,
-  useNotify, useResourceDefinition,
+  useNotify,
+  useResourceDefinition,
 } from 'react-admin';
 
 import Box from '@mui/material/Box';
@@ -87,7 +88,7 @@ export const PatientEdit = () => {
   return (
     <Edit
       mutationOptions={{ onError }}
-      actions={<TopToolbar hasShow={hasShow}/>}
+      actions={<TopToolbar hasShow={hasShow} />}
       mutationMode="pessimistic"
     >
       <SimpleForm

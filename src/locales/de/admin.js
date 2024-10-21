@@ -39,7 +39,7 @@ export default {
           reset_password: 'Passwort zurücksetzen',
           create_password: 'Erstellen Sie das Passwort',
         },
-        profile: 'Mein Profil'
+        profile: 'Mein Profil',
       },
       notifications: {
         archive: {
@@ -75,7 +75,8 @@ export default {
         },
         language: {
           success: 'Ihre Sprache wurde erfolgreich aktualisiert',
-          failure: 'Es ist ein Fehler aufgetreten, Ihr Profil wurde nicht aktualisiert',
+          failure:
+            'Es ist ein Fehler aufgetreten, Ihr Profil wurde nicht aktualisiert',
         },
         profile: {
           success: 'Dein Profil wurde erfolgreich aktualisiert',
@@ -95,18 +96,19 @@ export default {
         field_required: 'Dieses Feld ist erforderlich',
         password_mismatch: 'Passwörter stimmen nicht überein',
         password_too_short: 'Das Passwort muss %{min_length} Zeichen enthalten',
-        password_not_secure: 'Das Passwort muss mindestens einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen (-_ @$!%*#?&amp;) enthalten.',
+        password_not_secure:
+          'Das Passwort muss mindestens einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen (-_ @$!%*#?&amp;) enthalten.',
         password_required: 'Dieses Feld ist erforderlich',
-      }
+      },
     },
     dashboard: {
       title: 'Willkommen %{name}',
       labels: {
-        openMirrorButton: 'Offener Spiegel'
+        openMirrorButton: 'Offener Spiegel',
       },
       widgets: {
         daily_repeats: {
-          card_header: 'Tägliche Frequenzen erreicht'
+          card_header: 'Tägliche Frequenzen erreicht',
         },
         sessions: {
           card_header: 'Sitzungen',
@@ -115,20 +117,20 @@ export default {
           one_week: 'die letzten 7 Tage',
           two_weeks: 'die letzten 14 Tage',
           one_month: 'die letzten 30 Tage',
-          all: 'der Anfang'
+          all: 'der Anfang',
         },
         labels: {
           completed: 'Vollständig ausgeführt',
           uncompleted: 'Teilweise ausgeführt',
-          since: 'Aus'
-        }
+          since: 'Aus',
+        },
       },
       mirror_dialog: {
         title: 'Offener Spiegel',
         labels: {
-          autocomplete: 'Wählen Sie einen Patienten'
-        }
-      }
+          autocomplete: 'Wählen Sie einen Patienten',
+        },
+      },
     },
   },
 
@@ -146,12 +148,12 @@ export default {
       name: 'Kategorie |||| Kategorien',
       fields: {
         'i18n.name.fr': 'Name',
-        'i18n.name': 'Name'
+        'i18n.name': 'Name',
       },
       labels: {
         category: 'Kategorie',
-        sub_category: 'Unterkategorie'
-      }
+        sub_category: 'Unterkategorie',
+      },
     },
     clinicians: {
       name: 'Kliniker |||| Kliniker',
@@ -164,7 +166,7 @@ export default {
         password: 'Passwort',
         confirm_password: 'Bestätige das Passwort',
         archived: 'Archiv',
-        is_superuser: 'Administrator'
+        is_superuser: 'Administrator',
       },
       list: {
         labels: {
@@ -174,14 +176,14 @@ export default {
       card: {
         title: {
           default: 'Kliniker %{placeholder}',
-          create: 'Fügen Sie einen Arzt hinzu'
+          create: 'Fügen Sie einen Arzt hinzu',
         },
       },
       delete: {
         confirmTitle: 'Kliniker %{placeholder} löschen',
       },
       errors: {
-        email: 'E-Mail-Adresse wird schon verwendet'
+        email: 'E-Mail-Adresse wird schon verwendet',
       },
     },
     exercises: {
@@ -197,31 +199,32 @@ export default {
         category__uid: 'Kategorie',
         uid: 'Unterkategorie',
         is_system: 'System',
-        sub_categories: 'Kategorien und Unterkategorien'
+        sub_categories: 'Kategorien und Unterkategorien',
       },
       card: {
         title: {
           default: 'Übung %{placeholder}',
-          create: 'Fügen Sie eine Übung hinzu'
+          create: 'Fügen Sie eine Übung hinzu',
         },
         labels: {
           definition: 'Merkmale',
-          classification: 'Einstufung'
-        }
+          classification: 'Einstufung',
+        },
       },
       list: {
         labels: {
           user: 'Meine Übungen',
-          system: 'System'
-        }
+          system: 'System',
+        },
       },
       delete: {
         confirmTitle: 'Übung %{placeholder} löschen',
       },
       errors: {
-        sub_categories: 'Sie müssen mindestens eine Kategorie/Unterkategorie auswählen',
-        gt_zero: 'Muss größer als Null sein'
-      }
+        sub_categories:
+          'Sie müssen mindestens eine Kategorie/Unterkategorie auswählen',
+        gt_zero: 'Muss größer als Null sein',
+      },
     },
     patients: {
       name: 'Patient(en) |||| Patient(en)',
@@ -241,7 +244,7 @@ export default {
       card: {
         title: {
           default: 'Patient(in) %{placeholder}',
-          create: 'Fügen Sie einen Patienten hinzu'
+          create: 'Fügen Sie einen Patienten hinzu',
         },
         labels: {
           plans: 'Interventionspläne',
@@ -251,21 +254,21 @@ export default {
           labels: {
             autocomplete: 'Name',
             radio_new: 'Erstellen Sie einen neuen Interventionsplan',
-            radio_template: 'Verwenden Sie eine vorhandene Vorlage'
-          }
+            radio_template: 'Verwenden Sie eine vorhandene Vorlage',
+          },
         },
         actions: {
-          copy: 'Erstellen Sie eine Vorlage'
-        }
+          copy: 'Erstellen Sie eine Vorlage',
+        },
       },
       errors: {
-        email: 'E-Mail-Adresse wird schon verwendet'
+        email: 'E-Mail-Adresse wird schon verwendet',
       },
       filters: {
         last_visited: 'letzter Besuch',
         today: 'Heute',
         this_week: 'Diese Woche',
-        this_month: 'Diesen Monat'
+        this_month: 'Diesen Monat',
       },
       shared: {
         side: {
@@ -290,8 +293,9 @@ export default {
         email: {
           send: {
             success: 'Email wurde erfolgreich Versendet',
-            failure: 'Ein Fehler ist aufgetreten. Es wurde keine E-Mail gesendet',
-          }
+            failure:
+              'Ein Fehler ist aufgetreten. Es wurde keine E-Mail gesendet',
+          },
         },
       },
     },
@@ -314,15 +318,15 @@ export default {
           description: 'Beschreibung',
           movement_duration: 'Dauer',
           pause: 'Pause',
-          repetition: 'Proben'
-        }
+          repetition: 'Proben',
+        },
       },
       list: {
         labels: {
           exercises_count: 'Übungen',
           user: 'Meine Modelle',
           admin: 'Modelle',
-          system: 'System'
+          system: 'System',
         },
       },
       edit: {
@@ -342,26 +346,29 @@ export default {
               category: 'Kategorie',
               sub_category: 'Unterkategorie',
               exercise: 'Beschreibung',
-              sub_category_empty_label: 'Alle'
-            }
-          }
+              sub_category_empty_label: 'Alle',
+            },
+          },
         },
         title: {
           default: 'Interventionsplan %{placeholder}',
-          create: 'Fügen Sie einen Interventionsplan hinzu'
+          create: 'Fügen Sie einen Interventionsplan hinzu',
         },
         labels: {
           definition: 'Merkmale',
           exercises: 'Übungen',
-          is_system_warning: 'Alle dazugehörigen Übungen werden auch öffentlich zugänglich sein'
-        }
-      }
+          is_system_warning:
+            'Alle dazugehörigen Übungen werden auch öffentlich zugänglich sein',
+        },
+      },
     },
     shared: {
       labels: {
-        translate_on_save: 'Dieses Feld wird beim Speichern automatisch in andere (nicht manuell eingegebene) Sprachen übersetzt',
-        overwrite_existing_translations: 'Ersetzen Sie vorhandene Übersetzungen'
-      }
-    }
+        translate_on_save:
+          'Dieses Feld wird beim Speichern automatisch in andere (nicht manuell eingegebene) Sprachen übersetzt',
+        overwrite_existing_translations:
+          'Ersetzen Sie vorhandene Übersetzungen',
+      },
+    },
   },
 };

@@ -19,10 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import { useTranslate } from 'react-admin';
 
-import {
-  useTranslate,
-} from 'react-admin';
 import { getPlaceHolder } from '@admin/utils/placeholder';
 
 const CardTitle = ({ resource, record }) => {
@@ -38,7 +36,6 @@ const CardTitle = ({ resource, record }) => {
       placeholder: placeholder,
     });
   }
-
 };
 
 export default CardTitle;

@@ -19,9 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import { makeStyles } from '@mui/styles';
-
 
 export const useNumberStyles = makeStyles((theme) => ({
   numbers: {
@@ -31,9 +29,9 @@ export const useNumberStyles = makeStyles((theme) => ({
     gap: '1em',
     '& > div': {
       minWidth: '95px',
-      width: '95px'
+      width: '95px',
     },
-  }
+  },
 }));
 
 export const useCategoryChipsStyles = makeStyles((theme) => {
@@ -48,8 +46,8 @@ export const useCategoryChipsStyles = makeStyles((theme) => {
         marginRight: theme.spacing(2),
         '&:last-child': {
           marginRight: 0,
-        }
-      }
-    }
+        },
+      },
+    },
   };
 });

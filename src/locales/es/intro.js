@@ -25,8 +25,7 @@ export default {
     title: 'Hola {{nombre}}',
     introduction:
       '¿Listo para comenzar tu entrenamiento? Concéntrate en las contracciones de los músculos y trata de sentirlas, incluso si no ves nada en movimiento. Deja reposar el resto del rostro.',
-    instruction:
-      'Haz los ejercicios lentamente, siguiendo el ritmo sugerido.',
+    instruction: 'Haz los ejercicios lentamente, siguiendo el ritmo sugerido.',
   },
   permission: {
     title: 'Permiso',

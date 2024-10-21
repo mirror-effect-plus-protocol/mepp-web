@@ -21,10 +21,7 @@
  */
 import { defaultTheme } from 'react-admin';
 
-
-
 import { createTheme } from '@mui/material/styles';
-
 
 const lightBlue = '#33a4e4';
 const blue = '#078EE4';
@@ -294,6 +291,5 @@ export const meppTheme = {
         },
       },
     },
-
   },
 };

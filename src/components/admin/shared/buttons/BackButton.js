@@ -19,16 +19,12 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
-import {
-  useRedirect,
-  useResourceContext,
-  useTranslate,
-} from 'react-admin';
-import Button from '@mui/material/Button';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useRedirect, useResourceContext, useTranslate } from 'react-admin';
 import { useStore } from 'react-admin';
+
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import Button from '@mui/material/Button';
 
 const BackButton = () => {
   const redirect = useRedirect();
@@ -47,7 +43,7 @@ const BackButton = () => {
 
   return (
     <Button
-      startIcon={<ArrowBackIosIcon/>}
+      startIcon={<ArrowBackIosIcon />}
       size="small"
       onClick={handleBack}
       color="secondary"

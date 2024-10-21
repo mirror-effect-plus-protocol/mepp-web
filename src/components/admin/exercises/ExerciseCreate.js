@@ -32,32 +32,33 @@ import {
   TextInput,
   TranslatableInputs,
   useGetList,
-  usePermissions, useResourceContext,
+  usePermissions,
+  useResourceContext,
   useTranslate,
 } from 'react-admin';
 
+import GTranslateIcon from '@mui/icons-material/GTranslate';
+
 import { useLocale } from '@hooks/locale/useLocale';
+
 import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
 import { preSave } from '@components/admin/exercises/callbacks';
-import {
-  useNumberStyles,
-} from '@components/admin/exercises/styles';
+import { useNumberStyles } from '@components/admin/exercises/styles';
 import {
   validateCategory,
   validateSubCategory,
   validateSubCategories,
 } from '@components/admin/exercises/validators';
 import { Typography, Div } from '@components/admin/shared/dom/sanitize';
+import {
+  categoriesSelectorStyle,
+  translatorInputStyle,
+} from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
-import {
-  categoriesSelectorStyle,
-  translatorInputStyle
-} from '@components/admin/shared/styles/shared';
-import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 export const ExerciseCreate = () => {
   const { permissions } = usePermissions();
@@ -145,17 +146,20 @@ export const ExerciseCreate = () => {
             fullWidth
             validate={validateI18n}
           />
-          <div style={{
-            fontSize: '0.7em',
-            display: 'grid',
-            gridTemplateColumns: 'auto 1fr',
-            gridGap: '10px', /* Adjust the value to add space between the image and text */
-            alignItems: 'center'
-          }}>
-            <GTranslateIcon/> {t('resources.shared.labels.translate_on_save')}
+          <div
+            style={{
+              fontSize: '0.7em',
+              display: 'grid',
+              gridTemplateColumns: 'auto 1fr',
+              gridGap:
+                '10px' /* Adjust the value to add space between the image and text */,
+              alignItems: 'center',
+            }}
+          >
+            <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
           </div>
         </TranslatableInputs>
-        {permissions === 'admin' && <BooleanInput source="is_system"/>}
+        {permissions === 'admin' && <BooleanInput source="is_system" />}
         <Div className={numberClasses.numbers}>
           <NumberInput
             source="movement_duration"

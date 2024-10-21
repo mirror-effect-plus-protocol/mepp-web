@@ -39,7 +39,7 @@ export default {
           reset_password: 'Resetta la password',
           create_password: 'Crea la password',
         },
-        profile: 'Il mio profilo'
+        profile: 'Il mio profilo',
       },
       notifications: {
         archive: {
@@ -75,7 +75,8 @@ export default {
         },
         language: {
           success: 'La tua lingua è stata aggiornata con successo',
-          failure: 'Si è verificato un errore, il tuo profilo non è stato aggiornato',
+          failure:
+            'Si è verificato un errore, il tuo profilo non è stato aggiornato',
         },
         profile: {
           success: 'Il tuo profilo è stato aggiornato con successo',
@@ -94,19 +95,21 @@ export default {
       errors: {
         field_required: 'Questo campo è obbligatorio',
         password_mismatch: 'le passwords non corrispondono',
-        password_too_short: 'La password deve contenere %{min_length} caratteri',
-        password_not_secure: 'La password deve contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (-_ @$!%*#?&amp;)',
+        password_too_short:
+          'La password deve contenere %{min_length} caratteri',
+        password_not_secure:
+          'La password deve contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (-_ @$!%*#?&amp;)',
         password_required: 'Questo campo è obbligatorio',
-      }
+      },
     },
     dashboard: {
       title: 'Benvenuto %{nome}',
       labels: {
-        openMirrorButton: 'Specchio facciale aperto'
+        openMirrorButton: 'Specchio facciale aperto',
       },
       widgets: {
         daily_repeats: {
-          card_header: 'Frequenze giornaliere raggiunte'
+          card_header: 'Frequenze giornaliere raggiunte',
         },
         sessions: {
           card_header: 'Sessioni',
@@ -115,20 +118,20 @@ export default {
           one_week: 'gli ultimi 7 giorni',
           two_weeks: 'gli ultimi 14 giorni',
           one_month: 'gli ultimi 30 giorni',
-          all: 'l’inizio'
+          all: 'l’inizio',
         },
         labels: {
           completed: 'Completamente eseguito',
           uncompleted: 'Parzialmente eseguito',
-          since: 'Da'
-        }
+          since: 'Da',
+        },
       },
       mirror_dialog: {
         title: 'Specchio facciale aperto',
         labels: {
-          autocomplete: 'Scegli un paziente'
-        }
-      }
+          autocomplete: 'Scegli un paziente',
+        },
+      },
     },
   },
 
@@ -146,12 +149,12 @@ export default {
       name: 'Categoria |||| Categorie',
       fields: {
         'i18n.name.fr': 'Nome',
-        'i18n.name': 'Nome'
+        'i18n.name': 'Nome',
       },
       labels: {
         category: 'Categoria',
-        sub_category: 'Sottocategoria'
-      }
+        sub_category: 'Sottocategoria',
+      },
     },
     clinicians: {
       name: 'Clinico |||| Medici',
@@ -164,7 +167,7 @@ export default {
         password: 'Parola d’ordine',
         confirm_password: 'Conferma password',
         archived: 'Archivi',
-        is_superuser: 'Amministratore'
+        is_superuser: 'Amministratore',
       },
       list: {
         labels: {
@@ -174,14 +177,14 @@ export default {
       card: {
         title: {
           default: 'Medico %{placeholder}',
-          create: 'Aggiungi un medico'
+          create: 'Aggiungi un medico',
         },
       },
       delete: {
         confirmTitle: 'Elimina medico %{placeholder}',
       },
       errors: {
-        email: 'indirizzo email già in uso'
+        email: 'indirizzo email già in uso',
       },
     },
     exercises: {
@@ -197,31 +200,31 @@ export default {
         category__uid: 'Categoria',
         uid: 'Sottocategoria',
         is_system: 'Sistema',
-        sub_categories: 'Categorie e sottocategorie'
+        sub_categories: 'Categorie e sottocategorie',
       },
       card: {
         title: {
           default: 'Esercizio %{placeholder}',
-          create: 'Aggiungi un esercizio'
+          create: 'Aggiungi un esercizio',
         },
         labels: {
           definition: 'Caratteristiche',
-          classification: 'Classificazione'
-        }
+          classification: 'Classificazione',
+        },
       },
       list: {
         labels: {
           user: 'I miei esercizi',
-          system: 'Sistema'
-        }
+          system: 'Sistema',
+        },
       },
       delete: {
         confirmTitle: 'Elimina esercizio %{placeholder}',
       },
       errors: {
         sub_categories: 'Devi scegliere almeno una categoria/sottocategoria',
-        gt_zero: 'Deve essere maggiore di zero'
-      }
+        gt_zero: 'Deve essere maggiore di zero',
+      },
     },
     patients: {
       name: 'Paziente(e) |||| Paziente/i',
@@ -241,7 +244,7 @@ export default {
       card: {
         title: {
           default: 'Paziente(e) %{placeholder}',
-          create: 'Aggiungi un paziente'
+          create: 'Aggiungi un paziente',
         },
         labels: {
           plans: 'Piani di intervento',
@@ -251,21 +254,21 @@ export default {
           labels: {
             autocomplete: 'Nome',
             radio_new: 'Creare un nuovo piano di intervento',
-            radio_template: 'Utilizza un modello esistente'
-          }
+            radio_template: 'Utilizza un modello esistente',
+          },
         },
         actions: {
-          copy: 'Crea un modello'
-        }
+          copy: 'Crea un modello',
+        },
       },
       errors: {
-        email: 'indirizzo email già in uso'
+        email: 'indirizzo email già in uso',
       },
       filters: {
         last_visited: 'l’ultima visita',
         today: 'Oggi',
         this_week: 'Questa settimana',
-        this_month: 'Questo mese'
+        this_month: 'Questo mese',
       },
       shared: {
         side: {
@@ -291,7 +294,7 @@ export default {
           send: {
             success: 'email inviata correttamente',
             failure: 'C’è stato un errore. Non è stata inviata alcuna email',
-          }
+          },
         },
       },
     },
@@ -314,15 +317,15 @@ export default {
           description: 'Descrizione',
           movement_duration: 'Durata',
           pause: 'Pausa',
-          repetition: 'Prove'
-        }
+          repetition: 'Prove',
+        },
       },
       list: {
         labels: {
           exercises_count: 'Esercizi',
           user: 'I miei modelli',
           admin: 'Modelli',
-          system: 'Sistema'
+          system: 'Sistema',
         },
       },
       edit: {
@@ -342,26 +345,28 @@ export default {
               category: 'Categoria',
               sub_category: 'Sottocategoria',
               exercise: 'Descrizione',
-              sub_category_empty_label: 'Tutte'
-            }
-          }
+              sub_category_empty_label: 'Tutte',
+            },
+          },
         },
         title: {
           default: 'Piano d’intervento %{placeholder}',
-          create: 'Aggiungi un piano di intervento'
+          create: 'Aggiungi un piano di intervento',
         },
         labels: {
           definition: 'Caratteristiche',
           exercises: 'Esercizi',
-          is_system_warning: 'Anche tutti gli esercizi associati saranno accessibili al pubblico'
-        }
-      }
+          is_system_warning:
+            'Anche tutti gli esercizi associati saranno accessibili al pubblico',
+        },
+      },
     },
     shared: {
       labels: {
-        translate_on_save: 'Questo campo verrà automaticamente tradotto in altre lingue (non inserite manualmente) durante il salvataggio',
-        overwrite_existing_translations: 'Sostituisci le traduzioni esistenti'
-      }
-    }
+        translate_on_save:
+          'Questo campo verrà automaticamente tradotto in altre lingue (non inserite manualmente) durante il salvataggio',
+        overwrite_existing_translations: 'Sostituisci le traduzioni esistenti',
+      },
+    },
   },
 };

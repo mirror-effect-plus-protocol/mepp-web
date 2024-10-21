@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useEffect, useState } from 'react';
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
+import React, { useEffect, useState } from 'react';
 import {
   Datagrid,
   Show,
@@ -43,7 +43,6 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
@@ -61,16 +60,17 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
+import { useLocale } from '@hooks/locale/useLocale';
+
 import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
 import AddPlanButton from '@components/admin/patients/AddPlanButton';
+import { PatientWidget } from '@components/admin/patients/PatientWidget';
 import Spinner from '@components/admin/shared/Spinner';
 import { Typography } from '@components/admin/shared/dom/sanitize';
+import { useRaBoxStyles } from '@components/admin/shared/styles/shared';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
-import {useRaBoxStyles} from "@components/admin/shared/styles/shared";
-import {PatientWidget} from "@components/admin/patients/PatientWidget";
-
 
 const useArchivesStyles = makeStyles((theme) => ({
   root: {
@@ -82,11 +82,7 @@ const useArchivesStyles = makeStyles((theme) => ({
 export const PatientShow = () => {
   const { hasEdit } = useResourceDefinition();
   return (
-    <Show
-      actions={
-        <TopToolbar showExport hasEdit={hasEdit} hasShow={false} />
-      }
-    >
+    <Show actions={<TopToolbar showExport hasEdit={hasEdit} hasShow={false} />}>
       <PatientShowRecord />
     </Show>
   );

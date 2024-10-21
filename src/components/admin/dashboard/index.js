@@ -21,7 +21,9 @@
  */
 import React from 'react';
 import { usePermissions } from 'react-admin';
+
 import { useMediaQuery } from '@mui/material';
+
 import { Welcome } from './Welcome';
 
 const Dashboard = () => {

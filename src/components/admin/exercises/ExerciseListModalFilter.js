@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {
-  useListContext,
-  useGetList,
-  useStore,
-} from 'react-admin';
+import React, { useEffect, useState } from 'react';
+import { useListContext, useGetList, useStore } from 'react-admin';
+
+import FilterListIcon from '@mui/icons-material/FilterList';
 import {
   Modal,
   Box,
@@ -14,7 +12,7 @@ import {
   ListItem,
   ListItemText,
 } from '@mui/material';
-import FilterListIcon from '@mui/icons-material/FilterList';
+
 import { useLocale } from '@hooks/locale/useLocale';
 
 const styles = {
@@ -38,7 +36,7 @@ const styles = {
     flexDirection: 'row',
     gap: '1rem',
     marginBottom: '1rem',
-    alignItems: 'stretch',  // Pour étirer les conteneurs à la même hauteur
+    alignItems: 'stretch', // Pour étirer les conteneurs à la même hauteur
   },
   categoryList: {
     flex: 1,
@@ -53,7 +51,13 @@ const styles = {
   },
 };
 
-const DynamicCategoryFilterModal = ({ categories, locale, level, onCategoryClick, activePath }) => {
+const DynamicCategoryFilterModal = ({
+  categories,
+  locale,
+  level,
+  onCategoryClick,
+  activePath,
+}) => {
   const handleCategoryClick = (category) => {
     onCategoryClick(category, level);
   };
@@ -98,7 +102,7 @@ const ExerciseListModalFilter = () => {
     pagination: { page: 1, perPage: 100 },
     sort: { field: `i18n.name.${locale}`, order: 'ASC' },
     filter: { language: locale },
-  })
+  });
   const [open, setOpen] = useState(false);
   const [activePath, setActivePath] = useStore('categoriesActivePath', []);
 
@@ -111,11 +115,14 @@ const ExerciseListModalFilter = () => {
 
     // Apply filter and update path to category
     setFilters({ ...filterValues, [filterKey]: category.id }, null);
-    setFilters({
-      ...filterValues,
-      [filterKey]: category.id,
-      category__uid: category.children.length ? false : category.id
-    }, null);
+    setFilters(
+      {
+        ...filterValues,
+        [filterKey]: category.id,
+        category__uid: category.children.length ? false : category.id,
+      },
+      null,
+    );
 
     // Update the active path up to current level
     setActivePath((prev) => {

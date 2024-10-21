@@ -19,24 +19,27 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FilterList,
   FilterListItem,
-  FilterLiveSearch, useGetIdentity, useListFilterContext,
+  FilterLiveSearch,
+  useGetIdentity,
+  useListFilterContext,
 } from 'react-admin';
-import { CardContent } from '@mui/material';
-import { ClinicianIcon } from '@components/admin/shared/icons/ClinicianIcon';
-import useGetClinicians from '@components/admin/shared/hook/useGetClinicians';
-import { ASide } from '@components/admin/shared/cards/ASide';
 
-const PlanListAside = ({permissions}) => {
+import { CardContent } from '@mui/material';
+
+import { ASide } from '@components/admin/shared/cards/ASide';
+import useGetClinicians from '@components/admin/shared/hook/useGetClinicians';
+import { ClinicianIcon } from '@components/admin/shared/icons/ClinicianIcon';
+
+const PlanListAside = ({ permissions }) => {
   const {
     data: clinicians,
     loading: isLoading,
     loaded: isLoaded,
-    refetch
+    refetch,
   } = useGetClinicians(permissions, true);
   const [defaultClinician, setDefaultClinician] = useState(true);
   const [clickClinician, setClickClinician] = useState(false);
@@ -50,14 +53,13 @@ const PlanListAside = ({permissions}) => {
       if (!filterValues?.clinician_uid) {
         setFilters({
           ...filterValues,
-          'clinician_uid': identity.uid
+          'clinician_uid': identity.uid,
         });
       }
     }
   }, [identity, defaultClinician]);
 
   useEffect(() => {
-
     if (clickClinician) {
       refetch(identity?.uid, filterValues.clinician_uid);
       setTimeout(() => setClickClinician(false), 200);
@@ -65,14 +67,13 @@ const PlanListAside = ({permissions}) => {
   }, [filterValues]);
 
   useEffect(() => {
-
     if (permissions !== 'admin') return;
 
-     if (identity?.uid && isLoaded) {
-       if (filterValues?.clinician_uid) {
-         refetch(identity?.uid, filterValues.clinician_uid);
-       }
-     }
+    if (identity?.uid && isLoaded) {
+      if (filterValues?.clinician_uid) {
+        refetch(identity?.uid, filterValues.clinician_uid);
+      }
+    }
   }, [identity, isLoaded]);
 
   return (
@@ -96,8 +97,7 @@ const PlanListAside = ({permissions}) => {
                     setClickClinician(true);
                   }}
                 />
-              ))
-            }
+              ))}
           </FilterList>
         )}
       </CardContent>

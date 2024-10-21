@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import { PatientCreate } from './PatientCreate';
 import { PatientEdit } from './PatientEdit';
 import { PatientList } from './PatientList';

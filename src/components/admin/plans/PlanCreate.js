@@ -20,9 +20,9 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import {
-  ArrayInput, BooleanInput,
+  ArrayInput,
+  BooleanInput,
   Create,
   FormDataConsumer,
   NumberInput,
@@ -35,8 +35,12 @@ import {
   useStore,
   useTranslate,
 } from 'react-admin';
+import { useSearchParams } from 'react-router-dom';
+
+import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 import { useLocale } from '@hooks/locale/useLocale';
+
 import ExerciseRow from '@components/admin/plans/ExerciseRow';
 import IsSystemInput from '@components/admin/plans/IsSystem';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
@@ -46,16 +50,15 @@ import {
   useGetCategories,
   useGetSubCategories,
 } from '@components/admin/shared/hook';
+import {
+  categoriesSelectorStyle,
+  translatorInputStyle,
+} from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
-import {
-  categoriesSelectorStyle,
-  translatorInputStyle
-} from '@components/admin/shared/styles/shared';
-import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 export const PlanCreate = () => {
   const t = useTranslate();
@@ -73,11 +76,11 @@ export const PlanCreate = () => {
   const subCategories = useGetSubCategories(locale);
   const redirect = useCallback(
     () => contextualRedirect(patientUid),
-    [patientUid]
+    [patientUid],
   );
   const transform = useCallback(
     (record) => preSave(record, locale, patientUid, asTemplate),
-    [patientUid, asTemplate]
+    [patientUid, asTemplate],
   );
 
   useEffect(() => {
@@ -104,7 +107,11 @@ export const PlanCreate = () => {
   };
 
   return (
-    <Create transform={transform} redirect={redirect} mutationOptions={{ onError }}>
+    <Create
+      transform={transform}
+      redirect={redirect}
+      mutationOptions={{ onError }}
+    >
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}
@@ -114,23 +121,26 @@ export const PlanCreate = () => {
           defaultLocale={locale}
           sx={translatorInputStyle}
         >
-          <TextInput source="i18n.name" validate={validateI18n} fullWidth/>
-          <div style={{
-            fontSize: '0.7em',
-            display: 'grid',
-            gridTemplateColumns: 'auto 1fr',
-            gridGap: '10px', /* Adjust the value to add space between the image and text */
-            alignItems: 'center'
-          }}>
-            <GTranslateIcon/> {t('resources.shared.labels.translate_on_save')}
+          <TextInput source="i18n.name" validate={validateI18n} fullWidth />
+          <div
+            style={{
+              fontSize: '0.7em',
+              display: 'grid',
+              gridTemplateColumns: 'auto 1fr',
+              gridGap:
+                '10px' /* Adjust the value to add space between the image and text */,
+              alignItems: 'center',
+            }}
+          >
+            <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
           </div>
         </TranslatableInputs>
         {permissions === 'admin' && asTemplate && (
           <FormDataConsumer>
-            {({formData, ...rest}) => <IsSystemInput data={formData}/>}
+            {({ formData, ...rest }) => <IsSystemInput data={formData} />}
           </FormDataConsumer>
         )}
-        <NumberInput source="daily_repeat" validate={validateNumber}/>
+        <NumberInput source="daily_repeat" validate={validateNumber} />
 
         <Typography
           variant="h6"
@@ -139,7 +149,7 @@ export const PlanCreate = () => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            gap: '1em'
+            gap: '1em',
           }}
         >
           {t('resources.plans.card.labels.exercises')}

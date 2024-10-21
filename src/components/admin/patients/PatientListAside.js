@@ -19,36 +19,33 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {useEffect, useState} from 'react';
+import { endOfYesterday, startOfWeek, startOfMonth } from 'date-fns';
+import React, { useEffect, useState } from 'react';
 import {
   FilterList,
   FilterListItem,
-  FilterLiveSearch, useGetIdentity, useListFilterContext,
+  FilterLiveSearch,
+  useGetIdentity,
+  useListFilterContext,
 } from 'react-admin';
+
 import { CardContent } from '@mui/material';
 
-import {
-  endOfYesterday,
-  startOfWeek,
-  startOfMonth,
-} from 'date-fns';
-
+import { ASide } from '@components/admin/shared/cards/ASide';
+import useGetClinicians from '@components/admin/shared/hook/useGetClinicians';
 import {
   ClinicianIcon,
   FaceIcon,
   SoundIcon,
   TimeIcon,
 } from '@components/admin/shared/icons';
-import useGetClinicians from '@components/admin/shared/hook/useGetClinicians';
-import { ASide } from '@components/admin/shared/cards/ASide';
 
-const PatientListAside = ({permissions}) => {
-    const {
+const PatientListAside = ({ permissions }) => {
+  const {
     data: clinicians,
     loading: isLoading,
     loaded: isLoaded,
-    refetch
+    refetch,
   } = useGetClinicians(permissions, true);
   const [defaultClinician, setDefaultClinician] = useState(true);
   const [clickClinician, setClickClinician] = useState(false);
@@ -62,14 +59,13 @@ const PatientListAside = ({permissions}) => {
       if (!filterValues?.clinician_uid) {
         setFilters({
           ...filterValues,
-          'clinician_uid': identity.uid
+          'clinician_uid': identity.uid,
         });
       }
     }
   }, [identity, defaultClinician]);
 
   useEffect(() => {
-
     if (clickClinician) {
       refetch(identity?.uid, filterValues.clinician_uid);
       setTimeout(() => setClickClinician(false), 200);
@@ -77,14 +73,13 @@ const PatientListAside = ({permissions}) => {
   }, [filterValues]);
 
   useEffect(() => {
-
     if (permissions !== 'admin') return;
 
-     if (identity?.uid && isLoaded) {
-       if (filterValues?.clinician_uid) {
-         refetch(identity?.uid, filterValues.clinician_uid);
-       }
-     }
+    if (identity?.uid && isLoaded) {
+      if (filterValues?.clinician_uid) {
+        refetch(identity?.uid, filterValues.clinician_uid);
+      }
+    }
   }, [identity, isLoaded]);
 
   return (
@@ -119,10 +114,7 @@ const PatientListAside = ({permissions}) => {
           />
         </FilterList>
 
-        <FilterList
-          label="resources.patients.fields.side"
-          icon={<FaceIcon />}
-        >
+        <FilterList label="resources.patients.fields.side" icon={<FaceIcon />}>
           <FilterListItem
             label="resources.patients.shared.side.0"
             value={{ side: 0 }}
@@ -144,7 +136,7 @@ const PatientListAside = ({permissions}) => {
           />
         </FilterList>
 
-        {permissions === 'admin' &&
+        {permissions === 'admin' && (
           <FilterList
             label="resources.patients.fields.clinician_uid"
             icon={<ClinicianIcon />}
@@ -160,10 +152,9 @@ const PatientListAside = ({permissions}) => {
                     setClickClinician(true);
                   }}
                 />
-              ))
-            }
+              ))}
           </FilterList>
-        }
+        )}
       </CardContent>
     </ASide>
   );

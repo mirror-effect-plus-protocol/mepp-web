@@ -22,16 +22,14 @@
 import React from 'react';
 import { TopToolbar, CreateButton, useResourceContext } from 'react-admin';
 
-import ExportButton from '@components/admin/shared/buttons/ExportButton';
 import ExerciseListModalFilter from '@components/admin/exercises/ExerciseListModalFilter';
+import ExportButton from '@components/admin/shared/buttons/ExportButton';
 
 const ListActions = ({ showExport, showExercisesFilter = false, ...props }) => {
   const resourceName = useResourceContext();
   return (
     <TopToolbar>
-      {showExercisesFilter && (
-        <ExerciseListModalFilter />
-      )}
+      {showExercisesFilter && <ExerciseListModalFilter />}
       {showExport && (
         <ExportButton
           resource={resourceName}
@@ -40,7 +38,7 @@ const ListActions = ({ showExport, showExercisesFilter = false, ...props }) => {
             marginRight: {
               xs: '5px', // theme.breakpoints.up('xs')
               md: 0, // theme.breakpoints.up('md')
-            }
+            },
           }}
           filterValues={props.filterValues}
         />

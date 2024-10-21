@@ -28,9 +28,10 @@ import {
   useResourceContext,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import DownloadIcon from '@mui/icons-material/GetApp';
 import Button from '@mui/material/Button';
+
+import { useLocale } from '@hooks/locale/useLocale';
 
 const ExportButton = (props) => {
   const {
@@ -62,7 +63,7 @@ const ExportButton = (props) => {
       const qs = new URLSearchParams(data).toString();
       return `${process.env.API_ENDPOINT}/${resource}/export/?${qs}`;
     },
-    [selectedIds, filterValues, locale]
+    [selectedIds, filterValues, locale],
   );
 
   const handleClick = (e) => {

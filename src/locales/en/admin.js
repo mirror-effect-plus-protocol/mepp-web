@@ -39,7 +39,7 @@ export default {
           reset_password: 'Reset the password',
           create_password: 'Create the password',
         },
-        profile: 'My profile'
+        profile: 'My profile',
       },
       notifications: {
         archive: {
@@ -95,40 +95,41 @@ export default {
         field_required: 'This field is required',
         password_mismatch: 'Passwords do not match',
         password_too_short: 'Password must be %{min_length} characters long',
-        password_not_secure: 'Password must contain at least one lower case, one upper case one number and one special character (-_ @$!%*#?&)',
+        password_not_secure:
+          'Password must contain at least one lower case, one upper case one number and one special character (-_ @$!%*#?&)',
         password_required: 'This field is required',
-      }
+      },
     },
     dashboard: {
       title: 'Welcome %{name}',
       labels: {
-        openMirrorButton: 'Open the facial mirror'
+        openMirrorButton: 'Open the facial mirror',
       },
       widgets: {
         daily_repeats: {
-          card_header: 'Completed repetitions'
+          card_header: 'Completed repetitions',
         },
         sessions: {
-          card_header: 'Sessions'
+          card_header: 'Sessions',
         },
         choices: {
           one_week: 'the last 7 days',
           two_weeks: 'the last 14 days',
           one_month: 'the last 30 days',
-          all: 'all time'
+          all: 'all time',
         },
         labels: {
           completed: 'Completed',
           uncompleted: 'Uncompleted',
-          since: 'For'
-        }
+          since: 'For',
+        },
       },
       mirror_dialog: {
         title: 'Open the facial mirror',
         labels: {
-          autocomplete: 'Choose a patient'
-        }
-      }
+          autocomplete: 'Choose a patient',
+        },
+      },
     },
   },
 
@@ -146,8 +147,8 @@ export default {
       name: 'Category |||| Categories',
       fields: {
         'i18n.name.en': 'Name',
-        'i18n.name': 'Name'
-      }
+        'i18n.name': 'Name',
+      },
     },
     clinicians: {
       name: 'Clinician |||| Clinicians',
@@ -160,7 +161,7 @@ export default {
         password: 'Password',
         confirm_password: 'Confirm the password',
         archived: 'Archives',
-        is_superuser: 'Administrator'
+        is_superuser: 'Administrator',
       },
       list: {
         labels: {
@@ -170,21 +171,22 @@ export default {
       card: {
         title: {
           default: 'Clinician %{placeholder}',
-          create: 'Add a clinician'
+          create: 'Add a clinician',
         },
       },
       delete: {
         confirmTitle: 'Delete the clinician %{placeholder}',
       },
       errors: {
-        email: 'E-mail address already in use'
+        email: 'E-mail address already in use',
       },
     },
     exercises: {
       name: 'Exercise |||| Exercises',
       empty: {
         title: 'No exercises',
-        description: 'Please filter the categories by clicking on the Filter button',
+        description:
+          'Please filter the categories by clicking on the Filter button',
       },
       fields: {
         archived: 'Archives',
@@ -197,31 +199,31 @@ export default {
         category__uid: 'Category',
         uid: 'Sub-category',
         is_system: 'System',
-        sub_categories: 'Categories and sub-categories'
+        sub_categories: 'Categories and sub-categories',
       },
       card: {
         title: {
           default: 'Exercise %{placeholder}',
-          create: 'Add an exercise'
+          create: 'Add an exercise',
         },
         labels: {
           definition: 'Definition',
-          classification: 'Classification'
-        }
+          classification: 'Classification',
+        },
       },
       list: {
         labels: {
           user: 'My exercises',
-          system: 'System'
-        }
+          system: 'System',
+        },
       },
       delete: {
         confirmTitle: 'Delete the exercise %{placeholder}',
       },
       errors: {
         sub_categories: 'You must choose at least one category/sub-category',
-        gt_zero: 'Must be greater than zero'
-      }
+        gt_zero: 'Must be greater than zero',
+      },
     },
     patients: {
       name: 'Patient |||| Patients',
@@ -241,7 +243,7 @@ export default {
       card: {
         title: {
           default: 'Patient %{placeholder}',
-          create: 'Add a patient'
+          create: 'Add a patient',
         },
         labels: {
           plans: 'Treatment plan',
@@ -251,15 +253,15 @@ export default {
           labels: {
             autocomplete: 'Name',
             radio_new: 'Create a new treatment plan',
-            radio_template: 'Use an existing template'
-          }
+            radio_template: 'Use an existing template',
+          },
         },
         actions: {
-          copy: 'Create a template'
-        }
+          copy: 'Create a template',
+        },
       },
       errors: {
-        email: 'E-mail address already in use'
+        email: 'E-mail address already in use',
       },
       filters: {
         last_visited: 'Last visit',
@@ -291,8 +293,8 @@ export default {
           send: {
             success: 'E-mail has been sent successfully',
             failure: 'An error has occurred. No e-mails have been sent',
-          }
-        }
+          },
+        },
       },
     },
     plans: {
@@ -314,15 +316,15 @@ export default {
           description: 'Description',
           movement_duration: 'Duration',
           pause: 'Pause',
-          repetition: 'Repetitions'
-        }
+          repetition: 'Repetitions',
+        },
       },
       list: {
         labels: {
           exercises_count: 'Exercises',
           user: 'My templates',
           admin: 'Templates',
-          system: 'System'
+          system: 'System',
         },
       },
       edit: {
@@ -342,26 +344,28 @@ export default {
               category: 'Category',
               sub_category: 'Sub-category',
               exercise: 'Description',
-              sub_category_empty_label: 'All'
-            }
-          }
+              sub_category_empty_label: 'All',
+            },
+          },
         },
         title: {
           default: 'Treatment plan %{placeholder}',
-          create: 'Add a treatment plan'
+          create: 'Add a treatment plan',
         },
         labels: {
           definition: 'Definition',
           exercises: 'Exercises',
-          is_system_warning: 'All related exercises will be publicly accessible'
-        }
-      }
+          is_system_warning:
+            'All related exercises will be publicly accessible',
+        },
+      },
     },
     shared: {
       labels: {
-        translate_on_save: 'This field will be automatically translated into other (not manually filled in) languages when saving',
-        overwrite_existing_translations: 'Overwrite existing translations'
-      }
-    }
+        translate_on_save:
+          'This field will be automatically translated into other (not manually filled in) languages when saving',
+        overwrite_existing_translations: 'Overwrite existing translations',
+      },
+    },
   },
 };

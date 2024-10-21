@@ -30,12 +30,14 @@ import {
   BooleanField,
   useListContext,
   usePermissions,
-  useResourceContext, useStore,
+  useResourceContext,
+  useStore,
   useTranslate,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import { Divider, Tabs, Tab } from '@mui/material';
+
+import { useLocale } from '@hooks/locale/useLocale';
 
 import PlanListAside from '@components/admin/plans/PlanListAside';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
@@ -51,7 +53,6 @@ const tabs = [
 ];
 
 const PlanDatagrid = ({ permissions }) => {
-
   const { locale } = useLocale();
   const t = useTranslate();
 
@@ -71,10 +72,7 @@ const PlanDatagrid = ({ permissions }) => {
           <TextField source="full_name" />
         </ReferenceField>
       )}
-      <BooleanField
-        source="randomize"
-        textAlign="center"
-      />
+      <BooleanField source="randomize" textAlign="center" />
       <RowActionToolbar permissions={permissions} clonable />
     </Datagrid>
   );

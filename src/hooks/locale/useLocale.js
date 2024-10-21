@@ -21,7 +21,7 @@
  */
 import i18n from 'i18next';
 import { useMemo, useCallback } from 'react';
-import {useLocaleState} from 'react-admin';
+import { useLocaleState } from 'react-admin';
 
 import { Language } from '@utils/constants';
 
@@ -41,15 +41,12 @@ const useLocale = () => {
   const setLocale = useCallback(
     (newLocale) => {
       const validCodes = Object.values(Language);
-      const lang =
-        validCodes.indexOf(newLocale) > -1
-          ? newLocale
-          : Language.FR;
+      const lang = validCodes.indexOf(newLocale) > -1 ? newLocale : Language.FR;
       setLocaleRAdmin(lang);
       i18n.changeLanguage(lang);
       document.documentElement.lang = lang;
     },
-    [i18n.language]
+    [i18n.language],
   );
 
   return { locale, setLocale };

@@ -24,7 +24,8 @@ export default {
   api: {
     success: {
       settings_update: 'Effekt erfolgreich geändert',
-      profile_update: 'Die Bearbeitung Ihres Profils wurde erfolgreich abgeschlossen',
+      profile_update:
+        'Die Bearbeitung Ihres Profils wurde erfolgreich abgeschlossen',
     },
     error: {
       generic: 'Ein unbekannter Fehler ist aufgetreten',

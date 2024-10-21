@@ -29,11 +29,12 @@ import { temporaryProfil } from '@admin/authProvider';
 import GlobalStyles from '@styles/Global';
 import { zindex } from '@styles/configs/zindex';
 
+import { useLocale } from '@hooks/locale/useLocale';
+
 import { BrowserSupportBanner } from '@components/header/BrowserSupportBanner';
 import { EnvironmentBanner } from '@components/header/EnvironmentBanner';
 import { TemporaryProfilBanner } from '@components/header/TemporaryProfilBanner';
 import OverlayProvider from '@components/overlays/OverlayProvider';
-import { useLocale } from '@hooks/locale/useLocale';
 
 import { LANGUAGES } from '../locales';
 

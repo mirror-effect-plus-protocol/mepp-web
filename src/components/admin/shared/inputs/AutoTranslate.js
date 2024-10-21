@@ -29,8 +29,8 @@ const AutoTranslate = ({ setI18nOverwrite, data }) => {
       source="auto_translate"
       sx={{
         '.MuiFormControlLabel-label': {
-          fontSize: '1em'
-        }
+          fontSize: '1em',
+        },
       }}
       label={t('resources.shared.labels.overwrite_existing_translations')}
     />

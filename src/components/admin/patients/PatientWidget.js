@@ -19,14 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, { useEffect, useState } from 'react';
-import {
-  useTranslate,
-} from 'react-admin';
-import { Card, CardContent } from '@mui/material';
-import { Typography } from '@components/admin/shared/dom/sanitize';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
+import React, { useEffect, useState } from 'react';
+import { useTranslate } from 'react-admin';
 import {
   BarChart,
   Bar,
@@ -34,18 +29,22 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from 'recharts';
-import Spinner from "@components/admin/shared/Spinner";
-import { makeStyles } from '@mui/styles';
+
+import { Card, CardContent } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
+import { makeStyles } from '@mui/styles';
+
+import Spinner from '@components/admin/shared/Spinner';
+import { Typography } from '@components/admin/shared/dom/sanitize';
 
 const useStyles = makeStyles((theme) => {
   return {
     formControl: {
       margin: theme.spacing(1),
-        minWidth: 120,
+      minWidth: 120,
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -53,19 +52,19 @@ const useStyles = makeStyles((theme) => {
     widget: {
       '& header': {
         paddingLeft: '15px',
-          '& > span': {
-          fontFamily: theme.typography.fontFamily
+        '& > span': {
+          fontFamily: theme.typography.fontFamily,
         },
         '& > div': {
           display: 'inline-flex',
-            marginTop: '-30px'
-        }
-      }
+          marginTop: '-30px',
+        },
+      },
     },
     widgetTooltipInner: {
       '& > p:first-child': { fontWeight: 'bold', fontSize: '0.9em' },
-      '& > p:not(:first-child)': { padding: 0, fontSize: '0.8em' }
-    }
+      '& > p:not(:first-child)': { padding: 0, fontSize: '0.8em' },
+    },
   };
 });
 
@@ -78,8 +77,7 @@ const widgetTooptipWrapperStyle = {
   outlineWidth: 0,
 };
 
-
-export const PatientWidget = ({widget, patientUid}) => {
+export const PatientWidget = ({ widget, patientUid }) => {
   const t = useTranslate();
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
@@ -107,7 +105,7 @@ export const PatientWidget = ({widget, patientUid}) => {
     fetchData();
   }, [weekRange]);
 
-  const CustomTooltip = ({widget, active, payload}) => {
+  const CustomTooltip = ({ widget, active, payload }) => {
     if (!payload || !payload.length) {
       return null;
     }
@@ -116,10 +114,14 @@ export const PatientWidget = ({widget, patientUid}) => {
       return (
         <div className={classes.widgetTooltipInner}>
           <p>{payload[0].payload.full_name}</p>
-          <p>{`${payload[0].name} : ${payload[0].value}`}
-          {widget === 'sessions' &&
-            <span><br />{`${payload[1].name} : ${payload[1].value}`}</span>
-          }
+          <p>
+            {`${payload[0].name} : ${payload[0].value}`}
+            {widget === 'sessions' && (
+              <span>
+                <br />
+                {`${payload[1].name} : ${payload[1].value}`}
+              </span>
+            )}
           </p>
         </div>
       );
@@ -161,7 +163,7 @@ export const PatientWidget = ({widget, patientUid}) => {
       <CardContent>
         <div style={{ width: '100%', height: widgetHeight }}>
           {loading && <Spinner />}
-          {!loading &&
+          {!loading && (
             <ResponsiveContainer width="99%" height={widgetHeight}>
               <BarChart
                 data={data}
@@ -175,7 +177,7 @@ export const PatientWidget = ({widget, patientUid}) => {
               >
                 <XAxis
                   type="number"
-                  domain={[0, dataMax => (dataMax >= 4 ? dataMax : 4)]}
+                  domain={[0, (dataMax) => (dataMax >= 4 ? dataMax : 4)]}
                   style={{ fontFamily: 'Inter' }}
                 />
                 <YAxis
@@ -187,8 +189,8 @@ export const PatientWidget = ({widget, patientUid}) => {
                 <Tooltip
                   isAnimationActive={false}
                   wrapperStyle={widgetTooptipWrapperStyle}
-                  contentStyle={{backgroundColor: 'green'}}
-                  itemStyle={{backgroundColor: 'purple'}}
+                  contentStyle={{ backgroundColor: 'green' }}
+                  itemStyle={{ backgroundColor: 'purple' }}
                   content={<CustomTooltip widget={widget} />}
                 />
                 <Bar
@@ -196,24 +198,23 @@ export const PatientWidget = ({widget, patientUid}) => {
                   dataKey="completed"
                   fill="#078EE4"
                 />
-                {widget === 'sessions' &&
+                {widget === 'sessions' && (
                   <Bar
                     name={t('admin.dashboard.widgets.labels.uncompleted')}
                     dataKey="uncompleted"
                     fill="#939DAB"
                   />
-                }
-                {widget === 'sessions' &&
+                )}
+                {widget === 'sessions' && (
                   <Legend
-                    wrapperStyle={{ fontFamily: 'Inter', fontSize: '0.8em'}}
+                    wrapperStyle={{ fontFamily: 'Inter', fontSize: '0.8em' }}
                   />
-                }
-
+                )}
               </BarChart>
             </ResponsiveContainer>
-          }
+          )}
         </div>
       </CardContent>
     </Card>
-  )
+  );
 };

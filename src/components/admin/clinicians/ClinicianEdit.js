@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import { RaBox } from 'ra-compact-ui';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   BooleanInput,
   Edit,
@@ -37,6 +37,7 @@ import {
   useRedirect,
 } from 'react-admin';
 import { useSearchParams } from 'react-router-dom';
+
 import { makeStyles } from '@mui/styles';
 
 import { Typography } from '@components/admin/shared/dom/sanitize';
@@ -110,7 +111,10 @@ export const ClinicianEdit = () => {
       notify('admin.shared.notifications.profile.success', { type: 'info' });
     } else {
       redirect(`/${resource}`);
-      notify('ra.notification.updated', { type: 'info', messageArgs: { smart_count: 1 }});
+      notify('ra.notification.updated', {
+        type: 'info',
+        messageArgs: { smart_count: 1 },
+      });
     }
   };
 
@@ -121,9 +125,7 @@ export const ClinicianEdit = () => {
       actions={<TopToolbar hasShow={hasShow} identity={identity} />}
       redirect="list"
     >
-      <SimpleForm
-        toolbar={<SimpleFormToolBar identity={identity} />}
-      >
+      <SimpleForm toolbar={<SimpleFormToolBar identity={identity} />}>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>
