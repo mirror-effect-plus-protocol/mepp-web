@@ -21,16 +21,13 @@
  */
 import React from 'react';
 import {
-  Edit,
   SelectInput,
   SimpleForm,
   PasswordInput,
   ReferenceInput,
   TextInput,
   usePermissions,
-  useResourceContext,
   useTranslate,
-  useNotify,
   useResourceDefinition,
 } from 'react-admin';
 
@@ -49,8 +46,10 @@ import {
   validatePasswordOptional as validatePassword,
   validatePasswords,
 } from '@components/admin/shared/validators';
+import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 
 import { validateAudio, validateClinician, validateSide } from './validators';
+
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -64,31 +63,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const PatientEdit = () => {
-  const resourceName = useResourceContext();
   const { hasShow } = useResourceDefinition();
   const t = useTranslate();
   const classes = useStyles();
   const options = Options();
-  const notify = useNotify();
   const { permissions } = usePermissions();
 
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.keys(error.body).forEach((key) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
-
   return (
-    <Edit
-      mutationOptions={{ onError }}
+    <ResourceEdit
       actions={<TopToolbar hasShow={hasShow} />}
-      mutationMode="pessimistic"
     >
       <SimpleForm
         redirect="list"
@@ -175,6 +158,6 @@ export const PatientEdit = () => {
           />
         </Box>
       </SimpleForm>
-    </Edit>
+    </ResourceEdit>
   );
 };

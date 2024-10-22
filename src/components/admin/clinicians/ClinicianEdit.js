@@ -23,7 +23,6 @@ import { RaBox } from 'ra-compact-ui';
 import React from 'react';
 import {
   BooleanInput,
-  Edit,
   SelectInput,
   SimpleForm,
   PasswordInput,
@@ -53,6 +52,7 @@ import {
 } from '@components/admin/shared/validators';
 
 import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
+import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -84,17 +84,6 @@ export const ClinicianEdit = () => {
   const classes = useStyles();
   const notify = useNotify();
   const options = Options();
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.keys(error.body).forEach((key) => {
-        message += t(`resources.${resource}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
 
   const onSuccess = (data) => {
     if (identity?.uid === data.id) {
@@ -119,9 +108,8 @@ export const ClinicianEdit = () => {
   };
 
   return (
-    <Edit
-      mutationMode="pessimistic"
-      mutationOptions={{ onSuccess, onError }}
+    <ResourceEdit
+      mutationOptions={{ onSuccess }}
       actions={<TopToolbar hasShow={hasShow} identity={identity} />}
       redirect="list"
     >
@@ -176,6 +164,6 @@ export const ClinicianEdit = () => {
           />
         </RaBox>
       </SimpleForm>
-    </Edit>
+    </ResourceEdit>
   );
 };

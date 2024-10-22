@@ -23,7 +23,6 @@ import React, { useEffect, useCallback, useState } from 'react';
 import {
   ArrayInput,
   BooleanInput,
-  Edit,
   FormDataConsumer,
   NumberInput,
   ReferenceField,
@@ -32,10 +31,8 @@ import {
   TextField,
   TextInput,
   TranslatableInputs,
-  useNotify,
   usePermissions,
   useRecordContext,
-  useResourceContext,
   useResourceDefinition,
   useStore,
   useTranslate,
@@ -65,15 +62,13 @@ import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
 import ExerciseRow from './ExerciseRow';
+import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 
 export const PlanEdit = () => {
   const { hasShow } = useResourceDefinition();
   const [patientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
-  const t = useTranslate();
   const { locale } = useLocale();
-  const resource = useResourceContext();
-  const notify = useNotify();
   const redirect = useCallback(
     () => contextualRedirect(patientUid),
     [patientUid],
@@ -82,32 +77,19 @@ export const PlanEdit = () => {
     (record) => preSave(record, locale, patientUid, asTemplate),
     [patientUid, asTemplate],
   );
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.keys(error.body).forEach((key) => {
-        message += t(`resources.${resource}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
 
   useEffect(() => {
     setAsTemplate(patientUid === false);
   }, [patientUid]);
 
   return (
-    <Edit
+    <ResourceEdit
       actions={<TopToolbar hasShow={hasShow} patientUid={patientUid} />}
-      mutationMode="pessimistic"
       redirect={redirect}
       transform={transform}
-      mutationOptions={{ onError }}
     >
       <SimplePlanEditForm locale={locale} asTemplate={asTemplate} />
-    </Edit>
+    </ResourceEdit>
   );
 };
 

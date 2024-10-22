@@ -23,7 +23,6 @@ import React, { useState } from 'react';
 import {
   ArrayInput,
   BooleanInput,
-  Edit,
   FormDataConsumer,
   NumberInput,
   ReferenceField,
@@ -34,9 +33,7 @@ import {
   TextInput,
   TranslatableInputs,
   useGetList,
-  useNotify,
   usePermissions,
-  useResourceContext,
   useResourceDefinition,
   useTranslate,
 } from 'react-admin';
@@ -64,6 +61,7 @@ import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolb
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
+import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 
 import { LANGUAGES } from '../../../locales';
 
@@ -71,9 +69,7 @@ export const ExerciseEdit = () => {
   const t = useTranslate();
   const { permissions } = usePermissions();
   const { hasShow } = useResourceDefinition();
-  const notify = useNotify();
   const numberClasses = useNumberStyles();
-  const resource = useResourceContext();
   const { locale } = useLocale();
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
   let categories = [];
@@ -121,24 +117,10 @@ export const ExerciseEdit = () => {
     });
   }
 
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.keys(error.body).forEach((key) => {
-        message += t(`resources.${resource}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
-
   return (
-    <Edit
+    <ResourceEdit
       transform={transform}
       actions={<TopToolbar hasShow={hasShow} />}
-      mutationOptions={{ onError }}
-      mutationMode="pessimistic"
     >
       <SimpleForm
         redirect="list"
@@ -250,6 +232,6 @@ export const ExerciseEdit = () => {
           </ArrayInput>
         )}
       </SimpleForm>
-    </Edit>
+    </ResourceEdit>
   );
 };
