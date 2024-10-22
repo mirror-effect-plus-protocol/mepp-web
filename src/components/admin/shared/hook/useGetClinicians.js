@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
-import React, { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 const useGetClinicians = (permissions, useProfileFirst = false) => {
   const [loaded, setLoaded] = useState(false);
@@ -72,7 +72,7 @@ const useGetClinicians = (permissions, useProfileFirst = false) => {
 
   useEffect(() => {
     if (permissions === 'admin') {
-      fetchData();
+      fetchData().then();
     }
   }, [permissions]);
 

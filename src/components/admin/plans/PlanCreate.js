@@ -30,6 +30,7 @@ import {
   SimpleFormIterator,
   TextInput,
   TranslatableInputs,
+  useNotify,
   usePermissions,
   useResourceContext,
   useStore,
@@ -64,10 +65,11 @@ export const PlanCreate = () => {
   const t = useTranslate();
   const { permissions } = usePermissions();
   const { locale } = useLocale();
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [patientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
   const [randomize, setRandomize] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const notify = useNotify();
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'name');
   };
@@ -84,7 +86,7 @@ export const PlanCreate = () => {
   );
 
   useEffect(() => {
-    const createTemplate = searchParams.get('source') ? true : false;
+    const createTemplate = !!searchParams.get('source');
     if (patientUid) {
       setAsTemplate(createTemplate);
     }
@@ -93,7 +95,7 @@ export const PlanCreate = () => {
   const onError = (error) => {
     let message = '';
     if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
+      Object.keys(error.body).forEach((key) => {
         message += t(`resources.${resourceName}.errors.${key}`);
       });
     } else {
@@ -137,7 +139,7 @@ export const PlanCreate = () => {
         </TranslatableInputs>
         {permissions === 'admin' && asTemplate && (
           <FormDataConsumer>
-            {({ formData, ...rest }) => <IsSystemInput data={formData} />}
+            {({ formData }) => <IsSystemInput data={formData} />}
           </FormDataConsumer>
         )}
         <NumberInput source="daily_repeat" validate={validateNumber} />

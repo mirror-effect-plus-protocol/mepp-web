@@ -23,7 +23,7 @@ import React from 'react';
 
 import SvgIcon from '@mui/material/SvgIcon';
 
-export const TimeIcon = (props) => {
+export const TimeIcon = () => {
   return (
     <SvgIcon viewBox="0 0 24 24">
       <path

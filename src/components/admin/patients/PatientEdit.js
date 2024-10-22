@@ -28,7 +28,6 @@ import {
   ReferenceInput,
   TextInput,
   usePermissions,
-  useRefresh,
   useResourceContext,
   useTranslate,
   useNotify,
@@ -53,7 +52,7 @@ import {
 
 import { validateAudio, validateClinician, validateSide } from './validators';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
     display: 'flex',
@@ -76,7 +75,7 @@ export const PatientEdit = () => {
   const onError = (error) => {
     let message = '';
     if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
+      Object.keys(error.body).forEach((key) => {
         message += t(`resources.${resourceName}.errors.${key}`);
       });
     } else {

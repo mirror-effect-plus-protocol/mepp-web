@@ -19,10 +19,10 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { BooleanInput, useTranslate } from 'react-admin';
 
-const AutoTranslate = ({ setI18nOverwrite, data }) => {
+const AutoTranslate = () => {
   const t = useTranslate();
   return (
     <BooleanInput

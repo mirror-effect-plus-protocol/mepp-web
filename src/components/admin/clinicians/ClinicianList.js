@@ -40,7 +40,7 @@ export const ClinicianList = () => {
   const { permissions } = usePermissions();
   const t = useTranslate();
 
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [, setPatientUid] = useStore('patient.uid', false);
   useEffect(() => {
     setPatientUid(false);
   }, []);

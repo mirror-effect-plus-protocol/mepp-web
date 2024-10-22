@@ -29,7 +29,7 @@ export const categoriesSelectorStyle = {
   },
 };
 
-export const useRaBoxStyles = makeStyles((theme) => ({
+export const useRaBoxStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     width: '100%',

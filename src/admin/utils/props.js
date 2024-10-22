@@ -25,7 +25,7 @@ const sanitizeRestProps = (props, subsetProps, remove) => {
 
   if (remove) {
     subsetProps.forEach((prop) => {
-      if (sanitizedProps.hasOwnProperty(prop)) {
+      if (prop in sanitizedProps) {
         delete sanitizedProps[prop];
       }
     });

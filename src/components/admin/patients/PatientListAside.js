@@ -43,7 +43,6 @@ import {
 const PatientListAside = ({ permissions }) => {
   const {
     data: clinicians,
-    loading: isLoading,
     loaded: isLoaded,
     refetch,
   } = useGetClinicians(permissions, true);
@@ -53,7 +52,9 @@ const PatientListAside = ({ permissions }) => {
   const { filterValues, setFilters } = useListFilterContext();
 
   useEffect(() => {
-    if (permissions !== 'admin') return;
+    if (permissions !== 'admin') {
+      return;
+    }
 
     if (defaultClinician && identity?.uid) {
       if (!filterValues?.clinician_uid) {
@@ -73,7 +74,9 @@ const PatientListAside = ({ permissions }) => {
   }, [filterValues]);
 
   useEffect(() => {
-    if (permissions !== 'admin') return;
+    if (permissions !== 'admin') {
+      return;
+    }
 
     if (identity?.uid && isLoaded) {
       if (filterValues?.clinician_uid) {

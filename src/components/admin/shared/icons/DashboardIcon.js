@@ -23,7 +23,7 @@ import React from 'react';
 
 import SvgIcon from '@mui/material/SvgIcon';
 
-export const DashboardIcon = (props) => {
+export const DashboardIcon = () => {
   return (
     <SvgIcon viewBox="0 0 24 24">
       <path

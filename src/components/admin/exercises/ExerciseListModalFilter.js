@@ -126,15 +126,8 @@ const ExerciseListModalFilter = () => {
 
     // Update the active path up to current level
     setActivePath((prev) => {
-      const newPath = [...prev.slice(0, level), category];
-      return newPath;
+      return [...prev.slice(0, level), category];
     });
-  };
-
-  const handleResetFilters = () => {
-    setFilters({}, null);
-    setActivePath([]);
-    handleClose();
   };
 
   useEffect(() => {

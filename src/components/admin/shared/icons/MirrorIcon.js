@@ -23,7 +23,7 @@ import React from 'react';
 
 import SvgIcon from '@mui/material/SvgIcon';
 
-export const MirrorIcon = (props) => {
+export const MirrorIcon = () => {
   return (
     <SvgIcon viewBox="0 0 512 512">
       <g id="Outline">

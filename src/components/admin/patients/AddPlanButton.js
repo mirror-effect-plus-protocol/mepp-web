@@ -97,7 +97,7 @@ const AddPlanButton = ({ patientUid }) => {
           notify('resources.patients.notifications.plans.add.success', 'info');
           refresh();
         })
-        .catch((e) => {
+        .catch(() => {
           notify('resources.patients.notifications.plans.add.failure', 'error');
         })
         .finally(() => {

@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { google_translate } from '@components/admin/shared/utils';
+import { googleTranslate } from '@components/admin/shared/utils';
 
 import { LANGUAGES } from '../../../locales';
 
@@ -30,27 +30,31 @@ export const contextualRedirect = (patientUid) => {
 export const preSave = async (record, locale, patientUid, asTemplate) => {
   let localizedName = '';
 
-  // Try to get i18n field from current language
+  // Try to get i18n field from then current language
   try {
     localizedName = record.i18n.name[locale];
-  } catch (e) {}
+  } catch (e) {
+    // Intentionally left empty: ignore if localizedName is not found
+  }
 
   // If no matches found, let's loop through all languages.
   LANGUAGES.forEach((language) => {
     if (!localizedName) {
       try {
         localizedName = record.i18n.name[language];
-      } catch (e) {}
+      } catch (e) {
+        // Intentionally left empty: ignore if localizedName is not found
+      }
     }
   });
 
   const promises = LANGUAGES.map(async (language) => {
     if (
       record.auto_translate ||
-      !record.i18n.name.hasOwnProperty(language) ||
+      !(language in record.i18n.name) ||
       !record.i18n.name[language]
     ) {
-      record.i18n.name[language] = await google_translate(
+      record.i18n.name[language] = await googleTranslate(
         localizedName,
         language,
       );
@@ -66,7 +70,7 @@ export const preSave = async (record, locale, patientUid, asTemplate) => {
   });
 
   // Let's force `is_template` to False if patientUid is present in
-  // the context (i.e. edit from patient's card)
+  // the context (i.e., edit from patient's card)
   // A treatment plan cannot be considered as a template if it is linked to
   // a patient.
   if (asTemplate) {

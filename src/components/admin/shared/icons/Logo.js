@@ -29,7 +29,7 @@ const logoStyle = {
   width: 'auto',
 };
 
-export const Logo = (props) => {
+export const Logo = () => {
   return (
     <SvgIcon
       viewBox="0 0 126 38"

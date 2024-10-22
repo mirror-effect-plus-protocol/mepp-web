@@ -21,7 +21,7 @@
  */
 import { makeStyles } from '@mui/styles';
 
-export const useNumberStyles = makeStyles((theme) => ({
+export const useNumberStyles = makeStyles(() => ({
   numbers: {
     display: 'flex',
     justifyContent: 'start',

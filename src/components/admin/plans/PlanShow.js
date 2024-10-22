@@ -46,7 +46,7 @@ import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
 import { LANGUAGES } from '../../../locales';
 
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(() => {
   return {
     root: {
       '& .ra-field-exercises': {

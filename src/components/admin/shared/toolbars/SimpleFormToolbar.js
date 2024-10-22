@@ -72,7 +72,7 @@ const SimpleFormToolBar = ({ identity }) => {
   const { isDirty } = useFormState();
   const [confirm, setConfirm] = React.useState(false);
   const [patientUid, setPatientUid] = useStore('patient.uid', false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const showEditButtons = useMemo(() => {
     if (identity === false) {

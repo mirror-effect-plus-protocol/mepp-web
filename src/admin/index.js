@@ -39,7 +39,6 @@ import Terms from '@pages/Terms';
 
 import withPage from '@hocs/withPage';
 
-import { CategoryList } from '@components/admin/categories';
 import {
   ClinicianCreate,
   ClinicianEdit,
@@ -67,7 +66,6 @@ import {
 } from '@components/admin/plans';
 import { MeppAdminLayout } from '@components/admin/shared';
 import {
-  CategoryIcon,
   ClinicianIcon,
   ExerciseIcon,
   TreatmentPlanIcon,
@@ -78,6 +76,7 @@ import AuthProvider from './authProvider';
 import DataProvider from './dataProvider';
 import i18nProvider from './i18nProvider';
 
+// eslint-disable-next-line react/display-name
 export default () => {
   // with auth pages
   const IntroPage = withPage(Intro);

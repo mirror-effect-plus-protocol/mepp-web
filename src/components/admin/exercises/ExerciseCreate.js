@@ -32,6 +32,7 @@ import {
   TextInput,
   TranslatableInputs,
   useGetList,
+  useNotify,
   usePermissions,
   useResourceContext,
   useTranslate,
@@ -63,6 +64,7 @@ import { LANGUAGES } from '../../../locales';
 export const ExerciseCreate = () => {
   const { permissions } = usePermissions();
   const t = useTranslate();
+  const notify = useNotify();
   const numberClasses = useNumberStyles();
   const { locale } = useLocale();
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
@@ -120,7 +122,7 @@ export const ExerciseCreate = () => {
   const onError = (error) => {
     let message = '';
     if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
+      Object.keys(error.body).forEach((key) => {
         message += t(`resources.${resourceName}.errors.${key}`);
       });
     } else {
@@ -202,7 +204,7 @@ export const ExerciseCreate = () => {
                 validate={validateCategory}
               />
               <FormDataConsumer>
-                {({ scopedFormData, getSource, ...rest }) =>
+                {({ scopedFormData, getSource }) =>
                   scopedFormData ? (
                     <SubCategoryInput
                       label="Sub-category"

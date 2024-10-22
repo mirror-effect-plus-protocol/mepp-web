@@ -19,6 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import 'core-js/stable';
+
 import { RequestEndpoint, RequestMethod } from '@utils/constants';
 import { fetchData } from '@utils/fetch';
 
@@ -69,7 +71,7 @@ const authProvider = {
       window.location.href = '/';
       return Promise.reject();
     }
-
+    // eslint-disable-next-line no-undef
     return Promise.resolve();
   },
 

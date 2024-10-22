@@ -19,10 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import {
   Datagrid,
-  Empty,
   List,
   TextField,
   usePermissions,
@@ -30,12 +29,10 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { Box, Typography, IconButton } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
-import Spinner from '@components/admin/shared/Spinner';
 import ArchivableFilter from '@components/admin/shared/filters/ArchivableFilter';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 import ListActions from '@components/admin/shared/toolbars/ListToolbar';
@@ -47,7 +44,8 @@ export const ExerciseList = () => {
   const { permissions } = usePermissions();
   const { locale } = useLocale();
 
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [, setPatientUid] = useStore('patient.uid', false);
+
   useEffect(() => {
     setPatientUid(false);
   }, []);
@@ -90,7 +88,7 @@ export const ExerciseList = () => {
       filters={<ArchivableFilter />}
       sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
       perPage={25}
-      actions={<ListActions showExercisesFilter={true} />}
+      actions={<ListActions showExercisesFilter />}
     >
       <Datagrid
         bulkActionButtons={<BulkActionButtons permissions={permissions} />}

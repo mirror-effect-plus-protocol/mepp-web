@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useGetList } from 'react-admin';
 
 const useGetCategories = (locale) => {

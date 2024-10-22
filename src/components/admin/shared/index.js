@@ -25,7 +25,6 @@ import {
   Layout,
   Logout,
   UserMenu,
-  useUserMenu,
   MenuItemLink,
   useTranslate,
   useGetIdentity,
@@ -75,6 +74,7 @@ const MeppAdminAppBar = (props) => {
   );
 };
 
+// eslint-disable-next-line react/display-name
 const SettingsMenu = forwardRef((props, ref) => {
   const t = useTranslate();
   const location = useLocation();

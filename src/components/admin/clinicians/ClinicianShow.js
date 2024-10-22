@@ -80,15 +80,15 @@ export const ClinicianShowLayout = ({ record }) => {
   const classes = useRaBoxStyles();
   const [openDialogEmail, setOpenDialogEmail] = useState(false);
 
-  const handleOpenDialogEmail = (event) => {
+  const handleOpenDialogEmail = () => {
     setOpenDialogEmail(true);
   };
 
-  const handleCloseDialogEmail = (event) => {
+  const handleCloseDialogEmail = () => {
     setOpenDialogEmail(false);
   };
 
-  const handleSendOnboarding = (event) => {
+  const handleSendOnboarding = () => {
     setOpenDialogEmail(false);
     const url = `${process.env.API_ENDPOINT}/clinicians/${record.id}/resend/`;
 
@@ -101,7 +101,7 @@ export const ClinicianShowLayout = ({ record }) => {
           type: 'info',
         });
       })
-      .catch((e) => {
+      .catch(() => {
         notify('resources.patients.notifications.email.send.failure', {
           type: 'error',
         });

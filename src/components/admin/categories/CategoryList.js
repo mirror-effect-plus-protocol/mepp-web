@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import { List, TextField, Datagrid, useTranslate } from 'react-admin';
+import { List, TextField, Datagrid } from 'react-admin';
 
 import { Chip } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -45,7 +45,6 @@ const SubCategoriesRow = ({ record, locale }) => {
 };
 
 export const CategoryList = () => {
-  const t = useTranslate();
   const { locale } = useLocale();
 
   return (

@@ -79,9 +79,9 @@ const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
     : 'admin.shared.labels.activateButton';
 
   // Row is editable by default
-  const isSystem = record.hasOwnProperty('is_system') && record.is_system;
+  const isSystem = 'is_system' in record && record.is_system;
   const editable = !isSystem || permissions === 'admin';
-  const context = props.hasOwnProperty('context') && props.context;
+  const context = 'context' in props && props.context;
 
   return (
     <div className={classes.toolbar}>

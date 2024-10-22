@@ -25,8 +25,6 @@ import {
   BooleanInput,
   Edit,
   FormDataConsumer,
-  FileInput,
-  FileField,
   NumberInput,
   ReferenceField,
   SelectInput,
@@ -36,7 +34,9 @@ import {
   TextInput,
   TranslatableInputs,
   useGetList,
+  useNotify,
   usePermissions,
+  useResourceContext,
   useResourceDefinition,
   useTranslate,
 } from 'react-admin';
@@ -71,7 +71,9 @@ export const ExerciseEdit = () => {
   const t = useTranslate();
   const { permissions } = usePermissions();
   const { hasShow } = useResourceDefinition();
+  const notify = useNotify();
   const numberClasses = useNumberStyles();
+  const resource = useResourceContext();
   const { locale } = useLocale();
   const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
   let categories = [];
@@ -122,8 +124,8 @@ export const ExerciseEdit = () => {
   const onError = (error) => {
     let message = '';
     if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
+      Object.keys(error.body).forEach((key) => {
+        message += t(`resources.${resource}.errors.${key}`);
       });
     } else {
       message = t('api.error.generic');
@@ -183,7 +185,7 @@ export const ExerciseEdit = () => {
             }}
           >
             <FormDataConsumer>
-              {({ formData, ...rest }) => <AutoTranslate data={formData} />}
+              {({ formData }) => <AutoTranslate data={formData} />}
             </FormDataConsumer>
           </div>
         </TranslatableInputs>
@@ -231,7 +233,7 @@ export const ExerciseEdit = () => {
                 validate={validateCategory}
               />
               <FormDataConsumer>
-                {({ scopedFormData, getSource, ...rest }) =>
+                {({ scopedFormData, getSource }) =>
                   scopedFormData ? (
                     <SubCategoryInput
                       label={t('resources.categories.labels.sub_category')}

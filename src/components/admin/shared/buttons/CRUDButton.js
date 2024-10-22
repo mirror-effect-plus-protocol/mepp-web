@@ -49,15 +49,9 @@ const CRUDButton = (props) => {
   const icon = type === 'show' ? <ImageEye /> : <ContentCreate />;
   const state = { _scrollToTop: scrollToTop };
   const context =
-    rest.hasOwnProperty('context') && rest.context
-      ? { ...state, ...props.context }
-      : state;
+    'context' in rest && rest.context ? { ...state, ...props.context } : state;
   const handleClick = rest.handleClick || stopPropagation;
-  const location = rest.hasOwnProperty('location')
-    ? props.location
-    : record
-    ? link
-    : '';
+  const location = 'location' in rest ? props.location : record ? link : '';
 
   return (
     <Button

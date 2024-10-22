@@ -28,15 +28,12 @@ module.exports = {
       'presets': ['@babel/preset-react'],
     },
   },
-  ignorePatterns: [
-    'public/**/*.js',
-    'src/admin/**/*.*', // TODO: Oli -> lint admin folder
-    'src/components/admin/**/*.*', // TODO: Oli -> lint admin folder
-  ],
+  ignorePatterns: ['public/**/*.js'],
   extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
   root: true,
   env: {
     node: true,
+    es6: true,
     browser: true,
   },
   globals: {

@@ -74,7 +74,7 @@ const ExerciseRow = (props) => {
   useEffect(() => {
     const sourceIndex = props.source.split('.')[1];
     exercises.forEach((exercise, index) => {
-      if (index == sourceIndex && exercise === '') {
+      if (index === sourceIndex && exercise === '') {
         form.setValue(`${props.source}.i18n.description.${locale}`, '');
         form.setValue(`${props.source}.movement_duration`, 18);
         form.setValue(`${props.source}.pause`, 70);
@@ -146,7 +146,7 @@ const ExerciseRow = (props) => {
   return (
     <div>
       <FormDataConsumer>
-        {({ formData }) => {
+        {() => {
           return (
             <input type="hidden" name={`${props.source}.id`} value={uid} />
           );

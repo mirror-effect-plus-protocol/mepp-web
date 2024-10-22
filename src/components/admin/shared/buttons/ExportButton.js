@@ -36,7 +36,6 @@ import { useLocale } from '@hooks/locale/useLocale';
 const ExportButton = (props) => {
   const {
     selectedIds = [],
-    scrollToTop = true,
     showLabel = true,
     color = 'primary',
     variant = undefined,
@@ -77,14 +76,16 @@ const ExportButton = (props) => {
     })
       .then((response) => {
         notify('admin.shared.notifications.export.start', { type: 'info' });
-        window.location.href = exportEndpoint(response.json['token']);
+        window.location.href = exportEndpoint(response.json.token);
       })
       .catch(() => {
         notify('admin.shared.notifications.export.failure', { type: 'error' });
       })
       .finally(() => {
         setTimeout(() => {
-          if (selectedIds.length && resource) unselectAll(resource);
+          if (selectedIds.length && resource) {
+            unselectAll();
+          }
         }, 500);
       });
   };

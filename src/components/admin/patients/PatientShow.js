@@ -91,7 +91,7 @@ export const PatientShow = () => {
 export const PatientShowRecord = () => {
   const record = useRecordContext();
   if (!record) return null;
-  const [patientUid, setPatientUid] = useStore('patient.uid', record.id);
+  const [, setPatientUid] = useStore('patient.uid', record.id);
   const classes = useRaBoxStyles();
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export const PatientShowLayout = ({ record }) => {
   const { permissions } = usePermissions();
   const classes = useRaBoxStyles();
   const archivesToggleClasses = useArchivesStyles();
-  const [sort, setSort] = useState({ field: 'start_date', order: 'DESC' });
+  const [sort] = useState({ field: 'start_date', order: 'DESC' });
   const [openDialogEmail, setOpenDialogEmail] = useState(false);
   const [archives, setArchives] = useState(false);
   const { data, total, isLoading } = useGetList('plans', {
@@ -125,15 +125,15 @@ export const PatientShowLayout = ({ record }) => {
     setArchives(event.target.checked);
   };
 
-  const handleOpenDialogEmail = (event) => {
+  const handleOpenDialogEmail = () => {
     setOpenDialogEmail(true);
   };
 
-  const handleCloseDialogEmail = (event) => {
+  const handleCloseDialogEmail = () => {
     setOpenDialogEmail(false);
   };
 
-  const handleSendOnboarding = (event) => {
+  const handleSendOnboarding = () => {
     setOpenDialogEmail(false);
     const url = `${process.env.API_ENDPOINT}/patients/${record.id}/resend/`;
 
@@ -146,7 +146,7 @@ export const PatientShowLayout = ({ record }) => {
           type: 'info',
         });
       })
-      .catch((e) => {
+      .catch(() => {
         notify('resources.patients.notifications.email.send.failure', {
           type: 'error',
         });

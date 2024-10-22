@@ -27,7 +27,7 @@ export const useAutocompleteStyles = makeStyles((theme) => ({
   },
 }));
 
-export const useNumberStyles = makeStyles((theme) => ({
+export const useNumberStyles = makeStyles(() => ({
   numbers: {
     display: 'flex',
     justifyContent: 'start',

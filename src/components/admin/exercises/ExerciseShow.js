@@ -22,13 +22,10 @@
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import React from 'react';
 import {
-  BooleanField,
   NumberField,
   Show,
   TextField,
   TranslatableFields,
-  useGetList,
-  usePermissions,
   useRecordContext,
   useResourceDefinition,
   useTranslate,
@@ -38,7 +35,6 @@ import { Chip } from '@mui/material';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
-import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
 import { useCategoryChipsStyles } from '@components/admin/exercises/styles';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import VideoField from '@components/admin/shared/inputs/VideoField';
@@ -51,7 +47,9 @@ import { LANGUAGES } from '../../../locales';
 const CategoryChips = ({ locale }) => {
   const classes = useCategoryChipsStyles();
   const record = useRecordContext();
-  if (!record) return null;
+  if (!record) {
+    return null;
+  }
   return record.categories.map((category) => (
     <div
       key={category.category__uid}
@@ -59,7 +57,7 @@ const CategoryChips = ({ locale }) => {
       className={classes.root}
     >
       {category.parents.map((parent) => (
-        <Chip color="secondary" label={parent.i18n[locale]} />
+        <Chip key={parent.id} color="secondary" label={parent.i18n[locale]} />
       ))}
       <Chip
         color="secondary"
@@ -71,7 +69,6 @@ const CategoryChips = ({ locale }) => {
 };
 
 export const ExerciseShow = () => {
-  const { permissions } = usePermissions();
   const { hasEdit } = useResourceDefinition();
   const t = useTranslate();
   const { locale } = useLocale();

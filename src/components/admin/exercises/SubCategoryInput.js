@@ -29,10 +29,10 @@ const SubCategoryInput = ({
   ...props
 }) => {
   let choices = [];
-  if (updatedSubCategoryInputs.hasOwnProperty(props.source)) {
+  if (props.source in updatedSubCategoryInputs) {
     choices = subCategories[updatedSubCategoryInputs[props.source]];
-  } else if (data['category__uid']) {
-    choices = subCategories[data['category__uid']];
+  } else if (data.category__uid) {
+    choices = subCategories[data.category__uid];
   }
   return <SelectInput choices={choices} {...props} />;
 };

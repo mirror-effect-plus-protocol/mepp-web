@@ -39,7 +39,7 @@ import PatientListAside from './PatientListAside';
 export const PatientList = () => {
   const { permissions } = usePermissions();
 
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [, setPatientUid] = useStore('patient.uid', false);
   useEffect(() => {
     setPatientUid(false);
   }, []);

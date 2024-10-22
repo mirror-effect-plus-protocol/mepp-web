@@ -22,12 +22,12 @@
 
 const getPlaceHolder = (record, locale) => {
   let placeholder = record.id;
-  if (record.hasOwnProperty('full_name')) {
+  if ('full_name' in record) {
     placeholder = record.full_name;
   } else {
-    if (record.i18n?.name?.hasOwnProperty(locale)) {
+    if (record && record.i18n && locale in record.i18n.name) {
       placeholder = record.i18n.name[locale];
-    } else if (record.i18n?.description?.hasOwnProperty(locale)) {
+    } else if (record && record.i18n && locale in record.i18n.description) {
       const description = record.i18n.description[locale];
       placeholder =
         description.length <= 20

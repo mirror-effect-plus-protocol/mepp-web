@@ -32,13 +32,14 @@ import {
   TextField,
   TextInput,
   TranslatableInputs,
+  useNotify,
   usePermissions,
   useRecordContext,
+  useResourceContext,
   useResourceDefinition,
   useStore,
   useTranslate,
 } from 'react-admin';
-import { useFormContext } from 'react-hook-form';
 
 import GTranslateIcon from '@mui/icons-material/GTranslate';
 
@@ -67,10 +68,12 @@ import ExerciseRow from './ExerciseRow';
 
 export const PlanEdit = () => {
   const { hasShow } = useResourceDefinition();
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [patientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
   const t = useTranslate();
   const { locale } = useLocale();
+  const resource = useResourceContext();
+  const notify = useNotify();
   const redirect = useCallback(
     () => contextualRedirect(patientUid),
     [patientUid],
@@ -82,8 +85,8 @@ export const PlanEdit = () => {
   const onError = (error) => {
     let message = '';
     if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
+      Object.keys(error.body).forEach((key) => {
+        message += t(`resources.${resource}.errors.${key}`);
       });
     } else {
       message = t('api.error.generic');
@@ -161,13 +164,13 @@ const SimplePlanEditForm = ({ locale, asTemplate }) => {
           }}
         >
           <FormDataConsumer>
-            {({ formData, ...rest }) => <AutoTranslate data={formData} />}
+            {({ formData }) => <AutoTranslate data={formData} />}
           </FormDataConsumer>
         </div>
       </TranslatableInputs>
       {permissions === 'admin' && asTemplate && (
         <FormDataConsumer>
-          {({ formData, ...rest }) => <IsSystemInput data={formData} />}
+          {({ formData }) => <IsSystemInput data={formData} />}
         </FormDataConsumer>
       )}
       <NumberInput source="daily_repeat" validate={validateNumber} />

@@ -32,7 +32,7 @@ const BackButton = () => {
   const resource = useResourceContext();
   const [patientUid, setPatientUid] = useStore('patient.uid', false);
 
-  const handleBack = (e) => {
+  const handleBack = () => {
     let redirectUrl = `/${resource}`;
     if (patientUid && resource !== 'patients') {
       redirectUrl = `/patients/${patientUid}/show`;

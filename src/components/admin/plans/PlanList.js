@@ -141,7 +141,7 @@ export const PlanList = () => {
   const { permissions } = usePermissions();
   const { locale } = useLocale();
 
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [, setPatientUid] = useStore('patient.uid', false);
   useEffect(() => {
     setPatientUid(false);
   }, []);

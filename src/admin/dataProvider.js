@@ -43,7 +43,7 @@ const dataProvider = withLifecycleCallbacks(
        * the `picture` sent property, with `src` and `title` attributes.
        */
       resource: 'exercises',
-      beforeUpdate: async (params, dataProvider) => {
+      beforeUpdate: async (params) => {
         // Freshly dropped pictures are File objects and must be converted to base64 strings
         const newMedia = [];
         const formerMedia = [];

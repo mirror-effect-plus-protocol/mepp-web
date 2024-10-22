@@ -20,7 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import { RaBox } from 'ra-compact-ui';
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   BooleanInput,
   Edit,
@@ -54,7 +54,7 @@ import {
 
 import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
     display: 'flex',
@@ -80,15 +80,15 @@ export const ClinicianEdit = () => {
   const { identity, isLoading: identityLoading, refetch } = useGetIdentity();
   const resource = useResourceContext();
   const redirect = useRedirect();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const classes = useStyles();
   const notify = useNotify();
   const options = Options();
   const onError = (error) => {
     let message = '';
     if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
+      Object.keys(error.body).forEach((key) => {
+        message += t(`resources.${resource}.errors.${key}`);
       });
     } else {
       message = t('api.error.generic');

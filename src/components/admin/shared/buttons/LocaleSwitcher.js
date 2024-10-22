@@ -21,7 +21,7 @@
  */
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import React, { useState } from 'react';
-import { useLocaleState, useTranslate, useNotify } from 'react-admin';
+import { useTranslate, useNotify } from 'react-admin';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -59,7 +59,7 @@ const LocaleSwitcher = () => {
       method: 'PATCH',
       body: `{"language": "${newLanguage}"}`,
     })
-      .then((response) => {
+      .then(() => {
         notify('admin.shared.notifications.language.success', { type: 'info' });
       })
       .catch(() => {

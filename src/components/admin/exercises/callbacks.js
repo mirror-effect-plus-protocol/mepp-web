@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { google_translate } from '@components/admin/shared/utils';
+import { googleTranslate } from '@components/admin/shared/utils';
 
 import { LANGUAGES } from '../../../locales';
 
@@ -28,14 +28,18 @@ export const preSave = async (record, locale) => {
 
   try {
     localizedDescription = record.i18n.description[locale];
-  } catch (e) {}
+  } catch (e) {
+    // Intentionally left empty: ignore if localizedName is not found
+  }
 
   // If no matches found, let's loop through all languages.
   LANGUAGES.forEach((language) => {
     if (!localizedDescription) {
       try {
         localizedDescription = record.i18n.description[language];
-      } catch (e) {}
+      } catch (e) {
+        // Intentionally left empty: ignore if localizedName is not found
+      }
     }
   });
 
@@ -43,10 +47,10 @@ export const preSave = async (record, locale) => {
   const promises = LANGUAGES.map(async (language) => {
     if (
       record.auto_translate ||
-      !record.i18n.description.hasOwnProperty(language) ||
+      !(language in record.i18n.description) ||
       !record.i18n.description[language]
     ) {
-      record.i18n.description[language] = await google_translate(
+      record.i18n.description[language] = await googleTranslate(
         localizedDescription,
         language,
       );

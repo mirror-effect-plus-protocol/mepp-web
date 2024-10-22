@@ -83,7 +83,7 @@ export const PatientWidget = ({ widget, patientUid }) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [weekRange, setWeekRange] = useState('one_week');
-  const [widgetHeight, setWidgetHeight] = useState(100);
+  const [widgetHeight] = useState(100);
   const fetchData = async () => {
     setLoading(true);
     const options = {

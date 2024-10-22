@@ -62,7 +62,7 @@ const ToggleArchiveButton = ({
       select(newSelectedIds);
     }
     // Update data
-    updateHandler();
+    updateHandler().then();
   };
   const [updateHandler, { isLoading }] = useUpdate(
     resource,
@@ -86,7 +86,7 @@ const ToggleArchiveButton = ({
         notify(translatedText, { type: 'info' });
         select([]);
       },
-      onError: (error) => {
+      onError: () => {
         const translatedText = record.archived
           ? 'admin.shared.notifications.unarchive.failure'
           : 'admin.shared.notifications.archive.failure';
