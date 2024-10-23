@@ -1,21 +1,11 @@
 import React from 'react';
-import {
-  Edit,
-  useResourceContext,
-  useTranslate,
-  useNotify,
-  useResourceDefinition, useStore
-} from 'react-admin';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
+import { Create, useResourceContext, useTranslate, useNotify } from 'react-admin';
 
-const ResourceEdit = ({ children, mutationOptions = {}, ...props }) => {
+const ResourceCreate = ({ children, mutationOptions = {}, ...props }) => {
   const resource = useResourceContext();
-  const [patientUid] = useStore('patient.uid', false);
-  const { hasShow } = useResourceDefinition();
   const t = useTranslate();
   const notify = useNotify();
   const redirect = 'redirect' in props ? props.redirect : 'list';
-  const identity = 'identity' in props ? props.identity : false;
 
   const onError = (error) => {
     let message = '';
@@ -35,20 +25,15 @@ const ResourceEdit = ({ children, mutationOptions = {}, ...props }) => {
   };
 
   return (
-    <Edit
+    <Create
       mutationOptions={mergedMutationOptions}
       mutationMode="pessimistic"
       redirect={redirect}
-      actions={<TopToolbar
-        hasShow={hasShow}
-        patientUid={patientUid}
-        identity={identity}
-      />}
       {...props}
     >
       {children}
-    </Edit>
+    </Create>
   );
 };
 
-export default ResourceEdit;
+export default ResourceCreate;

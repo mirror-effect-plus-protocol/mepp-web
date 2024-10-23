@@ -19,120 +19,48 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  ArrayInput,
   BooleanInput,
-  Create,
-  FormDataConsumer,
   NumberInput,
-  SelectInput,
   SimpleForm,
-  SimpleFormIterator,
   TextInput,
   TranslatableInputs,
-  useGetList,
-  useNotify,
   usePermissions,
-  useResourceContext,
   useTranslate,
 } from 'react-admin';
 
 import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 import { useLocale } from '@hooks/locale/useLocale';
-
-import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
 import { preSave } from '@components/admin/exercises/callbacks';
 import { useNumberStyles } from '@components/admin/exercises/styles';
-import {
-  validateCategory,
-  validateSubCategory,
-  validateSubCategories,
-} from '@components/admin/exercises/validators';
 import { Typography, Div } from '@components/admin/shared/dom/sanitize';
 import {
-  categoriesSelectorStyle,
   translatorInputStyle,
 } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
+import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 
 import { LANGUAGES } from '../../../locales';
 
 export const ExerciseCreate = () => {
   const { permissions } = usePermissions();
   const t = useTranslate();
-  const notify = useNotify();
   const numberClasses = useNumberStyles();
   const { locale } = useLocale();
-  const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
-  let categories = [];
-  let subCategories = {};
-  const resourceName = useResourceContext();
-  const { data, isLoading } = useGetList(
-    'categories',
-    {
-      pagination: { page: 1, perPage: 9999 },
-      sort: { field: 'i18n__name', order: 'ASC' },
-    },
-    { language: locale },
-  );
 
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'description');
   };
 
   /* Update description translations if empty */
-  const transform = (record) => {
-    return preSave(record, locale);
-  };
-
-  /* Populate dynamically subcategories */
-  const handleChange = (event) => {
-    const categoryInput = event.target;
-    const updates = {};
-
-    updates[categoryInput.name.replace('category__', '')] = categoryInput.value;
-    setUpdatedSubCategoryInputs({
-      ...updatedSubCategoryInputs,
-      ...updates,
-    });
-  };
-
-  // ToDo refactor
-  if (!isLoading) {
-    data.forEach((category) => {
-      categories.push({
-        'id': category.id,
-        'name': category.i18n.name[locale],
-      });
-      subCategories[category.id] = category.sub_categories.map(
-        (subCategory) => {
-          return {
-            'id': subCategory.id,
-            'name': subCategory.i18n.name[locale],
-          };
-        },
-      );
-    });
-  }
-
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.keys(error.body).forEach((key) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
+  const transform = (record) => preSave(record, locale);
 
   return (
-    <Create transform={transform} mutationOptions={{ onError }} redirect="list">
+    <ResourceCreate transform={transform}>
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}
@@ -185,42 +113,8 @@ export const ExerciseCreate = () => {
         <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
-        {!isLoading && (
-          <ArrayInput
-            source="sub_categories"
-            validate={validateSubCategories}
-            fullWidth={false}
-          >
-            <SimpleFormIterator
-              sx={categoriesSelectorStyle}
-              disableReordering
-              inline
-            >
-              <SelectInput
-                label="Category"
-                source="category__uid"
-                choices={categories}
-                onChange={handleChange}
-                validate={validateCategory}
-              />
-              <FormDataConsumer>
-                {({ scopedFormData, getSource }) =>
-                  scopedFormData ? (
-                    <SubCategoryInput
-                      label="Sub-category"
-                      source={getSource('uid')}
-                      data={scopedFormData}
-                      updatedSubCategoryInputs={updatedSubCategoryInputs}
-                      subCategories={subCategories}
-                      validate={validateSubCategory}
-                    />
-                  ) : null
-                }
-              </FormDataConsumer>
-            </SimpleFormIterator>
-          </ArrayInput>
-        )}
+        {/* TODO - handle categories */}
       </SimpleForm>
-    </Create>
+    </ResourceCreate>
   );
 };

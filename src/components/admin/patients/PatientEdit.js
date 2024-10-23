@@ -28,7 +28,6 @@ import {
   TextInput,
   usePermissions,
   useTranslate,
-  useResourceDefinition,
 } from 'react-admin';
 
 import Box from '@mui/material/Box';
@@ -37,7 +36,6 @@ import { makeStyles } from '@mui/styles';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import Options from '@components/admin/shared/options';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import {
   validateEmail,
   validateFirstName,
@@ -63,18 +61,14 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const PatientEdit = () => {
-  const { hasShow } = useResourceDefinition();
   const t = useTranslate();
   const classes = useStyles();
   const options = Options();
   const { permissions } = usePermissions();
 
   return (
-    <ResourceEdit
-      actions={<TopToolbar hasShow={hasShow} />}
-    >
+    <ResourceEdit>
       <SimpleForm
-        redirect="list"
         toolbar={<SimpleFormToolBar identity={false} />}
       >
         <Typography variant="h6" gutterBottom>

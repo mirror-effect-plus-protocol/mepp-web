@@ -65,7 +65,6 @@ class MeppAPIFilter(BaseFilterBackend):
             queryset = queryset.filter(patient__uid=patient_id)
 
         # Filter clinicians
-        print('viewmane', view, flush=True)
         if view.__class__.__name__ != 'ExerciseViewSet':
             try:
                 clinician_uid = request.query_params['clinician_uid']

@@ -32,7 +32,6 @@ import {
   useResourceContext,
   useTranslate,
   useNotify,
-  useResourceDefinition,
   useRedirect,
 } from 'react-admin';
 import { useSearchParams } from 'react-router-dom';
@@ -41,7 +40,6 @@ import { makeStyles } from '@mui/styles';
 
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import Options from '@components/admin/shared/options';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import {
   validateEmail,
   validateFirstName,
@@ -76,7 +74,6 @@ const ProfileRow = ({ identity, identityLoading, ...props }) => {
 
 export const ClinicianEdit = () => {
   const t = useTranslate();
-  const { hasShow } = useResourceDefinition();
   const { identity, isLoading: identityLoading, refetch } = useGetIdentity();
   const resource = useResourceContext();
   const redirect = useRedirect();
@@ -110,8 +107,7 @@ export const ClinicianEdit = () => {
   return (
     <ResourceEdit
       mutationOptions={{ onSuccess }}
-      actions={<TopToolbar hasShow={hasShow} identity={identity} />}
-      redirect="list"
+      identity={identity}
     >
       <SimpleForm toolbar={<SimpleFormToolBar identity={identity} />}>
         <Typography variant="h6" gutterBottom>

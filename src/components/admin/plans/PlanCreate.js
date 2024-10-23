@@ -21,18 +21,13 @@
  */
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  ArrayInput,
   BooleanInput,
-  Create,
   FormDataConsumer,
   NumberInput,
   SimpleForm,
-  SimpleFormIterator,
   TextInput,
   TranslatableInputs,
-  useNotify,
   usePermissions,
-  useResourceContext,
   useStore,
   useTranslate,
 } from 'react-admin';
@@ -42,17 +37,10 @@ import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
-import ExerciseRow from '@components/admin/plans/ExerciseRow';
 import IsSystemInput from '@components/admin/plans/IsSystem';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
-import { validateExercises } from '@components/admin/plans/validators';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import {
-  useGetCategories,
-  useGetSubCategories,
-} from '@components/admin/shared/hook';
-import {
-  categoriesSelectorStyle,
   translatorInputStyle,
 } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
@@ -60,6 +48,7 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
+import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 
 export const PlanCreate = () => {
   const t = useTranslate();
@@ -67,15 +56,11 @@ export const PlanCreate = () => {
   const { locale } = useLocale();
   const [patientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
-  const [randomize, setRandomize] = useState(false);
+  const [, setRandomize] = useState(false);
   const [searchParams] = useSearchParams();
-  const notify = useNotify();
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'name');
   };
-  const resourceName = useResourceContext();
-  const categories = useGetCategories(locale);
-  const subCategories = useGetSubCategories(locale);
   const redirect = useCallback(
     () => contextualRedirect(patientUid),
     [patientUid],
@@ -92,27 +77,14 @@ export const PlanCreate = () => {
     }
   }, [patientUid]);
 
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.keys(error.body).forEach((key) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
-
   const handleRandomizeClick = (event) => {
     setRandomize(event.target.checked);
   };
 
   return (
-    <Create
+    <ResourceCreate
       transform={transform}
       redirect={redirect}
-      mutationOptions={{ onError }}
     >
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
@@ -163,23 +135,8 @@ export const PlanCreate = () => {
           />
         </Typography>
 
-        <ArrayInput
-          source="exercises"
-          fullWidth={false}
-          label=""
-          validate={validateExercises}
-        >
-          <SimpleFormIterator
-            sx={categoriesSelectorStyle}
-            disableReordering={randomize}
-          >
-            <ExerciseRow
-              categories={categories}
-              subCategories={subCategories}
-            />
-          </SimpleFormIterator>
-        </ArrayInput>
+        {/* Handle exercises */}
       </SimpleForm>
-    </Create>
+    </ResourceCreate>
   );
 };

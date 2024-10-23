@@ -21,19 +21,16 @@
  */
 import React, { useEffect, useCallback, useState } from 'react';
 import {
-  ArrayInput,
   BooleanInput,
   FormDataConsumer,
   NumberInput,
   ReferenceField,
   SimpleForm,
-  SimpleFormIterator,
   TextField,
   TextInput,
   TranslatableInputs,
   usePermissions,
   useRecordContext,
-  useResourceDefinition,
   useStore,
   useTranslate,
 } from 'react-admin';
@@ -44,28 +41,19 @@ import { useLocale } from '@hooks/locale/useLocale';
 
 import IsSystemInput from '@components/admin/plans/IsSystem';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
-import { validateExercises } from '@components/admin/plans/validators';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import {
-  useGetCategories,
-  useGetSubCategories,
-} from '@components/admin/shared/hook';
 import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
 import {
   translatorInputStyle,
-  categoriesSelectorStyle,
 } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
-import ExerciseRow from './ExerciseRow';
 import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 
 export const PlanEdit = () => {
-  const { hasShow } = useResourceDefinition();
   const [patientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
   const { locale } = useLocale();
@@ -84,7 +72,6 @@ export const PlanEdit = () => {
 
   return (
     <ResourceEdit
-      actions={<TopToolbar hasShow={hasShow} patientUid={patientUid} />}
       redirect={redirect}
       transform={transform}
     >
@@ -97,12 +84,10 @@ const SimplePlanEditForm = ({ locale, asTemplate }) => {
   const record = useRecordContext();
   const { permissions } = usePermissions();
   const t = useTranslate();
-  const [randomize, setRandomize] = useState(record.randomize);
+  const [, setRandomize] = useState(record.randomize);
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'name');
   };
-  const categories = useGetCategories(locale);
-  const subCategories = useGetSubCategories(locale);
 
   const handleRandomizeClick = (event) => {
     setRandomize(event.target.checked);
@@ -176,19 +161,7 @@ const SimplePlanEditForm = ({ locale, asTemplate }) => {
         />
       </Typography>
 
-      <ArrayInput
-        source="exercises"
-        fullWidth={false}
-        label=""
-        validate={validateExercises}
-      >
-        <SimpleFormIterator
-          sx={categoriesSelectorStyle}
-          disableReordering={randomize}
-        >
-          <ExerciseRow categories={categories} subCategories={subCategories} />
-        </SimpleFormIterator>
-      </ArrayInput>
+      {/* TODO - handle exercises */}
     </SimpleForm>
   );
 };

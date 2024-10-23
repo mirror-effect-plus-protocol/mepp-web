@@ -22,16 +22,13 @@
 import { RaBox } from 'ra-compact-ui';
 import React from 'react';
 import {
-  Create,
   SelectInput,
   PasswordInput,
   ReferenceInput,
   SimpleForm,
   TextInput,
   usePermissions,
-  useResourceContext,
   useTranslate,
-  useNotify,
 } from 'react-admin';
 
 import { makeStyles } from '@mui/styles';
@@ -49,6 +46,7 @@ import {
 
 import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
 import { validateAudio, validateClinician, validateSide } from './validators';
+import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -62,26 +60,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const PatientCreate = () => {
-  const resourceName = useResourceContext();
   const t = useTranslate();
   const classes = useStyles();
   const options = Options();
-  const notify = useNotify();
   const { permissions } = usePermissions();
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.keys(error.body).forEach((key) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
 
   return (
-    <Create mutationOptions={{ onError }} redirect="list">
+    <ResourceCreate>
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
@@ -164,6 +149,6 @@ export const PatientCreate = () => {
           />
         </RaBox>
       </SimpleForm>
-    </Create>
+    </ResourceCreate>
   );
 };
