@@ -22,23 +22,17 @@
 import React, { useEffect, useCallback } from 'react';
 import {
   Datagrid,
-  List,
   TextField,
   usePermissions,
   useStore,
   useTranslate,
 } from 'react-admin';
-
 import { Box, Typography } from '@mui/material';
-
 import { useLocale } from '@hooks/locale/useLocale';
-
-import ArchivableFilter from '@components/admin/shared/filters/ArchivableFilter';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
-
 import ExerciseListModalFilter from './ExerciseListModalFilter';
+import ResourceList from '@components/admin/shared/resources/ResourceList';
 
 export const ExerciseList = () => {
   const { permissions } = usePermissions();
@@ -79,16 +73,13 @@ export const ExerciseList = () => {
   }, []);
 
   return (
-    <List
+    <ResourceList
+      sortField={`i18n.description.${locale}`}
       filterDefaultValues={{
-        archived: false,
         language: locale,
         category__uid: -1,
       }}
-      filters={<ArchivableFilter />}
-      sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
-      perPage={25}
-      actions={<ListActions showExercisesFilter />}
+      showExercisesFilter
     >
       <Datagrid
         bulkActionButtons={<BulkActionButtons permissions={permissions} />}
@@ -97,6 +88,6 @@ export const ExerciseList = () => {
         <TextField source={`i18n.description.${locale}`} />
         <RowActionToolbar permissions={permissions} clonable />
       </Datagrid>
-    </List>
+    </ResourceList>
   );
 };

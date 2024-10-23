@@ -21,20 +21,17 @@
  */
 import React, { useEffect } from 'react';
 import {
-  List,
   ReferenceField,
   TextField,
   usePermissions,
   useStore,
 } from 'react-admin';
 
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
-
 import Datagrid from '../shared/Datagrid';
-import ArchivableFilter from '../shared/filters/ArchivableFilter';
 import BulkActionButtons from '../shared/toolbars/BulkActionsToolbar';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
 import PatientListAside from './PatientListAside';
+import ResourceList from '@components/admin/shared/resources/ResourceList';
 
 export const PatientList = () => {
   const { permissions } = usePermissions();
@@ -45,13 +42,10 @@ export const PatientList = () => {
   }, []);
 
   return (
-    <List
-      sort={{ field: 'full_name', order: 'ASC' }}
-      filters={<ArchivableFilter />}
-      filterDefaultValues={{ archived: false }}
+    <ResourceList
+      sortField='full_name'
       aside={<PatientListAside permissions={permissions} />}
-      perPage={25}
-      actions={<ListActions showExport />}
+      showExport
     >
       <Datagrid
         bulkActionButtons={
@@ -70,6 +64,6 @@ export const PatientList = () => {
         )}
         <RowActionToolbar permissions={permissions} />
       </Datagrid>
-    </List>
+    </ResourceList>
   );
 };

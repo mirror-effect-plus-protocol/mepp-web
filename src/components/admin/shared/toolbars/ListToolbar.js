@@ -25,7 +25,7 @@ import { TopToolbar, CreateButton, useResourceContext } from 'react-admin';
 import ExerciseListModalFilter from '@components/admin/exercises/ExerciseListModalFilter';
 import ExportButton from '@components/admin/shared/buttons/ExportButton';
 
-const ListActions = ({ showExport, showExercisesFilter = false, ...props }) => {
+const ListActions = ({ showExport = false, showExercisesFilter = false, ...props }) => {
   const resourceName = useResourceContext();
   return (
     <TopToolbar>

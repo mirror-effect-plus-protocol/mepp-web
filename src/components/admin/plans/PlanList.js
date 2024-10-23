@@ -23,7 +23,6 @@ import React, { Fragment, useEffect, useState } from 'react';
 import {
   Datagrid,
   FunctionField,
-  List,
   ListContextProvider,
   ReferenceField,
   TextField,
@@ -34,18 +33,13 @@ import {
   useStore,
   useTranslate,
 } from 'react-admin';
-
 import { Divider, Tabs, Tab } from '@mui/material';
-
 import { useLocale } from '@hooks/locale/useLocale';
-
 import PlanListAside from '@components/admin/plans/PlanListAside';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
-
 import Spinner from '../shared/Spinner';
-import ArchivableFilter from '../shared/filters/ArchivableFilter';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
+import ResourceList from '@components/admin/shared/resources/ResourceList';
 
 const tabs = [
   { id: 'user', is_system: false },
@@ -147,20 +141,16 @@ export const PlanList = () => {
   }, []);
 
   return (
-    <List
+    <ResourceList
       filterDefaultValues={{
-        archived: false,
         is_system: false,
         is_template: true,
         language: locale,
       }}
-      filters={<ArchivableFilter />}
-      sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
-      perPage={25}
-      actions={<ListActions />}
+      sortField={`i18n.description.${locale}`}
       aside={<PlanListAside permissions={permissions} />}
     >
       <TabbedDatagrid permissions={permissions} />
-    </List>
+    </ResourceList>
   );
 };

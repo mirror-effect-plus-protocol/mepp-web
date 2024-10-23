@@ -116,7 +116,6 @@ export const ExerciseEdit = () => {
             </FormDataConsumer>
           </div>
         </TranslatableInputs>
-        {permissions === 'admin' && <BooleanInput source="is_system" />}
         <Div className={numberClasses.numbers}>
           <NumberInput
             source="movement_duration"

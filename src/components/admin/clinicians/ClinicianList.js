@@ -22,7 +22,6 @@
 import React, { useEffect } from 'react';
 import {
   BooleanField,
-  List,
   TextField,
   FunctionField,
   usePermissions,
@@ -31,10 +30,9 @@ import {
 } from 'react-admin';
 
 import Datagrid from '@components/admin/shared/Datagrid';
-import ArchivableFilter from '@components/admin/shared/filters/ArchivableFilter';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
+import ResourceList from '@components/admin/shared/resources/ResourceList';
 
 export const ClinicianList = () => {
   const { permissions } = usePermissions();
@@ -46,12 +44,9 @@ export const ClinicianList = () => {
   }, []);
 
   return (
-    <List
-      sort={{ field: 'first_name', order: 'ASC' }}
-      filters={<ArchivableFilter />}
-      filterDefaultValues={{ archived: false, me: false }}
-      perPage={25}
-      actions={<ListActions />}
+    <ResourceList
+      sortField="first_name"
+      filterDefaultValues={{ me: false }}
     >
       <Datagrid
         bulkActionButtons={<BulkActionButtons permissions={permissions} />}
@@ -65,6 +60,6 @@ export const ClinicianList = () => {
         />
         <RowActionToolbar permissions={permissions} />
       </Datagrid>
-    </List>
+    </ResourceList>
   );
 };
