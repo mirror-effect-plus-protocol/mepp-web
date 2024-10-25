@@ -21,12 +21,10 @@
  */
 import React from 'react';
 import {
-  BooleanInput,
   NumberInput,
   SimpleForm,
   TextInput,
   TranslatableInputs,
-  usePermissions,
   useTranslate,
 } from 'react-admin';
 
@@ -47,7 +45,6 @@ import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 import { LANGUAGES } from '../../../locales';
 
 export const ExerciseCreate = () => {
-  const { permissions } = usePermissions();
   const t = useTranslate();
   const numberClasses = useNumberStyles();
   const { locale } = useLocale();
@@ -89,7 +86,6 @@ export const ExerciseCreate = () => {
             <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
           </div>
         </TranslatableInputs>
-        {permissions === 'admin' && <BooleanInput source="is_system" />}
         <Div className={numberClasses.numbers}>
           <NumberInput
             source="movement_duration"

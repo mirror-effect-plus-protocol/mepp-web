@@ -246,7 +246,7 @@ const WaitingExercise = () => {
 };
 
 /**
- * Completing Exercice (complete exercise)
+ * Completing Exercise (complete exercise)
  */
 const CompletingExercise = () => {
   const { t } = useTranslation();

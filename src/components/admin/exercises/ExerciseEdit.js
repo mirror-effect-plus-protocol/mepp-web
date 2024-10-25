@@ -21,7 +21,6 @@
  */
 import React from 'react';
 import {
-  BooleanInput,
   FormDataConsumer,
   NumberInput,
   ReferenceField,
