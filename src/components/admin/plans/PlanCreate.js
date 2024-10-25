@@ -40,15 +40,13 @@ import { useLocale } from '@hooks/locale/useLocale';
 import IsSystemInput from '@components/admin/plans/IsSystem';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import {
-  translatorInputStyle,
-} from '@components/admin/shared/styles/shared';
+import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
+import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
-import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 
 export const PlanCreate = () => {
   const t = useTranslate();
@@ -82,10 +80,7 @@ export const PlanCreate = () => {
   };
 
   return (
-    <ResourceCreate
-      transform={transform}
-      redirect={redirect}
-    >
+    <ResourceCreate transform={transform} redirect={redirect}>
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}

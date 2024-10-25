@@ -33,13 +33,17 @@ import {
   useStore,
   useTranslate,
 } from 'react-admin';
+
 import { Divider, Tabs, Tab } from '@mui/material';
+
 import { useLocale } from '@hooks/locale/useLocale';
+
 import PlanListAside from '@components/admin/plans/PlanListAside';
+import ResourceList from '@components/admin/shared/resources/ResourceList';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
+
 import Spinner from '../shared/Spinner';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
-import ResourceList from '@components/admin/shared/resources/ResourceList';
 
 const tabs = [
   { id: 'user', is_system: false },

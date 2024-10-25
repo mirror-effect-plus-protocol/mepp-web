@@ -31,16 +31,15 @@ import {
 import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 import { useLocale } from '@hooks/locale/useLocale';
+
 import { preSave } from '@components/admin/exercises/callbacks';
 import { useNumberStyles } from '@components/admin/exercises/styles';
 import { Typography, Div } from '@components/admin/shared/dom/sanitize';
-import {
-  translatorInputStyle,
-} from '@components/admin/shared/styles/shared';
+import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
+import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
-import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 
 import { LANGUAGES } from '../../../locales';
 

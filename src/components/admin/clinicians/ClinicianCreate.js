@@ -34,6 +34,7 @@ import { makeStyles } from '@mui/styles';
 
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import Options from '@components/admin/shared/options';
+import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 import {
   validateEmail,
   validateFirstName,
@@ -44,7 +45,6 @@ import {
 } from '@components/admin/shared/validators';
 
 import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
-import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 
 const useStyles = makeStyles(() => ({
   root: {

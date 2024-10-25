@@ -40,6 +40,7 @@ import { makeStyles } from '@mui/styles';
 
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import Options from '@components/admin/shared/options';
+import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 import {
   validateEmail,
   validateFirstName,
@@ -50,7 +51,6 @@ import {
 } from '@components/admin/shared/validators';
 
 import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
-import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -105,10 +105,7 @@ export const ClinicianEdit = () => {
   };
 
   return (
-    <ResourceEdit
-      mutationOptions={{ onSuccess }}
-      identity={identity}
-    >
+    <ResourceEdit mutationOptions={{ onSuccess }} identity={identity}>
       <SimpleForm toolbar={<SimpleFormToolBar identity={identity} />}>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}

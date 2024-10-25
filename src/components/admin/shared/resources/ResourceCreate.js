@@ -1,5 +1,10 @@
 import React from 'react';
-import { Create, useResourceContext, useTranslate, useNotify } from 'react-admin';
+import {
+  Create,
+  useResourceContext,
+  useTranslate,
+  useNotify,
+} from 'react-admin';
 
 const ResourceCreate = ({ children, mutationOptions = {}, ...props }) => {
   const resource = useResourceContext();

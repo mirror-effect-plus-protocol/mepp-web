@@ -27,12 +27,16 @@ import {
   useStore,
   useTranslate,
 } from 'react-admin';
+
 import { Box, Typography } from '@mui/material';
+
 import { useLocale } from '@hooks/locale/useLocale';
+
+import ResourceList from '@components/admin/shared/resources/ResourceList';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
+
 import ExerciseListModalFilter from './ExerciseListModalFilter';
-import ResourceList from '@components/admin/shared/resources/ResourceList';
 
 export const ExerciseList = () => {
   const { permissions } = usePermissions();

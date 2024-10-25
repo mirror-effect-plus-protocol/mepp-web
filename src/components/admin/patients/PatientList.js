@@ -27,11 +27,12 @@ import {
   useStore,
 } from 'react-admin';
 
+import ResourceList from '@components/admin/shared/resources/ResourceList';
+
 import Datagrid from '../shared/Datagrid';
 import BulkActionButtons from '../shared/toolbars/BulkActionsToolbar';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
 import PatientListAside from './PatientListAside';
-import ResourceList from '@components/admin/shared/resources/ResourceList';
 
 export const PatientList = () => {
   const { permissions } = usePermissions();
@@ -43,7 +44,7 @@ export const PatientList = () => {
 
   return (
     <ResourceList
-      sortField='full_name'
+      sortField="full_name"
       aside={<PatientListAside permissions={permissions} />}
       showExport
     >

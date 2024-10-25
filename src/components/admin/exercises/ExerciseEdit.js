@@ -41,13 +41,11 @@ import { useNumberStyles } from '@components/admin/exercises/styles';
 import { Typography, Div } from '@components/admin/shared/dom/sanitize';
 import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
 import VideoInput from '@components/admin/shared/inputs/VideoInput';
-import {
-  translatorInputStyle,
-} from '@components/admin/shared/styles/shared';
+import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
+import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
-import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 
 import { LANGUAGES } from '../../../locales';
 
@@ -67,9 +65,7 @@ export const ExerciseEdit = () => {
 
   return (
     <ResourceEdit transform={transform}>
-      <SimpleForm
-        toolbar={<SimpleFormToolBar identity={false} />}
-      >
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}
         </Typography>

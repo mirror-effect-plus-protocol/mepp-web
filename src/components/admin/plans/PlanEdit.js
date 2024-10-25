@@ -43,15 +43,13 @@ import IsSystemInput from '@components/admin/plans/IsSystem';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
-import {
-  translatorInputStyle,
-} from '@components/admin/shared/styles/shared';
+import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
+import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
-import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 
 export const PlanEdit = () => {
   const [patientUid] = useStore('patient.uid', false);
@@ -71,10 +69,7 @@ export const PlanEdit = () => {
   }, [patientUid]);
 
   return (
-    <ResourceEdit
-      redirect={redirect}
-      transform={transform}
-    >
+    <ResourceEdit redirect={redirect} transform={transform}>
       <SimplePlanEditForm locale={locale} asTemplate={asTemplate} />
     </ResourceEdit>
   );

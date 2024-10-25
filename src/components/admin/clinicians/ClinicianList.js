@@ -30,9 +30,9 @@ import {
 } from 'react-admin';
 
 import Datagrid from '@components/admin/shared/Datagrid';
+import ResourceList from '@components/admin/shared/resources/ResourceList';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
-import ResourceList from '@components/admin/shared/resources/ResourceList';
 
 export const ClinicianList = () => {
   const { permissions } = usePermissions();
@@ -44,10 +44,7 @@ export const ClinicianList = () => {
   }, []);
 
   return (
-    <ResourceList
-      sortField="first_name"
-      filterDefaultValues={{ me: false }}
-    >
+    <ResourceList sortField="first_name" filterDefaultValues={{ me: false }}>
       <Datagrid
         bulkActionButtons={<BulkActionButtons permissions={permissions} />}
       >

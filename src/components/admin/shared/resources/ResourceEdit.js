@@ -4,8 +4,10 @@ import {
   useResourceContext,
   useTranslate,
   useNotify,
-  useResourceDefinition, useStore
+  useResourceDefinition,
+  useStore,
 } from 'react-admin';
+
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
 const ResourceEdit = ({ children, mutationOptions = {}, ...props }) => {
@@ -39,11 +41,13 @@ const ResourceEdit = ({ children, mutationOptions = {}, ...props }) => {
       mutationOptions={mergedMutationOptions}
       mutationMode="pessimistic"
       redirect={redirect}
-      actions={<TopToolbar
-        hasShow={hasShow}
-        patientUid={patientUid}
-        identity={identity}
-      />}
+      actions={
+        <TopToolbar
+          hasShow={hasShow}
+          patientUid={patientUid}
+          identity={identity}
+        />
+      }
       {...props}
     >
       {children}
