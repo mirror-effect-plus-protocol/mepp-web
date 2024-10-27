@@ -31,7 +31,6 @@ import {
   TranslatableInputs,
   usePermissions,
   useTranslate,
-  DeleteButton,
 } from 'react-admin';
 
 import GTranslateIcon from '@mui/icons-material/GTranslate';
@@ -62,7 +61,6 @@ const CategoryPath = () => {
       <div key={category.uid}>
         {category.parents.map((parent) => `${parent.i18n[locale]} -> `)}
         <span style={{ fontWeight: 'bold' }}>{`${category.i18n[locale]}`}</span>
-        <DeleteButton />
       </div>
     );
   });
@@ -156,9 +154,10 @@ export const ExerciseEdit = () => {
         </Typography>
 
         <CategoryPath />
+
         <ExerciseListFilterHandle
-          onSelect={(category, index) => {
-            console.log('AJOUTER:', category, index);
+          onSelect={(category, level) => {
+            console.log('AJOUTER:', category, level);
           }}
         />
       </SimpleForm>
