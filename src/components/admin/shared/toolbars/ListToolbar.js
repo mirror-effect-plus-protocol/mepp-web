@@ -26,7 +26,7 @@ import Divider from '@mui/material/Divider';
 
 import {
   ExerciseListFilterModal,
-  ExerciseListFilterCancel,
+  ExerciseListFilterCancelButton,
 } from '@components/admin/exercises/ExerciseListFilter';
 import ExportButton from '@components/admin/shared/buttons/ExportButton';
 
@@ -40,7 +40,7 @@ const ListActions = ({
     <TopToolbar>
       {showExercisesFilter && (
         <>
-          <ExerciseListFilterCancel /> <ExerciseListFilterModal />
+          <ExerciseListFilterCancelButton /> <ExerciseListFilterModal />
           <Divider
             orientation="vertical"
             flexItem

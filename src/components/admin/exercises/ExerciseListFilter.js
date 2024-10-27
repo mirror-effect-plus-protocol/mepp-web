@@ -46,15 +46,9 @@ const styles = {
   },
 };
 
-const ExerciseListFilter = ({
-  idsAutoFill,
-  vertical,
-  categories,
-  onSelect,
-}) => {
+const ExerciseListFilter = ({ vertical, categories, onSelect }) => {
   const { locale } = useLocale();
   const [activeIndex, setActiveIndex] = useState(null);
-  const [autoFill] = useState(idsAutoFill);
 
   const Sublist = ({ category }) => {
     return (
@@ -65,26 +59,16 @@ const ExerciseListFilter = ({
         }}
       >
         <ExerciseListFilter
-          idsAutoFill={autoFill}
           vertical={vertical}
-          categories={category.children}
           onSelect={onSelect}
+          categories={category.children}
         />
       </div>
     );
   };
 
-  useEffect(() => {
-    if (!autoFill) return;
-    categories.map((category, index) => {
-      if (autoFill.includes(category.id)) {
-        setActiveIndex(index);
-      }
-    });
-  }, [autoFill]);
-
   return (
-    <List sx={styles.list}>
+    <List sx={{ ...styles.list }}>
       {categories.map((category, index) => {
         return (
           <div key={category.id}>
@@ -100,7 +84,7 @@ const ExerciseListFilter = ({
               <ListItemButton
                 onClick={() => {
                   setActiveIndex(activeIndex === index ? null : index);
-                  if (category.children.length === 0) onSelect(category, index);
+                  if (category.children.length === 0) onSelect(category);
                 }}
               >
                 {activeIndex === index && category.children.length > 0 && (
@@ -127,17 +111,12 @@ const ExerciseListFilter = ({
     </List>
   );
 };
-const ExerciseListFilterVertical = ({ idsAutoFill, onSelect }) => {
-  return (
-    <ExerciseListFilterHandle
-      vertical
-      idsAutoFill={idsAutoFill}
-      onSelect={onSelect}
-    />
-  );
+
+const ExerciseListFilterVertical = ({ onSelect }) => {
+  return <ExerciseListFilterHandle vertical onSelect={onSelect} />;
 };
 
-const ExerciseListFilterHandle = ({ idsAutoFill, vertical, onSelect }) => {
+const ExerciseListFilterHandle = ({ vertical, onSelect }) => {
   const { filterValues, setFilters } = useListContext();
   const { locale } = useLocale();
   const { data: categories, isLoading } = useGetList('categories', {
@@ -148,7 +127,7 @@ const ExerciseListFilterHandle = ({ idsAutoFill, vertical, onSelect }) => {
 
   const defaultSelect = (category, level) => {
     const filterKey = `category${level}__uid`;
-    setFilters({ ...filterValues, [filterKey]: category.id }, null);
+
     setFilters(
       {
         ...filterValues,
@@ -164,7 +143,6 @@ const ExerciseListFilterHandle = ({ idsAutoFill, vertical, onSelect }) => {
       {!isLoading && (
         <>
           <ExerciseListFilter
-            idsAutoFill={idsAutoFill}
             vertical={vertical}
             categories={categories}
             onSelect={onSelect ? onSelect : defaultSelect}
@@ -213,9 +191,7 @@ const ExerciseListFilterModal = () => {
               justifyContent: 'flex-end',
               marginTop: 30,
             }}
-          >
-            <ExerciseListFilterCancel onClick={() => handleClose} />
-          </div>
+          ></div>
         </Box>
       </Modal>
 
@@ -232,7 +208,7 @@ const ExerciseListFilterModal = () => {
   );
 };
 
-const ExerciseListFilterCancel = () => {
+const ExerciseListFilterCancelButton = ({ onClick }) => {
   const { filterValues, setFilters } = useListContext();
   const [visible, setVisible] = useState(false);
   const t = useTranslate();
@@ -245,6 +221,7 @@ const ExerciseListFilterCancel = () => {
       },
       null,
     );
+    onClick && onClick();
   };
 
   useEffect(() => {
@@ -257,7 +234,6 @@ const ExerciseListFilterCancel = () => {
   return (
     <Button
       onClick={handleReset}
-      autoFocus
       size="small"
       variant="outlined"
       color="primary"
@@ -270,7 +246,7 @@ const ExerciseListFilterCancel = () => {
 
 export {
   ExerciseListFilter,
-  ExerciseListFilterCancel,
+  ExerciseListFilterCancelButton,
   ExerciseListFilterVertical,
   ExerciseListFilterHandle,
 };

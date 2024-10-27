@@ -31,11 +31,8 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import { Chip } from '@mui/material';
-
 import { useLocale } from '@hooks/locale/useLocale';
 
-import { useCategoryChipsStyles } from '@components/admin/exercises/styles';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import VideoField from '@components/admin/shared/inputs/VideoField';
 import { translatorInputStyle } from '@components/admin/shared/styles/shared';
@@ -44,27 +41,15 @@ import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
 import { LANGUAGES } from '../../../locales';
 
-const CategoryChips = ({ locale }) => {
-  const classes = useCategoryChipsStyles();
+const CategoryPath = () => {
+  const { locale } = useLocale();
   const record = useRecordContext();
-  if (!record) {
-    return null;
-  }
+  if (!record) return null;
+
   return record.categories.map((category) => (
-    <div
-      key={category.category__uid}
-      data-name="chip-row"
-      className={classes.root}
-    >
-      {category.parents.map((parent) => (
-        <Chip
-          key={parent.id}
-          color="secondary"
-          variant="outlined"
-          label={parent.i18n[locale]}
-        />
-      ))}
-      <Chip color="secondary" label={category.i18n[locale]} />
+    <div key={category.uid}>
+      {category.parents.map((parent) => `${parent.i18n[locale]} -> `)}
+      <span style={{ fontWeight: 'bold' }}>{`${category.i18n[locale]}`}</span>
     </div>
   ));
 };
@@ -96,11 +81,10 @@ export const ExerciseShow = () => {
           {t('resources.exercises.card.labels.video')}
         </Typography>
         <VideoField source="video" label={false} />
-        <Typography variant="h6" gutterBottom gutterTop>
+        <Typography variant="h6" gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
-        <CategoryChips locale={locale} />
-
+        <CategoryPath />
         <ShowToolBar />
       </BoxedShowLayout>
     </Show>

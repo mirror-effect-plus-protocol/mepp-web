@@ -31,6 +31,7 @@ import {
   TranslatableInputs,
   usePermissions,
   useTranslate,
+  DeleteButton,
 } from 'react-admin';
 
 import GTranslateIcon from '@mui/icons-material/GTranslate';
@@ -51,28 +52,20 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { LANGUAGES } from '../../../locales';
 import { ExerciseListFilterHandle } from './ExerciseListFilter';
 
-const Category = () => {
+const CategoryPath = () => {
+  const { locale } = useLocale();
   const record = useRecordContext();
   if (!record) return null;
 
-  let ids = [];
-  record.categories.forEach((category) => {
-    ids.push(category.uid);
-    if (category.parents) {
-      category.parents.forEach((subcategory) => {
-        ids.push(subcategory.uid);
-      });
-    }
+  return record.categories.map((category) => {
+    return (
+      <div key={category.uid}>
+        {category.parents.map((parent) => `${parent.i18n[locale]} -> `)}
+        <span style={{ fontWeight: 'bold' }}>{`${category.i18n[locale]}`}</span>
+        <DeleteButton />
+      </div>
+    );
   });
-
-  return (
-    <ExerciseListFilterHandle
-      idsAutoFill={ids}
-      onSelect={(category, level) => {
-        console.log('AJOUTER:', category, level);
-      }}
-    />
-  );
 };
 
 export const ExerciseEdit = () => {
@@ -161,7 +154,13 @@ export const ExerciseEdit = () => {
         <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
-        <Category />
+
+        <CategoryPath />
+        <ExerciseListFilterHandle
+          onSelect={(category, index) => {
+            console.log('AJOUTER:', category, index);
+          }}
+        />
       </SimpleForm>
     </ResourceEdit>
   );
