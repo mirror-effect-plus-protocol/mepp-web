@@ -33,6 +33,7 @@ import {
   useTranslate,
 } from 'react-admin';
 
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 import { useLocale } from '@hooks/locale/useLocale';
@@ -49,7 +50,7 @@ import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
-import { ExerciseListFilterHandle } from './ExerciseListFilter';
+import { ExerciseListFilterModal } from './ExerciseListFilter';
 
 const CategoryPath = () => {
   const { locale } = useLocale();
@@ -155,11 +156,15 @@ export const ExerciseEdit = () => {
 
         <CategoryPath />
 
-        <ExerciseListFilterHandle
-          onSelect={(category, level) => {
-            console.log('AJOUTER:', category, level);
-          }}
-        />
+        <div style={{ marginTop: 20, marginBottom: 20 }}>
+          <ExerciseListFilterModal
+            buttonLabel="Ajouter une classification"
+            buttonIcon={<AddOutlinedIcon />}
+            onSelect={(category) => {
+              console.log('AJOUTER CETTE CLASSIFICATION', category);
+            }}
+          />
+        </div>
       </SimpleForm>
     </ResourceEdit>
   );

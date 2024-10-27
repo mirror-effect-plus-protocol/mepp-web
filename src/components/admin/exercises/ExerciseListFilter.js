@@ -153,7 +153,7 @@ const ExerciseListFilterHandle = ({ vertical, onSelect }) => {
   );
 };
 
-const ExerciseListFilterModal = () => {
+const ExerciseListFilterModal = ({ buttonLabel, buttonIcon, onSelect }) => {
   const { filterValues } = useListContext();
   const [open, setOpen] = useState(false);
   const t = useTranslate();
@@ -183,7 +183,16 @@ const ExerciseListFilterModal = () => {
             </IconButton>
           </div>
           <Divider />
-          <ExerciseListFilterVertical />
+          <ExerciseListFilterVertical
+            onSelect={
+              onSelect
+                ? (category) => {
+                    handleClose();
+                    onSelect && onSelect(category);
+                  }
+                : null
+            }
+          />
           <Divider />
           <div
             style={{
@@ -200,9 +209,9 @@ const ExerciseListFilterModal = () => {
         size="small"
         variant="outlined"
         color="primary"
-        startIcon={<FilterListIcon />}
+        startIcon={buttonIcon ? buttonIcon : <FilterListIcon />}
       >
-        {t('admin.shared.labels.filterButton')}
+        {buttonLabel ? buttonLabel : t('admin.shared.labels.filterButton')}
       </Button>
     </>
   );
@@ -225,7 +234,7 @@ const ExerciseListFilterCancelButton = ({ onClick }) => {
   };
 
   useEffect(() => {
-    if (filterValues?.category__uid) {
+    if (filterValues?.category__uid && filterValues?.category__uid !== -1) {
       setVisible(true);
     } else setVisible(false);
   }, [filterValues, visible]);
