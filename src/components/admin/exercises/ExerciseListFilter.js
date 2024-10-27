@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useListContext, useGetList, Button } from 'react-admin';
+import { useListContext, useGetList, useTranslate } from 'react-admin';
 
+import CloseIcon from '@mui/icons-material/Close';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {
   Modal,
   Box,
@@ -12,7 +14,9 @@ import {
   ListItem,
   ListItemText,
   ListItemButton,
+  Button,
 } from '@mui/material';
+import Divider from '@mui/material/Divider';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
@@ -38,6 +42,7 @@ const styles = {
     minWidth: 400,
     bgcolor: 'background.paper',
     overflowY: 'auto',
+    padding: 2,
   },
 };
 
@@ -154,10 +159,6 @@ const ExerciseListFilterHandle = ({ idsAutoFill, vertical, onSelect }) => {
     );
   };
 
-  const handleResetFilters = () => {
-    setFilters({}, null);
-  };
-
   return (
     <>
       {!isLoading && (
@@ -168,14 +169,6 @@ const ExerciseListFilterHandle = ({ idsAutoFill, vertical, onSelect }) => {
             categories={categories}
             onSelect={onSelect ? onSelect : defaultSelect}
           />
-          <Button
-            size="small"
-            variant="contained"
-            color="secondary"
-            onClick={handleResetFilters}
-          >
-            Reset
-          </Button>
         </>
       )}
     </>
@@ -185,6 +178,7 @@ const ExerciseListFilterHandle = ({ idsAutoFill, vertical, onSelect }) => {
 const ExerciseListFilterModal = () => {
   const { filterValues } = useListContext();
   const [open, setOpen] = useState(false);
+  const t = useTranslate();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -199,19 +193,84 @@ const ExerciseListFilterModal = () => {
     <>
       <Modal open={open} onClose={handleClose}>
         <Box sx={styles.modal}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginBottom: 20,
+            }}
+          >
+            <IconButton onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+          </div>
+          <Divider />
           <ExerciseListFilterVertical />
+          <Divider />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginTop: 30,
+            }}
+          >
+            <ExerciseListFilterCancel onClick={() => handleClose} />
+          </div>
         </Box>
       </Modal>
 
-      <IconButton onClick={handleOpen}>
-        <FilterListIcon />
-      </IconButton>
+      <Button
+        onClick={handleOpen}
+        size="small"
+        variant="outlined"
+        color="primary"
+        startIcon={<FilterListIcon />}
+      >
+        {t('admin.shared.labels.filterButton')}
+      </Button>
     </>
+  );
+};
+
+const ExerciseListFilterCancel = () => {
+  const { filterValues, setFilters } = useListContext();
+  const [visible, setVisible] = useState(false);
+  const t = useTranslate();
+
+  const handleReset = () => {
+    setFilters(
+      {
+        ['category0__uid']: 0,
+        category__uid: false,
+      },
+      null,
+    );
+  };
+
+  useEffect(() => {
+    if (filterValues?.category__uid) {
+      setVisible(true);
+    } else setVisible(false);
+  }, [filterValues, visible]);
+
+  if (!visible) return <></>;
+  return (
+    <Button
+      onClick={handleReset}
+      autoFocus
+      size="small"
+      variant="outlined"
+      color="primary"
+      startIcon={<RestartAltIcon />}
+    >
+      {t('admin.shared.labels.cancelButton')}
+    </Button>
   );
 };
 
 export {
   ExerciseListFilter,
+  ExerciseListFilterCancel,
   ExerciseListFilterVertical,
   ExerciseListFilterHandle,
 };

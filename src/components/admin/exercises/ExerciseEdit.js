@@ -51,7 +51,7 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { LANGUAGES } from '../../../locales';
 import { ExerciseListFilterHandle } from './ExerciseListFilter';
 
-const CategoryChips = () => {
+const Category = () => {
   const record = useRecordContext();
   if (!record) return null;
 
@@ -161,7 +161,7 @@ export const ExerciseEdit = () => {
         <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
-        <CategoryChips locale={locale} />
+        <Category />
       </SimpleForm>
     </ResourceEdit>
   );

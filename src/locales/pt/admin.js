@@ -33,6 +33,7 @@ export default {
         deactivateButton: 'Desativar',
         backButton: 'Voltar',
         exportButton: 'Exportador',
+        filterButton: 'Filtro',
         card: {
           identity: 'Identificar',
           informations: 'Perfil',
