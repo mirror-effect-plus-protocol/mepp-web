@@ -57,13 +57,14 @@ const CategoryChips = ({ locale }) => {
       className={classes.root}
     >
       {category.parents.map((parent) => (
-        <Chip key={parent.id} color="secondary" label={parent.i18n[locale]} />
+        <Chip
+          key={parent.id}
+          color="secondary"
+          variant="outlined"
+          label={parent.i18n[locale]}
+        />
       ))}
-      <Chip
-        color="secondary"
-        label={category.i18n[locale]}
-        variant="outlined"
-      />
+      <Chip color="secondary" label={category.i18n[locale]} />
     </div>
   ));
 };
@@ -99,6 +100,7 @@ export const ExerciseShow = () => {
           {t('resources.exercises.card.labels.classification')}
         </Typography>
         <CategoryChips locale={locale} />
+
         <ShowToolBar />
       </BoxedShowLayout>
     </Show>

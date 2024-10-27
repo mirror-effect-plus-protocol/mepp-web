@@ -25,7 +25,6 @@ const getPlaceHolder = (record, locale) => {
   if ('full_name' in record) {
     placeholder = record.full_name;
   } else {
-    console.log('record.i18n.name', record.i18n.name);
     if (locale in (record?.i18n?.name || {})) {
       placeholder = record.i18n.name[locale];
     } else if (locale in (record?.i18n?.description || {})) {

@@ -27,6 +27,7 @@ import {
   SimpleForm,
   TextField,
   TextInput,
+  useRecordContext,
   TranslatableInputs,
   usePermissions,
   useTranslate,
@@ -48,6 +49,31 @@ import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
+import { ExerciseListFilterHandle } from './ExerciseListFilter';
+
+const CategoryChips = () => {
+  const record = useRecordContext();
+  if (!record) return null;
+
+  let ids = [];
+  record.categories.forEach((category) => {
+    ids.push(category.uid);
+    if (category.parents) {
+      category.parents.forEach((subcategory) => {
+        ids.push(subcategory.uid);
+      });
+    }
+  });
+
+  return (
+    <ExerciseListFilterHandle
+      idsAutoFill={ids}
+      onSelect={(category, level) => {
+        console.log('AJOUTER:', category, level);
+      }}
+    />
+  );
+};
 
 export const ExerciseEdit = () => {
   const t = useTranslate();
@@ -135,7 +161,7 @@ export const ExerciseEdit = () => {
         <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
-        {/* TODO - handle categories */}
+        <CategoryChips locale={locale} />
       </SimpleForm>
     </ResourceEdit>
   );
