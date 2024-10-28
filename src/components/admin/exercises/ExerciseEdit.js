@@ -32,7 +32,6 @@ import {
   TranslatableInputs,
   usePermissions,
   useTranslate,
-  useRecordContext,
 } from 'react-admin';
 import { useFormContext } from 'react-hook-form';
 
@@ -55,22 +54,6 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { LANGUAGES } from '../../../locales';
 import { ExerciseListFilterHandle } from './ExerciseListFilter';
 
-/*
-const CategoryPath = () => {
-  const { locale } = useLocale();
-  const record = useRecordContext();
-  if (!record) return null;
-
-  return record.categories.map((category) => {
-    return (
-      <div key={category.uid}>
-        {category.parents.map((parent) => `${parent.i18n[locale]} -> `)}
-        <span style={{ fontWeight: 'bold' }}>{`${category.i18n[locale]}`}</span>
-      </div>
-    );
-  });
-}; */
-
 
 export const ExerciseEdit = () => {
   const t = useTranslate();
@@ -80,42 +63,35 @@ export const ExerciseEdit = () => {
 
   const CategoryRow = (props) => {
     const form = useFormContext();
-    const record = useRecordContext();
     const categories = form.watch('categories', []);
     const [selectedCategory, setSelectedCategory] = useState();
 
     useEffect(() => {
-      const sourceIndex = props.source.split('.')[1];
+      const sourceIndex = parseInt(props.source.split('.')[1]);
       categories.forEach((category, index) => {
-        if (index === sourceIndex && category === '') {
-          form.setValue(`${props.source}.uid`, '');
+        if (index === sourceIndex) {
+          if (category === '') {
+            form.setValue(`${props.source}.uid`, '');
+          } else {
+            setSelectedCategory(category);
+          }
         }
       });
     }, [categories]);
 
-    useEffect(() => {
-      const index = props.source.split('.')[1];
-      if (record && record.categories[index]) {
-        setSelectedCategory(record.categories[index]);
-      }
-    }, [record]);
-
     const selectCategory = (category) => {
-      console.log('CATEGORY', category);
-      console.log('select Castegyr:', `${props.source}.uid`);
       setSelectedCategory(category);
-      form.setValue(`${props.source}.uid`, category.uid);
+      form.setValue(`${props.source}.uid`, category.id);
+      form.setValue(`${props.source}.i18n`, category.i18n);
+      form.setValue(`${props.source}.parents`, category.parents || []);
     };
 
     const CategoryPath = () => {
-      /* const { locale } = useLocale();
-      const currentCategory = useWatch({
-        name: `categories[${index}]`,
-      }); */
 
-      console.log('SELECTED CATEGORY', selectedCategory);
       if (!selectedCategory) return;
       /* FIX backend to include "NAME" all the time */
+      if (selectedCategory.uid === '') return <div>Choose a category</div>;
+
       const label = 'name' in selectedCategory.i18n
         ? selectedCategory.i18n.name[locale]
         : selectedCategory.i18n[locale];
@@ -130,19 +106,11 @@ export const ExerciseEdit = () => {
 
     return (
       <div>
-        <FormDataConsumer>
-          {({ formData, scopedFormData, ...rest }) => {
-            console.log('consumer', scopedFormData, rest);
-            return (
-              <input type="hidden" name={`${props.source}.uid`} value={formData.uid} />
-            );
-          }}
-        </FormDataConsumer>
         <CategoryPath />
         <ExerciseListFilterHandle
           onSelect={(category, level) => {
 
-            /* todo retrieve parents */
+            /* TODO find a way to inject parents */
             const addParents = (category) => {
               return {...category, 'parents': [] };
             };
