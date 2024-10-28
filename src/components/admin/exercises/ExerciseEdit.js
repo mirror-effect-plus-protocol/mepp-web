@@ -19,19 +19,23 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  ArrayInput,
   FormDataConsumer,
   NumberInput,
   ReferenceField,
   SimpleForm,
+  SimpleFormIterator,
   TextField,
   TextInput,
-  useRecordContext,
   TranslatableInputs,
   usePermissions,
   useTranslate,
+  useRecordContext,
 } from 'react-admin';
+import { useFormContext } from 'react-hook-form';
+
 
 import GTranslateIcon from '@mui/icons-material/GTranslate';
 
@@ -51,6 +55,7 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { LANGUAGES } from '../../../locales';
 import { ExerciseListFilterHandle } from './ExerciseListFilter';
 
+/*
 const CategoryPath = () => {
   const { locale } = useLocale();
   const record = useRecordContext();
@@ -64,13 +69,90 @@ const CategoryPath = () => {
       </div>
     );
   });
-};
+}; */
+
 
 export const ExerciseEdit = () => {
   const t = useTranslate();
-  const { permissions } = usePermissions();
+  const {permissions} = usePermissions();
   const numberClasses = useNumberStyles();
-  const { locale } = useLocale();
+  const {locale} = useLocale();
+
+  const CategoryRow = (props) => {
+    const form = useFormContext();
+    const record = useRecordContext();
+    const categories = form.watch('categories', []);
+    const [selectedCategory, setSelectedCategory] = useState();
+
+    useEffect(() => {
+      const sourceIndex = props.source.split('.')[1];
+      categories.forEach((category, index) => {
+        if (index === sourceIndex && category === '') {
+          form.setValue(`${props.source}.uid`, '');
+        }
+      });
+    }, [categories]);
+
+    useEffect(() => {
+      const index = props.source.split('.')[1];
+      if (record && record.categories[index]) {
+        setSelectedCategory(record.categories[index]);
+      }
+    }, [record]);
+
+    const selectCategory = (category) => {
+      console.log('CATEGORY', category);
+      console.log('select Castegyr:', `${props.source}.uid`);
+      setSelectedCategory(category);
+      form.setValue(`${props.source}.uid`, category.uid);
+    };
+
+    const CategoryPath = () => {
+      /* const { locale } = useLocale();
+      const currentCategory = useWatch({
+        name: `categories[${index}]`,
+      }); */
+
+      console.log('SELECTED CATEGORY', selectedCategory);
+      if (!selectedCategory) return;
+      /* FIX backend to include "NAME" all the time */
+      const label = 'name' in selectedCategory.i18n
+        ? selectedCategory.i18n.name[locale]
+        : selectedCategory.i18n[locale];
+
+      return (
+        <div key={selectedCategory.uid}>
+          {selectedCategory.parents.map((parent) => `${parent.i18n[locale]} -> `)}
+          <span style={{fontWeight: 'bold'}}>{label}</span>
+        </div>
+      );
+    };
+
+    return (
+      <div>
+        <FormDataConsumer>
+          {({ formData, scopedFormData, ...rest }) => {
+            console.log('consumer', scopedFormData, rest);
+            return (
+              <input type="hidden" name={`${props.source}.uid`} value={formData.uid} />
+            );
+          }}
+        </FormDataConsumer>
+        <CategoryPath />
+        <ExerciseListFilterHandle
+          onSelect={(category, level) => {
+
+            /* todo retrieve parents */
+            const addParents = (category) => {
+              return {...category, 'parents': [] };
+            };
+            selectCategory(addParents(category));
+            console.log('AJOUTER:', category, level);
+          }}
+        />
+      </div>
+    );
+  };
 
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'description');
@@ -153,13 +235,19 @@ export const ExerciseEdit = () => {
           {t('resources.exercises.card.labels.classification')}
         </Typography>
 
-        <CategoryPath />
+        <ArrayInput
+          source="categories"
+          fullWidth={false}
+        >
+          <SimpleFormIterator
+            disableReordering
+            inline
+          >
+            <CategoryRow />
+          </SimpleFormIterator>
+        </ArrayInput>
 
-        <ExerciseListFilterHandle
-          onSelect={(category, level) => {
-            console.log('AJOUTER:', category, level);
-          }}
-        />
+
       </SimpleForm>
     </ResourceEdit>
   );
