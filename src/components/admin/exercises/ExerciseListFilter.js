@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useListContext, useGetList, useTranslate } from 'react-admin';
+import {
+  useListContext,
+  useGetList,
+  useTranslate,
+  useStore,
+} from 'react-admin';
 
 import CloseIcon from '@mui/icons-material/Close';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -46,22 +51,26 @@ const styles = {
   },
 };
 
-const ExerciseListFilter = ({ vertical, categories, onSelect }) => {
+const ExerciseListFilter = ({ categories, level, onSelect, storekey }) => {
   const { locale } = useLocale();
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useStore(
+    `${storekey}_${categories[level] ? categories[level].id : level + 'last'}`,
+    null,
+  );
 
-  const Sublist = ({ category }) => {
+  const Sublist = ({ category, level }) => {
     return (
       <div
         style={{
-          paddingLeft: vertical ? 10 : 0,
+          paddingLeft: 10,
           backgroundColor: 'rgba(0,0,0,.035)',
         }}
       >
         <ExerciseListFilter
-          vertical={vertical}
+          storekey={storekey}
           onSelect={onSelect}
           categories={category.children}
+          level={level}
         />
       </div>
     );
@@ -75,7 +84,7 @@ const ExerciseListFilter = ({ vertical, categories, onSelect }) => {
             <ListItem
               sx={{
                 '&.Mui-selected  .MuiListItemText-primary': {
-                  fontWeight: vertical ? 'bold' : 'none',
+                  fontWeight: 'bold',
                 },
                 padding: 0,
               }}
@@ -98,13 +107,10 @@ const ExerciseListFilter = ({ vertical, categories, onSelect }) => {
                 )}
                 <ListItemText primary={category.i18n.name[locale]} />
               </ListItemButton>
-              {!vertical &&
-                activeIndex === index &&
-                category.children.length > 0 && <Sublist category={category} />}
             </ListItem>
-            {vertical &&
-              activeIndex === index &&
-              category.children.length > 0 && <Sublist category={category} />}
+            {activeIndex === index && category.children.length > 0 && (
+              <Sublist category={category} level={level + 1} />
+            )}
           </div>
         );
       })}
@@ -112,11 +118,7 @@ const ExerciseListFilter = ({ vertical, categories, onSelect }) => {
   );
 };
 
-const ExerciseListFilterVertical = ({ onSelect }) => {
-  return <ExerciseListFilterHandle vertical onSelect={onSelect} />;
-};
-
-const ExerciseListFilterHandle = ({ vertical, onSelect }) => {
+const ExerciseListFilterHandle = ({ onSelect, storekey }) => {
   const { filterValues, setFilters } = useListContext();
   const { locale } = useLocale();
   const { data: categories, isLoading } = useGetList('categories', {
@@ -143,7 +145,8 @@ const ExerciseListFilterHandle = ({ vertical, onSelect }) => {
       {!isLoading && (
         <>
           <ExerciseListFilter
-            vertical={vertical}
+            level={0}
+            storekey={storekey}
             categories={categories}
             onSelect={onSelect ? onSelect : defaultSelect}
           />
@@ -153,7 +156,12 @@ const ExerciseListFilterHandle = ({ vertical, onSelect }) => {
   );
 };
 
-const ExerciseListFilterModal = ({ buttonLabel, buttonIcon, onSelect }) => {
+const ExerciseListFilterModal = ({
+  buttonLabel,
+  buttonIcon,
+  onSelect,
+  storekey,
+}) => {
   const { filterValues } = useListContext();
   const [open, setOpen] = useState(false);
   const t = useTranslate();
@@ -183,7 +191,8 @@ const ExerciseListFilterModal = ({ buttonLabel, buttonIcon, onSelect }) => {
             </IconButton>
           </div>
           <Divider />
-          <ExerciseListFilterVertical
+          <ExerciseListFilterHandle
+            storekey={storekey ? storekey : 'CategoriesActiveIndex'}
             onSelect={
               onSelect
                 ? (category) => {
@@ -256,7 +265,6 @@ const ExerciseListFilterCancelButton = ({ onClick }) => {
 export {
   ExerciseListFilter,
   ExerciseListFilterCancelButton,
-  ExerciseListFilterVertical,
   ExerciseListFilterHandle,
 };
 export { ExerciseListFilterModal };
