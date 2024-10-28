@@ -40,7 +40,8 @@ const ListActions = ({
     <TopToolbar>
       {showExercisesFilter && (
         <>
-          <ExerciseListFilterCancelButton /> <ExerciseListFilterModal />
+          <ExerciseListFilterCancelButton />{' '}
+          <ExerciseListFilterModal storekey="CategorieFilterIndex" />
           <Divider
             orientation="vertical"
             flexItem

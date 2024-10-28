@@ -160,7 +160,6 @@ export const ExerciseEdit = () => {
           <ExerciseListFilterModal
             buttonLabel="Ajouter une classification"
             buttonIcon={<AddOutlinedIcon />}
-            storekey="ExercisesClassification"
             onSelect={(category) => {
               console.log('AJOUTER CETTE CLASSIFICATION', category);
             }}

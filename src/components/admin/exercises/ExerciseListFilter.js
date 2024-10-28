@@ -54,7 +54,13 @@ const styles = {
 const ExerciseListFilter = ({ categories, level, onSelect, storekey }) => {
   const { locale } = useLocale();
   const [activeIndex, setActiveIndex] = useStore(
-    `${storekey}_${categories[level] ? categories[level].id : level + 'last'}`,
+    `${
+      storekey
+        ? storekey +
+          '_' +
+          (categories[level] ? categories[level].id : level + 'last')
+        : 'Categories_' + Math.random()
+    }`,
     null,
   );
 
@@ -192,7 +198,9 @@ const ExerciseListFilterModal = ({
           </div>
           <Divider />
           <ExerciseListFilterHandle
-            storekey={storekey ? storekey : 'CategoriesActiveIndex'}
+            storekey={
+              storekey ? storekey : 'CategoriesActiveIndex' + Math.random()
+            }
             onSelect={
               onSelect
                 ? (category) => {
