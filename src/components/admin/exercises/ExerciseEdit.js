@@ -33,8 +33,7 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import GTranslateIcon from '@mui/icons-material/GTranslate';
+import { AddOutlined, GTranslate } from '@mui/icons-material';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
@@ -117,7 +116,7 @@ export const ExerciseEdit = () => {
               alignItems: 'center',
             }}
           >
-            <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
+            <GTranslate /> {t('resources.shared.labels.translate_on_save')}
           </div>
           <div
             style={{
@@ -159,7 +158,7 @@ export const ExerciseEdit = () => {
         <div style={{ marginTop: 20, marginBottom: 20 }}>
           <ExerciseListFilterModal
             buttonLabel="Ajouter une classification"
-            buttonIcon={<AddOutlinedIcon />}
+            buttonIcon={<AddOutlined />}
             onSelect={(category) => {
               console.log('AJOUTER CETTE CLASSIFICATION', category);
             }}
