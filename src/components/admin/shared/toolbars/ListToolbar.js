@@ -24,10 +24,7 @@ import { TopToolbar, CreateButton, useResourceContext } from 'react-admin';
 
 import Divider from '@mui/material/Divider';
 
-import {
-  ExerciseListFilterModal,
-  ExerciseListFilterCancelButton,
-} from '@components/admin/exercises/ExerciseListFilter';
+import { ExerciseListFilterModal } from '@components/admin/exercises/ExerciseListFilter';
 import ExportButton from '@components/admin/shared/buttons/ExportButton';
 
 const ListActions = ({
@@ -40,7 +37,6 @@ const ListActions = ({
     <TopToolbar>
       {showExercisesFilter && (
         <>
-          <ExerciseListFilterCancelButton />{' '}
           <ExerciseListFilterModal storekey="CategorieFilterIndex" />
           <Divider
             orientation="vertical"

@@ -300,9 +300,4 @@ const ExerciseListFilterCancelButton = ({ onClick }) => {
   );
 };
 
-export {
-  ExerciseListFilter,
-  ExerciseListFilterHandle,
-  ExerciseListFilterCancelButton,
-};
-export { ExerciseListFilterModal };
+export { ExerciseListFilterCancelButton, ExerciseListFilterModal };
