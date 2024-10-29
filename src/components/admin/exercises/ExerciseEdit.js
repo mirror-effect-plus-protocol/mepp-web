@@ -88,7 +88,9 @@ export const ExerciseEdit = () => {
 
     const CategoryPath = () => {
 
-      if (!selectedCategory?.id) return <div>{t('resources.exercices.fields.empty.categories.label')}</div>;
+      if (!selectedCategory?.id) return (
+        <div>{t('resources.exercises.fields.empty.categories.label')}</div>
+      );
 
       return (
         <div key={selectedCategory.id}>
