@@ -36,7 +36,7 @@ import {
 import { useFormContext } from 'react-hook-form';
 
 
-import GTranslateIcon from '@mui/icons-material/GTranslate';
+import { AddOutlined, GTranslate } from '@mui/icons-material';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
@@ -52,7 +52,7 @@ import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
-import { ExerciseListFilterHandle } from './ExerciseListFilter';
+import { ExerciseListFilterModal } from './ExerciseListFilter';
 
 
 export const ExerciseEdit = () => {
@@ -71,7 +71,7 @@ export const ExerciseEdit = () => {
       categories.forEach((category, index) => {
         if (index === sourceIndex) {
           if (category === '') {
-            form.setValue(`${props.source}.uid`, '');
+            form.setValue(`${props.source}.id`, '');
           } else {
             setSelectedCategory(category);
           }
@@ -81,43 +81,40 @@ export const ExerciseEdit = () => {
 
     const selectCategory = (category) => {
       setSelectedCategory(category);
-      form.setValue(`${props.source}.uid`, category.id);
+      form.setValue(`${props.source}.id`, category.id);
       form.setValue(`${props.source}.i18n`, category.i18n);
       form.setValue(`${props.source}.parents`, category.parents || []);
     };
 
     const CategoryPath = () => {
 
-      if (!selectedCategory) return;
-      /* FIX backend to include "NAME" all the time */
-      if (selectedCategory.uid === '') return <div>Choose a category</div>;
-
-      const label = 'name' in selectedCategory.i18n
-        ? selectedCategory.i18n.name[locale]
-        : selectedCategory.i18n[locale];
+      if (!selectedCategory?.id) return <div>{t('resources.exercices.fields.empty.categories.label')}</div>;
 
       return (
-        <div key={selectedCategory.uid}>
-          {selectedCategory.parents.map((parent) => `${parent.i18n[locale]} -> `)}
-          <span style={{fontWeight: 'bold'}}>{label}</span>
+        <div key={selectedCategory.id}>
+          {selectedCategory.parents.map((parent) => `${parent.i18n.name[locale]} -> `)}
+          <span style={{fontWeight: 'bold'}}>{selectedCategory.i18n.name[locale]}</span>
         </div>
       );
     };
 
     return (
       <div>
-        <CategoryPath />
-        <ExerciseListFilterHandle
-          onSelect={(category, level) => {
-
-            /* TODO find a way to inject parents */
-            const addParents = (category) => {
-              return {...category, 'parents': [] };
-            };
-            selectCategory(addParents(category));
-            console.log('AJOUTER:', category, level);
-          }}
-        />
+        <CategoryPath/>
+        <div style={{marginTop: 20, marginBottom: 20}}>
+          <ExerciseListFilterModal
+            buttonLabel=""
+            buttonIcon={<AddOutlined/>}
+            onSelect={(category) => {
+              /* TODO find a way to inject parents */
+              const addParents = (category) => {
+                return {...category, 'parents': []};
+              };
+              selectCategory(addParents(category));
+              console.log('AJOUTER CETTE CLASSIFICATION', category);
+            }}
+          />
+        </div>
       </div>
     );
   };
@@ -166,7 +163,7 @@ export const ExerciseEdit = () => {
               alignItems: 'center',
             }}
           >
-            <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
+            <GTranslate /> {t('resources.shared.labels.translate_on_save')}
           </div>
           <div
             style={{
@@ -214,8 +211,6 @@ export const ExerciseEdit = () => {
             <CategoryRow />
           </SimpleFormIterator>
         </ArrayInput>
-
-
       </SimpleForm>
     </ResourceEdit>
   );

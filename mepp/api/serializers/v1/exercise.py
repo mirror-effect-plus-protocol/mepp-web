@@ -132,20 +132,22 @@ class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
 
         for category in exercise.categories.all():
             category_dict = {
-                'uid': category.uid,
+                'id': category.uid,
                 'i18n': {
-                    i18n.language: i18n.name
-                    for i18n in category.i18n.all()
+                    'name':  {
+                        i18n.language: i18n.name
+                        for i18n in category.i18n.all()
+                    }
                 },
                 'parents': [],
             }
             current_category = category
             while parent := current_category.parent:
-                i18n = {}
+                i18n = {'name': {}}
                 for category_i18n in parent.i18n.all():
-                    i18n[category_i18n.language] = category_i18n.name
+                    i18n['name'][category_i18n.language] = category_i18n.name
                 category_dict['parents'].insert(0, {
-                    'uid': parent.uid,
+                    'id': parent.uid,
                     'i18n': i18n,
                 })
                 current_category = current_category.parent
@@ -221,17 +223,19 @@ class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
                 )
             else:
                 # Skip update of categories
+                print('EMTPY CATEGORIES', flush=True)
                 return
 
-        categories_uid = set([item.get('uid') for item in categories_map])
+        categories_uid = set([item.get('id') for item in categories_map])
+
+        if not categories_uid:
+            raise serializers.ValidationError({'categories': 'Required field'})
 
         # Convert to list to help the save process.
         categories = list(Category.objects.filter(uid__in=categories_uid))
 
         if len(categories) != len(categories_uid):
-            raise serializers.ValidationError(
-                {'categories': 'Invalid values'}
-            )
+            raise serializers.ValidationError({'categories': 'Invalid values'})
 
         return categories
 

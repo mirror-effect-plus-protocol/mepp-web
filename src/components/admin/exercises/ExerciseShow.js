@@ -47,9 +47,9 @@ const CategoryPath = () => {
   if (!record) return null;
 
   return record.categories.map((category) => (
-    <div key={category.uid}>
-      {category.parents.map((parent) => `${parent.i18n[locale]} -> `)}
-      <span style={{ fontWeight: 'bold' }}>{`${category.i18n[locale]}`}</span>
+    <div key={category.id}>
+      {category.parents.map((parent) => `${parent.i18n.name[locale]} -> `)}
+      <span style={{ fontWeight: 'bold' }}>{`${category.i18n.name[locale]}`}</span>
     </div>
   ));
 };

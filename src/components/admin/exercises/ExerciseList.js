@@ -70,7 +70,7 @@ export const ExerciseList = () => {
           style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
         >
           {t('resources.exercises.empty.description')}
-          <ExerciseListFilterModal />
+          <ExerciseListFilterModal storekey="CategorieFilterIndex" />
         </Typography>
       </Box>
     );

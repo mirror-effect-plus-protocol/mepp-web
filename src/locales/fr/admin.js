@@ -205,8 +205,12 @@ export default {
         clinician_uid: 'Clinicien(ne)',
         category__uid: 'Catégorie',
         uid: 'Sous-catégorie',
-        is_system: 'Système',
-        sub_categories: 'Catégories et sous-catégories',
+        categories: 'Catégories',
+        empty : {
+          categories: {
+            label: 'Choississez une catégorie'
+          }
+        }
       },
       card: {
         title: {
@@ -232,8 +236,8 @@ export default {
         confirmTitle: 'Supprimer l’exercice %{placeholder}',
       },
       errors: {
-        sub_categories:
-          'Vous devez choisir au moins une catégorie/sous-catégorie',
+        categories:
+          'Vous devez choisir au moins une catégorie',
         gt_zero: 'Doit être supérieur à zéro',
       },
     },
