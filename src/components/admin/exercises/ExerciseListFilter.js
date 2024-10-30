@@ -237,15 +237,21 @@ const ExerciseListFilterModal = ({
         </Box>
       </Modal>
 
-      <Button
-        onClick={handleOpen}
-        size="small"
-        variant="outlined"
-        color="primary"
-        startIcon={buttonIcon ? buttonIcon : <FilterList />}
-      >
-        {buttonLabel ? buttonLabel : t('admin.shared.labels.filterButton')}
-      </Button>
+      {!buttonLabel && buttonIcon ? (
+        <IconButton size="small" color="secondary" onClick={handleOpen}>
+          {buttonIcon}
+        </IconButton>
+      ) : (
+        <Button
+          onClick={handleOpen}
+          size="small"
+          variant="outlined"
+          color="primary"
+          startIcon={buttonIcon ? buttonIcon : <FilterList />}
+        >
+          {buttonLabel ? buttonLabel : t('admin.shared.labels.filterButton')}
+        </Button>
+      )}
     </>
   );
 };

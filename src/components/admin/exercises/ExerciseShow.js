@@ -49,7 +49,7 @@ const CategoryPath = () => {
   return record.categories.map((category) => (
     <div key={category.id}>
       {category.parents.map((parent) => `${parent.i18n.name[locale]} -> `)}
-      <span style={{ fontWeight: 'bold' }}>{`${category.i18n.name[locale]}`}</span>
+      {category.i18n.name[locale]}
     </div>
   ));
 };

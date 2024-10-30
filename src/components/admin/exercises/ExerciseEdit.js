@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ArrayInput,
   FormDataConsumer,
@@ -35,8 +35,7 @@ import {
 } from 'react-admin';
 import { useFormContext } from 'react-hook-form';
 
-
-import { AddOutlined, GTranslate } from '@mui/icons-material';
+import { EditRounded, GTranslate } from '@mui/icons-material';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
@@ -54,23 +53,25 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { LANGUAGES } from '../../../locales';
 import { ExerciseListFilterModal } from './ExerciseListFilter';
 
-
 export const ExerciseEdit = () => {
   const t = useTranslate();
-  const {permissions} = usePermissions();
+  const { permissions } = usePermissions();
   const numberClasses = useNumberStyles();
-  const {locale} = useLocale();
+  const { locale } = useLocale();
 
   const CategoryRow = (props) => {
+    const { locale } = useLocale();
     const form = useFormContext();
     const categories = form.watch('categories', []);
     const [selectedCategory, setSelectedCategory] = useState();
+    const [ready, setReady] = useState(false);
 
     useEffect(() => {
       const sourceIndex = parseInt(props.source.split('.')[1]);
       categories.forEach((category, index) => {
         if (index === sourceIndex) {
           if (category === '') {
+            setReady(true);
             form.setValue(`${props.source}.id`, '');
           } else {
             setSelectedCategory(category);
@@ -86,37 +87,45 @@ export const ExerciseEdit = () => {
       form.setValue(`${props.source}.parents`, category.parents || []);
     };
 
-    const CategoryPath = () => {
-
-      if (!selectedCategory?.id) return (
-        <div>{t('resources.exercises.fields.empty.categories.label')}</div>
-      );
-
-      return (
-        <div key={selectedCategory.id}>
-          {selectedCategory.parents.map((parent) => `${parent.i18n.name[locale]} -> `)}
-          <span style={{fontWeight: 'bold'}}>{selectedCategory.i18n.name[locale]}</span>
-        </div>
-      );
+    const getParents = () => {
+      return [];
     };
 
     return (
-      <div>
-        <CategoryPath/>
-        <div style={{marginTop: 20, marginBottom: 20}}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          paddingTop: 15,
+          paddingBottom: 15,
+        }}
+      >
+        {ready && !selectedCategory?.id && (
           <ExerciseListFilterModal
-            buttonLabel=""
-            buttonIcon={<AddOutlined/>}
-            onSelect={(category) => {
-              /* TODO find a way to inject parents */
-              const addParents = (category) => {
-                return {...category, 'parents': []};
-              };
-              selectCategory(addParents(category));
-              console.log('AJOUTER CETTE CLASSIFICATION', category);
-            }}
+            buttonLabel={t('resources.exercises.fields.empty.categories.label')}
+            buttonIcon={<EditRounded fontSize="small" />}
+            onSelect={(category) =>
+              selectCategory({ ...category, parents: getParents() })
+            }
           />
-        </div>
+        )}
+
+        {selectedCategory?.id && (
+          <>
+            {selectedCategory?.parents.map(
+              (parent) => `${parent.i18n.name[locale]} -> `,
+            )}
+            {selectedCategory.i18n.name[locale]}
+            <div style={{ position: 'absolute', right: 30 }}>
+              <ExerciseListFilterModal
+                buttonIcon={<EditRounded fontSize="small" />}
+                onSelect={(category) =>
+                  selectCategory({ ...category, parents: getParents() })
+                }
+              />
+            </div>
+          </>
+        )}
       </div>
     );
   };
@@ -124,6 +133,7 @@ export const ExerciseEdit = () => {
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'description');
   };
+
   /* Update description translations if empty */
   const transform = (record) => {
     return preSave(record, locale);
@@ -204,12 +214,25 @@ export const ExerciseEdit = () => {
 
         <ArrayInput
           source="categories"
-          fullWidth={false}
+          sx={{
+            '& .RaSimpleFormIterator-action': {
+              visibility: 'visible!important',
+              margin: '0 !important',
+              position: 'absolute',
+              right: 0,
+            },
+            minWidth: '525',
+            maxWidth: '50%',
+            '& .RaSimpleFormIterator-line': {
+              display: 'flex',
+              alignItems: 'center',
+              ':last-child': {
+                marginBottom: 0.5,
+              },
+            },
+          }}
         >
-          <SimpleFormIterator
-            disableReordering
-            inline
-          >
+          <SimpleFormIterator disableReordering inline>
             <CategoryRow />
           </SimpleFormIterator>
         </ArrayInput>
