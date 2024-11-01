@@ -25,6 +25,7 @@ from rest_framework import routers
 from rest_framework_extensions.routers import NestedRouterMixin
 
 from mepp.api.views.v1 import (
+    ArticleViewSet,
     CategoryViewSet,
     ClinicianViewSet,
     CurrentUserViewSet,
@@ -42,6 +43,7 @@ class DefaultRouterWithNesting(NestedRouterMixin, routers.DefaultRouter):
 
 
 api_v1_router = DefaultRouterWithNesting()
+api_v1_router.register(r'articles', ArticleViewSet, basename='article')
 api_v1_router.register(r'categories', CategoryViewSet, basename='category')
 api_v1_router.register(r'clinicians', ClinicianViewSet, basename='clinician')
 api_v1_router.register(r'exercises', ExerciseViewSet, basename='exercise')

@@ -19,25 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import { ArticleCreate } from './ArticleCreate';
+import { ArticleEdit } from './ArticleEdit';
+import { ArticleList } from './ArticleList';
 
-const getPlaceHolder = (record, locale) => {
-  let placeholder = record.id;
-  if ('full_name' in record) {
-    placeholder = record.full_name;
-  } else {
-    if (locale in (record?.i18n?.name || {})) {
-      placeholder = record.i18n.name[locale];
-    } else if (locale in (record?.i18n?.title || {})) {
-      placeholder = record.i18n.title[locale];
-    } else if (locale in (record?.i18n?.description || {})) {
-      const description = record.i18n.description[locale];
-      placeholder =
-        description.length <= 20
-          ? description
-          : `${description.substring(0, 20)}...`;
-    }
-  }
-  return placeholder;
-};
-
-export { getPlaceHolder };
+export { ArticleCreate, ArticleEdit, ArticleList };

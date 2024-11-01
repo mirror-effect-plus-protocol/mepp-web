@@ -22,12 +22,10 @@
 import React from 'react';
 import { usePermissions } from 'react-admin';
 
-import { useMediaQuery } from '@mui/material';
-
 import { Welcome } from './Welcome';
+import { ArticleList } from '@components/admin/articles';
 
 const Dashboard = () => {
-  const isSmall = useMediaQuery((theme) => theme.breakpoints.down('lg'));
   const { permissions } = usePermissions();
   const styles = {
     flex: { display: 'flex' },
@@ -44,16 +42,11 @@ const Dashboard = () => {
   };
 
   if (['admin', 'staff'].includes(permissions)) {
-    return isSmall ? (
+    return (
       <div>
         <div style={styles.flexColumn}>
           <Welcome />
-        </div>
-      </div>
-    ) : (
-      <div style={styles.flexColumn}>
-        <div style={styles.singleCol}>
-          <Welcome />
+          <ArticleList />
         </div>
       </div>
     );

@@ -78,6 +78,7 @@ export const ExerciseList = () => {
 
   return (
     <ResourceList
+      hasEdit={permissions === 'admin'}
       sortField={`i18n.description.${locale}`}
       filterDefaultValues={{
         language: locale,

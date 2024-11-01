@@ -1,5 +1,3 @@
-# coding: utf-8
-
 # MEPP - A web application to guide patients and clinicians in the process of
 # facial palsy rehabilitation, with the help of the mirror effect and principles
 # of motor learning
@@ -20,6 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
+from .article import ArticleViewSet
 from .category import CategoryViewSet
 from .clinician import ClinicianViewSet
 from .current_user import CurrentUserViewSet

@@ -1,5 +1,3 @@
-# coding: utf-8
-
 # MEPP - A web application to guide patients and clinicians in the process of
 # facial palsy rehabilitation, with the help of the mirror effect and principles
 # of motor learning
@@ -19,33 +17,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
-
-from mepp.api.filters.base import MeppAPIFilter
-from mepp.api.filters.category import (
-    CategoryFilter,
-    CategoryOrderingFilter,
-)
-from mepp.api.models.category import Category
-from mepp.api.serializers.v1.category import CategorySerializer
+from mepp.api.models.article import Article
+from mepp.api.serializers.v1.article import ArticleSerializer
 from mepp.api.views import UUIDLookupFieldViewSet
 
 
-class CategoryViewSet(UUIDLookupFieldViewSet):
+class ArticleViewSet(UUIDLookupFieldViewSet):
     """
-    API endpoint that allows categories to be viewed or edited.
+    API endpoint that allows article articles to be viewed or edited.
     """
-    serializer_class = CategorySerializer
-
-    filter_backends = [
-        MeppAPIFilter,
-        CategoryFilter,
-        CategoryOrderingFilter,
-    ]
-    ordering = 'i18n__name'
+    serializer_class = ArticleSerializer
+    ordering = '-modified_at'
     ordering_fields = [
-        'i18n__name',
+        'modified_at',
     ]
 
     def get_queryset(self):
-        queryset = Category.objects.filter(parent_id__isnull=True)
+        queryset = Article.objects.all()
         return queryset

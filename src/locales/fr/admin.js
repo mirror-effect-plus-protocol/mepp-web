@@ -146,6 +146,29 @@ export default {
   },
 
   resources: {
+    articles: {
+      name: 'Article |||| Articles',
+      fields: {
+        'i18n.title': 'Titre',
+        'i18n.title.fr': 'Titre',
+        'i18n.description': 'Description',
+        'i18n.description.fr': 'Description',
+        'i18n.external_url': 'Lien externe',
+        'i18n.external_url.fr': 'Lien externe',
+      },
+      card: {
+        labels: {
+          add: 'Ajouter un article',
+          more_details: 'Plus de détails',
+          title: 'Titre',
+          description: 'Description',
+          external_url: 'Lien externe',
+        }
+      },
+      delete: {
+        confirmTitle: 'Supprimer l’article %{placeholder}',
+      },
+    },
     categories: {
       name: 'Catégorie |||| Catégories',
       fields: {
@@ -154,7 +177,6 @@ export default {
       },
       labels: {
         category: 'Catégorie',
-        sub_category: 'Sous-catégorie',
       },
     },
     clinicians: {
@@ -204,7 +226,7 @@ export default {
         repetition: 'Répétitions',
         clinician_uid: 'Clinicien(ne)',
         category__uid: 'Catégorie',
-        uid: 'Sous-catégorie',
+        uid: 'Catégorie',
         categories: 'Catégories',
         empty : {
           categories: {
@@ -387,6 +409,8 @@ export default {
           "Lors de la sauvegarde, ce champ sera traduit automatiquement dans les langues pour lesquelles aucune saisie manuelle n'a été effectuée",
         overwrite_existing_translations:
           'Remplacer aussi les traductions existantes',
+        copy_on_save:
+          "Lors de la sauvegarde, ce champ sera copié automatiquement dans les langues pour lesquelles aucune saisie manuelle n'a été effectuée",
       },
     },
   },
