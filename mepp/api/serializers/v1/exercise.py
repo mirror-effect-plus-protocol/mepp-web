@@ -24,8 +24,6 @@ from django.core.files.base import ContentFile
 from rest_framework import serializers
 
 from mepp.api.enums.language import LanguageEnum
-from mepp.api.fields.uuid import HyperlinkedUUIDRelatedField
-from mepp.api.mixins.serializers.clinician import ClinicianValidatorMixin
 from mepp.api.models.exercise import (
     Category,
     Exercise,
@@ -39,9 +37,11 @@ from mepp.api.serializers import (
 
 class Base64FileField(serializers.FileField):
     def to_internal_value(self, data):
-
-        if isinstance(data, dict) and data.get('base64', '').startswith('data:'):
-            return self._convert_base64_to_file(data['base64'], data['filename'])
+        if isinstance(data, dict):
+            if data.get('base64', '').startswith('data:'):
+                return self._convert_base64_to_file(data['base64'], data['filename'])
+            else:
+                return ''
 
         if isinstance(data, str) and data.startswith('data:'):
             return self._convert_base64_to_file(data['base64'])
@@ -92,7 +92,7 @@ class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
 
     i18n = ExerciseI18nSerializer(many=True)
     categories = serializers.SerializerMethodField()
-    video = Base64FileField(allow_null=True)
+    video = Base64FileField(allow_null=True, allow_empty_file=True, required=False)
 
     class Meta:
         model = Exercise
@@ -163,6 +163,15 @@ class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
 
         return attrs
 
+    def validate_video(self, video):
+        # The comparison with empty string is in purpose. If `video` is None,
+        # user has removed it.
+        if self.instance and video == '':
+            # keep same video in the DB
+            return self.instance.video
+
+        return video
+
     def validate_i18n(self, i18n):
         if len(i18n) < len(LanguageEnum.choices()):
             raise serializers.ValidationError(
@@ -223,7 +232,6 @@ class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
                 )
             else:
                 # Skip update of categories
-                print('EMTPY CATEGORIES', flush=True)
                 return
 
         categories_uid = set([item.get('id') for item in categories_map])

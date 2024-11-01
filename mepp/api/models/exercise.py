@@ -21,7 +21,6 @@
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 import os
 
-from django.conf import settings
 from django.db import models
 
 from mepp.api.enums.language import LanguageEnum
@@ -51,7 +50,7 @@ class Exercise(BaseModel, Archivable, Template, Searchable):
     movement_duration = models.PositiveSmallIntegerField(null=False, default=5)
     repetition = models.PositiveSmallIntegerField(null=False, default=3)
     pause = models.PositiveSmallIntegerField(null=False, default=5)
-    auto_translate = models.BooleanField(default=True)
+    auto_translate = models.BooleanField(default=False)
     video = models.FileField(upload_to=upload_to, null=True, blank=True)
 
     def __str__(self):

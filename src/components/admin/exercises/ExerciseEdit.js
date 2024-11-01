@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   ArrayInput,
   FormDataConsumer,
@@ -33,9 +33,8 @@ import {
   usePermissions,
   useTranslate,
 } from 'react-admin';
-import { useFormContext } from 'react-hook-form';
 
-import { EditRounded, GTranslate } from '@mui/icons-material';
+import { GTranslate } from '@mui/icons-material';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
@@ -51,84 +50,13 @@ import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
-import { ExerciseListFilterModal } from './ExerciseListFilter';
+import CategoryRow from './CategoryRow';
 
 export const ExerciseEdit = () => {
   const t = useTranslate();
   const { permissions } = usePermissions();
   const numberClasses = useNumberStyles();
   const { locale } = useLocale();
-
-  const CategoryRow = (props) => {
-    const { locale } = useLocale();
-    const form = useFormContext();
-    const categories = form.watch('categories', []);
-    const [selectedCategory, setSelectedCategory] = useState();
-    const [ready, setReady] = useState(false);
-
-    useEffect(() => {
-      const sourceIndex = parseInt(props.source.split('.')[1]);
-      categories.forEach((category, index) => {
-        if (index === sourceIndex) {
-          if (category === '') {
-            setReady(true);
-            form.setValue(`${props.source}.id`, '');
-          } else {
-            setSelectedCategory(category);
-          }
-        }
-      });
-    }, [categories]);
-
-    const selectCategory = (category) => {
-      setSelectedCategory(category);
-      form.setValue(`${props.source}.id`, category.id);
-      form.setValue(`${props.source}.i18n`, category.i18n);
-      form.setValue(`${props.source}.parents`, category.parents || []);
-    };
-
-    const getParents = () => {
-      return [];
-    };
-
-    return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          paddingTop: 15,
-          paddingBottom: 15,
-        }}
-      >
-        {ready && !selectedCategory?.id && (
-          <ExerciseListFilterModal
-            buttonLabel={t('resources.exercises.fields.empty.categories.label')}
-            buttonIcon={<EditRounded fontSize="small" />}
-            onSelect={(category) =>
-              selectCategory({ ...category, parents: getParents() })
-            }
-          />
-        )}
-
-        {selectedCategory?.id && (
-          <>
-            {selectedCategory?.parents.map(
-              (parent) => `${parent.i18n.name[locale]} -> `,
-            )}
-            {selectedCategory.i18n.name[locale]}
-            <div style={{ position: 'absolute', right: 30 }}>
-              <ExerciseListFilterModal
-                buttonIcon={<EditRounded fontSize="small" />}
-                onSelect={(category) =>
-                  selectCategory({ ...category, parents: getParents() })
-                }
-              />
-            </div>
-          </>
-        )}
-      </div>
-    );
-  };
 
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'description');

@@ -21,8 +21,9 @@
  */
 import React from 'react';
 import {
+  ArrayInput,
   NumberInput,
-  SimpleForm,
+  SimpleForm, SimpleFormIterator,
   TextInput,
   TranslatableInputs,
   useTranslate,
@@ -42,6 +43,8 @@ import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
+import CategoryRow from './CategoryRow';
+import VideoInput from "@components/admin/shared/inputs/VideoInput";
 
 export const ExerciseCreate = () => {
   const t = useTranslate();
@@ -106,9 +109,36 @@ export const ExerciseCreate = () => {
           />
         </Div>
         <Typography variant="h6" gutterBottom gutterTop>
+          {t('resources.exercises.card.labels.video')}
+        </Typography>
+        <VideoInput source="video" label={false} />
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
-        {/* TODO - handle categories */}
+        <ArrayInput
+          source="categories"
+          sx={{
+            '& .RaSimpleFormIterator-action': {
+              visibility: 'visible!important',
+              margin: '0 !important',
+              position: 'absolute',
+              right: 0,
+            },
+            minWidth: '525',
+            maxWidth: '50%',
+            '& .RaSimpleFormIterator-line': {
+              display: 'flex',
+              alignItems: 'center',
+              ':last-child': {
+                marginBottom: 0.5,
+              },
+            },
+          }}
+        >
+          <SimpleFormIterator disableReordering inline>
+            <CategoryRow />
+          </SimpleFormIterator>
+        </ArrayInput>
       </SimpleForm>
     </ResourceCreate>
   );

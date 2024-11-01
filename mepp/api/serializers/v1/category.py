@@ -58,7 +58,7 @@ class CategorySerializer(HyperlinkedModelUUIDSerializer):
             'children',
         ]
 
-    def get_children(self, category):
+    def get_children(self, category: Category) -> list:
         request = self.context.get('request')
         language = request.query_params.get(
             'language', LanguageEnum.default.value
@@ -69,3 +69,26 @@ class CategorySerializer(HyperlinkedModelUUIDSerializer):
         if children.exists():
             return CategorySerializer(children, many=True, context=self.context).data
         return []
+
+    def get_parents(self, category: Category) -> list:
+        parents = []
+        current_category = category
+        while parent := current_category.parent:
+            i18n = {'name': {}}
+            for category_i18n in parent.i18n.all():
+                i18n['name'][category_i18n.language] = category_i18n.name
+            parents.insert(0, {
+                'id': parent.uid,
+                'i18n': i18n,
+            })
+            current_category = current_category.parent
+
+        return parents
+
+    def to_representation(self, category: Category):
+        representation = super().to_representation(category)
+        if not representation['children']:
+            representation['parents'] = self.get_parents(category)
+        else:
+            representation['parents'] = []
+        return representation
