@@ -46,7 +46,7 @@ import {
 } from '@components/admin/shared/validators';
 
 import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
-import { validateAudio, validateClinician, validateSide } from './validators';
+import { validateAudio, validateVideo, validateClinician, validateSide } from './validators';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -93,10 +93,24 @@ export const PatientCreate = () => {
             fullWidth
           />
           <SelectInput
+            source="use_video"
+            validate={validateVideo}
+            choices={options.video}
+            fullWidth
+          />
+        </RaBox>
+        <RaBox className={classes.root}>
+          <SelectInput
             source="side"
             validate={validateSide}
             choices={options.sides}
             fullWidth
+          />
+          <SelectInput
+            source="language"
+            choices={options.languages}
+            fullWidth
+            validate={validateLanguage}
           />
         </RaBox>
         {permissions === 'admin' && (
@@ -113,22 +127,6 @@ export const PatientCreate = () => {
                 style={{ width: '100%' }}
               />
             </ReferenceInput>
-            <SelectInput
-              source="language"
-              choices={options.languages}
-              fullWidth
-              validate={validateLanguage}
-            />
-          </RaBox>
-        )}
-        {permissions !== 'admin' && (
-          <RaBox className={classes.root}>
-            <SelectInput
-              source="language"
-              choices={options.languages}
-              fullWidth
-              validate={validateLanguage}
-            />
           </RaBox>
         )}
         <Typography variant="h6" gutterBottom gutterTop>

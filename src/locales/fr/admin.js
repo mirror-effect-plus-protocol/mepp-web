@@ -252,6 +252,7 @@ export default {
         last_name: 'Nom',
         side: 'Côté paralysé',
         use_audio: 'Audio actif',
+        use_video: 'Vidéo active',
         language: 'Langue',
         password: 'Mot de passe',
         confirm_password: 'Confirmer le mot de passe',
@@ -291,6 +292,10 @@ export default {
           '1': 'Droit',
         },
         audio: {
+          'true': 'Oui',
+          'false': 'Non',
+        },
+        video: {
           'true': 'Oui',
           'false': 'Non',
         },

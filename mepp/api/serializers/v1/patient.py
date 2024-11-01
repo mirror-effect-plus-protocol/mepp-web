@@ -58,6 +58,7 @@ class PatientSerializer(
             'last_name',
             'full_name',
             'use_audio',
+            'use_video',
             'side',
             'clinician_uid',
             'archived',

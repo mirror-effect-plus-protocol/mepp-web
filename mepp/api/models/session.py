@@ -187,12 +187,15 @@ class Session(BaseModel):
 
         exercises = []
         for exercise_through in exercises_through:
+            video = exercise_through.exercise.video
+            video_url = video.url if video else ''
             exercise = {
                 'movement_duration': exercise_through.movement_duration,
                 'repetition': exercise_through.repetition,
                 'pause': exercise_through.pause,
                 'i18n': {},
                 'status': StatusEnum.default.name,
+                'video_url': video_url,
                 # saved as timestamp to make `exercise` JSON serializable
                 'modified_at': int(time.time()),
             }

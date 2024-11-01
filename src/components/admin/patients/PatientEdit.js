@@ -46,7 +46,7 @@ import {
   validatePasswords,
 } from '@components/admin/shared/validators';
 
-import { validateAudio, validateClinician, validateSide } from './validators';
+import { validateAudio, validateVideo, validateClinician, validateSide } from './validators';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -93,10 +93,24 @@ export const PatientEdit = () => {
             validate={validateAudio}
           />
           <SelectInput
+            source="use_video"
+            validate={validateVideo}
+            choices={options.video}
+            fullWidth
+          />
+        </Box>
+        <Box className={classes.root}>
+          <SelectInput
             source="side"
+            validate={validateSide}
             choices={options.sides}
             fullWidth
-            validate={validateSide}
+          />
+          <SelectInput
+            source="language"
+            choices={options.languages}
+            fullWidth
+            validate={validateLanguage}
           />
         </Box>
         {permissions === 'admin' && (
@@ -108,27 +122,11 @@ export const PatientEdit = () => {
               sort={{ field: 'full_name', order: 'ASC' }}
             >
               <SelectInput
-                validate={validateClinician}
                 optionText="full_name"
+                validate={validateClinician}
                 style={{ width: '100%' }}
               />
             </ReferenceInput>
-            <SelectInput
-              source="language"
-              choices={options.languages}
-              fullWidth
-              validate={validateLanguage}
-            />
-          </Box>
-        )}
-        {permissions !== 'admin' && (
-          <Box className={classes.root}>
-            <SelectInput
-              source="language"
-              choices={options.languages}
-              fullWidth
-              validate={validateLanguage}
-            />
           </Box>
         )}
         <Typography variant="h6" gutterBottom gutterTop>

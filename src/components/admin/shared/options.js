@@ -32,6 +32,11 @@ const Options = () => {
       { id: 'true', name: t('resources.patients.shared.audio.true') },
     ],
 
+    video: [
+      { id: 'false', name: t('resources.patients.shared.video.false') },
+      { id: 'true', name: t('resources.patients.shared.video.true') },
+    ],
+
     languages: LANGUAGES.map((language) => ({
       id: language,
       name: t(`languages.${language}`),

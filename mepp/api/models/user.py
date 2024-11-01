@@ -60,6 +60,7 @@ class User(AbstractUser, Archivable, Searchable):
         max_length=2,
     )
     use_audio = models.BooleanField(null=True)
+    use_video = models.BooleanField(default=True)
     side = models.PositiveSmallIntegerField(
         choices=SideEnum.choices(),
         null=True,
