@@ -240,16 +240,13 @@ const ExerciseProvider = ({ children }) => {
         pauseTime: current.pause || 5,
         repeatTime: current.repetition || 3,
         text: current.i18n,
-        cognitive: identity.cognitive,
+        cognitive: identity.use_video,
       };
+
       data.videoUrl =
         current.video_url && current.video_url !== ''
           ? current.video_url
           : null;
-      // TODO: temporary set value
-      data.videoUrl =
-        'https://videos.pexels.com/video-files/4363834/4363834-sd_640_360_25fps.mp4';
-
       setExercise(data);
     } else {
       log('Exercise not found: ', exerciseCurrent);
