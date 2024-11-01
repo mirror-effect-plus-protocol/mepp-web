@@ -22,7 +22,7 @@
 
 from django.http import Http404
 from django.utils.timezone import now
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 from mepp.api.mixins import Template
 from mepp.api.models.expiring_token import ExpiringToken

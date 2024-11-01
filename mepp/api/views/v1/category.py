@@ -20,14 +20,14 @@
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
-from mepp.api.models.category import Category
-from mepp.api.serializers.v1.category import CategorySerializer
-from mepp.api.views import UUIDLookupFieldViewSet
 from mepp.api.filters.base import MeppAPIFilter
 from mepp.api.filters.category import (
     CategoryFilter,
     CategoryOrderingFilter,
 )
+from mepp.api.models.category import Category
+from mepp.api.serializers.v1.category import CategorySerializer
+from mepp.api.views import UUIDLookupFieldViewSet
 
 
 class CategoryViewSet(UUIDLookupFieldViewSet):

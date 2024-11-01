@@ -28,11 +28,11 @@ from django.template.loader import render_to_string
 from django.utils import translation
 from django_rest_passwordreset.signals import reset_password_token_created
 
-from mepp.api.models.expiring_token import ExpiringToken
 from mepp.api.helpers.emails import (
     send_alert_email,
     send_onboarding_email,
 )
+from mepp.api.models.expiring_token import ExpiringToken
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -92,5 +92,5 @@ def password_reset_token_created(
         # to:
         [reset_password_token.user.email]
     )
-    msg.attach_alternative(email_html_message, "text/html")
+    msg.attach_alternative(email_html_message, 'text/html')
     msg.send()

@@ -32,9 +32,9 @@ from mepp.api.models.plan import (
     TreatmentPlanI18n,
 )
 from mepp.api.serializers import (
-    I18nSerializer,
     HyperlinkedModelUUIDSerializer,
     HyperlinkedUUIDRelatedField,
+    I18nSerializer,
 )
 from mepp.api.serializers.v1.exercise import ExerciseI18nSerializer
 

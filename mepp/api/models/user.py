@@ -75,7 +75,7 @@ class User(AbstractUser, Archivable, Searchable):
 
     def __init__(self, *args, **kwargs):
         self.email_has_changed = False
-        self.email = models.EmailField(_("email address"), blank=True)
+        self.email = models.EmailField(_('email address'), blank=True)
         super().__init__(*args, **kwargs)
 
     @property

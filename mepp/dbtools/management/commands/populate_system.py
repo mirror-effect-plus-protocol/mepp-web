@@ -22,8 +22,8 @@ import csv
 import sys
 from pathlib import Path
 
-from django.db import connection, transaction
 from django.core.management.base import BaseCommand
+from django.db import connection, transaction
 
 from mepp.api.models import (
     Category,
@@ -189,7 +189,7 @@ class Command(BaseCommand):
                 language=language,
             )
 
-        self.stdout.write(f"New `{exercise}` has been created!")
+        self.stdout.write(f'New `{exercise}` has been created!')
         return exercise
 
     def _get_descriptions(self, row) -> dict:

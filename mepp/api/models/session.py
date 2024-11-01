@@ -22,18 +22,18 @@
 
 import time
 from collections import defaultdict
-from typing import Optional
 
 from django.conf import settings
 from django.db import models
 
-from mepp.api.fields.uuid import UUIDField
 from mepp.api.enums import (
     ActionEnum,
     StatusEnum,
 )
 from mepp.api.exceptions import SessionStatusException
+from mepp.api.fields.uuid import UUIDField
 from mepp.api.models.plan import TreatmentPlanExerciseM2M
+
 from .base import BaseModel
 
 

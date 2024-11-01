@@ -5,33 +5,33 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("api", "0009_rename_repeat_exercise_repetition_and_more"),
+        ('api', '0009_rename_repeat_exercise_repetition_and_more'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name="exercise",
-            name="auto_translate",
+            model_name='exercise',
+            name='auto_translate',
             field=models.BooleanField(default=True),
         ),
         migrations.AddField(
-            model_name="treatmentplan",
-            name="auto_translate",
+            model_name='treatmentplan',
+            name='auto_translate',
             field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
-            model_name="user",
-            name="language",
+            model_name='user',
+            name='language',
             field=models.CharField(
                 choices=[
-                    ("en", "EN"),
-                    ("fr", "FR"),
-                    ("it", "IT"),
-                    ("de", "DE"),
-                    ("es", "ES"),
-                    ("pt", "PT"),
+                    ('en', 'EN'),
+                    ('fr', 'FR'),
+                    ('it', 'IT'),
+                    ('de', 'DE'),
+                    ('es', 'ES'),
+                    ('pt', 'PT'),
                 ],
-                default="en",
+                default='en',
                 max_length=2,
             ),
         ),

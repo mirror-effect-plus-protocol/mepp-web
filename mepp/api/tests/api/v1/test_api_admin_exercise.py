@@ -22,6 +22,7 @@ from rest_framework import status
 
 from mepp.api.models.category import Category
 from mepp.api.models.exercise import Exercise, ExerciseI18n
+
 from . import BaseV1TestCase
 
 

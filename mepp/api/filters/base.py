@@ -26,9 +26,9 @@ from django.db.models import Q
 from rest_framework.filters import BaseFilterBackend
 
 from mepp.api.helpers.strings import normalize
+from mepp.api.mixins import Template
 from mepp.api.mixins.models.archivable import Archivable
 from mepp.api.mixins.models.searchable import Searchable
-from mepp.api.mixins import Template
 
 
 class MeppAPIFilter(BaseFilterBackend):

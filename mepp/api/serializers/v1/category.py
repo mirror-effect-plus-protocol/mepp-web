@@ -28,8 +28,8 @@ from mepp.api.models.category import (
     CategoryI18n,
 )
 from mepp.api.serializers import (
-    I18nSerializer,
     HyperlinkedModelUUIDSerializer,
+    I18nSerializer,
 )
 
 

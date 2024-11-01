@@ -22,6 +22,7 @@ from rest_framework import status
 
 from mepp.api.models.exercise import Exercise
 from mepp.api.models.plan import TreatmentPlan, TreatmentPlanI18n
+
 from . import BaseV1TestCase
 
 

@@ -18,9 +18,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
-import re
-import os
 import html
+import os
+import re
 
 import polib
 import requests
@@ -28,7 +28,7 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from mepp.api.enums.language import LanguageEnum
-from mepp.api.models.category import CategoryI18n, SubCategoryI18n
+from mepp.api.models.category import CategoryI18n
 
 
 class Command(BaseCommand):

@@ -5,12 +5,12 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("api", "0005_user_mirror_settings"),
+        ('api', '0005_user_mirror_settings'),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name="treatmentplani18n",
-            name="description",
+            model_name='treatmentplani18n',
+            name='description',
         ),
     ]

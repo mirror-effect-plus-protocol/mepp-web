@@ -22,13 +22,13 @@ from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
+from mepp.api.enums.side import SideEnum
 from mepp.api.models import (
     Exercise,
     TreatmentPlan,
     TreatmentPlanI18n,
 )
 from mepp.api.models.plan import TreatmentPlanExerciseM2M
-from mepp.api.enums.side import SideEnum
 
 
 class Command(BaseCommand):

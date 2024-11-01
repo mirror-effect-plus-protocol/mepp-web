@@ -22,6 +22,7 @@
 
 from django.db.models import Case, Value, When
 from rest_framework.filters import BaseFilterBackend
+
 from .patient import PatientOrderingFilter
 
 

@@ -23,6 +23,7 @@
 from django.db import models
 
 from mepp.api.enums.action import ActionEnum
+
 from .base import BaseModel
 from .session import Session
 

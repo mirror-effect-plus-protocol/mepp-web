@@ -5,18 +5,18 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("api", "0008_alter_user_email"),
+        ('api', '0008_alter_user_email'),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name="exercise",
-            old_name="repeat",
-            new_name="repetition",
+            model_name='exercise',
+            old_name='repeat',
+            new_name='repetition',
         ),
         migrations.RenameField(
-            model_name="treatmentplanexercisem2m",
-            old_name="repeat",
-            new_name="repetition",
+            model_name='treatmentplanexercisem2m',
+            old_name='repeat',
+            new_name='repetition',
         ),
     ]

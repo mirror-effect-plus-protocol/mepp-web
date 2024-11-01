@@ -24,15 +24,15 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
-
 from mepp.api.enums.language import LanguageEnum
 from mepp.api.fields.uuid import UUIDField
+from mepp.api.mixins import Template
 from mepp.api.mixins.models.archivable import Archivable
 from mepp.api.mixins.models.searchable import (
     I18nSearchable,
     Searchable,
 )
-from mepp.api.mixins import Template
+
 from .base import BaseModel
 from .exercise import Exercise
 

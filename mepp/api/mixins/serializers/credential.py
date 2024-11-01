@@ -21,7 +21,6 @@
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
 import django.contrib.auth.password_validation as validators
-
 from django.core import exceptions
 from rest_framework import serializers
 

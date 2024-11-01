@@ -22,9 +22,10 @@ from django.db import models
 
 from mepp.api.enums.language import LanguageEnum
 from mepp.api.fields.uuid import UUIDField
+
 from .base import (
-    BaseModel,
     BaseI18nModel,
+    BaseModel,
 )
 
 

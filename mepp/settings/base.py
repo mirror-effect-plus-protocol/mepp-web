@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'mepp.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default="sqlite:///%s/.vols/db.sqlite3" % BASE_DIR
+        default='sqlite:///%s/.vols/db.sqlite3' % BASE_DIR
     ),
 }
 

@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# ruff: noqa
 # MEPP - A web application to guide patients and clinicians in the process of
 # facial palsy rehabilitation, with the help of the mirror effect and principles
 # of motor learning
@@ -19,7 +18,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
-from .base import *
+from .base import *  # noqa: F403
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'kp=$wi=6z&i7=%sy!8ab=x5z*7ht6ij^h*y1hjcxtc_lmlvsli'

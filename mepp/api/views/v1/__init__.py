@@ -21,8 +21,8 @@
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
 from .category import CategoryViewSet
-from .current_user import CurrentUserViewSet
 from .clinician import ClinicianViewSet
+from .current_user import CurrentUserViewSet
 from .exercise import ExerciseViewSet
 from .log import LogViewSet
 from .patient import PatientViewSet
