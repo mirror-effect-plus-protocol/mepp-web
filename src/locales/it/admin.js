@@ -202,6 +202,11 @@ export default {
         uid: 'Sottocategoria',
         is_system: 'Sistema',
         sub_categories: 'Categorie e sottocategorie',
+        empty: {
+          categories: {
+            label: 'Choississez une catégorie',
+          },
+        },
       },
       card: {
         title: {
@@ -319,6 +324,11 @@ export default {
           movement_duration: 'Durata',
           pause: 'Pausa',
           repetition: 'Prove',
+        },
+        empty: {
+          exercice: {
+            label: 'Choississez une exercice',
+          },
         },
       },
       list: {

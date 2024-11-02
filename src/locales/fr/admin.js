@@ -163,7 +163,7 @@ export default {
           title: 'Titre',
           description: 'Description',
           external_url: 'Lien externe',
-        }
+        },
       },
       delete: {
         confirmTitle: 'Supprimer l’article %{placeholder}',
@@ -228,11 +228,11 @@ export default {
         category__uid: 'Catégorie',
         uid: 'Catégorie',
         categories: 'Catégories',
-        empty : {
+        empty: {
           categories: {
-            label: 'Choississez une catégorie'
-          }
-        }
+            label: 'Choississez une catégorie',
+          },
+        },
       },
       card: {
         title: {
@@ -258,8 +258,7 @@ export default {
         confirmTitle: 'Supprimer l’exercice %{placeholder}',
       },
       errors: {
-        categories:
-          'Vous devez choisir au moins une catégorie',
+        categories: 'Vous devez choisir au moins une catégorie',
         gt_zero: 'Doit être supérieur à zéro',
       },
     },
@@ -360,6 +359,11 @@ export default {
           movement_duration: 'Durée',
           pause: 'Pause',
           repetition: 'Répétitions',
+          empty: {
+            exercice: {
+              label: 'Choississez une exercice',
+            },
+          },
         },
       },
       list: {

@@ -142,6 +142,7 @@ export const ExerciseEdit = () => {
 
         <ArrayInput
           source="categories"
+          label=""
           sx={{
             '& .RaSimpleFormIterator-action': {
               visibility: 'visible!important',

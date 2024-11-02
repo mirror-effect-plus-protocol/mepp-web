@@ -200,6 +200,11 @@ export default {
         uid: 'Subcategoria',
         is_system: 'Sistema',
         sub_categories: 'Categorias e subcategorias',
+        empty: {
+          categories: {
+            label: 'Choississez une catégorie',
+          },
+        },
       },
       card: {
         title: {
@@ -318,6 +323,11 @@ export default {
           movement_duration: 'Duração',
           pause: 'Pausa',
           repetition: 'Ensaios',
+          empty: {
+            exercice: {
+              label: 'Choississez une exercice',
+            },
+          },
         },
       },
       list: {

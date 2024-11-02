@@ -27,35 +27,34 @@ import { EditRounded } from '@mui/icons-material';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
-import { CategoryFilterModal } from '@components/admin/exercises/CategoryFilter';
+import { ExerciceFilterModal } from '@components/admin/plans/ExerciceFilter';
 
-const CategoryRow = (props) => {
+const ExerciceRow = (props) => {
   const t = useTranslate();
   const { locale } = useLocale();
   const form = useFormContext();
-  const categories = form.watch('categories', []);
-  const [selectedCategory, setSelectedCategory] = useState();
+  const exercices = form.watch('exercices', []);
+  const [selectedExercice, setSelectedExercice] = useState();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const sourceIndex = parseInt(props.source.split('.')[1]);
-    categories.forEach((category, index) => {
+    exercices.forEach((exercice, index) => {
       if (index === sourceIndex) {
-        if (category === '') {
+        if (exercice === '') {
           form.setValue(`${props.source}.id`, '');
         } else {
-          setSelectedCategory(category);
+          setSelectedExercice(exercice);
         }
       }
     });
     setReady(true);
-  }, [categories]);
+  }, [exercices]);
 
-  const selectCategory = (category) => {
-    setSelectedCategory(category);
-    form.setValue(`${props.source}.id`, category.id);
-    form.setValue(`${props.source}.i18n`, category.i18n);
-    form.setValue(`${props.source}.parents`, category.parents || []);
+  const selectExercice = (exercice) => {
+    setSelectedExercice(exercice);
+    form.setValue(`${props.source}.id`, exercice.id);
+    form.setValue(`${props.source}.i18n`, exercice.i18n);
   };
 
   return (
@@ -68,26 +67,28 @@ const CategoryRow = (props) => {
         paddingRight: 70,
       }}
     >
-      {ready && !selectedCategory?.id && (
-        <CategoryFilterModal
-          buttonLabel={t('resources.exercises.fields.empty.categories.label')}
+      {ready && !selectedExercice?.id && (
+        <ExerciceFilterModal
+          buttonLabel={t(
+            'resources.plans.fields.exercise.empty.exercice.label',
+          )}
           buttonIcon={<EditRounded fontSize="small" />}
-          onSelect={(category) => selectCategory(category)}
+          onSelect={(exercice) => selectExercice(exercice)}
         />
       )}
 
-      {selectedCategory?.id && (
+      {selectedExercice?.id && (
         <>
-          {selectedCategory?.parents.map(
+          {selectedExercice?.parents.map(
             (parent) => `${parent.i18n.name[locale]} -> `,
           )}
           <span
             style={{ display: 'contents', fontWeight: 'bold' }}
-          >{`${selectedCategory.i18n.name[locale]}`}</span>
+          >{`${selectedExercice.i18n.name[locale]}`}</span>
         </>
       )}
     </div>
   );
 };
 
-export default CategoryRow;
+export default ExerciceRow;
