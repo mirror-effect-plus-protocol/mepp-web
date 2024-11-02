@@ -27,7 +27,7 @@ import { EditRounded } from '@mui/icons-material';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
-import { ExerciseListFilterModal } from '@components/admin/exercises/ExerciseListFilter';
+import { CategoryFilterModal } from '@components/admin/exercises/CategoryFilter';
 
 const CategoryRow = (props) => {
   const t = useTranslate();
@@ -69,7 +69,7 @@ const CategoryRow = (props) => {
       }}
     >
       {ready && !selectedCategory?.id && (
-        <ExerciseListFilterModal
+        <CategoryFilterModal
           buttonLabel={t('resources.exercises.fields.empty.categories.label')}
           buttonIcon={<EditRounded fontSize="small" />}
           onSelect={(category) => selectCategory(category)}

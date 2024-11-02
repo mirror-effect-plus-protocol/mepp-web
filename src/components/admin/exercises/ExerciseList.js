@@ -36,7 +36,7 @@ import ResourceList from '@components/admin/shared/resources/ResourceList';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
 
-import { ExerciseListFilterModal } from './ExerciseListFilter';
+import { CategoryFilterModal } from './CategoryFilter';
 
 export const ExerciseList = () => {
   const { permissions } = usePermissions();
@@ -70,7 +70,7 @@ export const ExerciseList = () => {
           style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
         >
           {t('resources.exercises.empty.description')}
-          <ExerciseListFilterModal storekey="CategorieFilterIndex" />
+          <CategoryFilterModal storekey="CategorieFilterIndex" />
         </Typography>
       </Box>
     );
