@@ -19,79 +19,81 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import {useLocale} from "@hooks/locale/useLocale";
-import {useFormContext} from "react-hook-form";
-import React, {useEffect, useState} from "react";
-import {ExerciseListFilterModal} from "@components/admin/exercises/ExerciseListFilter";
-import {EditRounded} from "@mui/icons-material";
-import {useTranslate} from "react-admin";
+import React, { useEffect, useState } from 'react';
+import { useTranslate } from 'react-admin';
+import { useFormContext } from 'react-hook-form';
+
+import { EditRounded } from '@mui/icons-material';
+
+import { useLocale } from '@hooks/locale/useLocale';
+
+import { ExerciseListFilterModal } from '@components/admin/exercises/ExerciseListFilter';
 
 const CategoryRow = (props) => {
   const t = useTranslate();
-    const { locale } = useLocale();
-    const form = useFormContext();
-    const categories = form.watch('categories', []);
-    const [selectedCategory, setSelectedCategory] = useState();
-    const [ready, setReady] = useState(false);
+  const { locale } = useLocale();
+  const form = useFormContext();
+  const categories = form.watch('categories', []);
+  const [selectedCategory, setSelectedCategory] = useState();
+  const [ready, setReady] = useState(false);
 
-    useEffect(() => {
-      const sourceIndex = parseInt(props.source.split('.')[1]);
-      categories.forEach((category, index) => {
-        if (index === sourceIndex) {
-          if (category === '') {
-            setReady(true);
-            form.setValue(`${props.source}.id`, '');
-          } else {
-            setSelectedCategory(category);
-          }
+  useEffect(() => {
+    const sourceIndex = parseInt(props.source.split('.')[1]);
+    categories.forEach((category, index) => {
+      if (index === sourceIndex) {
+        if (category === '') {
+          setReady(true);
+          form.setValue(`${props.source}.id`, '');
+        } else {
+          setSelectedCategory(category);
         }
-      });
-    }, [categories]);
+      }
+    });
+  }, [categories]);
 
-    const selectCategory = (category) => {
-      setSelectedCategory(category);
-      form.setValue(`${props.source}.id`, category.id);
-      form.setValue(`${props.source}.i18n`, category.i18n);
-      form.setValue(`${props.source}.parents`, category.parents || []);
-    };
-
-    return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          paddingTop: 15,
-          paddingBottom: 15,
-        }}
-      >
-        {ready && !selectedCategory?.id && (
-          <ExerciseListFilterModal
-            buttonLabel={t('resources.exercises.fields.empty.categories.label')}
-            buttonIcon={<EditRounded fontSize="small" />}
-            onSelect={(category) =>
-              selectCategory(category)
-            }
-          />
-        )}
-
-        {selectedCategory?.id && (
-          <>
-            {selectedCategory?.parents.map(
-              (parent) => `${parent.i18n.name[locale]} -> `,
-            )}
-            <span style={{fontWeight: 'bold'}}>{`${selectedCategory.i18n.name[locale]}`}</span>
-            <div style={{position: 'absolute', right: 30}}>
-              <ExerciseListFilterModal
-                buttonIcon={<EditRounded fontSize="small"/>}
-                onSelect={(category) =>
-                  selectCategory(category)
-                }
-              />
-            </div>
-          </>
-        )}
-      </div>
-    );
+  const selectCategory = (category) => {
+    setSelectedCategory(category);
+    form.setValue(`${props.source}.id`, category.id);
+    form.setValue(`${props.source}.i18n`, category.i18n);
+    form.setValue(`${props.source}.parents`, category.parents || []);
   };
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingRight: 70,
+      }}
+    >
+      {ready && !selectedCategory?.id && (
+        <ExerciseListFilterModal
+          buttonLabel={t('resources.exercises.fields.empty.categories.label')}
+          buttonIcon={<EditRounded fontSize="small" />}
+          onSelect={(category) => selectCategory(category)}
+        />
+      )}
+
+      {selectedCategory?.id && (
+        <>
+          {selectedCategory?.parents.map(
+            (parent) => `${parent.i18n.name[locale]} -> `,
+          )}
+          <span
+            style={{ display: 'contents', fontWeight: 'bold' }}
+          >{`${selectedCategory.i18n.name[locale]}`}</span>
+          <div style={{ position: 'absolute', right: 30 }}>
+            <ExerciseListFilterModal
+              buttonIcon={<EditRounded fontSize="small" />}
+              onSelect={(category) => selectCategory(category)}
+            />
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 export default CategoryRow;
