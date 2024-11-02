@@ -84,12 +84,6 @@ const CategoryRow = (props) => {
           <span
             style={{ display: 'contents', fontWeight: 'bold' }}
           >{`${selectedCategory.i18n.name[locale]}`}</span>
-          <div style={{ position: 'absolute', right: 30 }}>
-            <ExerciseListFilterModal
-              buttonIcon={<EditRounded fontSize="small" />}
-              onSelect={(category) => selectCategory(category)}
-            />
-          </div>
         </>
       )}
     </div>
