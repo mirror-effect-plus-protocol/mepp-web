@@ -266,18 +266,9 @@ class TreatmentPlanSerializer(
             try:
                 exercise_obj = Exercise.objects.get(uid=exercise['id'])
             except Exercise.DoesNotExist:
-                # Do not reveal presence of item in DB
+                # Do not reveal the presence of item in DB
                 raise serializers.ValidationError({
                     'exercise': f"No exercises found with uid `{exercise['id']}`"
-                })
-
-            if (
-                request.user.pk != exercise_obj.clinician_id
-                and not request.user.is_superuser
-                and not exercise_obj.is_system
-            ):
-                raise serializers.ValidationError({
-                    'exercise': f"2 - No exercises found with uid `{exercise['id']}`"
                 })
 
             tpe_m2m = TreatmentPlanExerciseM2M()

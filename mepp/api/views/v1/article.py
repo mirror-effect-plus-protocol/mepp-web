@@ -18,6 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 from mepp.api.models.article import Article
+from mepp.api.permissions import MeppStaffReadonly
 from mepp.api.serializers.v1.article import ArticleSerializer
 from mepp.api.views import UUIDLookupFieldViewSet
 
@@ -27,6 +28,7 @@ class ArticleViewSet(UUIDLookupFieldViewSet):
     API endpoint that allows article articles to be viewed or edited.
     """
     serializer_class = ArticleSerializer
+    permission_classes = (MeppStaffReadonly,)
     ordering = '-modified_at'
     ordering_fields = [
         'modified_at',

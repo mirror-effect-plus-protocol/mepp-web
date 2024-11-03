@@ -99,12 +99,17 @@ class AdminTreatmentPlanCreateAPITestCase(BaseV1TestCase):
                     'movement_duration': 1,
                     'pause': 1,
                     'repetition': 1,
+                    'video_url': '',
                 }
             ],
             'i18n': {
                 'name': {
                     'fr': 'Lorem Ipsum en français',
-                    'en': 'Lorem Ipsum in English'
+                    'en': 'Lorem Ipsum in English',
+                    'de': 'Lorem Ipsum in German',
+                    'es': 'Lorem Ipsum in Espagnol',
+                    'it': 'Lorem Ipsum in Italian',
+                    'pt': 'Lorem Ipsum in Portuguese',
                 },
             },
             'movement_duration': 1,
