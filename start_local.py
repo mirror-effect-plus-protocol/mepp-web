@@ -237,8 +237,6 @@ class EnvStarter:
     def __write_docker_compose_file(self):
 
         compose_yml = f"""
-version: '3'
-
 services:
   nginx:
     image: nginx:latest
