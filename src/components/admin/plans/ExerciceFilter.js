@@ -1,6 +1,5 @@
-import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
-import React, { useEffect, useState } from 'react';
-import { useListContext, useGetList, useTranslate } from 'react-admin';
+import React, { useState } from 'react';
+import { useGetList, useTranslate } from 'react-admin';
 
 import {
   Close,
@@ -42,7 +41,7 @@ const styles = {
     position: 'absolute',
     right: '0',
     height: '100%',
-    minWidth: 400,
+    width: '50%',
     bgcolor: 'background.paper',
     overflowY: 'auto',
     padding: 2,
@@ -53,11 +52,11 @@ const styles = {
   },
 };
 
-const ExerciceFilter = ({ categories, level, onSelect }) => {
+const CategoryFilter = ({ categories, level, onSelect }) => {
   const { locale } = useLocale();
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const Sublist = ({ category, level }) => {
+  const CategorySublist = ({ category, level }) => {
     return (
       <div
         style={{
@@ -65,7 +64,7 @@ const ExerciceFilter = ({ categories, level, onSelect }) => {
           backgroundColor: 'rgba(0,0,0,.035)',
         }}
       >
-        <ExerciceFilter
+        <CategoryFilter
           level={level}
           categories={category.children}
           onSelect={onSelect}
@@ -91,7 +90,6 @@ const ExerciceFilter = ({ categories, level, onSelect }) => {
               <ListItemButton
                 onClick={() => {
                   setActiveIndex(activeIndex === index ? null : index);
-                  if (category.children.length === 0) onSelect(category);
                 }}
               >
                 {activeIndex === index && <KeyboardArrowDownRounded />}
@@ -100,10 +98,14 @@ const ExerciceFilter = ({ categories, level, onSelect }) => {
               </ListItemButton>
             </ListItem>
             {activeIndex === index && category.children.length > 0 && (
-              <Sublist category={category} level={level + 1} />
+              <CategorySublist category={category} level={level + 1} />
             )}
-            {activeIndex === index && category.children.length < 0 && (
-              <div>EXERCICES LIST HERE</div>
+            {activeIndex === index && category.children.length === 0 && (
+              <ExerciceFilterHandle
+                category={category}
+                level={level}
+                onSelect={onSelect}
+              />
             )}
           </div>
         );
@@ -112,34 +114,22 @@ const ExerciceFilter = ({ categories, level, onSelect }) => {
   );
 };
 
-const ExerciceFilterHandle = () => {
+const CategoryFilterHandle = ({ onSelect }) => {
   const { locale } = useLocale();
   const { data: categories, isLoading } = useGetList('categories', {
-    pagination: { page: 1, perPage: 100 },
+    pagination: { page: 1, perPage: 9999 },
     sort: { field: `i18n.name.${locale}`, order: 'ASC' },
     filter: { language: locale },
   });
-
-  // get exercices from selected category
-  const getExercices = async (category, level) => {
-    let url = `${process.env.API_ENDPOINT}/exercises/?page=1&page_size=9999&archived=false&language=${locale}&ordering=i18n__name`;
-    url += `&category${level}__uid=${category.id}`;
-    url += `&category__uid=${category.children.length ? false : category.id}`;
-    const response = await fetchJsonWithAuthToken(url, {});
-    console.log(response.json.results);
-    // onSelect('test');
-    // setExerciseOptions(response.json.results);
-    // setLoadingExercises(false);
-  };
 
   return (
     <>
       {!isLoading && (
         <>
-          <ExerciceFilter
+          <CategoryFilter
             level={0}
             categories={categories}
-            onSelect={getExercices}
+            onSelect={onSelect}
           />
         </>
       )}
@@ -147,18 +137,54 @@ const ExerciceFilterHandle = () => {
   );
 };
 
+const ExerciceFilterHandle = ({ category, level, onSelect }) => {
+  const { locale } = useLocale();
+  const { data: exercices, isLoading } = useGetList('exercises', {
+    pagination: { page: 1, perPage: 9999 },
+    filter: {
+      language: locale,
+      archived: false,
+      [`category${level}__uid`]: category.id,
+      category__uid: category.children.length ? false : category.id,
+    },
+  });
+
+  return (
+    <List sx={{ ...styles.list }}>
+      {isLoading && (
+        <ListItem sx={{ paddingLeft: 2 }}>
+          <ListItemText primary="Chargement en cours..." />
+        </ListItem>
+      )}
+      {!isLoading && exercices.length === 0 && (
+        <ListItem sx={{ paddingLeft: 2 }}>
+          <ListItemText primary="Aucun exercices trouvé dans cette catégorie!" />
+        </ListItem>
+      )}
+      {!isLoading &&
+        exercices.map((exercice) => {
+          return (
+            <ListItem key={category.id} sx={{ padding: 0 }}>
+              <ListItemButton
+                onClick={() => {
+                  onSelect(exercice);
+                }}
+              >
+                <ListItemText primary={exercice.i18n.description[locale]} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
+    </List>
+  );
+};
+
 const ExerciceFilterModal = ({ buttonLabel, buttonIcon, onSelect }) => {
-  const { filterValues } = useListContext();
   const [open, setOpen] = useState(false);
   const t = useTranslate();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  // close after setting filter
-  useEffect(() => {
-    if (filterValues?.category__uid) setOpen(false);
-  }, [filterValues]);
 
   return (
     <>
@@ -176,7 +202,7 @@ const ExerciceFilterModal = ({ buttonLabel, buttonIcon, onSelect }) => {
             </IconButton>
           </div>
           <Divider />
-          <ExerciceFilterHandle
+          <CategoryFilterHandle
             onSelect={
               onSelect
                 ? (exercice) => {

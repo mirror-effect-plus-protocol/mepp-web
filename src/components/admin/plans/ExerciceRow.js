@@ -52,9 +52,10 @@ const ExerciceRow = (props) => {
   }, [exercices]);
 
   const selectExercice = (exercice) => {
-    setSelectedExercice(exercice);
-    form.setValue(`${props.source}.id`, exercice.id);
-    form.setValue(`${props.source}.i18n`, exercice.i18n);
+    console.log(exercice);
+    //setSelectedExercice(exercice);
+    //form.setValue(`${props.source}.id`, exercice.id);
+    //form.setValue(`${props.source}.i18n`, exercice.i18n);
   };
 
   return (
