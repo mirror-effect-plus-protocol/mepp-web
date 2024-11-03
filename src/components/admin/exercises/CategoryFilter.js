@@ -60,7 +60,7 @@ const styles = {
 };
 
 const CategoryFilter = ({ categories, level, onSelect, storekey }) => {
-  // store key name byu levels - default is an unique key
+  // store key name by levels - default is an unique key
   const key = storekey
     ? storekey +
       '_' +
