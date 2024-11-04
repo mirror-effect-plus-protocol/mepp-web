@@ -168,11 +168,14 @@ const SimplePlanEditForm = ({ locale, asTemplate }) => {
             margin: '0 !important',
             position: 'absolute',
             right: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           },
-          minWidth: '525',
+          minWidth: '525px',
           maxWidth: '50%',
           '& .RaSimpleFormIterator-line': {
-            display: 'flex',
+            display: 'flex!important',
             alignItems: 'center',
             ':last-child': {
               marginBottom: 0.5,
@@ -180,7 +183,7 @@ const SimplePlanEditForm = ({ locale, asTemplate }) => {
           },
         }}
       >
-        <SimpleFormIterator disableReordering inline>
+        <SimpleFormIterator inline>
           <ExerciceRow />
         </SimpleFormIterator>
       </ArrayInput>

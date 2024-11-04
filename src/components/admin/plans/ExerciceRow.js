@@ -20,7 +20,12 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { useEffect, useState } from 'react';
-import { useTranslate } from 'react-admin';
+import {
+  useTranslate,
+  NumberInput,
+  TextInput,
+  FormDataConsumer,
+} from 'react-admin';
 import { useFormContext } from 'react-hook-form';
 
 import { EditRounded } from '@mui/icons-material';
@@ -28,12 +33,13 @@ import { EditRounded } from '@mui/icons-material';
 import { useLocale } from '@hooks/locale/useLocale';
 
 import { ExerciceFilterModal } from '@components/admin/plans/ExerciceFilter';
+import { validateNumber } from '@components/admin/shared/validators';
 
 const ExerciceRow = (props) => {
   const t = useTranslate();
   const { locale } = useLocale();
   const form = useFormContext();
-  const exercices = form.watch('exercices', []);
+  const exercices = form.watch('exercises', []);
   const [selectedExercice, setSelectedExercice] = useState();
   const [ready, setReady] = useState(false);
 
@@ -52,10 +58,15 @@ const ExerciceRow = (props) => {
   }, [exercices]);
 
   const selectExercice = (exercice) => {
-    console.log(exercice);
-    //setSelectedExercice(exercice);
-    //form.setValue(`${props.source}.id`, exercice.id);
-    //form.setValue(`${props.source}.i18n`, exercice.i18n);
+    form.setValue(`${props.source}.id`, exercice.id);
+    form.setValue(`${props.source}.i18n`, exercice.i18n);
+    form.setValue(
+      `${props.source}.movement_duration`,
+      exercice.movement_duration,
+    );
+    form.setValue(`${props.source}.pause`, exercice.pause);
+    form.setValue(`${props.source}.repetition`, exercice.repetition);
+    setSelectedExercice(exercice);
   };
 
   return (
@@ -65,7 +76,8 @@ const ExerciceRow = (props) => {
         alignItems: 'center',
         paddingTop: 15,
         paddingBottom: 15,
-        paddingRight: 70,
+        paddingRight: 100,
+        flexWrap: 'wrap',
       }}
     >
       {ready && !selectedExercice?.id && (
@@ -80,12 +92,51 @@ const ExerciceRow = (props) => {
 
       {selectedExercice?.id && (
         <>
-          {selectedExercice?.parents.map(
-            (parent) => `${parent.i18n.name[locale]} -> `,
-          )}
-          <span
-            style={{ display: 'contents', fontWeight: 'bold' }}
-          >{`${selectedExercice.i18n.name[locale]}`}</span>
+          <FormDataConsumer>
+            {() => {
+              return (
+                <input
+                  type="hidden"
+                  name={`${props.source}.id`}
+                  value={selectedExercice.id}
+                />
+              );
+            }}
+          </FormDataConsumer>
+          <TextInput
+            source={`${props.source}.i18n.description.${locale}`}
+            label={t('resources.plans.fields.exercise.description')}
+            multiline
+            fullWidth
+            disabled
+          />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'start',
+              alignItems: 'center',
+              gap: '1em',
+            }}
+          >
+            <NumberInput
+              source={`${props.source}.movement_duration`}
+              validate={validateNumber}
+              label={t('resources.plans.fields.exercise.movement_duration')}
+              defaultValue="10"
+            />
+            <NumberInput
+              source={`${props.source}.pause`}
+              validate={validateNumber}
+              label={t('resources.plans.fields.exercise.pause')}
+              defaultValue="5"
+            />
+            <NumberInput
+              source={`${props.source}.repetition`}
+              validate={validateNumber}
+              label={t('resources.plans.fields.exercise.repetition')}
+              defaultValue="10"
+            />
+          </div>
         </>
       )}
     </div>

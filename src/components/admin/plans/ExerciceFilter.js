@@ -158,13 +158,13 @@ const ExerciceFilterHandle = ({ category, level, onSelect }) => {
       )}
       {!isLoading && exercices.length === 0 && (
         <ListItem sx={{ paddingLeft: 2 }}>
-          <ListItemText primary="Aucun exercices trouvé dans cette catégorie!" />
+          <ListItemText primary="Aucun exercices trouvés dans cette catégorie!" />
         </ListItem>
       )}
       {!isLoading &&
         exercices.map((exercice) => {
           return (
-            <ListItem key={category.id} sx={{ padding: 0 }}>
+            <ListItem key={exercice.id} sx={{ padding: 0 }}>
               <ListItemButton
                 onClick={() => {
                   onSelect(exercice);
