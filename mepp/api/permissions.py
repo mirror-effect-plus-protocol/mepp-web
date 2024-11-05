@@ -87,6 +87,28 @@ class MeppStaffProfilePermission(BasePermission):
         return user.uid == obj.uid
 
 
+class MeppStaffReadonly(BasePermission):
+
+    def has_permission(self, request, view):
+        if not request.user.is_staff:
+            return False
+
+        if request.method in SAFE_METHODS:
+            return True
+
+        return request.user.is_superuser
+
+    def has_object_permission(self, request, view, obj):
+
+        if not request.user.is_staff:
+            return False
+
+        if request.method in SAFE_METHODS:
+            return True
+
+        return request.user.is_superuser
+
+
 class MeppExportPermission(BasePermission):
     """
     Allow actions based on a token when header cannot be set.

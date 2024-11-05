@@ -59,8 +59,13 @@ const styles = {
   },
 };
 
+<<<<<<<< HEAD:src/components/admin/exercises/CategoryFilter.js
 const CategoryFilter = ({ categories, level, onSelect, storekey }) => {
+  // store key name byu levels - default is an unique key
+========
+const ExerciseListFilter = ({ categories, level, onSelect, storekey }) => {
   // store key name by levels - default is an unique key
+>>>>>>>> develop:src/components/admin/plans/ExerciseListFilter.js
   const key = storekey
     ? storekey +
       '_' +

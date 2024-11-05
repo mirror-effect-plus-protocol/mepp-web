@@ -26,6 +26,7 @@ from mepp.api.filters.category import (
     CategoryOrderingFilter,
 )
 from mepp.api.models.category import Category
+from mepp.api.permissions import MeppStaffReadonly
 from mepp.api.serializers.v1.category import CategorySerializer
 from mepp.api.views import UUIDLookupFieldViewSet
 
@@ -35,7 +36,7 @@ class CategoryViewSet(UUIDLookupFieldViewSet):
     API endpoint that allows categories to be viewed or edited.
     """
     serializer_class = CategorySerializer
-
+    permission_classes = (MeppStaffReadonly,)
     filter_backends = [
         MeppAPIFilter,
         CategoryFilter,

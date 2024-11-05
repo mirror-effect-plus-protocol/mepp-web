@@ -21,151 +21,164 @@ from django.conf import settings
 from rest_framework import status
 
 from mepp.api.enums.language import LanguageEnum
-from mepp.api.models.category import Category
-from mepp.api.models.exercise import Exercise, ExerciseI18n
+from mepp.api.models.article import Article, ArticleI18n
 
 from . import BaseV1TestCase
 
 
-class AdminExerciseListAPITestCase(BaseV1TestCase):
+class AdminArticleListAPITestCase(BaseV1TestCase):
 
-    def test_list_exercises_as_admin(self):
+    def test_list_articles_as_admin(self):
         token = self.login(self.admin.username, self.common_password)
-        exercises_count = Exercise.objects.all().count()
+        articles_count = Article.objects.all().count()
         response = self.client.get(
-            self.reverse('exercise-list'),
+            self.reverse('article-list'),
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['count'], exercises_count)
+        self.assertEqual(response.data['count'], articles_count)
 
-    def test_list_exercises_as_clinician(self):
-        url = self.reverse('exercise-list')
+    def test_list_articles_as_clinician(self):
+        url = self.reverse('article-list')
         token = self.login(self.helen.username, self.common_password)
-        exercises_count = Exercise.objects.all().count()
+        articles_count = Article.objects.filter().count()
         response = self.client.get(
             url,
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['count'], exercises_count)
+        self.assertEqual(response.data['count'], articles_count)
+        self.assertEqual(response.data['count'], 0)
 
-    def test_list_exercises_as_patient(self):
+        # Create one article
+        article = Article.objects.create()
+        ArticleI18n.objects.create(
+            description='Lorem ipsum', parent=article, language='fr'
+        )
+        ArticleI18n.objects.create(
+            description='Lorem ipsum', parent=article, language='en'
+        )
+        response = self.client.get(
+            url,
+            **self.get_token_header(token),
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], articles_count + 1)
+
+    def test_list_articles_as_patient(self):
         token = self.login(self.patient_john.username, self.common_password)
         response = self.client.get(
-            self.reverse('exercise-list'),
+            self.reverse('article-list'),
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
-class AdminExerciseCreateAPITestCase(BaseV1TestCase):
+class AdminArticleCreateAPITestCase(BaseV1TestCase):
 
-    def test_create_exercise_as_admin(self):
+    def test_create_article_as_admin(self):
         token = self.login(self.admin.username, self.common_password)
         response = self.client.post(
-            self.reverse('exercise-list'),
-            data=self._get_exercise_dict(),
+            self.reverse('article-list'),
+            data=self._get_article_dict(),
             format='json',
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_cannot_create_exercise_as_clinician(self):
+    def test_cannot_create_article_as_clinician(self):
         token = self.login(self.helen.username, self.common_password)
         response = self.client.post(
-            self.reverse('exercise-list'),
-            data=self._get_exercise_dict(),
+            self.reverse('article-list'),
+            data=self._get_article_dict(),
             format='json',
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_cannot_create_exercise_as_patient(self):
+    def test_cannot_create_article_as_patient(self):
         token = self.login(self.patient_john.username, self.common_password)
         response = self.client.post(
-            self.reverse('exercise-list'),
-            data=self._get_exercise_dict(),
+            self.reverse('article-list'),
+            data=self._get_article_dict(),
             format='json',
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_cannot_create_not_valid_exercise(self):
-        exercise = self._get_exercise_dict()
-        del exercise['i18n']
+    def test_cannot_create_not_valid_article(self):
+        article = self._get_article_dict()
+        del article['i18n']
         token = self.login(self.admin.username, self.common_password)
         response = self.client.post(
-            self.reverse('exercise-list'),
-            data=exercise,
+            self.reverse('article-list'),
+            data=article,
             format='json',
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     @staticmethod
-    def _get_exercise_dict():
-        category = Category.objects.first()
-        exercise_dict = {
-            'archived': False,
+    def _get_article_dict():
+        article_dict = {
             'i18n': {
-                'description': {}
+                'title': {},
+                'description': {},
+                'external_url': {},
             },
-            'movement_duration': 1,
-            'pause': 1,
-            'repetition': 1,
-            'categories': [{'id': category.uid}],
         }
         for code, _ in list(LanguageEnum.choices()):
-            exercise_dict['i18n']['description'][code] = f'Description: Lorem ipsum {code}'
+            article_dict['i18n']['title'][code] = f'Title: Lorem ipsum {code}'
+            article_dict['i18n']['description'][code] = f'Description: Lorem ipsum {code}'
+            article_dict['i18n']['external_url'][code] = f'http://example.com/{code}/'
 
-        return exercise_dict
+        return article_dict
 
 
-class AdminExerciseUpdateAPITestCase(BaseV1TestCase):
+class AdminArticleUpdateAPITestCase(BaseV1TestCase):
 
     def setUp(self):
         super().setUp()
-        self.exercise = Exercise.objects.create()
+        self.article = Article.objects.create()
         for code, _ in list(LanguageEnum.choices()):
-            ExerciseI18n.objects.create(
-                description='Lorem ipsum', parent=self.exercise, language=code
+            ArticleI18n.objects.create(
+                description='Lorem ipsum', parent=self.article, language=code
             )
 
-    def test_update_exercise_as_admin(self):
+    def test_update_article_as_admin(self):
         token = self.login(self.admin.username, self.common_password)
         response = self.client.patch(
-            self.reverse('exercise-detail', args=(self.exercise.uid,)),
+            self.reverse('article-detail', args=(self.article.uid,)),
             data={'archived': True},
             format='json',
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_cannot_update_exercise_as_clinician(self):
+    def test_cannot_update_article_as_clinician(self):
         token = self.login(self.helen.username, self.common_password)
         response = self.client.patch(
-            self.reverse('exercise-detail', args=(self.exercise.uid,)),
+            self.reverse('article-detail', args=(self.article.uid,)),
             data={'archived': True},
             format='json',
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_update_exercise_as_patient(self):
+    def test_update_article_as_patient(self):
         token = self.login(self.patient_john.username, self.common_password)
         response = self.client.patch(
-            self.reverse('exercise-detail', args=(self.exercise.uid,)),
+            self.reverse('article-detail', args=(self.article.uid,)),
             data={'archived': True},
             format='json',
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_cannot_update_not_valid_exercise(self):
+    def test_cannot_update_not_valid_article(self):
         token = self.login(self.admin.username, self.common_password)
         response = self.client.patch(
-            self.reverse('exercise-detail', args=(self.exercise.uid,)),
+            self.reverse('article-detail', args=(self.article.uid,)),
             data={'i18n': {}},
             format='json',
             **self.get_token_header(token),
@@ -173,38 +186,38 @@ class AdminExerciseUpdateAPITestCase(BaseV1TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
-class AdminExerciseDeleteAPITestCase(BaseV1TestCase):
+class AdminArticleDeleteAPITestCase(BaseV1TestCase):
 
     def setUp(self):
         super().setUp()
-        self.exercise = Exercise.objects.create()
+        self.article = Article.objects.create()
         for code, _ in list(LanguageEnum.choices()):
-            ExerciseI18n.objects.create(
-                description='Lorem ipsum', parent=self.exercise, language=code
+            ArticleI18n.objects.create(
+                description='Lorem ipsum', parent=self.article, language=code
             )
 
-    def test_delete_exercise_as_admin(self):
+    def test_delete_article_as_admin(self):
         token = self.login(self.admin.username, self.common_password)
         response = self.client.delete(
-            self.reverse('exercise-detail', args=(self.exercise.uid,)),
+            self.reverse('article-detail', args=(self.article.uid,)),
             format='json',
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-    def test_cannot_delete_exercise_as_clinician(self):
+    def test_cannot_delete_article_as_clinician(self):
         token = self.login(self.john.username, self.common_password)
         response = self.client.delete(
-            self.reverse('exercise-detail', args=(self.exercise.uid,)),
+            self.reverse('article-detail', args=(self.article.uid,)),
             format='json',
             **self.get_token_header(token),
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_delete_exercise_as_patient(self):
+    def test_delete_article_as_patient(self):
         token = self.login(self.patient_john.username, self.common_password)
         response = self.client.delete(
-            self.reverse('exercise-detail', args=(self.exercise.uid,)),
+            self.reverse('article-detail', args=(self.article.uid,)),
             format='json',
             **self.get_token_header(token),
         )

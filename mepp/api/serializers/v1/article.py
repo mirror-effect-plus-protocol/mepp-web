@@ -20,6 +20,7 @@
 
 from rest_framework import serializers
 
+from mepp.api.enums.language import LanguageEnum
 from mepp.api.models.article import (
     Article,
     ArticleI18n,
@@ -74,6 +75,40 @@ class ArticleSerializer(HyperlinkedModelUUIDSerializer):
             self._update_i18n(instance, i18n)
 
         return super().update(instance, validated_data)
+
+    def validate_i18n(self, i18n):
+        if len(i18n) < len(LanguageEnum.choices()):
+            raise serializers.ValidationError(
+                'A description is required for each available language'
+            )
+
+        for translation in i18n:
+            language = translation.get('language', '')
+            title = translation.get('title')
+            description = translation.get('description')
+            external_url = translation.get('external_url')
+
+            if not hasattr(LanguageEnum, language.upper()):
+                raise serializers.ValidationError(
+                    f'Language `{language}` is not valid'
+                )
+
+            if not title:
+                raise serializers.ValidationError(
+                    f'Missing title for language `{language}`'
+                )
+
+            if not description:
+                raise serializers.ValidationError(
+                    f'Missing description for language `{language}`'
+                )
+
+            if not external_url:
+                raise serializers.ValidationError(
+                    f'Missing external_url for language `{language}`'
+                )
+
+        return i18n
 
     def _update_i18n(self, instance: Article, i18n: list):
         for translation in i18n:
