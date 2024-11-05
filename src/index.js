@@ -46,14 +46,23 @@ const App = () => {
   }, []);
 
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <Admin />
-      </ThemeProvider>
-    </StyledEngineProvider>
+    <>
+      <style>
+        {`
+          iframe#webpack-dev-server-client-overlay {
+            display: none !important;
+          }
+        `}
+      </style>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <Admin/>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </>
   );
 };
 
 const container = document.getElementById('app');
 const root = ReactDOMClient.createRoot(container);
-root.render(<App />);
+root.render(<App/>);
