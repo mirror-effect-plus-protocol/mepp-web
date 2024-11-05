@@ -326,7 +326,7 @@ export default {
           repetition: 'Prove',
         },
         empty: {
-          exercice: {
+          exercise: {
             label: 'Choississez une exercice',
           },
         },

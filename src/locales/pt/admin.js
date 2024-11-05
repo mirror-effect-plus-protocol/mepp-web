@@ -324,7 +324,7 @@ export default {
           pause: 'Pausa',
           repetition: 'Ensaios',
           empty: {
-            exercice: {
+            exercise: {
               label: 'Choississez une exercice',
             },
           },

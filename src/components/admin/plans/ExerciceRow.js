@@ -83,7 +83,7 @@ const ExerciceRow = (props) => {
       {ready && !selectedExercice?.id && (
         <ExerciceFilterModal
           buttonLabel={t(
-            'resources.plans.fields.exercise.empty.exercice.label',
+            'resources.plans.fields.exercise.empty.exercise.label',
           )}
           buttonIcon={<EditRounded fontSize="small" />}
           onSelect={(exercice) => selectExercice(exercice)}

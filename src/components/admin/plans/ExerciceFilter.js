@@ -153,7 +153,7 @@ const ExerciceFilterHandle = ({ category, level, onSelect }) => {
       )}
       {!isLoading && exercices.length === 0 && (
         <ListItem sx={{ paddingLeft: 2 }}>
-          <ListItemText primary="Aucun exercices trouvés dans cette catégorie!" />
+          <ListItemText primary="Aucun exercice trouvé dans cette catégorie!" />
         </ListItem>
       )}
       {!isLoading &&

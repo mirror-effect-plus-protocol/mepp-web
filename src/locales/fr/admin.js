@@ -360,8 +360,8 @@ export default {
           pause: 'Pause',
           repetition: 'Répétitions',
           empty: {
-            exercice: {
-              label: 'Choississez une exercice',
+            exercise: {
+              label: 'Choississez un exercice',
             },
           },
         },
