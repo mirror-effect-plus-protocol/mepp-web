@@ -109,6 +109,14 @@ const ExerciceRow = (props) => {
             multiline
             fullWidth
             disabled
+            sx={{
+              '& .MuiInputBase-input.Mui-disabled': {
+                WebkitTextFillColor: 'rgba(0, 0, 0, 0.6)',
+              },
+              '& .MuiInputBase-root': {
+                backgroundColor: 'rgba(0, 0, 0, 0.02)!important',
+              },
+            }}
           />
           <div
             style={{

@@ -91,6 +91,10 @@ export default {
           title: 'Onboarding e-mail',
           body: 'Are you sure you want to send the e-mail again?',
         },
+        exerciseFilter: {
+          loading: 'Loading...',
+          notfound: 'No exercises found in this category!',
+        },
       },
       errors: {
         field_required: 'This field is required',
@@ -203,7 +207,7 @@ export default {
         sub_categories: 'Categories and sub-categories',
         empty: {
           categories: {
-            label: 'Choississez une catégorie',
+            label: 'Choose a category',
           },
         },
       },
@@ -325,7 +329,7 @@ export default {
           repetition: 'Repetitions',
           empty: {
             exercise: {
-              label: 'Choississez une exercice',
+              label: 'Choose an exercise',
             },
           },
         },

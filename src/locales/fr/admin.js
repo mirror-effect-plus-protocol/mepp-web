@@ -92,6 +92,10 @@ export default {
           title: 'Courriel de bienvenue',
           body: 'Voulez-vous renvoyer le courriel?',
         },
+        exerciseFilter: {
+          loading: 'Chargement en cours...',
+          notfound: 'Aucun exercice trouvé dans cette catégorie!',
+        },
       },
       errors: {
         field_required: 'Ce champ est requis',

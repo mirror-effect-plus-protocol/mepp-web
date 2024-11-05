@@ -18,8 +18,6 @@ import {
   Button,
   Divider,
 } from '@mui/material';
-import { alpha } from '@mui/material';
-import { blue } from '@mui/material/colors';
 import { keyframes } from '@mui/system';
 
 import { useLocale } from '@hooks/locale/useLocale';
@@ -134,6 +132,7 @@ const CategoryFilterHandle = ({ onSelect }) => {
 
 const ExerciceFilterHandle = ({ category, level, onSelect }) => {
   const { locale } = useLocale();
+  const t = useTranslate();
   const { data: exercices, isLoading } = useGetList('exercises', {
     pagination: { page: 1, perPage: 9999 },
     filter: {
@@ -148,21 +147,25 @@ const ExerciceFilterHandle = ({ category, level, onSelect }) => {
     <List sx={{ ...styles.list }}>
       {isLoading && (
         <ListItem sx={{ paddingLeft: 2 }}>
-          <ListItemText primary="Chargement en cours..." />
+          <ListItemText
+            primary={t('admin.shared.text.exerciseFilter.loading')}
+          />
         </ListItem>
       )}
       {!isLoading && exercices.length === 0 && (
         <ListItem sx={{ paddingLeft: 2 }}>
-          <ListItemText primary="Aucun exercice trouvé dans cette catégorie!" />
+          <ListItemText
+            primary={t('admin.shared.text.exerciseFilter.notfound')}
+          />
         </ListItem>
       )}
       {!isLoading &&
         exercices.map((exercice) => {
           return (
-            <>
+            <div key={exercice.id}>
               <ListItem
                 key={exercice.id}
-                sx={{ padding: 0, backgroundColor: alpha(blue[50], 0.35) }}
+                sx={{ padding: 0, backgroundColor: '#fff' }}
               >
                 <ListItemButton
                   onClick={() => {
@@ -173,7 +176,7 @@ const ExerciceFilterHandle = ({ category, level, onSelect }) => {
                 </ListItemButton>
               </ListItem>
               <Divider />
-            </>
+            </div>
           );
         })}
     </List>

@@ -91,6 +91,10 @@ export default {
           title: 'E-mail de boas-vindas',
           body: 'Deseja reenviar o e-mail?',
         },
+        exerciseFilter: {
+          loading: 'Carregando...',
+          notfound: 'Nenhum exercício encontrado nesta categoria!',
+        },
       },
       errors: {
         field_required: 'Este campo é obrigatório',
@@ -202,7 +206,7 @@ export default {
         sub_categories: 'Categorias e subcategorias',
         empty: {
           categories: {
-            label: 'Choississez une catégorie',
+            label: 'Escolha uma categoria',
           },
         },
       },
@@ -325,7 +329,7 @@ export default {
           repetition: 'Ensaios',
           empty: {
             exercise: {
-              label: 'Choississez une exercice',
+              label: 'Escolha um exercício',
             },
           },
         },
