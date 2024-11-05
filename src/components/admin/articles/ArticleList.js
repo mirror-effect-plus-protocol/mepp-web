@@ -49,7 +49,7 @@ const CardGrid = () => {
                     <DeleteWithConfirmButton
                       record={record}
                       resource="articles"
-                      label={false}
+                      label=""
                       size="medium"
                       confirmTitle={confirmTitle}
                       redirect="/"
