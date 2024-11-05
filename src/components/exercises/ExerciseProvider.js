@@ -223,7 +223,11 @@ const ExerciseProvider = ({ children }) => {
     if (!exercisesData) return;
     if (!identity) return;
 
-    if (exercisesData.detail === 'Not found.' || !exercisesData.exercises) {
+    if (
+      exercisesData.detail === 'Not found.' ||
+      !exercisesData.exercises ||
+      exercisesData.exercises.length === 0
+    ) {
       setExerciseStep(ExerciseStep.EMPTY);
       return;
     }
