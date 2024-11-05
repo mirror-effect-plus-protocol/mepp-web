@@ -18,6 +18,8 @@ import {
   Button,
   Divider,
 } from '@mui/material';
+import { alpha } from '@mui/material';
+import { blue } from '@mui/material/colors';
 import { keyframes } from '@mui/system';
 
 import { useLocale } from '@hooks/locale/useLocale';
@@ -29,14 +31,7 @@ const styles = {
       zIndex: 0,
     },
   },
-  selected: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(7, 142, 228, .5)',
-  },
+
   modal: {
     position: 'absolute',
     right: '0',
@@ -164,15 +159,21 @@ const ExerciceFilterHandle = ({ category, level, onSelect }) => {
       {!isLoading &&
         exercices.map((exercice) => {
           return (
-            <ListItem key={exercice.id} sx={{ padding: 0 }}>
-              <ListItemButton
-                onClick={() => {
-                  onSelect(exercice);
-                }}
+            <>
+              <ListItem
+                key={exercice.id}
+                sx={{ padding: 0, backgroundColor: alpha(blue[50], 0.35) }}
               >
-                <ListItemText primary={exercice.i18n.description[locale]} />
-              </ListItemButton>
-            </ListItem>
+                <ListItemButton
+                  onClick={() => {
+                    onSelect(exercice);
+                  }}
+                >
+                  <ListItemText primary={exercice.i18n.description[locale]} />
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+            </>
           );
         })}
     </List>
