@@ -201,6 +201,11 @@ export default {
         uid: 'Unterkategorie',
         is_system: 'System',
         sub_categories: 'Kategorien und Unterkategorien',
+        empty: {
+          categories: {
+            label: 'Choississez une catégorie',
+          },
+        },
       },
       card: {
         title: {
@@ -320,6 +325,11 @@ export default {
           movement_duration: 'Dauer',
           pause: 'Pause',
           repetition: 'Proben',
+          empty: {
+            exercice: {
+              label: 'Choississez une exercice',
+            },
+          },
         },
       },
       list: {

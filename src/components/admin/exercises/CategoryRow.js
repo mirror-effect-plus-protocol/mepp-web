@@ -42,13 +42,13 @@ const CategoryRow = (props) => {
     categories.forEach((category, index) => {
       if (index === sourceIndex) {
         if (category === '') {
-          setReady(true);
           form.setValue(`${props.source}.id`, '');
         } else {
           setSelectedCategory(category);
         }
       }
     });
+    setReady(true);
   }, [categories]);
 
   const selectCategory = (category) => {

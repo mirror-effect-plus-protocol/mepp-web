@@ -21,6 +21,7 @@
  */
 import React, { useEffect, useCallback, useState } from 'react';
 import {
+  ArrayInput,
   BooleanInput,
   FormDataConsumer,
   NumberInput,
@@ -33,6 +34,7 @@ import {
   useRecordContext,
   useStore,
   useTranslate,
+  SimpleFormIterator,
 } from 'react-admin';
 
 import GTranslateIcon from '@mui/icons-material/GTranslate';
@@ -50,6 +52,7 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
+import ExerciceRow from './ExerciceRow';
 
 export const PlanEdit = () => {
   const [patientUid] = useStore('patient.uid', false);
@@ -156,7 +159,34 @@ const SimplePlanEditForm = ({ locale, asTemplate }) => {
         />
       </Typography>
 
-      {/* TODO - handle exercises */}
+      <ArrayInput
+        source="exercises"
+        label=""
+        sx={{
+          '& .RaSimpleFormIterator-action': {
+            visibility: 'visible!important',
+            margin: '0 !important',
+            position: 'absolute',
+            right: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+          minWidth: '525px',
+          maxWidth: '50%',
+          '& .RaSimpleFormIterator-line': {
+            display: 'flex!important',
+            alignItems: 'center',
+            ':last-child': {
+              marginBottom: 0.5,
+            },
+          },
+        }}
+      >
+        <SimpleFormIterator inline>
+          <ExerciceRow />
+        </SimpleFormIterator>
+      </ArrayInput>
     </SimpleForm>
   );
 };
