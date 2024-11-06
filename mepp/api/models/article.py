@@ -33,7 +33,9 @@ class Article(BaseModel):
     """
     Article
     """
-    uid = UUIDField('b')
+    uid = UUIDField('a')
+    auto_translate_title = models.BooleanField(default=False)
+    auto_translate_description = models.BooleanField(default=False)
 
     def __str__(self):
         title = (

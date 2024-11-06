@@ -196,7 +196,7 @@ class CurrentUserViewSet(
                 'email': user.email,
                 'language': user.language,
                 'use_audio': user.use_audio,
-                'use_video': user.use_video,
+                'has_cognitive_issues': user.has_cognitive_issues,
                 'side': user.side,
                 'mirror_settings': user.mirror_settings,
             },

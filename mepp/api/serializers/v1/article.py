@@ -54,6 +54,8 @@ class ArticleSerializer(HyperlinkedModelUUIDSerializer):
             'id',
             'url',
             'i18n',
+            'auto_translate_title',
+            'auto_translate_description',
         ]
 
     def create(self, validated_data):

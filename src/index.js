@@ -56,7 +56,7 @@ const App = () => {
       </style>
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
-          <Admin/>
+          <Admin />
         </ThemeProvider>
       </StyledEngineProvider>
     </>
@@ -65,4 +65,4 @@ const App = () => {
 
 const container = document.getElementById('app');
 const root = ReactDOMClient.createRoot(container);
-root.render(<App/>);
+root.render(<App />);

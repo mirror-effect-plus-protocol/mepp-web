@@ -22,8 +22,9 @@
 import React from 'react';
 import { usePermissions } from 'react-admin';
 
-import { Welcome } from './Welcome';
 import { ArticleList } from '@components/admin/articles';
+
+import { Welcome } from './Welcome';
 
 const Dashboard = () => {
   const { permissions } = usePermissions();

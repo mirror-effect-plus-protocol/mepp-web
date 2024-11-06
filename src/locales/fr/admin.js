@@ -277,7 +277,7 @@ export default {
         last_name: 'Nom',
         side: 'Côté paralysé',
         use_audio: 'Audio actif',
-        use_video: 'Vidéo active',
+        has_cognitive_issues: 'Problèmes cognitifs',
         language: 'Langue',
         password: 'Mot de passe',
         confirm_password: 'Confirmer le mot de passe',

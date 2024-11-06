@@ -75,8 +75,10 @@ export const preSave = async (record, locale) => {
 
   // Update URl for every empty language
   LANGUAGES.forEach((language) => {
-    if (!(language in record.i18n.external_url) ||
-      !record.i18n.external_url[language]) {
+    if (
+      !(language in record.i18n.external_url) ||
+      !record.i18n.external_url[language]
+    ) {
       record.i18n.external_url[language] = localizedExternalUrl;
     }
   });
@@ -85,7 +87,7 @@ export const preSave = async (record, locale) => {
   const promises = LANGUAGES.map(async (language) => {
     // Translate the title if auto-translate is enabled or if there's no existing translation
     const titlePromise =
-      record.auto_translate ||
+      record.auto_translate_title ||
       !(language in record.i18n.title) ||
       !record.i18n.title[language]
         ? googleTranslate(localizedTitle, language)
@@ -93,26 +95,25 @@ export const preSave = async (record, locale) => {
 
     // Translate the description
     const descriptionPromise =
-      record.auto_translate ||
-       !(language in record.i18n.description) ||
+      record.auto_translate_description ||
+      !(language in record.i18n.description) ||
       !record.i18n.description[language]
         ? googleTranslate(localizedDescription, language)
         : Promise.resolve(record.i18n.description[language]);
 
-      // Execute both translations simultaneously
+    // Execute both translations simultaneously
     const [translatedTitle, translatedDescription] = await Promise.all([
       titlePromise,
       descriptionPromise,
     ]);
 
-     // Update the translated values
+    // Update the translated values
     record.i18n.title[language] = translatedTitle;
     record.i18n.description[language] = translatedDescription;
   });
 
   // Wait for all translations to complete
   await Promise.all(promises);
-
 
   console.log('record', record);
   console.log('localizedExternalUrl', localizedExternalUrl);

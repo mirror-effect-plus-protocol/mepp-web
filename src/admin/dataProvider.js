@@ -25,7 +25,7 @@ import djangoRestFrameworkProvider, {
 import { withLifecycleCallbacks } from 'react-admin';
 
 const preparePayload = async (params) => {
-   // Freshly dropped pictures are File objects and must be converted to base64 strings
+  // Freshly dropped pictures are File objects and must be converted to base64 strings
   const newMedia = [];
   const formerMedia = [];
   const newMediaKeys = [];

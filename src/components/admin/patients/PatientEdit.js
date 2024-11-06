@@ -46,7 +46,12 @@ import {
   validatePasswords,
 } from '@components/admin/shared/validators';
 
-import { validateAudio, validateVideo, validateClinician, validateSide } from './validators';
+import {
+  validateAudio,
+  validateVideo,
+  validateClinician,
+  validateSide,
+} from './validators';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -93,7 +98,7 @@ export const PatientEdit = () => {
             validate={validateAudio}
           />
           <SelectInput
-            source="use_video"
+            source="has_cognitive_issues"
             validate={validateVideo}
             choices={options.video}
             fullWidth

@@ -24,8 +24,8 @@ import { Admin, CustomRoutes, Resource } from 'react-admin';
 import { Navigate } from 'react-router';
 import { Route } from 'react-router-dom';
 
-import UserIcon from '@mui/icons-material/People';
 import FeedIcon from '@mui/icons-material/Feed';
+import UserIcon from '@mui/icons-material/People';
 
 import Help from '@pages/Help';
 import Home from '@pages/Home';
@@ -40,11 +40,7 @@ import Terms from '@pages/Terms';
 
 import withPage from '@hocs/withPage';
 
-import {
-  ArticleEdit,
-  ArticleCreate,
-} from '@components/admin/articles';
-
+import { ArticleEdit, ArticleCreate } from '@components/admin/articles';
 import {
   ClinicianCreate,
   ClinicianEdit,

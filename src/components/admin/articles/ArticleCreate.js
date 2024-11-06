@@ -40,7 +40,6 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
 
-
 export const ArticleCreate = () => {
   const t = useTranslate();
   const { locale } = useLocale();
@@ -54,7 +53,6 @@ export const ArticleCreate = () => {
   const validateI18nExternalUrl = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'external_url');
   };
-
 
   /* Update description translations if empty */
   const transform = (record) => preSave(record, locale);

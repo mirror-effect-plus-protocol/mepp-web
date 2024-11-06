@@ -22,11 +22,11 @@
 import React from 'react';
 import { BooleanInput, useTranslate } from 'react-admin';
 
-const AutoTranslate = () => {
+const AutoTranslate = ({source = 'auto_translate'}) => {
   const t = useTranslate();
   return (
     <BooleanInput
-      source="auto_translate"
+      source={source}
       sx={{
         '.MuiFormControlLabel-label': {
           fontSize: '1em',

@@ -23,7 +23,8 @@ import React from 'react';
 import {
   ArrayInput,
   NumberInput,
-  SimpleForm, SimpleFormIterator,
+  SimpleForm,
+  SimpleFormIterator,
   TextInput,
   TranslatableInputs,
   useTranslate,
@@ -36,6 +37,7 @@ import { useLocale } from '@hooks/locale/useLocale';
 import { preSave } from '@components/admin/exercises/callbacks';
 import { useNumberStyles } from '@components/admin/exercises/styles';
 import { Typography, Div } from '@components/admin/shared/dom/sanitize';
+import VideoInput from '@components/admin/shared/inputs/VideoInput';
 import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
@@ -44,7 +46,6 @@ import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
 import CategoryRow from './CategoryRow';
-import VideoInput from "@components/admin/shared/inputs/VideoInput";
 
 export const ExerciseCreate = () => {
   const t = useTranslate();

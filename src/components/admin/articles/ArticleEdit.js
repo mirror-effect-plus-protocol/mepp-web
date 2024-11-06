@@ -21,6 +21,7 @@
  */
 import React from 'react';
 import {
+  FormDataConsumer,
   SimpleForm,
   TextInput,
   TranslatableInputs,
@@ -33,13 +34,13 @@ import { useLocale } from '@hooks/locale/useLocale';
 
 import { preSave } from '@components/admin/articles/callbacks';
 import { Typography } from '@components/admin/shared/dom/sanitize';
+import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
 import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
-
 
 export const ArticleEdit = () => {
   const t = useTranslate();
@@ -86,7 +87,18 @@ export const ArticleEdit = () => {
               alignItems: 'center',
             }}
           >
-            <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
+            <GTranslateIcon/> {t('resources.shared.labels.translate_on_save')}
+          </div>
+          <div
+            style={{
+              fontSize: '0.7em',
+            }}
+          >
+            <FormDataConsumer>
+              {({formData}) => (
+                <AutoTranslate source="auto_translate_title" data={formData}/>
+              )}
+            </FormDataConsumer>
           </div>
         </TranslatableInputs>
         <Typography variant="h6" gutterBottom>
@@ -114,6 +126,17 @@ export const ArticleEdit = () => {
             }}
           >
             <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
+          </div>
+          <div
+            style={{
+              fontSize: '0.7em',
+            }}
+          >
+            <FormDataConsumer>
+              {({ formData }) => (
+                <AutoTranslate source="auto_translate_description" data={formData} />
+              )}
+            </FormDataConsumer>
           </div>
         </TranslatableInputs>
         <Typography variant="h6" gutterBottom>
