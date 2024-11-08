@@ -28,21 +28,20 @@ import { spacings } from '@styles/configs/spacings';
 import { FlexAlignMiddle, FlexDisplay } from '@styles/tools';
 import { HoverOrActive } from '@styles/utils/HoverOrActive';
 
+import { theme } from '@themes/index';
+
 import { Copyright } from '@components/generics/Copyright';
 import LocaleSwitcher from '@components/generics/LocaleSwitcher';
 import { Href } from '@components/generics/basics';
-import {theme} from "@themes/index";
 
 /**
  * Footer Home
  */
-const FooterHome = ({showDonate}) => {
-  const background = showDonate
-    ? 'unset'
-    : theme.colors.bluelight;
+const FooterHome = ({ showDonate }) => {
+  const background = showDonate ? 'unset' : theme.colors.bluelight;
 
   return (
-    <Container background={background} >
+    <Container background={background}>
       <LeftSide />
       <RightSide />
     </Container>

@@ -28,6 +28,7 @@ import {
   useGetIdentity,
   useListFilterContext,
 } from 'react-admin';
+
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import { CardContent } from '@mui/material';
 
@@ -143,7 +144,10 @@ const PatientListAside = ({ permissions }) => {
           label="resources.patients.fields.has_cognitive_issues"
           icon={<PsychologyIcon />}
         >
-          <FilterListItem label="ra.boolean.true" value={{ has_cognitive_issues: true }} />
+          <FilterListItem
+            label="ra.boolean.true"
+            value={{ has_cognitive_issues: true }}
+          />
           <FilterListItem
             label="ra.boolean.false"
             value={{ has_cognitive_issues: false }}

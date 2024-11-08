@@ -35,7 +35,7 @@ export default {
         title:
           'Plusieurs études ont été réalisées afin de tester l’utilisabilité et l’efficacité du MEPP:',
         loading: 'Chargement en cours…',
-        error: 'Une erreur est survenu lors du chargement!'
+        error: 'Une erreur est survenu lors du chargement!',
       },
     },
     history: {

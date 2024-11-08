@@ -252,11 +252,12 @@ export const PatientShowLayout = ({ record }) => {
                 <FunctionField
                   label={t('resources.patients.fields.has_cognitive_issues')}
                   render={(record) =>
-                    t(`resources.patients.shared.video.${record.has_cognitive_issues}`)
+                    t(
+                      `resources.patients.shared.video.${record.has_cognitive_issues}`,
+                    )
                   }
                 />
               </Labeled>
-
             </RaBox>
           </RaBox>
         </RaBox>
@@ -334,9 +335,11 @@ export const PatientShowLayout = ({ record }) => {
             </Datagrid>
           </ListContextProvider>
         )}
-        <div style={{
-          marginTop: '30px'
-        }}>
+        <div
+          style={{
+            marginTop: '30px',
+          }}
+        >
           <PatientWidget widget="sessions" patientUid={record.id} />
         </div>
       </div>

@@ -22,7 +22,7 @@
 import React from 'react';
 import { BooleanInput, useTranslate } from 'react-admin';
 
-const AutoTranslate = ({source = 'auto_translate'}) => {
+const AutoTranslate = ({ source = 'auto_translate' }) => {
   const t = useTranslate();
   return (
     <BooleanInput

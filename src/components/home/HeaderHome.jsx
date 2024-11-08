@@ -36,11 +36,11 @@ import Button from '@components/generics/buttons/Button';
 /**
  * Header Home with Logo, Anchors and Donate/Login navigation
  */
-const HeaderHome = ({showDonate}) => {
+const HeaderHome = ({ showDonate }) => {
   return (
     <Container>
       <LeftSide />
-      <RightSide showDonate={showDonate}/>
+      <RightSide showDonate={showDonate} />
     </Container>
   );
 };
@@ -57,7 +57,7 @@ const LeftSide = () => {
   );
 };
 
-const RightSide = ({showDonate}) => {
+const RightSide = ({ showDonate }) => {
   const { t } = useTranslation();
   const { permissions } = usePermissions();
   const gotoAnchor = (id) => {

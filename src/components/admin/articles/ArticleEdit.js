@@ -88,7 +88,7 @@ export const ArticleEdit = () => {
               alignItems: 'center',
             }}
           >
-            <GTranslateIcon/> {t('resources.shared.labels.translate_on_save')}
+            <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
           </div>
           <div
             style={{
@@ -96,8 +96,8 @@ export const ArticleEdit = () => {
             }}
           >
             <FormDataConsumer>
-              {({formData}) => (
-                <AutoTranslate source="auto_translate_title" data={formData}/>
+              {({ formData }) => (
+                <AutoTranslate source="auto_translate_title" data={formData} />
               )}
             </FormDataConsumer>
           </div>
@@ -135,7 +135,10 @@ export const ArticleEdit = () => {
           >
             <FormDataConsumer>
               {({ formData }) => (
-                <AutoTranslate source="auto_translate_description" data={formData} />
+                <AutoTranslate
+                  source="auto_translate_description"
+                  data={formData}
+                />
               )}
             </FormDataConsumer>
           </div>

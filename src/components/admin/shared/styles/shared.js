@@ -51,7 +51,7 @@ export const useRaBoxStyles = makeStyles(() => ({
     flex: '0 0 50%',
     flexDirection: 'column',
     flexGrow: '1',
-    paddingLeft: '10px'
+    paddingLeft: '10px',
   },
   columnChild: {
     display: 'flex',

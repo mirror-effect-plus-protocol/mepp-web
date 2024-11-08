@@ -20,7 +20,6 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { useRef, useEffect, useState } from 'react';
-
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -34,6 +33,7 @@ import { rem } from '@styles/utils/rem';
 
 import { theme } from '@themes/index';
 
+import { useLocale } from '@hooks/locale/useLocale';
 import { useInView } from '@hooks/useInView';
 import { useTrackingView } from '@hooks/useTrackingView';
 
@@ -46,7 +46,6 @@ import DonationWidget from '@components/home/DonationWidget';
 import { FooterHome } from '@components/home/FooterHome';
 import { HeaderHome } from '@components/home/HeaderHome';
 import ImageRounded from '@components/home/ImageRounded';
-import { useLocale } from '@hooks/locale/useLocale';
 
 /**
  * HomePage with HomeLayout
@@ -57,12 +56,12 @@ const HomePage = () => {
 
   return (
     <HomeLayout
-      header={<HeaderHome showDonate={showDonate}/>}
+      header={<HeaderHome showDonate={showDonate} />}
       content={
         <WrapperFull>
           <GridIntroInner id="intro">
             <GridTwoColumn
-              left={<IntroLeft showDonate={showDonate}/>}
+              left={<IntroLeft showDonate={showDonate} />}
               right={<IntroRight />}
               fullHeight
             />
@@ -81,7 +80,7 @@ const HomePage = () => {
           <GridInner id="history">
             <GridTwoColumn left={<HistoryLeft />} right={<HistoryRight />} />
           </GridInner>
-          { showDonate && (
+          {showDonate && (
             <GridInner background={theme.colors.bluelight} id="donate">
               <GridTwoColumn left={<DonateLeft />} right={<DonateRight />} />
             </GridInner>
@@ -97,7 +96,7 @@ const HomePage = () => {
  * INTRO SECTION
  * Intro Left side (text)
  */
-const IntroLeft = ({showDonate}) => {
+const IntroLeft = ({ showDonate }) => {
   const { t } = useTranslation();
   return (
     <IntroLeftWrapper>
@@ -216,7 +215,7 @@ const IntroVideoWrapper = styled.div`
  * DESCRIPTION SECTION
  * Description Left side (text)
  */
-const DescriptionLeft = ({showDonate}) => {
+const DescriptionLeft = ({ showDonate }) => {
   const { t } = useTranslation();
 
   const logos = [
@@ -285,12 +284,14 @@ const DescriptionRight = () => {
           throw new Error('Failed to fetch links');
         }
         const data = await response.json();
-        setLinks(data.map((article) => {
-          return {
-            'text': article.i18n.description[locale],
-            'link': article.i18n.external_url[locale],
-          }
-        }));
+        setLinks(
+          data.map((article) => {
+            return {
+              'text': article.i18n.description[locale],
+              'link': article.i18n.external_url[locale],
+            };
+          }),
+        );
       } catch (err) {
         setError(err.message);
       } finally {
@@ -306,27 +307,20 @@ const DescriptionRight = () => {
       <TitleH3Case>{t('home:description:list:title')}</TitleH3Case>
       <Liner />
       <DescriptionLinksWrapper>
-        {error && (
-          <Text>
-            {t('home:description:list:error')}
-          </Text>
-        )}
-        {loading && (
-          <Text>
-            {t('home:description:list:loading')}
-          </Text>
-        )}
-        {!loading && links.map((item, key) => (
-          <div key={key}>
-            <DescriptionLink key={key} as="li">
-              <Href href={item.link} target="_blank">
-                {item.text}
-              </Href>
-              <IconArrowLink />
-            </DescriptionLink>
-            {key !== links.length - 1 && <Liner />}
-          </div>
-        ))}
+        {error && <Text>{t('home:description:list:error')}</Text>}
+        {loading && <Text>{t('home:description:list:loading')}</Text>}
+        {!loading &&
+          links.map((item, key) => (
+            <div key={key}>
+              <DescriptionLink key={key} as="li">
+                <Href href={item.link} target="_blank">
+                  {item.text}
+                </Href>
+                <IconArrowLink />
+              </DescriptionLink>
+              {key !== links.length - 1 && <Liner />}
+            </div>
+          ))}
       </DescriptionLinksWrapper>
     </>
   );
