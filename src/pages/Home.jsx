@@ -19,7 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -45,6 +46,7 @@ import DonationWidget from '@components/home/DonationWidget';
 import { FooterHome } from '@components/home/FooterHome';
 import { HeaderHome } from '@components/home/HeaderHome';
 import ImageRounded from '@components/home/ImageRounded';
+import { useLocale } from '@hooks/locale/useLocale';
 
 /**
  * HomePage with HomeLayout
@@ -216,7 +218,6 @@ const IntroVideoWrapper = styled.div`
  */
 const DescriptionLeft = ({showDonate}) => {
   const { t } = useTranslation();
-  console.log('showDonate', showDonate);
 
   const logos = [
     {
@@ -271,32 +272,51 @@ const DescriptionLeft = ({showDonate}) => {
  */
 const DescriptionRight = () => {
   const { t } = useTranslation();
+  const { locale } = useLocale();
+  const [links, setLinks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const links = [
-    {
-      text: t('home:description:list:item1:text'),
-      link: 'https://www.google.ca/',
-    },
-    {
-      text: t('home:description:list:item2:text'),
-      link: 'https://www.google.ca/',
-    },
-    {
-      text: t('home:description:list:item3:text'),
-      link: 'https://www.google.ca/',
-    },
-    {
-      text: t('home:description:list:item4:text'),
-      link: 'https://www.google.ca/',
-    },
-  ];
+  useEffect(() => {
+    const fetchLinks = async () => {
+      try {
+        const response = await fetch('/api/v1/public/articles/');
+        if (!response.ok) {
+          throw new Error('Failed to fetch links');
+        }
+        const data = await response.json();
+        setLinks(data.map((article) => {
+          return {
+            'text': article.i18n.description[locale],
+            'link': article.i18n.external_url[locale],
+          }
+        }));
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLinks();
+  }, []);
 
   return (
     <>
       <TitleH3Case>{t('home:description:list:title')}</TitleH3Case>
       <Liner />
       <DescriptionLinksWrapper>
-        {links.map((item, key) => (
+        {error && (
+          <Text>
+            {t('home:description:list:error')}
+          </Text>
+        )}
+        {loading && (
+          <Text>
+            {t('home:description:list:loading')}
+          </Text>
+        )}
+        {!loading && links.map((item, key) => (
           <div key={key}>
             <DescriptionLink key={key} as="li">
               <Href href={item.link} target="_blank">

@@ -49,6 +49,7 @@ class PublicArticleViewSet(ArticleViewSet):
     ordering_fields = [
         'modified_at',
     ]
+    pagination_class = None
 
     def get_queryset(self):
         queryset = Article.objects.filter(public=True).all()

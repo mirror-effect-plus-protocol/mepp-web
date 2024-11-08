@@ -34,18 +34,8 @@ export default {
       list: {
         title:
           'Plusieurs études ont été réalisées afin de tester l’utilisabilité et l’efficacité du MEPP:',
-        item1: {
-          text: 'Development of an open-source and free facial rehabilitation website for severe bell’s palsy: a within-subject study on user experience and patient’s compliance with the MEPP-website',
-        },
-        item2: {
-          text: 'The “Mirror Effect Plus Protocol” for acute Bell’s palsy: A randomized controlled trial with 1-year follow-up',
-        },
-        item3: {
-          text: 'Comparison of Objective Facial Metrics on Both Sides of the Face Among Patients with Severe Bell’s Palsy Treated with Mirror Effect Plus Protocol Rehabilitation Versus Controls',
-        },
-        item4: {
-          text: 'Measuring the Potential Effects of Mirror Therapy Added to the Gold Standard Facial Neuromuscular Retraining in Patients With Chronic Peripheral Facial Palsy: Protocol for a Randomized Controlled Trial.',
-        },
+        loading: 'Chargement en cours…',
+        error: 'Une erreur est survenu lors du chargement!'
       },
     },
     history: {
