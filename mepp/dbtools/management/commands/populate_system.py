@@ -22,7 +22,6 @@ import csv
 import sys
 from pathlib import Path
 
-import django.db.models
 from django.core.management.base import BaseCommand
 from django.db import connection, transaction
 
