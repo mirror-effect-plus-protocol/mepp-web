@@ -292,10 +292,6 @@ class TreatmentPlanSerializer(
             exercise.treatment_plan = instance
         TreatmentPlanExerciseM2M.objects.bulk_create(exercises)
 
-        if instance.is_system:
-            exercise_ids = [e.exercise_id for e in exercises]
-            Exercise.objects.filter(pk__in=exercise_ids).update(is_system=True)
-
     def _update_i18n(self, instance: TreatmentPlan, i18n: list):
         for translation in i18n:
             try:

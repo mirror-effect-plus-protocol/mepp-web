@@ -128,7 +128,7 @@ class User(AbstractUser, Archivable, Searchable):
 
         return self.patient_treatment_plans.filter(
             active=True,
-        ).first()
+        ).order_by('-modified_at').first()
 
     def delete(self, using=None, keep_parents=False):
         # Delete relationship with treatment plans manually to avoid
