@@ -166,7 +166,7 @@ export const PatientShowLayout = ({ record }) => {
               <Labeled>
                 <TextField source="first_name" />
               </Labeled>
-              <div>
+              <>
                 <EmailField source="email" />
                 <IconButton
                   size="small"
@@ -205,12 +205,15 @@ export const PatientShowLayout = ({ record }) => {
                     </Button>
                   </DialogActions>
                 </Dialog>
-              </div>
+              </>
             </RaBox>
             <RaBox className={classes.innerChild}>
               <Labeled>
                 <TextField source="last_name" />
               </Labeled>
+              <RaBox className={classes.innerChild}>
+                <ClinicianTextField show={permissions === 'admin'} />
+              </RaBox>
             </RaBox>
           </RaBox>
         </RaBox>
@@ -245,7 +248,15 @@ export const PatientShowLayout = ({ record }) => {
                   }
                 />
               </Labeled>
-              <ClinicianTextField show={permissions === 'admin'} />
+              <Labeled>
+                <FunctionField
+                  label={t('resources.patients.fields.has_cognitive_issues')}
+                  render={(record) =>
+                    t(`resources.patients.shared.video.${record.has_cognitive_issues}`)
+                  }
+                />
+              </Labeled>
+
             </RaBox>
           </RaBox>
         </RaBox>
@@ -323,7 +334,9 @@ export const PatientShowLayout = ({ record }) => {
             </Datagrid>
           </ListContextProvider>
         )}
-        <div>
+        <div style={{
+          marginTop: '30px'
+        }}>
           <PatientWidget widget="sessions" patientUid={record.id} />
         </div>
       </div>

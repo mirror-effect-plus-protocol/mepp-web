@@ -39,7 +39,7 @@ export const useRaBoxStyles = makeStyles(() => ({
   },
   leftColumn: {
     flexDirection: 'column',
-    flex: '0 0 60%',
+    flex: '0 0 50%',
     flexGrow: '3',
     justifyContent: 'center',
     marginBottom: '10px',
@@ -48,9 +48,10 @@ export const useRaBoxStyles = makeStyles(() => ({
     marginRight: '10px',
   },
   rightColumn: {
-    flex: '0 0 40%',
+    flex: '0 0 50%',
     flexDirection: 'column',
     flexGrow: '1',
+    paddingLeft: '10px'
   },
   columnChild: {
     display: 'flex',
