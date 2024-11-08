@@ -19,7 +19,7 @@
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 from mepp.api.models.article import Article
 from mepp.api.permissions import MeppStaffReadonly
-from mepp.api.serializers.v1.article import ArticleSerializer
+from mepp.api.serializers.v1.article import ArticleSerializer, PublicArticleSerializer
 from mepp.api.views import UUIDLookupFieldViewSet
 
 
@@ -36,4 +36,20 @@ class ArticleViewSet(UUIDLookupFieldViewSet):
 
     def get_queryset(self):
         queryset = Article.objects.all()
+        return queryset
+
+
+class PublicArticleViewSet(ArticleViewSet):
+    """
+    API endpoint that allows article articles to be viewed or edited.
+    """
+    serializer_class = PublicArticleSerializer
+    permission_classes = []
+    ordering = '-modified_at'
+    ordering_fields = [
+        'modified_at',
+    ]
+
+    def get_queryset(self):
+        queryset = Article.objects.filter(public=True).all()
         return queryset

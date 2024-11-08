@@ -56,6 +56,7 @@ class ArticleSerializer(HyperlinkedModelUUIDSerializer):
             'i18n',
             'auto_translate_title',
             'auto_translate_description',
+            'public',
         ]
 
     def create(self, validated_data):
@@ -121,3 +122,17 @@ class ArticleSerializer(HyperlinkedModelUUIDSerializer):
             article_i18n.description = translation['description']
             article_i18n.external_url = translation['external_url']
             article_i18n.save()
+
+
+class PublicArticleSerializer(ArticleSerializer):
+
+    class Meta(ArticleSerializer.Meta):
+        fields = [
+            'i18n',
+        ]
+
+    def create(self, validated_data):
+        raise NotImplementedError
+
+    def update(self, instance, validated_data):
+        raise NotImplementedError

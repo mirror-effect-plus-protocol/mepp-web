@@ -32,6 +32,7 @@ from mepp.api.views.v1 import (
     ExerciseViewSet,
     LogViewSet,
     PatientViewSet,
+    PublicArticleViewSet,
     SessionViewSet,
     TemporaryTokenViewSet,
     TreatmentPlanViewSet,
@@ -47,6 +48,7 @@ api_v1_router.register(r'articles', ArticleViewSet, basename='article')
 api_v1_router.register(r'categories', CategoryViewSet, basename='category')
 api_v1_router.register(r'clinicians', ClinicianViewSet, basename='clinician')
 api_v1_router.register(r'exercises', ExerciseViewSet, basename='exercise')
+api_v1_router.register(r'public/articles', PublicArticleViewSet, basename='public-article')
 api_v1_router.register(r'plans', TreatmentPlanViewSet, basename='treatmentplan')
 api_v1_router.register(r'token', TemporaryTokenViewSet, basename='temporarytoken')
 api_v1_router.register(r'me', CurrentUserViewSet, basename='current-user-profile')

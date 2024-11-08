@@ -21,6 +21,7 @@
  */
 import React from 'react';
 import {
+  BooleanInput,
   FormDataConsumer,
   SimpleForm,
   TextInput,
@@ -165,6 +166,7 @@ export const ArticleEdit = () => {
             {t('resources.shared.labels.copy_on_save')}
           </div>
         </TranslatableInputs>
+        <BooleanInput source="public" />
       </SimpleForm>
     </ResourceEdit>
   );

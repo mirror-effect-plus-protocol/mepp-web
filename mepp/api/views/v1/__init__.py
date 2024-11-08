@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
-from .article import ArticleViewSet
+from .article import ArticleViewSet, PublicArticleViewSet
 from .category import CategoryViewSet
 from .clinician import ClinicianViewSet
 from .current_user import CurrentUserViewSet

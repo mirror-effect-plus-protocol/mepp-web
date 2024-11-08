@@ -33,6 +33,3 @@ urlpatterns = [
     ),
     path('api/', include('mepp.api.urls')),
 ]
-
-# if os.getenv('ENVIRONMENT') == 'dev':
-#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
