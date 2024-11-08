@@ -234,7 +234,7 @@ export default {
         categories: 'Catégories',
         empty: {
           categories: {
-            label: 'Choississez une catégorie',
+            label: 'Choisir une catégorie',
           },
         },
       },
@@ -365,7 +365,7 @@ export default {
           repetition: 'Répétitions',
           empty: {
             exercise: {
-              label: 'Choississez un exercice',
+              label: 'Choisir un exercice',
             },
           },
         },

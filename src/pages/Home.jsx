@@ -51,15 +51,16 @@ import ImageRounded from '@components/home/ImageRounded';
  */
 const HomePage = () => {
   useTrackingView('/home');
+  const showDonate = process.env.SHOW_DONATE || false;
 
   return (
     <HomeLayout
-      header={<HeaderHome />}
+      header={<HeaderHome showDonate={showDonate}/>}
       content={
         <WrapperFull>
           <GridIntroInner id="intro">
             <GridTwoColumn
-              left={<IntroLeft />}
+              left={<IntroLeft showDonate={showDonate}/>}
               right={<IntroRight />}
               fullHeight
             />
@@ -70,7 +71,7 @@ const HomePage = () => {
           <Liner />
           <GridInner id="description">
             <GridTwoColumn
-              left={<DescriptionLeft />}
+              left={<DescriptionLeft showDonate={showDonate} />}
               right={<DescriptionRight />}
             />
           </GridInner>
@@ -78,12 +79,14 @@ const HomePage = () => {
           <GridInner id="history">
             <GridTwoColumn left={<HistoryLeft />} right={<HistoryRight />} />
           </GridInner>
-          <GridInner background={theme.colors.bluelight} id="donate">
-            <GridTwoColumn left={<DonateLeft />} right={<DonateRight />} />
-          </GridInner>
+          { showDonate && (
+            <GridInner background={theme.colors.bluelight} id="donate">
+              <GridTwoColumn left={<DonateLeft />} right={<DonateRight />} />
+            </GridInner>
+          )}
         </WrapperFull>
       }
-      footer={<FooterHome />}
+      footer={<FooterHome showDonate={showDonate} />}
     />
   );
 };
@@ -92,14 +95,14 @@ const HomePage = () => {
  * INTRO SECTION
  * Intro Left side (text)
  */
-const IntroLeft = () => {
+const IntroLeft = ({showDonate}) => {
   const { t } = useTranslation();
   return (
     <IntroLeftWrapper>
       <TitleH1>{t('home:intro:title')}</TitleH1>
       <Text>{t('home:intro:text')}</Text>
       <ButtonDonate
-        hide
+        hide={!showDonate}
         label={t('cta:donate')}
         onClick={() => {
           var elem = document.getElementById('donate');
@@ -211,8 +214,9 @@ const IntroVideoWrapper = styled.div`
  * DESCRIPTION SECTION
  * Description Left side (text)
  */
-const DescriptionLeft = () => {
+const DescriptionLeft = ({showDonate}) => {
   const { t } = useTranslation();
+  console.log('showDonate', showDonate);
 
   const logos = [
     {
@@ -239,6 +243,7 @@ const DescriptionLeft = () => {
       <Text>{t('home:description:text')}</Text>
       <ButtonDonate
         label={t('cta:donate')}
+        hide={!showDonate}
         onClick={() => {
           var elem = document.getElementById('donate');
           if (elem) window.scrollTo(elem.offsetLeft, elem.offsetTop - 105);
@@ -294,8 +299,8 @@ const DescriptionRight = () => {
         {links.map((item, key) => (
           <div key={key}>
             <DescriptionLink key={key} as="li">
-              <Href href="#" target="_blank">
-                {t('home:description:list:item1:text')}
+              <Href href={item.link} target="_blank">
+                {item.text}
               </Href>
               <IconArrowLink />
             </DescriptionLink>

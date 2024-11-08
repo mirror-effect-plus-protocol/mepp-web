@@ -36,11 +36,11 @@ import Button from '@components/generics/buttons/Button';
 /**
  * Header Home with Logo, Anchors and Donate/Login navigation
  */
-const HeaderHome = () => {
+const HeaderHome = ({showDonate}) => {
   return (
     <Container>
       <LeftSide />
-      <RightSide />
+      <RightSide showDonate={showDonate}/>
     </Container>
   );
 };
@@ -57,10 +57,10 @@ const LeftSide = () => {
   );
 };
 
-const RightSide = () => {
+const RightSide = ({showDonate}) => {
   const { t } = useTranslation();
   const { permissions } = usePermissions();
-
+  console.log(showDonate);
   const gotoAnchor = (id) => {
     var elem = document.getElementById(id);
     if (elem) window.scrollTo(elem.offsetLeft, elem.offsetTop - 150);
@@ -84,6 +84,7 @@ const RightSide = () => {
         <LocaleSwitcher />
       </ButtonLocalSwitcher>
       <ButtonDonate
+        hide={!showDonate}
         label={t('cta:donate')}
         onClick={() => {
           gotoAnchor('donate');
@@ -166,6 +167,8 @@ const ButtonAnchor = styled(Button.Transparent)`
 `;
 
 const ButtonDonate = styled(Button.Default)`
+  ${({ hide }) => hide && `display: none;`};
+
   @media screen and (max-width: 520px) {
     display: none;
   }

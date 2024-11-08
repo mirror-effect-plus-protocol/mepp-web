@@ -31,13 +31,18 @@ import { HoverOrActive } from '@styles/utils/HoverOrActive';
 import { Copyright } from '@components/generics/Copyright';
 import LocaleSwitcher from '@components/generics/LocaleSwitcher';
 import { Href } from '@components/generics/basics';
+import {theme} from "@themes/index";
 
 /**
  * Footer Home
  */
-const FooterHome = () => {
+const FooterHome = ({showDonate}) => {
+  const background = showDonate
+    ? 'unset'
+    : theme.colors.bluelight;
+
   return (
-    <Container>
+    <Container background={background} >
       <LeftSide />
       <RightSide />
     </Container>
@@ -70,6 +75,7 @@ const RightSide = () => {
 
 const Container = styled.footer`
   ${FlexDisplay.CSS}
+  ${({ background }) => `background-color: ${background}`};
 
   box-sizing: border-box;
   padding: ${spacings.default}px ${spacings.default * 2}px;
