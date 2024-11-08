@@ -58,6 +58,17 @@ class PatientFilter(BaseFilterBackend):
             queryset = queryset.filter(use_audio=use_audio)
 
         try:
+            has_cognitive_issues = strtobool(
+                request.query_params['has_cognitive_issues']
+            )
+        except (KeyError, ValueError):
+            pass
+        else:
+            queryset = queryset.filter(
+                has_cognitive_issues=has_cognitive_issues
+            )
+
+        try:
             uid = request.query_params['uid']
         except KeyError:
             pass

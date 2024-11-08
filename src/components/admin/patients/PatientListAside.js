@@ -28,7 +28,7 @@ import {
   useGetIdentity,
   useListFilterContext,
 } from 'react-admin';
-
+import PsychologyIcon from '@mui/icons-material/Psychology';
 import { CardContent } from '@mui/material';
 
 import { ASide } from '@components/admin/shared/cards/ASide';
@@ -136,6 +136,17 @@ const PatientListAside = ({ permissions }) => {
           <FilterListItem
             label="ra.boolean.false"
             value={{ use_audio: false }}
+          />
+        </FilterList>
+
+        <FilterList
+          label="resources.patients.fields.has_cognitive_issues"
+          icon={<PsychologyIcon />}
+        >
+          <FilterListItem label="ra.boolean.true" value={{ has_cognitive_issues: true }} />
+          <FilterListItem
+            label="ra.boolean.false"
+            value={{ has_cognitive_issues: false }}
           />
         </FilterList>
 
