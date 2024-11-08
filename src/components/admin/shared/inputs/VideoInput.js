@@ -24,7 +24,6 @@ import { FileInput, useInput } from 'react-admin';
 
 const VideoInput = (props) => {
   const handleFileChange = (files) => {
-    console.log(files);
     if (files && files[0]) {
       setUploadedFile(files[0]);
     }

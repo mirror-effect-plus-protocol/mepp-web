@@ -60,7 +60,6 @@ const LeftSide = () => {
 const RightSide = ({showDonate}) => {
   const { t } = useTranslation();
   const { permissions } = usePermissions();
-  console.log(showDonate);
   const gotoAnchor = (id) => {
     var elem = document.getElementById(id);
     if (elem) window.scrollTo(elem.offsetLeft, elem.offsetTop - 150);

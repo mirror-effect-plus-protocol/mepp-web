@@ -115,8 +115,5 @@ export const preSave = async (record, locale) => {
   // Wait for all translations to complete
   await Promise.all(promises);
 
-  console.log('record', record);
-  console.log('localizedExternalUrl', localizedExternalUrl);
-
   return record;
 };

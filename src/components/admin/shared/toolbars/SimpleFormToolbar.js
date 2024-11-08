@@ -109,9 +109,10 @@ const SimpleFormToolBar = ({ identity }) => {
         return '/';
       }
     } else {
+      const location = resource === 'articles' ? '/' : resource;
       return patientUid && resource !== 'patients'
         ? `/patients/${patientUid}/show`
-        : `/${resource}`;
+        : `/${location}`;
     }
   }, [showEditButtons]);
 
