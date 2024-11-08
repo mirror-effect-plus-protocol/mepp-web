@@ -22,6 +22,7 @@ import csv
 import sys
 from pathlib import Path
 
+import django.db.models
 from django.core.management.base import BaseCommand
 from django.db import connection, transaction
 
@@ -31,6 +32,7 @@ from mepp.api.models import (
     Exercise,
     ExerciseI18n,
 )
+from mepp.api.models.plan import TreatmentPlanExerciseM2M
 
 
 class Command(BaseCommand):
@@ -53,7 +55,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         force = options['force']
-        base_dir = Path(__file__).resolve().parent.parent.parent
         if connection.vendor == 'sqlite':
             sql_keywords = 'DELETE FROM'
         else:
@@ -75,8 +76,24 @@ class Command(BaseCommand):
                 f'{sql_keywords} `{Category._meta.db_table}`;')  # noqa
             sys.exit(1)
 
-        self.stdout.write('Creating categories...')
+        original_on_delete = TreatmentPlanExerciseM2M._meta.get_field(
+            'exercise'
+        ).remote_field.on_delete
 
+        try:
+            TreatmentPlanExerciseM2M._meta.get_field(
+                'exercise'
+            ).remote_field.on_delete = lambda *args, **kwargs: None
+            self._insert_data(force)
+        finally:
+            TreatmentPlanExerciseM2M._meta.get_field(
+                'exercise'
+            ).remote_field.on_delete = original_on_delete
+
+    def _insert_data(self, force: bool):
+        base_dir = Path(__file__).resolve().parent.parent.parent
+        exercise_ids = []
+        self.stdout.write('Creating categories...')
         with transaction.atomic():
 
             if force:
@@ -152,12 +169,17 @@ class Command(BaseCommand):
                             exercise = self._create_exercise(
                                 movement, pause, repetition, descriptions
                             )
-
+                    exercise_ids.append(exercise.pk)
                     exercise.categories.add(parent)
                     self.stdout.write(
                         f'\tExercise `{exercise}` attached to `{parent}` at level '
                         f'{level - 1}'
                     )
+
+            self.stdout.write('Clean up treatment plans…')
+            TreatmentPlanExerciseM2M.objects.exclude(
+                exercise_id__in=exercise_ids
+            ).delete()
 
         self.stdout.write('Done!')
 
