@@ -47,16 +47,16 @@ export default {
         'Um dieses wichtige Problem zu lösen, hat das Forschungsteam bestehend aus Dr. Sarah Martineau, Sprachtherapeutin und Assistenzprofessorin für klinische Forschung an der Universität Montreal, Dr. Karine Marcotte, Sprachtherapeutin und Forscherin, und Dr. Akram Rahal, HNO-Arzt und klinischer Professor an der Universität Montreal, zwischen 2017 und 2023 das Mirror Effect Plus Protocol (MEPP) entwickelt. Diese Rehabilitation und die begleitende Website basieren auf den wichtigen Interventionsprinzipien bei Gesichtslähmungen sowie auf der Spiegelftherapie. Die Website integriert eine Progression der Übungen und visuelle Hilfsmittel, um die Rehabilitation von Menschen mit neurologischen Beeinträchtigungen im Gesicht zu erleichtern. Das MEPP bietet einen personalisierten Ansatz zur Gesichtswiederherstellung, der einzigartig im Vergleich zu den auf dem Markt verfügbaren Gesichtstherapie-Software ist. Darüber hinaus stützen sich die Rehabilitationsprotokolle und die in die Website integrierten Übungen auf die neuesten wissenschaftlichen Erkenntnisse. Dieses Werkzeug erleichtert somit erheblich die Arbeit der Fachleute sowie den therapeutischen Prozess der Patienten, da es eine klare Struktur bietet, die auf der wissenschaftlichen Literatur basiert, und gleichzeitig die Zugänglichkeit zu den Übungen zu Hause sowie die Tele-Rehabilitation im Bereich der Gesichtslähmung erleichtert.',
       persons: {
         person1: {
-          name: 'Dr. Sarah Martineau',
+          name: 'Dr.in Sarah Martineau',
           title:
             'Logopäde und außerordentliche Professorin für Klinische Wissenschaften an der Universität Montreal',
         },
         person2: {
-          name: 'Dre Karine Marcotte',
+          name: 'Dr.in Karine Marcotte',
           title: 'Logopädin und Forscherin',
         },
         person3: {
-          name: 'Dr Akram Rahal',
+          name: 'Dr. Akram Rahal',
           title:
             'HNO-Arzt und klinischer Professor an der Universität Montréal',
         },
