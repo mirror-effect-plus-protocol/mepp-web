@@ -48,7 +48,7 @@ const authProvider = {
       if (data.profile)
         localStorage.setItem('profile', JSON.stringify(data.profile));
       document.body.style.visibility = 'hidden';
-      if (data.permissions === 'admin') {
+      if (data.permissions === 'admin' || data.permissions === 'staff') {
         window.location.href = '/';
       } else {
         window.location.href = '#/intro';
