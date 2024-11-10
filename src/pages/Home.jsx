@@ -685,7 +685,7 @@ const ButtonDonate = styled(Button.Default)`
 
   @media screen and (max-width: 520px) {
     width: 100%;
-    display: block;
+    display: ${({ hide }) => (hide ? `none` : 'block')};
   }
 `;
 /***********/
