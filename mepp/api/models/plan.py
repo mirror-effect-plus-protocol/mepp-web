@@ -24,15 +24,15 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
-
 from mepp.api.enums.language import LanguageEnum
 from mepp.api.fields.uuid import UUIDField
+from mepp.api.mixins import Template
 from mepp.api.mixins.models.archivable import Archivable
 from mepp.api.mixins.models.searchable import (
     I18nSearchable,
     Searchable,
 )
-from mepp.api.mixins import Template
+
 from .base import BaseModel
 from .exercise import Exercise
 
@@ -64,6 +64,7 @@ class TreatmentPlan(BaseModel, Archivable, Template, Searchable):
     daily_repeat = models.PositiveSmallIntegerField(null=False, default=3)
     active = models.BooleanField(null=True)
     randomize = models.BooleanField(default=False)
+    auto_translate = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['i18n__name']
@@ -192,7 +193,7 @@ class TreatmentPlanExerciseM2M(BaseModel):
     treatment_plan = models.ForeignKey(TreatmentPlan, on_delete=models.CASCADE)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     movement_duration = models.PositiveSmallIntegerField(null=False)
-    repeat = models.PositiveSmallIntegerField(null=False)
+    repetition = models.PositiveSmallIntegerField(null=False)
     pause = models.PositiveSmallIntegerField(null=False)
     index = models.PositiveSmallIntegerField(null=False)
 
@@ -204,8 +205,8 @@ class TreatmentPlanExerciseM2M(BaseModel):
         if self.pk is None:
             if self.movement_duration is None:
                 self.movement_duration = self.exercise.movement_duration
-            if self.repeat is None:
-                self.repeat = self.exercise.repeat
+            if self.repetition is None:
+                self.repetition = self.exercise.repetition
             if self.pause is None:
                 self.pause = self.exercise.pause
             if self.index is None:

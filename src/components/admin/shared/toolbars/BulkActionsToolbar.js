@@ -30,7 +30,7 @@ const BulkActionsToolbar = ({ permissions, showExport, ...props }) => {
   const resourceName = useResourceContext();
 
   if (
-    filterValues.hasOwnProperty('is_system') &&
+    'is_system' in filterValues &&
     filterValues.is_system &&
     permissions !== 'admin'
   ) {

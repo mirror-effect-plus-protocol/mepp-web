@@ -21,93 +21,71 @@
  */
 import React, { useEffect, useCallback, useState } from 'react';
 import {
-  ArrayInput, BooleanInput,
-  Edit,
+  ArrayInput,
+  BooleanInput,
   FormDataConsumer,
   NumberInput,
   ReferenceField,
   SimpleForm,
-  SimpleFormIterator,
   TextField,
   TextInput,
   TranslatableInputs,
-  usePermissions, useRecordContext,
-  useResourceDefinition,
+  usePermissions,
+  useRecordContext,
   useStore,
   useTranslate,
+  SimpleFormIterator,
 } from 'react-admin';
 
+import GTranslateIcon from '@mui/icons-material/GTranslate';
+
 import { useLocale } from '@hooks/locale/useLocale';
+
 import IsSystemInput from '@components/admin/plans/IsSystem';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
-import { validateExercises } from '@components/admin/plans/validators';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import {
-  useGetCategories,
-  useGetSubCategories,
-} from '@components/admin/shared/hook';
+import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
+import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
+import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
-import ExerciseRow from './ExerciseRow';
-import { translatorInputStyle, categoriesSelectorStyle } from '@components/admin/shared/styles/shared';
+import ExerciceRow from './ExerciceRow';
 
 export const PlanEdit = () => {
-  const { hasShow } = useResourceDefinition();
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [patientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
-  const t = useTranslate();
   const { locale } = useLocale();
   const redirect = useCallback(
     () => contextualRedirect(patientUid),
-    [patientUid]
+    [patientUid],
   );
   const transform = useCallback(
     (record) => preSave(record, locale, patientUid, asTemplate),
-    [patientUid, asTemplate]
+    [patientUid, asTemplate],
   );
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
 
   useEffect(() => {
     setAsTemplate(patientUid === false);
   }, [patientUid]);
 
   return (
-    <Edit
-      actions={<TopToolbar hasShow={hasShow} patientUid={patientUid} />}
-      mutationMode="pessimistic"
-      redirect={redirect}
-      transform={transform}
-      mutationOptions={{ onError: onError }}
-    >
-      <SimplePlanEditForm locale={locale} asTemplate={asTemplate}/>
-    </Edit>
-  )
+    <ResourceEdit redirect={redirect} transform={transform}>
+      <SimplePlanEditForm locale={locale} asTemplate={asTemplate} />
+    </ResourceEdit>
+  );
 };
 
-const SimplePlanEditForm = ({locale, asTemplate}) => {
+const SimplePlanEditForm = ({ locale, asTemplate }) => {
   const record = useRecordContext();
   const { permissions } = usePermissions();
   const t = useTranslate();
-  const [randomize, setRandomize] = useState(record.randomize);
+  const [, setRandomize] = useState(record.randomize);
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'name');
   };
-  const categories = useGetCategories(locale);
-  const subCategories = useGetSubCategories(locale);
 
   const handleRandomizeClick = (event) => {
     setRandomize(event.target.checked);
@@ -115,67 +93,100 @@ const SimplePlanEditForm = ({locale, asTemplate}) => {
 
   return (
     <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
-        <Typography variant="h6" gutterBottom>
-          {t('resources.plans.card.labels.definition')}
-        </Typography>
-        {permissions === 'admin' && (
-          <ReferenceField
-            source="clinician_uid"
-            reference="clinicians"
-            link="show"
-          >
-            <TextField source="full_name" />
-          </ReferenceField>
-        )}
-        <TranslatableInputs
-          locales={LANGUAGES}
-          defaultLocale={locale}
-          sx={translatorInputStyle}
+      <Typography variant="h6" gutterBottom>
+        {t('resources.plans.card.labels.definition')}
+      </Typography>
+      {permissions === 'admin' && (
+        <ReferenceField
+          source="clinician_uid"
+          reference="clinicians"
+          link="show"
         >
-          <TextInput source="i18n.name" validate={validateI18n} fullWidth />
-        </TranslatableInputs>
-        {permissions === 'admin' && asTemplate && (
-          <FormDataConsumer>
-            {({ formData, ...rest }) => <IsSystemInput data={formData} />}
-          </FormDataConsumer>
-        )}
-        <NumberInput source="daily_repeat" validate={validateNumber} />
-
-        <Typography
-          variant="h6"
-          gutterBottom
-          gutterTop={true}
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            gap: '1em'
+          <TextField source="full_name" />
+        </ReferenceField>
+      )}
+      <TranslatableInputs
+        locales={LANGUAGES}
+        defaultLocale={locale}
+        sx={translatorInputStyle}
+      >
+        <TextInput source="i18n.name" validate={validateI18n} fullWidth />
+        <div
+          style={{
+            fontSize: '0.7em',
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gridGap:
+              '10px' /* Adjust the value to add space between the image and text */,
+            alignItems: 'center',
           }}
         >
-          {t('resources.plans.card.labels.exercises')}
-          <BooleanInput
-            size="small"
-            source="randomize"
-            onClick={handleRandomizeClick}
-            sx={{ marginTop: '5px' }}
-          />
-        </Typography>
-
-        <ArrayInput
-          source="exercises"
-          fullWidth={false}
-          label=""
-          validate={validateExercises}
+          <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
+        </div>
+        <div
+          style={{
+            fontSize: '0.7em',
+          }}
         >
-          <SimpleFormIterator
-            sx={categoriesSelectorStyle}
-            disableReordering={randomize}
-          >
-            <ExerciseRow
-              categories={categories}
-              subCategories={subCategories}
-            />
-          </SimpleFormIterator>
-        </ArrayInput>
-      </SimpleForm>
+          <FormDataConsumer>
+            {({ formData }) => <AutoTranslate data={formData} />}
+          </FormDataConsumer>
+        </div>
+      </TranslatableInputs>
+      {permissions === 'admin' && asTemplate && (
+        <FormDataConsumer>
+          {({ formData }) => <IsSystemInput data={formData} />}
+        </FormDataConsumer>
+      )}
+      <NumberInput source="daily_repeat" validate={validateNumber} />
+
+      <Typography
+        variant="h6"
+        gutterBottom
+        gutterTop
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: '1em',
+        }}
+      >
+        {t('resources.plans.card.labels.exercises')}
+        <BooleanInput
+          size="small"
+          source="randomize"
+          onClick={handleRandomizeClick}
+          sx={{ marginTop: '5px' }}
+        />
+      </Typography>
+
+      <ArrayInput
+        source="exercises"
+        label=""
+        sx={{
+          '& .RaSimpleFormIterator-action': {
+            visibility: 'visible!important',
+            margin: '0 !important',
+            position: 'absolute',
+            right: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+          minWidth: '525px',
+          maxWidth: '50%',
+          '& .RaSimpleFormIterator-line': {
+            display: 'flex!important',
+            alignItems: 'center',
+            ':last-child': {
+              marginBottom: 0.5,
+            },
+          },
+        }}
+      >
+        <SimpleFormIterator inline>
+          <ExerciceRow />
+        </SimpleFormIterator>
+      </ArrayInput>
+    </SimpleForm>
   );
 };

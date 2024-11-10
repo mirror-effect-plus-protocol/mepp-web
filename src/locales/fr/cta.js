@@ -22,28 +22,30 @@
 
 export default {
   cta: {
+    connexion: 'Connexion',
     login: 'Se connecter',
     logout: 'Se déconnecter',
     send: 'Envoyer',
-
+    donate: 'Donnez',
+    description: 'Description',
+    history: 'Historique',
     goto_forgot_password: 'Mot de passe oublié?',
     goto_login: 'Revenir à l’écran de connexion',
-
     start: 'Commencer la séance',
     settings: 'Configurer l’effet',
     start_exercise: 'Commencer',
     restart: 'Recommencer',
-    restart_exercise: 'Continuer',
+    restart_exercise: 'Continuer l’exercice',
     pause_exercise: 'Pause',
     skip_exercise: 'Sauter',
     next_exercise: 'Suivant',
     authorize: 'Autoriser',
-
     cancel: 'Annuler',
     close: 'Fermer',
     save: 'Sauvegarder',
     modify: 'Modifier',
     back: 'Retour',
     confirm: 'Ok',
+    support: 'Aide',
   },
 };

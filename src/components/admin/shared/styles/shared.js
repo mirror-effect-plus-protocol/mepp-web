@@ -19,18 +19,17 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import {makeStyles} from "@mui/styles";
+import { makeStyles } from '@mui/styles';
 
 export const translatorInputStyle = { width: 'calc(2*256px + 1em)' };
 
 export const categoriesSelectorStyle = {
-    '>ul>li': {
-      borderBottom: 'none'
-    }
+  '>ul>li': {
+    borderBottom: 'none',
+  },
 };
 
-
-export const useRaBoxStyles = makeStyles((theme) => ({
+export const useRaBoxStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     width: '100%',
@@ -40,7 +39,7 @@ export const useRaBoxStyles = makeStyles((theme) => ({
   },
   leftColumn: {
     flexDirection: 'column',
-    flex: '0 0 60%',
+    flex: '0 0 50%',
     flexGrow: '3',
     justifyContent: 'center',
     marginBottom: '10px',
@@ -49,9 +48,10 @@ export const useRaBoxStyles = makeStyles((theme) => ({
     marginRight: '10px',
   },
   rightColumn: {
-    flex: '0 0 40%',
+    flex: '0 0 50%',
     flexDirection: 'column',
     flexGrow: '1',
+    paddingLeft: '10px',
   },
   columnChild: {
     display: 'flex',

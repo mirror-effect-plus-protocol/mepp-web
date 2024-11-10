@@ -25,7 +25,7 @@ export default {
     title: 'Settings',
     nav: {
       languages: 'Language',
-      infos: 'Credentials',
+      infos: 'Identifier',
     },
   },
 };

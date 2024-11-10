@@ -20,24 +20,24 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-
 const getPlaceHolder = (record, locale) => {
   let placeholder = record.id;
-  if (record.hasOwnProperty('full_name')) {
+  if ('full_name' in record) {
     placeholder = record.full_name;
   } else {
-    if (record.i18n?.name?.hasOwnProperty(locale)) {
+    if (locale in (record?.i18n?.name || {})) {
       placeholder = record.i18n.name[locale];
-    } else if (record.i18n?.description?.hasOwnProperty(locale)) {
+    } else if (locale in (record?.i18n?.title || {})) {
+      placeholder = record.i18n.title[locale];
+    } else if (locale in (record?.i18n?.description || {})) {
       const description = record.i18n.description[locale];
-      placeholder = description.length <= 20
-        ? description
-        : `${description.substring(0, 20)}...`;
+      placeholder =
+        description.length <= 20
+          ? description
+          : `${description.substring(0, 20)}...`;
     }
   }
   return placeholder;
 };
 
 export { getPlaceHolder };
-

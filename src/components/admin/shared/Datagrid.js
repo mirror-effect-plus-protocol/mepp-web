@@ -26,34 +26,14 @@ import {
   useListContext,
 } from 'react-admin';
 
-const DatagridBody = ({ data, total, ...rest }) => {
+const DatagridBody = ({ data, ...rest }) => {
   const { filterValues } = useListContext();
   const data_copy = data.filter((item) => {
-    if (item.archived != filterValues.archived) {
+    if (item.archived !== filterValues.archived) {
       return false;
     }
     return true;
   });
-
-  // const ids_copy = ids.filter((id) => {
-  //   if (!data.hasOwnProperty(id)) {
-  //     return false;
-  //   }
-  //   if (data[id].archived != filterValues.archived) {
-  //     return false;
-  //   }
-
-  //   data_copy[id] = data[id];
-
-  //   if (data.hasOwnProperty('fetchedAt')) {
-  //     if (!data_copy.hasOwnProperty('fetchedAt')) {
-  //       data_copy['fetchedAt'] = {};
-  //     }
-  //     data_copy['fetchedAt'][id] = data['fetchedAt'][id];
-  //   }
-
-  //   return true;
-  // });
 
   return <RaDatagridBody data={data_copy} total={data_copy.length} {...rest} />;
 };

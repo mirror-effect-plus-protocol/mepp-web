@@ -167,9 +167,8 @@ const GUIProvider = ({ children }) => {
     return {
       'x': controllers[t(`GUI:labels:${folder}:x`)],
       'y': controllers[t(`GUI:labels:${folder}:y`)],
-      'z': controllers[t(`GUI:labels:${folder}:z`)]
+      'z': controllers[t(`GUI:labels:${folder}:z`)],
     };
-
   };
 
   const getMappedCoordinates = (obj, folder) => {
@@ -274,14 +273,14 @@ const GUIProvider = ({ children }) => {
       .add(position, 'y', -1, 1)
       .name(t('GUI:labels:position:y'))
       .onChange(() => {
-      onChangePosition(position);
-    });
+        onChangePosition(position);
+      });
     positionFolder
       .add(position, 'z', -3, 3)
       .name(t('GUI:labels:position:z'))
       .onChange(() => {
-      onChangePosition(position);
-    });
+        onChangePosition(position);
+      });
 
     const rotationFolder = gui.addFolder(t('GUI:folders:rotation'));
     rotationFolder
@@ -308,14 +307,14 @@ const GUIProvider = ({ children }) => {
       .add(scale, 'x', 0.5, 1.5)
       .name(t('GUI:labels:scale:x'))
       .onChange(() => {
-      onChangeScale(scale);
-    });
+        onChangeScale(scale);
+      });
     scaleFolder
       .add(scale, 'y', 0.5, 1.5)
       .name(t('GUI:labels:scale:y'))
       .onChange(() => {
-      onChangeScale(scale);
-    });
+        onChangeScale(scale);
+      });
     scaleFolder
       .add(scale, 'z', 0.5, 1.5)
       .onChange(() => {

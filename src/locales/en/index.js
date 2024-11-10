@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import ReactAdminEn from 'ra-language-english';
+import RaLanguage from 'ra-language-english';
 
 import a11y from './a11y';
 import admin from './admin';
@@ -28,11 +28,19 @@ import cta from './cta';
 import exercise from './exercise';
 import footer from './footer';
 import form from './form';
+import home from './home';
 import intro from './intro';
 import settings from './settings';
 
+const RaLanguageOverride = { ...RaLanguage };
+RaLanguageOverride.ra.action.show = 'See';
+RaLanguageOverride.ra.action.edit = 'Modify';
+RaLanguageOverride.ra.notification.updated =
+  'Element updated successfully |||| %{smart_count} elements updated successfully';
+RaLanguageOverride.ra.notification.created = 'Element created successfully';
+
 export default {
-  ...ReactAdminEn,
+  ...RaLanguageOverride,
   ...admin,
   ...a11y,
   ...cta,
@@ -42,13 +50,14 @@ export default {
   ...exercise,
   ...settings,
   ...api,
+  ...home,
 
   temporaryProfile: {
-    label: 'You are connected a temporary session',
+    label: 'You are logged in to a temporary session.',
   },
 
   browserSupport: {
-    label: '{name} version {version} is not supported',
+    label: '{name} version {version} is not supported.',
   },
 
   GUI: {
@@ -70,8 +79,8 @@ export default {
         z: '↺ | ↻',
       },
       scale: {
-        x: 'Narrow ↔ Large',
-        y: 'Small ↕ Long',
+        x: 'Narrow ↔ Wide',
+        y: 'Short ↕ Long',
         z: 'z',
       },
     },
@@ -80,7 +89,7 @@ export default {
       default: 'Default values',
     },
     confirm: {
-      title: 'Are you sure you want to exit without saving?',
+      title: 'Do you really want to leave without saving?',
     },
   },
 };

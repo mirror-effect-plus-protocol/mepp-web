@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# ruff: noqa
 # MEPP - A web application to guide patients and clinicians in the process of
 # facial palsy rehabilitation, with the help of the mirror effect and principles
 # of motor learning
@@ -24,4 +23,3 @@ from .staging import *
 
 ALLOWED_HOSTS = ['mirroreffectplus.org', 'www.mirroreffectplus.org']
 HTTP_HOST = os.environ.get('HTTP_HOST', 'https://www.mirroreffectplus.org')
-

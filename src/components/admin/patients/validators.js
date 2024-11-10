@@ -19,9 +19,11 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import { required } from 'react-admin';
 
 export const validateAudio = [required()];
+
+export const validateVideo = [required()];
+
 export const validateClinician = [required()];
 export const validateSide = [required()];

@@ -10,6 +10,9 @@ pytest = "*"
 pytest-django = "*"
 pytest-env = "*"
 mock = "*"
+pip-licenses = "*"
+polib = "*"
+ruff = "*"
 
 [packages]
 django = "==4.2.11"
@@ -25,6 +28,8 @@ pyyaml = "*"
 ua-parser = "*"
 user-agents = "*"
 jsonschema = "*"
+requests = "*"
+django-storages = {extras = ["s3"], version = "*"}
 
 [requires]
 python_version = "3.10"

@@ -22,15 +22,15 @@
 import logging
 
 from django.contrib.auth import get_user_model
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
-from django.http import Http404
-from rest_framework import viewsets, mixins
+from rest_framework import mixins, viewsets
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_201_CREATED
+from rest_framework.status import HTTP_201_CREATED, HTTP_403_FORBIDDEN
 from user_agents import parse
 
 from mepp.api.enums.action import ActionEnum
@@ -46,8 +46,8 @@ from mepp.api.permissions import (
 from mepp.api.serializers.v1.authtoken import AuthTokenSerializer
 from mepp.api.serializers.v1.log import UserLogSerializer
 from mepp.api.serializers.v1.patient import (
-    PatientSettingsSerializer,
     PatientMirrorSettingsSerializer,
+    PatientSettingsSerializer,
 )
 from mepp.api.serializers.v1.session import UserSessionSerializer
 
@@ -196,6 +196,7 @@ class CurrentUserViewSet(
                 'email': user.email,
                 'language': user.language,
                 'use_audio': user.use_audio,
+                'has_cognitive_issues': user.has_cognitive_issues,
                 'side': user.side,
                 'mirror_settings': user.mirror_settings,
             },

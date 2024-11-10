@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React, { useState } from 'react';
 import { useNotify } from 'react-admin';
 import { useTranslation } from 'react-i18next';
@@ -53,7 +52,7 @@ const ForgotPwdForm = ({ onSwitch }) => {
     const { data } = await post({ email });
     // always success message even if email is not found
     if (data) setSuccess(true);
-    else notify('api.error.generic', {type: 'error'});
+    else notify('api.error.generic', { type: 'error' });
   };
 
   return (

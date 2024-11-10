@@ -20,19 +20,17 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-
 const sanitizeRestProps = (props, subsetProps, remove) => {
-  const sanitizedProps = {...props};
+  const sanitizedProps = { ...props };
 
   if (remove) {
-    subsetProps.forEach(prop => {
-      if (sanitizedProps.hasOwnProperty(prop)) {
+    subsetProps.forEach((prop) => {
+      if (prop in sanitizedProps) {
         delete sanitizedProps[prop];
       }
     });
   } else {
-    Object.keys(props).forEach(prop => {
+    Object.keys(props).forEach((prop) => {
       if (!subsetProps.includes(prop)) {
         delete sanitizedProps[prop];
       }

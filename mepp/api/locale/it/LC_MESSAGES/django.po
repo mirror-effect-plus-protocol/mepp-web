@@ -1,0 +1,484 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-05 00:06+0000\n"
+"PO-Revision-Date: 2024-11-10 16:42+0000\n"
+"Last-Translator: ChatGPT 4o-mini API\n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#: mepp/api/authentication.py:28
+msgid "Invalid token."
+msgstr "Chiave API non valida"
+
+#: mepp/api/signals.py:51
+msgid "Your profile has been activated"
+msgstr "Il tuo profilo è stato attivato"
+
+#: mepp/api/signals.py:85
+msgid "Your e-mail address has been changed"
+msgstr "Il tuo indirizzo email è stato modificato"
+
+#: mepp/api/signals.py:126 mepp/api/templates/email/user_reset_password.html:7
+#: mepp/api/templates/email/user_reset_password.source.html:7
+msgid "Your password reset link"
+msgstr "Il tuo link per reimpostare la password"
+
+#: mepp/api/templates/email/staff_registration.html:7
+#: mepp/api/templates/email/staff_registration.source.html:7
+#: mepp/api/templates/email/user_registration.html:7
+#: mepp/api/templates/email/user_registration.source.html:7
+msgid "Your profile has been activated on MEPP"
+msgstr "Il tuo profilo MEPP è stato attivato"
+
+#: mepp/api/templates/email/staff_registration.html:102
+#: mepp/api/templates/email/staff_registration.source.html:336
+msgid "Welcome to the MEPP."
+msgstr "Benvenuto sul MEPP"
+
+#: mepp/api/templates/email/staff_registration.html:127
+#: mepp/api/templates/email/staff_registration.source.html:361
+#: mepp/api/templates/email/staff_registration.txt:2
+#: mepp/api/templates/email/user_email_changed.html:127
+#: mepp/api/templates/email/user_email_changed.source.html:361
+#: mepp/api/templates/email/user_email_changed.txt:2
+#: mepp/api/templates/email/user_registration.html:127
+#: mepp/api/templates/email/user_registration.source.html:361
+#: mepp/api/templates/email/user_registration.txt:2
+#: mepp/api/templates/email/user_reset_password.html:127
+#: mepp/api/templates/email/user_reset_password.source.html:361
+#: mepp/api/templates/email/user_reset_password.txt:2
+msgid "Hello"
+msgstr "Ciao"
+
+#: mepp/api/templates/email/staff_registration.html:128
+#: mepp/api/templates/email/staff_registration.source.html:362
+#: mepp/api/templates/email/staff_registration.txt:4
+msgid "Welcome to the MEPP 2.0, your staff facial rehabilitation website, at"
+msgstr ""
+"È con piacere che vi diamo il benvenuto su MEPP 2.0, un sito progettato per "
+"aiutarvi a supportare al meglio i vostri pazienti nelle diverse fasi della "
+"loro riabilitazione dalla paralisi facciale"
+
+#: mepp/api/templates/email/staff_registration.html:129
+#: mepp/api/templates/email/staff_registration.source.html:363
+#: mepp/api/templates/email/staff_registration.txt:6
+#: mepp/api/templates/email/user_registration.html:129
+#: mepp/api/templates/email/user_registration.source.html:363
+#: mepp/api/templates/email/user_registration.txt:6
+msgid "Your username is:"
+msgstr "Il tuo nome utente è :"
+
+#: mepp/api/templates/email/staff_registration.html:130
+#: mepp/api/templates/email/user_registration.html:130
+#, python-format
+msgid ""
+"We invite you to visit <a href=\"%(mepp_host)s\" style=\"color: #008EDE; "
+"text-decoration: underline;\">%(mepp_host)s</a> and click on "
+"<b>Forgot&nbsp;your&nbsp;password?</b> to reset and create your own your "
+"password."
+msgstr ""
+"Per accedere al sito, vai a <a href=\"%(mepp_host)s\" style=\"color: "
+"#008EDE; text-decoration: underline;\">%(mepp_host)s</a>. Alla tua prima "
+"utilizzazione, dovrai cliccare su <b>Hai dimenticato la password?</b> per "
+"ripristinare la tua password e crearne una nuova"
+
+#: mepp/api/templates/email/staff_registration.html:132
+#: mepp/api/templates/email/staff_registration.source.html:366
+#: mepp/api/templates/email/staff_registration.txt:10
+msgid ""
+"The administrator has created a therapist profile for you. We invite you to "
+"look at the following video of instructions to understand how to navigate in"
+" the system:"
+msgstr ""
+"L’amministratore ti ha creato un profilo di terapeuta. Prima di tutto, ti "
+"invitiamo a guardare questo breve video. Spiega in dettaglio come navigare "
+"nel sito:"
+
+#: mepp/api/templates/email/staff_registration.html:133
+#: mepp/api/templates/email/staff_registration.source.html:367
+msgid "staff_introduction_video"
+msgstr "staff_introduction_video"
+
+#: mepp/api/templates/email/staff_registration.html:135
+#: mepp/api/templates/email/staff_registration.source.html:369
+#: mepp/api/templates/email/staff_registration.txt:13
+msgid ""
+"You can now go to your profile, create profiles, practical sessions and "
+"intervention plans for your patients."
+msgstr ""
+"Accedendo al tuo profilo, potrai creare, per ogni paziente, un profilo, "
+"delle sedute di esercizi e dei piani di intervento"
+
+#: mepp/api/templates/email/staff_registration.html:137
+#: mepp/api/templates/email/staff_registration.source.html:371
+#: mepp/api/templates/email/staff_registration.txt:15
+#: mepp/api/templates/email/user_registration.html:132
+#: mepp/api/templates/email/user_registration.source.html:366
+#: mepp/api/templates/email/user_registration.txt:12
+msgid ""
+"Below are important tips to use the MEPP in an efficient way and to have a "
+"better experience:"
+msgstr ""
+"Per ottimizzare l’utilizzo di MEPP 2.0, è necessario adattarlo al tipo di "
+"dispositivo che stai utilizzando:"
+
+#: mepp/api/templates/email/staff_registration.html:139
+#: mepp/api/templates/email/staff_registration.source.html:373
+#: mepp/api/templates/email/user_registration.html:134
+#: mepp/api/templates/email/user_registration.source.html:368
+msgid ""
+"On your mobile devices, it is imperative to hold your device vertically"
+msgstr ""
+"Con un dispositivo mobile (telefono o tablet), è imperativo tenerlo in "
+"verticale"
+
+#: mepp/api/templates/email/staff_registration.html:140
+#: mepp/api/templates/email/staff_registration.source.html:374
+#: mepp/api/templates/email/user_registration.html:135
+#: mepp/api/templates/email/user_registration.source.html:369
+msgid "On your computer, put your browser in fullscreen"
+msgstr ""
+"Con un computer: devi utilizzare il tuo browser in modalità a schermo intero"
+
+#: mepp/api/templates/email/staff_registration.html:143
+#: mepp/api/templates/email/staff_registration.source.html:377
+#: mepp/api/templates/email/staff_registration.txt:20
+msgid ""
+"Please, follow this flash training on important principles for facial "
+"rehabilitation:"
+msgstr ""
+"Prima di iniziare, vi invitiamo a seguire questo breve corso sui principi "
+"importanti nella riabilitazione della paralisi facciale:"
+
+#: mepp/api/templates/email/staff_registration.html:144
+#: mepp/api/templates/email/staff_registration.source.html:378
+msgid "staff_training_video"
+msgstr "staff_training_video"
+
+#: mepp/api/templates/email/staff_registration.html:146
+#: mepp/api/templates/email/staff_registration.source.html:380
+#: mepp/api/templates/email/staff_registration.txt:23
+msgid ""
+"We also encourage you to continue training in the field to learn how to "
+"guide your patients in an optimal way."
+msgstr ""
+"Vi incoraggiamo vivamente a proseguire la vostra formazione nel settore. È "
+"il modo migliore per assicurarvi che i vostri pazienti possano beneficiare "
+"delle migliori interventi possibili"
+
+#: mepp/api/templates/email/staff_registration.html:147
+#: mepp/api/templates/email/user_registration.html:140
+msgid ""
+"In case of technical problems with the website or application, please "
+"contact us at <a href=\"mailto:info@mirroreffectplus.org\" style=\"color: "
+"#008EDE; text-decoration: underline;\">info@mirroreffectplus.org</a>."
+msgstr ""
+"Per qualsiasi problema tecnico con il sito web o l’applicazione, puoi "
+"contattarci a <a href=\"mailto:info@mirroreffectplus.org\" style=\"color: "
+"#008EDE; text-decoration: underline;\">info@mirroreffectplus.org</a>"
+
+#: mepp/api/templates/email/staff_registration.html:148
+#: mepp/api/templates/email/staff_registration.source.html:382
+#: mepp/api/templates/email/staff_registration.txt:27
+msgid "We wish you a successful intervention!"
+msgstr "Vi auguriamo tutto il successo possibile nei vostri interventi!"
+
+#: mepp/api/templates/email/staff_registration.html:149
+#: mepp/api/templates/email/staff_registration.source.html:383
+#: mepp/api/templates/email/staff_registration.txt:29
+#: mepp/api/templates/email/user_email_changed.html:146
+#: mepp/api/templates/email/user_email_changed.source.html:380
+#: mepp/api/templates/email/user_email_changed.txt:10
+#: mepp/api/templates/email/user_registration.html:142
+#: mepp/api/templates/email/user_registration.source.html:376
+#: mepp/api/templates/email/user_registration.txt:26
+#: mepp/api/templates/email/user_reset_password.html:146
+#: mepp/api/templates/email/user_reset_password.source.html:380
+#: mepp/api/templates/email/user_reset_password.txt:10
+msgid "The MEPP team"
+msgstr "Il team MEPP"
+
+#: mepp/api/templates/email/staff_registration.source.html:364
+#: mepp/api/templates/email/user_registration.source.html:364
+#, python-format
+msgid ""
+"We invite you to visit <a href=\"%(mepp_host)s\">%(mepp_host)s</a> and click"
+" on <b>Forgot&nbsp;your&nbsp;password?</b> to reset and create your own your"
+" password."
+msgstr ""
+"Per accedere al sito, vai su <a href=\"%(mepp_host)s\">%(mepp_host)s</a>. Al"
+" primo utilizzo, dovrai cliccare su <b>Hai dimenticato la password?</b> per "
+"reimpostare e creare la tua password."
+
+#: mepp/api/templates/email/staff_registration.source.html:381
+#: mepp/api/templates/email/user_registration.source.html:374
+msgid ""
+"In case of technical problems with the website or application, please "
+"contact us at <a "
+"href=\"mailto:info@mirroreffectplus.org\">info@mirroreffectplus.org</a>."
+msgstr ""
+"In caso di problemi tecnici con il sito web o l’applicazione, si prega di "
+"scrivere a <a "
+"href=\"mailto:info@mirroreffectplus.org\">info@mirroreffectplus.org</a>"
+
+#: mepp/api/templates/email/staff_registration.txt:8
+#: mepp/api/templates/email/user_registration.txt:8
+#, python-format
+msgid ""
+"We invite you to visit %(mepp_host)s and click on \"Forgot your password?\" "
+"to reset and create your own your password."
+msgstr ""
+"Per accedere al sito, vai a %(mepp_host)s\". Durante il tuo primo utilizzo, "
+"dovrai cliccare su “Password dimenticata?” per reimpostare e creare la tua "
+"password."
+
+#: mepp/api/templates/email/staff_registration.txt:17
+#: mepp/api/templates/email/user_registration.txt:14
+msgid ""
+"   - On your mobile devices, it is imperative to hold your device vertically"
+msgstr ""
+"- Sugli apparecchi mobili (telefonini e tablet), è imperativo tenerli in "
+"verticale"
+
+#: mepp/api/templates/email/staff_registration.txt:18
+#: mepp/api/templates/email/user_registration.txt:15
+msgid "   - On your computer, put your browser in fullscreen"
+msgstr ""
+"   - Sul tuo computer, usa il tuo browser in modalità a schermo intero"
+
+#: mepp/api/templates/email/staff_registration.txt:25
+#: mepp/api/templates/email/user_registration.txt:22
+msgid ""
+"In case of technical problems with the website or application, please "
+"contact us at info@mirroreffectplus.org."
+msgstr ""
+"In caso di problemi tecnici con il sito web o l’applicazione, si prega di "
+"scrivere a info@mirroreffectplus.org"
+
+#: mepp/api/templates/email/user_email_changed.html:7
+#: mepp/api/templates/email/user_email_changed.source.html:7
+msgid "Your e-mail address has changed"
+msgstr "Il tuo indirizzo email è cambiato"
+
+#: mepp/api/templates/email/user_email_changed.html:102
+#: mepp/api/templates/email/user_email_changed.source.html:336
+msgid "Your email-address has changed."
+msgstr "Il tuo indirizzo email è cambiato"
+
+#: mepp/api/templates/email/user_email_changed.html:128
+#: mepp/api/templates/email/user_email_changed.source.html:362
+#: mepp/api/templates/email/user_email_changed.txt:4
+msgid "Your e-mail address used with your MEPP account has been changed!"
+msgstr "L’indirizzo email del tuo account MEPP è stato modificato!"
+
+#: mepp/api/templates/email/user_email_changed.html:129
+#: mepp/api/templates/email/user_email_changed.source.html:363
+#: mepp/api/templates/email/user_email_changed.txt:6
+#, python-format
+msgid ""
+"The previous address was %(previous_email)s and the new address is "
+"%(email)s."
+msgstr ""
+"Il tuo indirizzo precedente era %(previous_email)s e il nuovo è %(email)s"
+
+#: mepp/api/templates/email/user_email_changed.html:130
+#: mepp/api/templates/email/user_email_changed.source.html:364
+msgid ""
+"If you have not made this change, please contact us immediately by clicking "
+"the button below."
+msgstr ""
+"Se non hai effettuato questa modifica, ti preghiamo di contattarci "
+"immediatamente cliccando sul pulsante qui sotto"
+
+#: mepp/api/templates/email/user_email_changed.html:138
+#: mepp/api/templates/email/user_email_changed.source.html:372
+msgid "Contact us"
+msgstr "Contattaci"
+
+#: mepp/api/templates/email/user_email_changed.txt:8
+msgid ""
+"If you have not made this change, please contact us immediately at "
+"info@mirroreffectplus.org."
+msgstr ""
+"Se non hai effettuato questa modifica, ti preghiamo di contattarci "
+"immediatamente a info@mirroreffectplus.org"
+
+#: mepp/api/templates/email/user_registration.html:102
+#: mepp/api/templates/email/user_registration.source.html:336
+msgid "Welcome to the MEPP"
+msgstr "Benvenuto sul MEPP"
+
+#: mepp/api/templates/email/user_registration.html:128
+#: mepp/api/templates/email/user_registration.source.html:362
+#: mepp/api/templates/email/user_registration.txt:4
+msgid "Welcome to the MEPP 2.0, your facial rehabilitation website, at"
+msgstr ""
+"È con piacere che vi diamo il benvenuto su MEPP 2.0, un sito progettato per "
+"accompagnarvi in tutte le fasi della vostra riabilitazione facciale"
+
+#: mepp/api/templates/email/user_registration.html:131
+#: mepp/api/templates/email/user_registration.source.html:365
+#: mepp/api/templates/email/user_registration.txt:10
+msgid ""
+"Your facial therapist has created a practical session for you. We invite you"
+" to go to your profile and to follow the instructions to realize your "
+"therapy."
+msgstr ""
+"Il tuo terapeuta per la riabilitazione della paralisi facciale ha creato un "
+"piano di intervento per te. Accedendo al tuo profilo, avrai accesso agli "
+"esercizi che contiene. Questi esercizi fanno parte della tua terapia e "
+"devono essere eseguiti secondo le istruzioni che ti saranno fornite per "
+"ognuno."
+
+#: mepp/api/templates/email/user_registration.html:137
+#: mepp/api/templates/email/user_registration.source.html:371
+#: mepp/api/templates/email/user_registration.txt:17
+msgid ""
+"Please, look at the following video of instructions to understand how to "
+"navigate in the system:"
+msgstr ""
+"Per aiutarvi a comprendere meglio la navigazione nell’interfaccia, vi "
+"invitiamo a guardare il breve video che segue:"
+
+#: mepp/api/templates/email/user_registration.html:138
+#: mepp/api/templates/email/user_registration.source.html:372
+msgid "user_intro_video"
+msgstr "user_intro_video"
+
+#: mepp/api/templates/email/user_registration.html:139
+#: mepp/api/templates/email/user_registration.source.html:373
+#: mepp/api/templates/email/user_registration.txt:21
+msgid ""
+"In case of questions about your therapy and its evolution, please contact "
+"your therapist."
+msgstr ""
+"Per qualsiasi domanda riguardante la tua terapia e la sua evoluzione, ti "
+"preghiamo di contattare il tuo terapeuta"
+
+#: mepp/api/templates/email/user_registration.html:141
+#: mepp/api/templates/email/user_registration.source.html:375
+#: mepp/api/templates/email/user_registration.txt:24
+msgid "We wish you a successful rehabilitation!"
+msgstr "Vi auguriamo tutto il successo possibile nella vostra riabilitazione!"
+
+#: mepp/api/templates/email/user_reset_password.html:102
+#: mepp/api/templates/email/user_reset_password.source.html:336
+msgid "Instructions to reset your password."
+msgstr "Istruzioni per reimpostare la tua password"
+
+#: mepp/api/templates/email/user_reset_password.html:128
+#: mepp/api/templates/email/user_reset_password.source.html:362
+#: mepp/api/templates/email/user_reset_password.txt:4
+msgid "There was a request to change your password!"
+msgstr "Abbiamo ricevuto una richiesta di cambio della password"
+
+#: mepp/api/templates/email/user_reset_password.html:129
+#: mepp/api/templates/email/user_reset_password.source.html:363
+#: mepp/api/templates/email/user_reset_password.txt:6
+msgid "If you did not make this request then please ignore this email."
+msgstr "Se sei l’autore di questa richiesta, fai clic sul pulsante qui sotto"
+
+#: mepp/api/templates/email/user_reset_password.html:130
+#: mepp/api/templates/email/user_reset_password.source.html:364
+msgid "Otherwise, please click the button below to change your password."
+msgstr "Altrimenti, puoi ignorare questa email"
+
+#: mepp/api/templates/email/user_reset_password.html:138
+#: mepp/api/templates/email/user_reset_password.source.html:372
+msgid "Reset your password"
+msgstr "Nuova password"
+
+#: mepp/api/templates/email/user_reset_password.txt:8
+msgid "Otherwise, please click this link to change your password:"
+msgstr "In alternativa, fai clic su questo link per cambiare la tua password:"
+
+#: mepp/api/views/v1/patient.py:92
+msgid "side:0"
+msgstr "side:0"
+
+#: mepp/api/views/v1/patient.py:93
+msgid "side:1"
+msgstr "side:1"
+
+#: mepp/api/views/v1/patient.py:94
+msgid "use_audio:False"
+msgstr "use_audio:False"
+
+#: mepp/api/views/v1/patient.py:95
+msgid "use_audio:True"
+msgstr "use_audio:True"
+
+#: mepp/api/views/v1/patient.py:96
+msgid "language:fr"
+msgstr "language:fr"
+
+#: mepp/api/views/v1/patient.py:97
+msgid "language:en"
+msgstr "language:en"
+
+#: mepp/api/views/v1/patient.py:100
+msgid "Patient"
+msgstr "Paziente(a)"
+
+#: mepp/api/views/v1/patient.py:101
+msgid "Treatment plan"
+msgstr "Piano di intervento"
+
+#: mepp/api/views/v1/patient.py:102
+msgid "Side"
+msgstr "Lato"
+
+#: mepp/api/views/v1/patient.py:103
+msgid "Audio"
+msgstr "Audio"
+
+#: mepp/api/views/v1/patient.py:104
+msgid "Language"
+msgstr "Lingua"
+
+#: mepp/api/views/v1/patient.py:105
+msgid "Clinician"
+msgstr "Clinico(a)"
+
+#: mepp/api/views/v1/patient.py:106
+msgid "Session"
+msgstr "Seduta"
+
+#: mepp/api/views/v1/patient.py:107
+msgid "Exercise"
+msgstr "Esercizio"
+
+#: mepp/api/views/v1/patient.py:108
+msgid "Action"
+msgstr "Azione"
+
+#: mepp/api/views/v1/patient.py:109
+msgid "Date/Time (UTC)"
+msgstr "Data/Ora (UTC)"
+
+#: mepp/api/views/v1/patient.py:183
+msgid "side:{record['side']}"
+msgstr "side:{record['side']}"
+
+#: mepp/api/views/v1/patient.py:186
+msgid "use_audio:{record['use_audio']}"
+msgstr "use_audio:{record['use_audio']}"
+
+#: mepp/api/views/v1/patient.py:189
+msgid "language:{record['language']}"
+msgstr "language:{record['language']}"
+
+#~ msgid "The MEPP team."
+#~ msgstr "Il team MEPP"

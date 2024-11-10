@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useEffect, useState } from 'react';
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
+import React, { useEffect, useState } from 'react';
 import {
   Datagrid,
   Show,
@@ -43,7 +43,6 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
@@ -61,15 +60,17 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
+import { useLocale } from '@hooks/locale/useLocale';
+
 import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
 import AddPlanButton from '@components/admin/patients/AddPlanButton';
+import { PatientWidget } from '@components/admin/patients/PatientWidget';
 import Spinner from '@components/admin/shared/Spinner';
 import { Typography } from '@components/admin/shared/dom/sanitize';
+import { useRaBoxStyles } from '@components/admin/shared/styles/shared';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
-import {useRaBoxStyles} from "@components/admin/shared/styles/shared";
-
 
 const useArchivesStyles = makeStyles((theme) => ({
   root: {
@@ -81,11 +82,7 @@ const useArchivesStyles = makeStyles((theme) => ({
 export const PatientShow = () => {
   const { hasEdit } = useResourceDefinition();
   return (
-    <Show
-      actions={
-        <TopToolbar showExport={true} hasEdit={hasEdit} hasShow={false} />
-      }
-    >
+    <Show actions={<TopToolbar showExport hasEdit={hasEdit} hasShow={false} />}>
       <PatientShowRecord />
     </Show>
   );
@@ -94,7 +91,7 @@ export const PatientShow = () => {
 export const PatientShowRecord = () => {
   const record = useRecordContext();
   if (!record) return null;
-  const [patientUid, setPatientUid] = useStore('patient.uid', record.id);
+  const [, setPatientUid] = useStore('patient.uid', record.id);
   const classes = useRaBoxStyles();
 
   useEffect(() => {
@@ -116,7 +113,7 @@ export const PatientShowLayout = ({ record }) => {
   const { permissions } = usePermissions();
   const classes = useRaBoxStyles();
   const archivesToggleClasses = useArchivesStyles();
-  const [sort, setSort] = useState({ field: 'start_date', order: 'DESC' });
+  const [sort] = useState({ field: 'start_date', order: 'DESC' });
   const [openDialogEmail, setOpenDialogEmail] = useState(false);
   const [archives, setArchives] = useState(false);
   const { data, total, isLoading } = useGetList('plans', {
@@ -128,15 +125,15 @@ export const PatientShowLayout = ({ record }) => {
     setArchives(event.target.checked);
   };
 
-  const handleOpenDialogEmail = (event) => {
+  const handleOpenDialogEmail = () => {
     setOpenDialogEmail(true);
   };
 
-  const handleCloseDialogEmail = (event) => {
+  const handleCloseDialogEmail = () => {
     setOpenDialogEmail(false);
   };
 
-  const handleSendOnboarding = (event) => {
+  const handleSendOnboarding = () => {
     setOpenDialogEmail(false);
     const url = `${process.env.API_ENDPOINT}/patients/${record.id}/resend/`;
 
@@ -149,7 +146,7 @@ export const PatientShowLayout = ({ record }) => {
           type: 'info',
         });
       })
-      .catch((e) => {
+      .catch(() => {
         notify('resources.patients.notifications.email.send.failure', {
           type: 'error',
         });
@@ -169,15 +166,19 @@ export const PatientShowLayout = ({ record }) => {
               <Labeled>
                 <TextField source="first_name" />
               </Labeled>
-              <div>
-                <EmailField source="email" />
-                <IconButton
-                  size="small"
-                  style={{ marginLeft: '0.5em' }}
-                  onClick={handleOpenDialogEmail}
+              <>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                  }}
                 >
-                  <MailOutlineIcon />
-                </IconButton>
+                  <EmailField source="email" sx={{ marginRight: '5px' }} />
+                  <IconButton size="small" onClick={handleOpenDialogEmail}>
+                    <MailOutlineIcon />
+                  </IconButton>
+                </div>
                 <Dialog open={openDialogEmail}>
                   <DialogTitle>
                     {t('admin.shared.text.emailDialog.title')}
@@ -208,12 +209,15 @@ export const PatientShowLayout = ({ record }) => {
                     </Button>
                   </DialogActions>
                 </Dialog>
-              </div>
+              </>
             </RaBox>
             <RaBox className={classes.innerChild}>
               <Labeled>
                 <TextField source="last_name" />
               </Labeled>
+              <RaBox className={classes.innerChild}>
+                <ClinicianTextField show={permissions === 'admin'} />
+              </RaBox>
             </RaBox>
           </RaBox>
         </RaBox>
@@ -248,7 +252,16 @@ export const PatientShowLayout = ({ record }) => {
                   }
                 />
               </Labeled>
-              <ClinicianTextField show={permissions === 'admin'} />
+              <Labeled>
+                <FunctionField
+                  label={t('resources.patients.fields.has_cognitive_issues')}
+                  render={(record) =>
+                    t(
+                      `resources.patients.shared.video.${record.has_cognitive_issues}`,
+                    )
+                  }
+                />
+              </Labeled>
             </RaBox>
           </RaBox>
         </RaBox>
@@ -279,10 +292,10 @@ export const PatientShowLayout = ({ record }) => {
         {!isLoading && (
           <ListContextProvider
             value={{
-              data: data,
+              data,
               total,
-              sort: sort,
-              resource: resource,
+              sort,
+              resource,
               selectedIds: [],
             }}
           >
@@ -320,14 +333,20 @@ export const PatientShowLayout = ({ record }) => {
                 rowResource="plans"
                 record={record}
                 context={{ patientUid: record.id }}
-                activable={true}
-                clonable={true}
+                activable
+                clonable
               />
             </Datagrid>
           </ListContextProvider>
         )}
+        <div
+          style={{
+            marginTop: '30px',
+          }}
+        >
+          <PatientWidget widget="sessions" patientUid={record.id} />
+        </div>
       </div>
-
       <ShowToolBar />
     </BoxedShowLayout>
   );

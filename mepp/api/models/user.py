@@ -60,6 +60,7 @@ class User(AbstractUser, Archivable, Searchable):
         max_length=2,
     )
     use_audio = models.BooleanField(null=True)
+    has_cognitive_issues = models.BooleanField(default=False)
     side = models.PositiveSmallIntegerField(
         choices=SideEnum.choices(),
         null=True,
@@ -75,7 +76,7 @@ class User(AbstractUser, Archivable, Searchable):
 
     def __init__(self, *args, **kwargs):
         self.email_has_changed = False
-        self.email = models.EmailField(_("email address"), blank=True)
+        self.email = models.EmailField(_('email address'), blank=True)
         super().__init__(*args, **kwargs)
 
     @property
@@ -127,7 +128,7 @@ class User(AbstractUser, Archivable, Searchable):
 
         return self.patient_treatment_plans.filter(
             active=True,
-        ).first()
+        ).order_by('-modified_at').first()
 
     def delete(self, using=None, keep_parents=False):
         # Delete relationship with treatment plans manually to avoid

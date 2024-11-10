@@ -19,10 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {useState} from 'react';
-import { Typography } from '@components/admin/shared/dom/sanitize';
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
+import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
+import React, { useState } from 'react';
 import {
   BooleanField,
   Show,
@@ -35,21 +34,23 @@ import {
   useRecordContext,
 } from 'react-admin';
 
-import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import {
   Button,
-  Dialog, DialogActions,
+  Dialog,
+  DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  IconButton
-} from "@mui/material";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import CheckCircle from "@mui/icons-material/CheckCircle";
-import {fetchJsonWithAuthToken} from "ra-data-django-rest-framework";
-import {useRaBoxStyles} from "@components/admin/shared/styles/shared";
+  IconButton,
+} from '@mui/material';
+
+import { Typography } from '@components/admin/shared/dom/sanitize';
+import { useRaBoxStyles } from '@components/admin/shared/styles/shared';
+import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
+import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
 export const ClinicianShow = () => {
   const { hasEdit } = useResourceDefinition();
@@ -61,7 +62,6 @@ export const ClinicianShow = () => {
   );
 };
 
-
 export const ClinicianShowRecord = () => {
   const record = useRecordContext();
   if (!record) return null;
@@ -72,7 +72,6 @@ export const ClinicianShowRecord = () => {
       <ClinicianShowLayout record={record}></ClinicianShowLayout>
     </BoxedShowLayout>
   );
-
 };
 
 export const ClinicianShowLayout = ({ record }) => {
@@ -81,15 +80,15 @@ export const ClinicianShowLayout = ({ record }) => {
   const classes = useRaBoxStyles();
   const [openDialogEmail, setOpenDialogEmail] = useState(false);
 
-  const handleOpenDialogEmail = (event) => {
+  const handleOpenDialogEmail = () => {
     setOpenDialogEmail(true);
   };
 
-  const handleCloseDialogEmail = (event) => {
+  const handleCloseDialogEmail = () => {
     setOpenDialogEmail(false);
   };
 
-  const handleSendOnboarding = (event) => {
+  const handleSendOnboarding = () => {
     setOpenDialogEmail(false);
     const url = `${process.env.API_ENDPOINT}/clinicians/${record.id}/resend/`;
 
@@ -102,7 +101,7 @@ export const ClinicianShowLayout = ({ record }) => {
           type: 'info',
         });
       })
-      .catch((e) => {
+      .catch(() => {
         notify('resources.patients.notifications.email.send.failure', {
           type: 'error',
         });
@@ -111,78 +110,78 @@ export const ClinicianShowLayout = ({ record }) => {
   };
 
   return (
-      <BoxedShowLayout className={classes.container}>
-        <Typography variant="h6" gutterBottom>
-          {t('admin.shared.labels.card.identity')}
-        </Typography>
-        <RaBox>
-          <RaBox className={classes.columnChild}>
-            <RaBox className={classes.innerChild}>
-              <TextField source="first_name" />
-              <div>
-                <EmailField source="email" />
-                <IconButton
-                  size="small"
-                  style={{ marginLeft: '0.5em' }}
-                  onClick={handleOpenDialogEmail}
-                >
-                  <MailOutlineIcon />
-                </IconButton>
-                <Dialog open={openDialogEmail}>
-                  <DialogTitle>
-                    {t('admin.shared.text.emailDialog.title')}
-                  </DialogTitle>
-                  <DialogContent>
-                    <DialogContentText>
-                      {t('admin.shared.text.emailDialog.body')}
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button
-                      onClick={handleCloseDialogEmail}
-                      autoFocus
-                      size="small"
-                      variant="contained"
-                      color="secondary"
-                      startIcon={<ErrorOutlineIcon />}
-                    >
-                      {t('admin.shared.labels.cancelButton')}
-                    </Button>
-                    <Button
-                      onClick={handleSendOnboarding}
-                      color="primary"
-                      variant="contained"
-                      startIcon={<CheckCircle />}
-                    >
-                      {t('admin.shared.labels.confirmButton')}
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-              </div>
-            </RaBox>
-            <RaBox className={classes.innerChild}>
-              <TextField source="last_name" />
-            </RaBox>
+    <BoxedShowLayout className={classes.container}>
+      <Typography variant="h6" gutterBottom>
+        {t('admin.shared.labels.card.identity')}
+      </Typography>
+      <RaBox>
+        <RaBox className={classes.columnChild}>
+          <RaBox className={classes.innerChild}>
+            <TextField source="first_name" />
+            <div>
+              <EmailField source="email" />
+              <IconButton
+                size="small"
+                style={{ marginLeft: '0.5em' }}
+                onClick={handleOpenDialogEmail}
+              >
+                <MailOutlineIcon />
+              </IconButton>
+              <Dialog open={openDialogEmail}>
+                <DialogTitle>
+                  {t('admin.shared.text.emailDialog.title')}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    {t('admin.shared.text.emailDialog.body')}
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    onClick={handleCloseDialogEmail}
+                    autoFocus
+                    size="small"
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<ErrorOutlineIcon />}
+                  >
+                    {t('admin.shared.labels.cancelButton')}
+                  </Button>
+                  <Button
+                    onClick={handleSendOnboarding}
+                    color="primary"
+                    variant="contained"
+                    startIcon={<CheckCircle />}
+                  >
+                    {t('admin.shared.labels.confirmButton')}
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+          </RaBox>
+          <RaBox className={classes.innerChild}>
+            <TextField source="last_name" />
           </RaBox>
         </RaBox>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
-          {t('admin.shared.labels.card.informations')}
-        </Typography>
-        <RaBox>
-          <RaBox className={classes.columnChild}>
-            <RaBox className={classes.innerChild}>
-              <FunctionField
-                label={t('resources.clinicians.fields.language')}
-                render={(record) => t(`languages.${record.language}`)}
-              />
-            </RaBox>
-            <RaBox className={classes.innerChild}>
-              <BooleanField source="is_superuser" />
-            </RaBox>
+      </RaBox>
+      <Typography variant="h6" gutterBottom gutterTop>
+        {t('admin.shared.labels.card.informations')}
+      </Typography>
+      <RaBox>
+        <RaBox className={classes.columnChild}>
+          <RaBox className={classes.innerChild}>
+            <FunctionField
+              label={t('resources.clinicians.fields.language')}
+              render={(record) => t(`languages.${record.language}`)}
+            />
+          </RaBox>
+          <RaBox className={classes.innerChild}>
+            <BooleanField source="is_superuser" />
           </RaBox>
         </RaBox>
+      </RaBox>
 
-        <ShowToolBar />
-      </BoxedShowLayout>
+      <ShowToolBar />
+    </BoxedShowLayout>
   );
 };

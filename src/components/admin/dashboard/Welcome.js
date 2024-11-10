@@ -28,7 +28,6 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import {
@@ -45,6 +44,8 @@ import {
 } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { makeStyles } from '@mui/styles';
+
+import { useLocale } from '@hooks/locale/useLocale';
 
 import { MirrorIcon } from '@components/admin/shared/icons/MirrorIcon';
 

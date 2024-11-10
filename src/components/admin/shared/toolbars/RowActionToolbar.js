@@ -28,13 +28,14 @@ import {
   useResourceContext,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Queue from '@mui/icons-material/Queue';
 import Tooltip from '@mui/material/Tooltip';
 import { makeStyles } from '@mui/styles';
 
 import { getPlaceHolder } from '@admin/utils/placeholder';
+
+import { useLocale } from '@hooks/locale/useLocale';
 
 import CRUDButton from '@components/admin/shared/buttons/CRUDButton';
 
@@ -50,14 +51,14 @@ const useRowActionToolbarStyles = makeStyles({
     minWidth: '40px;',
     padding: '4px 5px',
     '& svg': { fontSize: '1.35rem !important' },
-    '& .MuiButton-startIcon': { marginRight: 0 }
+    '& .MuiButton-startIcon': { marginRight: 0 },
   },
   icon_action_button_red: {
     color: 'red',
     minWidth: '40px;',
     padding: '4px 5px',
     '& svg': { fontSize: '1.35rem !important' },
-    '& .MuiButton-startIcon': { marginRight: 0 }
+    '& .MuiButton-startIcon': { marginRight: 0 },
   },
 });
 
@@ -78,9 +79,9 @@ const RowActionToolbar = ({ clonable, activable, permissions, ...props }) => {
     : 'admin.shared.labels.activateButton';
 
   // Row is editable by default
-  const isSystem = record.hasOwnProperty('is_system') && record.is_system;
+  const isSystem = 'is_system' in record && record.is_system;
   const editable = !isSystem || permissions === 'admin';
-  const context = props.hasOwnProperty('context') && props.context;
+  const context = 'context' in props && props.context;
 
   return (
     <div className={classes.toolbar}>

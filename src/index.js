@@ -22,8 +22,9 @@
 import i18n from 'i18next';
 import React, { useEffect } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
-import { StyledEngineProvider } from '@mui/material';
 import { ThemeProvider } from 'styled-components';
+
+import { StyledEngineProvider } from '@mui/material';
 
 import Admin from '@admin/index';
 
@@ -45,11 +46,20 @@ const App = () => {
   }, []);
 
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <Admin />
-      </ThemeProvider>
-    </StyledEngineProvider>
+    <>
+      <style>
+        {`
+          iframe#webpack-dev-server-client-overlay {
+            display: none !important;
+          }
+        `}
+      </style>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <Admin />
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </>
   );
 };
 

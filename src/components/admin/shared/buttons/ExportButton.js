@@ -28,14 +28,14 @@ import {
   useResourceContext,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import DownloadIcon from '@mui/icons-material/GetApp';
 import Button from '@mui/material/Button';
+
+import { useLocale } from '@hooks/locale/useLocale';
 
 const ExportButton = (props) => {
   const {
     selectedIds = [],
-    scrollToTop = true,
     showLabel = true,
     color = 'primary',
     variant = undefined,
@@ -54,7 +54,7 @@ const ExportButton = (props) => {
     (token) => {
       const data = {
         ...filterValues,
-        ...{ selectedIds: selectedIds },
+        ...{ selectedIds },
         ...{ language: locale },
         ...{ t: token },
       };
@@ -62,7 +62,7 @@ const ExportButton = (props) => {
       const qs = new URLSearchParams(data).toString();
       return `${process.env.API_ENDPOINT}/${resource}/export/?${qs}`;
     },
-    [selectedIds, filterValues, locale]
+    [selectedIds, filterValues, locale],
   );
 
   const handleClick = (e) => {
@@ -76,14 +76,16 @@ const ExportButton = (props) => {
     })
       .then((response) => {
         notify('admin.shared.notifications.export.start', { type: 'info' });
-        window.location.href = exportEndpoint(response.json['token']);
+        window.location.href = exportEndpoint(response.json.token);
       })
       .catch(() => {
         notify('admin.shared.notifications.export.failure', { type: 'error' });
       })
       .finally(() => {
         setTimeout(() => {
-          if (selectedIds.length && resource) unselectAll(resource);
+          if (selectedIds.length && resource) {
+            unselectAll();
+          }
         }, 500);
       });
   };

@@ -26,6 +26,7 @@ from django.test import override_settings
 from rest_framework import status
 
 from mepp.api.models.expiring_token import ExpiringToken
+
 from . import BaseV1TestCase
 
 

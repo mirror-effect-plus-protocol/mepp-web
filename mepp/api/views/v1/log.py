@@ -20,7 +20,6 @@
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
-from rest_framework import permissions
 from rest_framework_extensions.mixins import NestedViewSetMixin
 
 from mepp.api.models.log import Log

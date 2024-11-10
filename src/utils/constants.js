@@ -23,7 +23,20 @@
 export const Language = {
   FR: 'fr',
   EN: 'en',
+  IT: 'it',
+  DE: 'de',
+  ES: 'es',
+  PT: 'pt',
 };
+
+export const Languages = [
+  Language.FR,
+  Language.EN,
+  Language.ES,
+  Language.DE,
+  Language.IT,
+  Language.PT,
+];
 
 export const RequestMethod = {
   GET: 'GET',

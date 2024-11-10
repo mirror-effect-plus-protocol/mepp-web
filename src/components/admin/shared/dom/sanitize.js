@@ -19,23 +19,19 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
-import { Typography as MuiTypography} from '@mui/material';
-import {sanitizeRestProps} from '@admin/utils/props';
+
+import { Typography as MuiTypography } from '@mui/material';
+
+import { sanitizeRestProps } from '@admin/utils/props';
 
 export const Div = (props) => {
-  const validProps = [
-    'children',
-    'className',
-  ];
+  const validProps = ['children', 'className'];
   const sanitizedProps = sanitizeRestProps(props, validProps, false);
-  return (
-    <div {...sanitizedProps}>{props.children}</div>
-  );
-}
+  return <div {...sanitizedProps}>{props.children}</div>;
+};
 
-export const Typography = ({gutterTop, ...props}) => {
+export const Typography = ({ gutterTop, ...props }) => {
   const validProps = [
     'children',
     'align',
@@ -46,18 +42,14 @@ export const Typography = ({gutterTop, ...props}) => {
     'paragraph',
     'variant',
     'variantMapping',
-    'sx'
+    'sx',
   ];
   const sanitizedProps = sanitizeRestProps(props, validProps, false);
   if (gutterTop) {
     sanitizedProps['sx'] = {
-      ...sanitizedProps?.sx || {},
-      marginTop: '10px'
+      ...(sanitizedProps?.sx || {}),
+      marginTop: '10px',
     };
   }
-  return (
-    <MuiTypography {...sanitizedProps}>
-      {props.children}
-    </MuiTypography>
-  );
-}
+  return <MuiTypography {...sanitizedProps}>{props.children}</MuiTypography>;
+};

@@ -22,6 +22,7 @@ from django.core import mail
 from rest_framework import status
 
 from mepp.api.models.user import User
+
 from . import BaseV1TestCase
 
 

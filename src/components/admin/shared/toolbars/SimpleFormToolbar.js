@@ -25,7 +25,8 @@ import {
   Toolbar,
   useRecordContext,
   useRedirect,
-  useResourceContext, useStore,
+  useResourceContext,
+  useStore,
   useTranslate,
 } from 'react-admin';
 import { useFormState } from 'react-hook-form';
@@ -71,7 +72,7 @@ const SimpleFormToolBar = ({ identity }) => {
   const { isDirty } = useFormState();
   const [confirm, setConfirm] = React.useState(false);
   const [patientUid, setPatientUid] = useStore('patient.uid', false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const showEditButtons = useMemo(() => {
     if (identity === false) {
@@ -108,9 +109,10 @@ const SimpleFormToolBar = ({ identity }) => {
         return '/';
       }
     } else {
-      return (patientUid && resource !== 'patients')
+      const location = resource === 'articles' ? '/' : resource;
+      return patientUid && resource !== 'patients'
         ? `/patients/${patientUid}/show`
-        : `/${resource}`;
+        : `/${location}`;
     }
   }, [showEditButtons]);
 
@@ -161,8 +163,8 @@ const SimpleFormToolBar = ({ identity }) => {
           resource={resource}
           record={record}
           className=""
-          showLabel={true}
-          showLocation={true}
+          showLabel
+          showLocation
           variant="outlined"
         />
       )}

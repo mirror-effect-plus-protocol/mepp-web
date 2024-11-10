@@ -19,47 +19,37 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   BooleanField,
-  List,
   TextField,
   FunctionField,
   usePermissions,
-  useTranslate, useStore,
+  useTranslate,
+  useStore,
 } from 'react-admin';
 
-
 import Datagrid from '@components/admin/shared/Datagrid';
-import ArchivableFilter from '@components/admin/shared/filters/ArchivableFilter';
-import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
+import ResourceList from '@components/admin/shared/resources/ResourceList';
 import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
+import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
 
 export const ClinicianList = () => {
   const { permissions } = usePermissions();
   const t = useTranslate();
 
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [, setPatientUid] = useStore('patient.uid', false);
   useEffect(() => {
     setPatientUid(false);
   }, []);
 
   return (
-    <List
-      sort={{ field: 'first_name', order: 'ASC' }}
-      filters={<ArchivableFilter />}
-      filterDefaultValues={{ archived: false, me: false }}
-      perPage={25}
-      actions={<ListActions/>}
-    >
-      <Datagrid bulkActionButtons={<BulkActionButtons permissions={permissions} />}>
+    <ResourceList sortField="first_name" filterDefaultValues={{ me: false }}>
+      <Datagrid
+        bulkActionButtons={<BulkActionButtons permissions={permissions} />}
+      >
         <TextField source="full_name" />
-        <BooleanField
-          textAlign="center"
-          source="is_superuser"
-        />
+        <BooleanField textAlign="center" source="is_superuser" />
         <FunctionField
           label={t('resources.clinicians.list.labels.patients_count')}
           render={(record) => record.patients.length}
@@ -67,6 +57,6 @@ export const ClinicianList = () => {
         />
         <RowActionToolbar permissions={permissions} />
       </Datagrid>
-    </List>
+    </ResourceList>
   );
 };

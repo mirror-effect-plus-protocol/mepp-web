@@ -26,6 +26,7 @@ from mepp.api.filters.exercise import (
     ExerciseOrderingFilter,
 )
 from mepp.api.models.exercise import Exercise
+from mepp.api.permissions import MeppStaffReadonly
 from mepp.api.serializers.v1.exercise import ExerciseSerializer
 from mepp.api.views import UUIDLookupFieldViewSet
 
@@ -35,10 +36,7 @@ class ExerciseViewSet(UUIDLookupFieldViewSet):
     API endpoint that allows exercises to be viewed or edited.
     """
     serializer_class = ExerciseSerializer
-
-    def get_queryset(self):
-        queryset = Exercise.objects.all()
-        return queryset
+    permission_classes = (MeppStaffReadonly,)
 
     filter_backends = [
         MeppAPIFilter,
@@ -50,7 +48,9 @@ class ExerciseViewSet(UUIDLookupFieldViewSet):
         'i18n__description',
         'movement_duration',
         'pause',
-        'repeat',
-        'clinician__first_name',
-        'clinician__last_name',
+        'repetition',
     ]
+
+    def get_queryset(self):
+        queryset = Exercise.objects.all()
+        return queryset

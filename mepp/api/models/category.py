@@ -1,5 +1,3 @@
-# coding: utf-8
-
 # MEPP - A web application to guide patients and clinicians in the process of
 # facial palsy rehabilitation, with the help of the mirror effect and principles
 # of motor learning
@@ -24,9 +22,10 @@ from django.db import models
 
 from mepp.api.enums.language import LanguageEnum
 from mepp.api.fields.uuid import UUIDField
+
 from .base import (
-    BaseModel,
     BaseI18nModel,
+    BaseModel,
 )
 
 
@@ -35,6 +34,9 @@ class Category(BaseModel):
     Exercise categories
     """
     uid = UUIDField('c')
+    parent = models.ForeignKey(
+        'Category', related_name='children', on_delete=models.CASCADE, null=True
+    )
 
     def __str__(self):
         name = (
@@ -49,33 +51,6 @@ class CategoryI18n(BaseI18nModel):
 
     parent = models.ForeignKey(
         Category, related_name='i18n', on_delete=models.CASCADE
-    )
-    name = models.CharField(max_length=50, null=False)
-
-    def __str__(self):
-        return f'{self.name} ({self.language})'
-
-
-class SubCategory(BaseModel):
-
-    uid = UUIDField('sc')
-    category = models.ForeignKey(
-        Category, related_name='sub_categories', on_delete=models.CASCADE
-    )
-
-    def __str__(self):
-        name = (
-            self.i18n.filter(language=LanguageEnum.default.value)
-            .values_list('name', flat=True)
-            .first()
-        ) or self.uid
-        return name
-
-
-class SubCategoryI18n(BaseI18nModel):
-
-    parent = models.ForeignKey(
-        SubCategory, related_name='i18n', on_delete=models.CASCADE
     )
     name = models.CharField(max_length=50, null=False)
 

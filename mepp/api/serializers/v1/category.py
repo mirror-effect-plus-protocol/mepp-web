@@ -22,39 +22,15 @@
 
 from rest_framework import serializers
 
+from mepp.api.enums.language import LanguageEnum
 from mepp.api.models.category import (
     Category,
-    SubCategory,
-    SubCategoryI18n,
     CategoryI18n,
 )
 from mepp.api.serializers import (
-    I18nSerializer,
     HyperlinkedModelUUIDSerializer,
+    I18nSerializer,
 )
-
-
-class SubCategoryI18nSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = SubCategoryI18n
-        fields = [
-            'name',
-            'language',
-        ]
-        list_serializer_class = I18nSerializer
-
-
-class SubCategorySerializer(HyperlinkedModelUUIDSerializer):
-
-    i18n = SubCategoryI18nSerializer(many=True)
-
-    class Meta:
-        model = SubCategory
-        fields = [
-            'id',
-            'i18n',
-        ]
 
 
 class CategoryI18nSerializer(serializers.ModelSerializer):
@@ -71,7 +47,7 @@ class CategoryI18nSerializer(serializers.ModelSerializer):
 class CategorySerializer(HyperlinkedModelUUIDSerializer):
 
     i18n = CategoryI18nSerializer(many=True)
-    sub_categories = SubCategorySerializer(many=True)
+    children = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
@@ -79,5 +55,40 @@ class CategorySerializer(HyperlinkedModelUUIDSerializer):
             'id',
             'url',
             'i18n',
-            'sub_categories',
+            'children',
         ]
+
+    def get_children(self, category: Category) -> list:
+        request = self.context.get('request')
+        language = request.query_params.get(
+            'language', LanguageEnum.default.value
+        )
+        children = category.children.filter(i18n__language=language).order_by(
+            'i18n__name'
+        )
+        if children.exists():
+            return CategorySerializer(children, many=True, context=self.context).data
+        return []
+
+    def get_parents(self, category: Category) -> list:
+        parents = []
+        current_category = category
+        while parent := current_category.parent:
+            i18n = {'name': {}}
+            for category_i18n in parent.i18n.all():
+                i18n['name'][category_i18n.language] = category_i18n.name
+            parents.insert(0, {
+                'id': parent.uid,
+                'i18n': i18n,
+            })
+            current_category = current_category.parent
+
+        return parents
+
+    def to_representation(self, category: Category):
+        representation = super().to_representation(category)
+        if not representation['children']:
+            representation['parents'] = self.get_parents(category)
+        else:
+            representation['parents'] = []
+        return representation

@@ -29,7 +29,6 @@ import {
   useTranslate,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -47,6 +46,8 @@ import {
   CircularProgress,
 } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
+
+import { useLocale } from '@hooks/locale/useLocale';
 
 const AddPlanButton = ({ patientUid }) => {
   const t = useTranslate();
@@ -79,7 +80,7 @@ const AddPlanButton = ({ patientUid }) => {
   const handleConfirmClick = () => {
     if (treatmentPlanChoice === 'new') {
       redirect('create', '/plans', undefined, undefined, {
-        patientUid: patientUid,
+        patientUid,
       });
     } else {
       const updatedRecord = { treatment_plan_uid: selectedPlan.id };
@@ -96,7 +97,7 @@ const AddPlanButton = ({ patientUid }) => {
           notify('resources.patients.notifications.plans.add.success', 'info');
           refresh();
         })
-        .catch((e) => {
+        .catch(() => {
           notify('resources.patients.notifications.plans.add.failure', 'error');
         })
         .finally(() => {

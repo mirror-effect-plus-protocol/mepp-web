@@ -22,21 +22,19 @@
 import { RaBox } from 'ra-compact-ui';
 import React from 'react';
 import {
-  Create,
   SelectInput,
   SimpleForm,
   PasswordInput,
   TextInput,
   BooleanInput,
-  useResourceContext,
   useTranslate,
-  useNotify,
 } from 'react-admin';
 
 import { makeStyles } from '@mui/styles';
 
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import Options from '@components/admin/shared/options';
+import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 import {
   validateEmail,
   validateFirstName,
@@ -48,7 +46,7 @@ import {
 
 import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
     display: 'flex',
@@ -60,26 +58,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ClinicianCreate = () => {
-  const resourceName = useResourceContext();
   const t = useTranslate();
   const classes = useStyles();
   const options = Options();
-  const notify = useNotify();
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
 
   return (
-    <Create mutationOptions={{ onError: onError }} redirect="list">
-      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />} >
+    <ResourceCreate>
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>
@@ -94,7 +79,7 @@ export const ClinicianCreate = () => {
         <RaBox className={classes.root}>
           <TextInput source="email" fullWidth validate={validateEmail} />
         </RaBox>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.informations')}
         </Typography>
         <RaBox className={classes.root}>
@@ -106,7 +91,7 @@ export const ClinicianCreate = () => {
           />
           <BooleanInput source="is_superuser" />
         </RaBox>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.create_password')}
         </Typography>
         <RaBox className={classes.root}>
@@ -124,6 +109,6 @@ export const ClinicianCreate = () => {
           />
         </RaBox>
       </SimpleForm>
-    </Create>
+    </ResourceCreate>
   );
 };

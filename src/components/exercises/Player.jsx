@@ -111,8 +111,10 @@ const Player = () => {
     const onResize = () => {
       clearTimeout(time);
       time = setTimeout(() => {
-        canvas.current.width = window.innerWidth;
-        canvas.current.height = window.innerHeight;
+        if (canvas.current) {
+          canvas.current.width = window.innerWidth;
+          canvas.current.height = window.innerHeight;
+        }
       }, 100);
     };
 
@@ -182,7 +184,14 @@ const Player = () => {
       {exerciseStep !== ExerciseStep.ENDED && (
         <>
           <Canvas ref={canvas}></Canvas>
-          <GradientTop />
+          <GradientTop
+            hide={
+              exerciseStep !== ExerciseStep.INITIATED &&
+              exerciseStep !== ExerciseStep.COMPLETED &&
+              exerciseStep !== ExerciseStep.ENDED &&
+              exerciseStep !== ExerciseStep.EMPTY
+            }
+          />
           <GradientBottom />
         </>
       )}
@@ -207,11 +216,14 @@ const Gradient = styled.div`
 
   ${({ theme }) =>
     theme &&
-    `background: linear-gradient(0deg, ${theme.colors.black}00, ${theme.colors.black})`};
+    `background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.95) 90%)`};
 `;
 
 const GradientTop = styled(Gradient)`
+  transition: opacity 0.5s ease;
   top: 0;
+  opacity: 1;
+  ${({ hide }) => hide && `opacity:0;`}
 `;
 
 const GradientBottom = styled(Gradient)`

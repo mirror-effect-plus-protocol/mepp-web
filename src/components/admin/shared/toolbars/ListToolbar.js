@@ -22,12 +22,32 @@
 import React from 'react';
 import { TopToolbar, CreateButton, useResourceContext } from 'react-admin';
 
+import Divider from '@mui/material/Divider';
+
+import { CategoryFilterModal } from '@components/admin/exercises/CategoryFilter';
 import ExportButton from '@components/admin/shared/buttons/ExportButton';
 
-const ListActions = ({ showExport, ...props }) => {
+const ListActions = ({
+  showExport = false,
+  showExercisesFilter = false,
+  ...props
+}) => {
   const resourceName = useResourceContext();
   return (
     <TopToolbar>
+      {showExercisesFilter && (
+        <>
+          <CategoryFilterModal storekey="CategorieFilterIndex" />
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              marginRight: 2,
+              marginLeft: 2,
+            }}
+          />
+        </>
+      )}
       {showExport && (
         <ExportButton
           resource={resourceName}
@@ -36,7 +56,7 @@ const ListActions = ({ showExport, ...props }) => {
             marginRight: {
               xs: '5px', // theme.breakpoints.up('xs')
               md: 0, // theme.breakpoints.up('md')
-            }
+            },
           }}
           filterValues={props.filterValues}
         />

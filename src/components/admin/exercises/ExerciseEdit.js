@@ -19,120 +19,57 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ArrayInput,
-  BooleanInput,
-  Edit,
   FormDataConsumer,
   NumberInput,
   ReferenceField,
-  SelectInput,
   SimpleForm,
   SimpleFormIterator,
   TextField,
   TextInput,
   TranslatableInputs,
-  useGetList,
-  usePermissions, useResourceDefinition,
+  usePermissions,
   useTranslate,
 } from 'react-admin';
 
-import SubCategoryInput from '@components/admin/exercises/SubCategoryInput';
+import { GTranslate } from '@mui/icons-material';
+
+import { useLocale } from '@hooks/locale/useLocale';
+
 import { preSave } from '@components/admin/exercises/callbacks';
-import {
-  useNumberStyles,
-} from '@components/admin/exercises/styles';
-import {
-  validateCategory,
-  validateSubCategory,
-  validateSubCategories,
-} from '@components/admin/exercises/validators';
+import { useNumberStyles } from '@components/admin/exercises/styles';
 import { Typography, Div } from '@components/admin/shared/dom/sanitize';
+import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
+import VideoInput from '@components/admin/shared/inputs/VideoInput';
+import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
+import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import { validateNumber } from '@components/admin/shared/validators';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
-import { useLocale } from '@hooks/locale/useLocale';
-import { translatorInputStyle, categoriesSelectorStyle } from '@components/admin/shared/styles/shared';
 
 import { LANGUAGES } from '../../../locales';
+import CategoryRow from './CategoryRow';
 
 export const ExerciseEdit = () => {
   const t = useTranslate();
   const { permissions } = usePermissions();
-  const { hasShow } = useResourceDefinition();
   const numberClasses = useNumberStyles();
   const { locale } = useLocale();
-  const [updatedSubCategoryInputs, setUpdatedSubCategoryInputs] = useState({});
-  let categories = [];
-  let subCategories = {};
-  const { data, isLoading } = useGetList('categories', {
-    pagination: { page: 1, perPage: 9999 },
-    sort: { field: 'i18n__name', order: 'ASC' },
-    filter: { language: locale },
-  });
 
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'description');
   };
+
   /* Update description translations if empty */
   const transform = (record) => {
     return preSave(record, locale);
   };
 
-  /* Populate dynamically subcategories */
-  const handleChange = (event) => {
-    const categoryInput = event.target;
-    const updates = {};
-
-    updates[categoryInput.name.replace('category__', '')] = categoryInput.value;
-    setUpdatedSubCategoryInputs({
-      ...updatedSubCategoryInputs,
-      ...updates,
-    });
-  };
-  // ToDo refactor
-  if (!isLoading) {
-    data.forEach((category) => {
-      categories.push({
-        'id': category.id,
-        'name': category.i18n.name[locale],
-      });
-      subCategories[category.id] = category.sub_categories.map(
-        (subCategory) => {
-          return {
-            'id': subCategory.id,
-            'name': subCategory.i18n.name[locale],
-          };
-        },
-      );
-    });
-  }
-
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
-
   return (
-    <Edit
-      transform={transform}
-      actions={<TopToolbar hasShow={hasShow} />}
-      mutationOptions={{ onError: onError }}
-      mutationMode="pessimistic"
-    >
-      <SimpleForm
-        redirect="list"
-        toolbar={<SimpleFormToolBar identity={false} />}
-      >
+    <ResourceEdit transform={transform}>
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.exercises.card.labels.definition')}
         </Typography>
@@ -152,12 +89,32 @@ export const ExerciseEdit = () => {
         >
           <TextInput
             source="i18n.description"
-            multiline={true}
-            fullWidth={true}
+            multiline
+            fullWidth
             validate={validateI18n}
           />
+          <div
+            style={{
+              fontSize: '0.7em',
+              display: 'grid',
+              gridTemplateColumns: 'auto 1fr',
+              gridGap:
+                '10px' /* Adjust the value to add space between the image and text */,
+              alignItems: 'center',
+            }}
+          >
+            <GTranslate /> {t('resources.shared.labels.translate_on_save')}
+          </div>
+          <div
+            style={{
+              fontSize: '0.7em',
+            }}
+          >
+            <FormDataConsumer>
+              {({ formData }) => <AutoTranslate data={formData} />}
+            </FormDataConsumer>
+          </div>
         </TranslatableInputs>
-        {permissions === 'admin' && <BooleanInput source="is_system" />}
         <Div className={numberClasses.numbers}>
           <NumberInput
             source="movement_duration"
@@ -170,50 +127,45 @@ export const ExerciseEdit = () => {
             label={t('resources.exercises.fields.pause')}
           />
           <NumberInput
-            source="repeat"
+            source="repetition"
             validate={validateNumber}
-            label={t('resources.exercises.fields.repeat')}
+            label={t('resources.exercises.fields.repetition')}
           />
         </Div>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
+          {t('resources.exercises.card.labels.video')}
+        </Typography>
+        <VideoInput source="video" label={false} />
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
-        {!isLoading && (
-          <ArrayInput
-            source="sub_categories"
-            validate={validateSubCategories}
-            fullWidth={false}
-          >
-            <SimpleFormIterator
-              sx={categoriesSelectorStyle}
-              disableReordering={true}
-              inline
-            >
-              <SelectInput
-                label={t('resources.categories.labels.category')}
-                source="category__uid"
-                choices={categories}
-                onChange={handleChange}
-                validate={validateCategory}
-              />
-              <FormDataConsumer>
-                {({ scopedFormData, getSource, ...rest }) =>
-                  scopedFormData ? (
-                    <SubCategoryInput
-                      label={t('resources.categories.labels.sub_category')}
-                      source={getSource('uid')}
-                      data={scopedFormData}
-                      updatedSubCategoryInputs={updatedSubCategoryInputs}
-                      subCategories={subCategories}
-                      validate={validateSubCategory}
-                    />
-                  ) : null
-                }
-              </FormDataConsumer>
-            </SimpleFormIterator>
-          </ArrayInput>
-        )}
+
+        <ArrayInput
+          source="categories"
+          label=""
+          sx={{
+            '& .RaSimpleFormIterator-action': {
+              visibility: 'visible!important',
+              margin: '0 !important',
+              position: 'absolute',
+              right: 0,
+            },
+            minWidth: '525px',
+            maxWidth: '50%',
+            '& .RaSimpleFormIterator-line': {
+              display: 'flex',
+              alignItems: 'center',
+              ':last-child': {
+                marginBottom: 0.5,
+              },
+            },
+          }}
+        >
+          <SimpleFormIterator disableReordering inline>
+            <CategoryRow />
+          </SimpleFormIterator>
+        </ArrayInput>
       </SimpleForm>
-    </Edit>
+    </ResourceEdit>
   );
 };

@@ -19,13 +19,10 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import { useRecordContext } from 'react-admin';
-import {
-  TopToolbar as RaTopToolbar,
-  useTranslate,
-} from 'react-admin';
+import { TopToolbar as RaTopToolbar, useTranslate } from 'react-admin';
+
 import CRUDButton from '@components/admin/shared/buttons/CRUDButton';
 import ExportButton from '@components/admin/shared/buttons/ExportButton';
 
@@ -38,19 +35,16 @@ const TopToolbar = (props) => {
     context = { patientUid: props.patientUid };
   }
 
-  if (!record?.id || (props?.identity?.uid === record?.id)) {
+  if (!record?.id || props?.identity?.uid === record?.id) {
     return <></>;
   }
 
   return (
     <RaTopToolbar>
-      {props.showExport &&
-        <ExportButton
-          selectedIds={[record.id]}
-          variant="outlined"
-        />
-      }
-      {props.hasEdit &&
+      {props.showExport && (
+        <ExportButton selectedIds={[record.id]} variant="outlined" />
+      )}
+      {props.hasEdit && (
         <CRUDButton
           record={record}
           type="edit"
@@ -59,8 +53,8 @@ const TopToolbar = (props) => {
           size="small"
           variant="outlined"
         />
-      }
-      {props.hasShow &&
+      )}
+      {props.hasShow && (
         <CRUDButton
           record={record}
           type="show"
@@ -69,10 +63,9 @@ const TopToolbar = (props) => {
           size="small"
           variant="outlined"
         />
-      }
+      )}
     </RaTopToolbar>
   );
-
 };
 
 export default TopToolbar;

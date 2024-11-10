@@ -19,8 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import { Card as MuiCard } from "@mui/material";
+import { Card as MuiCard } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 
 const black = '#232525';
@@ -34,7 +33,7 @@ export const ASide = withStyles((theme) => ({
       width: '15em',
       marginRight: '1em',
       marginTop: '64px',
-      marginBottom: '52px'
+      marginBottom: '52px',
     },
     [theme.breakpoints.down('md')]: {
       display: 'none',
@@ -45,18 +44,18 @@ export const ASide = withStyles((theme) => ({
         paddingLeft: theme.spacing(1),
       },
       '&.Mui-selected': {
-        backgroundColor: 'rgba(0, 0, 0, 0.08)'
-      }
+        backgroundColor: 'rgba(0, 0, 0, 0.08)',
+      },
     },
     '& .MuiBox-root': {
       color: gray,
       '&:last-child .MuiList-root': {
-        borderBottom: 'none'
-      }
+        borderBottom: 'none',
+      },
     },
     '& .MuiList-root': {
       paddingBottom: theme.spacing(2),
-      borderBottom: 'solid 1px #DDDDDD'
-    }
-  }
+      borderBottom: 'solid 1px #DDDDDD',
+    },
+  },
 }))(MuiCard);

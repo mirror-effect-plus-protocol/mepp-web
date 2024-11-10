@@ -27,7 +27,10 @@ from django.utils.timezone import now
 from rest_framework import status
 
 from mepp.api.enums.action import ActionEnum
+from mepp.api.enums.side import SideEnum
+from mepp.api.enums.language import LanguageEnum
 from mepp.api.helpers.mirror import default_settings
+
 from . import BaseV1TestCase
 
 
@@ -41,7 +44,73 @@ class MeAPITestCase(BaseV1TestCase):
             self.login(self.patient_john.username, '64321')
 
     def test_get_profile(self):
-        pass
+        token = self.login(self.patient_john.username, self.common_password)
+        auth_headers = {
+            'HTTP_AUTHORIZATION': f'Token {token}'
+        }
+        response = self.client.get(
+            self.reverse('current-user-profile-user-profile'),
+            **auth_headers,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        expected = {
+            'token': token,
+            'profile': {
+                'uid': self.patient_john.uid,
+                'first_name': 'John',
+                'last_name': 'Smith',
+                'full_name': 'John Smith',
+                'email': 'john.smith@example.org',
+                'language': 'fr',
+                'use_audio': True,
+                'has_cognitive_issues': False,
+                'side': 0,
+                'mirror_settings': {
+                    'position': {'x': 0, 'y': 0, 'z': 0},
+                    'rotation': {'x': 0, 'y': 0, 'z': 0},
+                    'scale': {'x': 1, 'y': 1, 'z': 1},
+                },
+            },
+            'permissions': 'user',
+        }
+        self.assertEqual(response.data, expected)
+
+    def test_get_alternative_profile(self):
+        token = self.login(self.patient_john.username, self.common_password)
+        auth_headers = {
+            'HTTP_AUTHORIZATION': f'Token {token}'
+        }
+        self.patient_john.has_cognitive_issues = True
+        self.patient_john.use_audio = False
+        self.patient_john.language = LanguageEnum.EN.value
+        self.patient_john.side = SideEnum.RIGHT.value
+        self.patient_john.save()
+        response = self.client.get(
+            self.reverse('current-user-profile-user-profile'),
+            **auth_headers,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        expected = {
+            'token': token,
+            'profile': {
+                'uid': self.patient_john.uid,
+                'first_name': 'John',
+                'last_name': 'Smith',
+                'full_name': 'John Smith',
+                'email': 'john.smith@example.org',
+                'language': 'en',
+                'use_audio': False,
+                'has_cognitive_issues': True,
+                'side': 1,
+                'mirror_settings': {
+                    'position': {'x': 0, 'y': 0, 'z': 0},
+                    'rotation': {'x': 0, 'y': 0, 'z': 0},
+                    'scale': {'x': 1, 'y': 1, 'z': 1},
+                },
+            },
+            'permissions': 'user',
+        }
+        self.assertEqual(response.data, expected)
 
     def test_new_token_on_login(self):
         expiry_date = now() - timedelta(minutes=1)
@@ -96,8 +165,19 @@ class MeSessionAPITestCase(BaseV1TestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_user_with_no_treatmentplan(self):
-        pass
+    def test_user_with_no_treatment_plans(self):
+        # Retrieve session with John Smith
+        self.patient_john.patient_treatment_plans.all().delete()
+
+        token = self.login(self.patient_john.username, self.common_password)
+        auth_headers = {
+            'HTTP_AUTHORIZATION': f'Token {token}'
+        }
+        response = self.client.get(
+            self.reverse('current-user-profile-user-session-view'),
+            **auth_headers,
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
 class MeMirrorSettingsAPITestCase(BaseV1TestCase):

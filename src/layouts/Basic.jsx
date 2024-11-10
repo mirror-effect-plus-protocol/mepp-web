@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { media } from '@styles/configs/breakpoints';
@@ -35,6 +35,10 @@ import { Cell, Grid } from '@styles/tools/index';
  * @returns JSX.Element
  */
 const BasicLayout = ({ header, content, footer }) => {
+  useEffect(() => {
+    document.body.className = 'dark';
+  }, []);
+
   return (
     <Grid
       columns="1fr"

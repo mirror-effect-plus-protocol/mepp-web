@@ -22,7 +22,7 @@
 
 from django.http import Http404
 from django.utils.timezone import now
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 from mepp.api.mixins import Template
 from mepp.api.models.expiring_token import ExpiringToken
@@ -85,6 +85,28 @@ class MeppStaffProfilePermission(BasePermission):
             return True
 
         return user.uid == obj.uid
+
+
+class MeppStaffReadonly(BasePermission):
+
+    def has_permission(self, request, view):
+        if not request.user.is_staff:
+            return False
+
+        if request.method in SAFE_METHODS:
+            return True
+
+        return request.user.is_superuser
+
+    def has_object_permission(self, request, view, obj):
+
+        if not request.user.is_staff:
+            return False
+
+        if request.method in SAFE_METHODS:
+            return True
+
+        return request.user.is_superuser
 
 
 class MeppExportPermission(BasePermission):

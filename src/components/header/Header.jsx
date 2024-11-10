@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import i18n from 'i18next';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useLogout } from 'react-admin';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +26,6 @@ import styled from 'styled-components';
 
 import { temporaryProfil } from '@admin/authProvider';
 
-import IconEarth from '@assets/icons/earth.svg';
 import IconSettings from '@assets/icons/settings.svg';
 import Logo from '@assets/logos/logo.svg';
 
@@ -35,25 +33,21 @@ import { media } from '@styles/configs/breakpoints';
 import { spacings } from '@styles/configs/spacings';
 import { FlexAlignMiddle, FlexDisplay } from '@styles/tools';
 
-import { useLocale } from '@hooks/locale/useLocale';
-
-import { Language } from '@utils/constants';
-
 import {
   ExerciseStep,
   ExerciseContext,
 } from '@components/exercises/ExerciseProvider';
+import LocaleSwitcher from '@components/generics/LocaleSwitcher';
 import Button from '@components/generics/buttons/Button';
-import { ButtonSideLabelTypes } from '@components/generics/buttons/Button';
 import { OverlayContext } from '@components/overlays/OverlayProvider';
 import { SettingsOverlay } from '@components/overlays/SettingsOverlay';
 
 /**
  * Header with Logo and login navigation
  */
-const Header = ({ isLogged }) => {
+const Header = ({ isLogged, hidden }) => {
   return (
-    <Container>
+    <Container hide={hidden}>
       <LeftSide />
       {!isLogged ? (
         <RightSideWithoutLogout />
@@ -81,21 +75,9 @@ const LeftSide = () => {
 };
 
 const RightSideWithoutLogout = () => {
-  const { locale, setLocale } = useLocale();
-
-  const switchLanguage = useCallback(() => {
-    const lang = i18n.language == Language.FR ? Language.EN : Language.FR;
-    setLocale(lang);
-  }, [locale, i18n.language]);
-
   return (
     <RightWrapper>
-      <Button.Transparent
-        label={i18n.language == Language.FR ? 'English ' : 'Français'}
-        icon={<IconEarth width="100%" height="100%" />}
-        sideLabelType={ButtonSideLabelTypes.LEFT}
-        onClick={switchLanguage}
-      />
+      <LocaleSwitcher />
     </RightWrapper>
   );
 };
@@ -116,6 +98,7 @@ const RightSideWithLogout = () => {
   const handleSettingsClick = useCallback(() => {
     // if exercises page and it is running, pause current exercise
     if (
+      exerciseStep !== ExerciseStep.INITIATED &&
       exerciseStep !== ExerciseStep.ENDED &&
       exerciseStep !== ExerciseStep.EMPTY &&
       exerciseStep !== ExerciseStep.COMPLETED &&
@@ -139,9 +122,9 @@ const RightSideWithLogout = () => {
       // timeout to prevent logs request cancel
       // logs will be canceled if taken more than .5s
       setTimeout(() => {
-        logout(true);
+        logout();
       }, 500);
-    } else logout(true);
+    } else logout();
   };
 
   return (
@@ -167,6 +150,11 @@ const Container = styled.header`
   box-sizing: border-box;
   padding: ${spacings.default * 2}px;
   width: 100%;
+  position: relative;
+  transition: top 0.5s ease;
+  top: 0;
+
+  ${({ hide }) => hide && `top:-130px;`}
 
   ${media.xsOnly`
     padding: ${spacings.default}px;

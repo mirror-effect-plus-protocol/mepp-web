@@ -19,16 +19,15 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import { makeStyles } from '@mui/styles';
 
 export const useAutocompleteStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(2)
-  }
+    margin: theme.spacing(2),
+  },
 }));
 
-export const useNumberStyles = makeStyles((theme) => ({
+export const useNumberStyles = makeStyles(() => ({
   numbers: {
     display: 'flex',
     justifyContent: 'start',
@@ -36,7 +35,7 @@ export const useNumberStyles = makeStyles((theme) => ({
     gap: '1em',
     '& > div': {
       minWidth: 95,
-      width: 95
+      width: 95,
     },
-  }
+  },
 }));

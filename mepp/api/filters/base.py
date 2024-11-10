@@ -26,9 +26,9 @@ from django.db.models import Q
 from rest_framework.filters import BaseFilterBackend
 
 from mepp.api.helpers.strings import normalize
+from mepp.api.mixins import Template
 from mepp.api.mixins.models.archivable import Archivable
 from mepp.api.mixins.models.searchable import Searchable
-from mepp.api.mixins import Template
 
 
 class MeppAPIFilter(BaseFilterBackend):
@@ -65,16 +65,16 @@ class MeppAPIFilter(BaseFilterBackend):
             queryset = queryset.filter(patient__uid=patient_id)
 
         # Filter clinicians
-        try:
-            clinician_uid = request.query_params['clinician_uid']
-        except KeyError:
-            pass
-        else:
-            queryset = queryset.filter(clinician__uid=clinician_uid)
+        if view.__class__.__name__ != 'ExerciseViewSet':
+            try:
+                clinician_uid = request.query_params['clinician_uid']
+            except KeyError:
+                pass
+            else:
+                queryset = queryset.filter(clinician__uid=clinician_uid)
 
         # Filter templates
         if view.action == 'list' and issubclass(queryset.model, Template):
-
             try:
                 is_template = request.query_params['is_template']
             except KeyError:

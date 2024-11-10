@@ -23,9 +23,13 @@
 export default {
   exercise: {
     name: 'Exercise',
-    rest: 'Make a pause for a moment',
-    complete: 'Exercise completed',
-    end: 'Congratulations! You are at the end of your workout. Keep up the good work: perseverance is essential to your success.',
-    empty: 'A treatment plan has not been created for you yet. See your clinician to activate your profile.',
+    rest: 'Take a moment to rest.',
+    pause: 'You are on break.',
+    pauseMessage:
+      'Take your time and when you are ready, press the button below.',
+    complete: 'Exercise completed.',
+    end: 'Congratulations! You are at the end of your exercise session. Keep up the good work: perseverance is a key condition for your success.',
+    empty:
+      'No intervention plan has yet been created for you. Please consult your clinician to activate your exercise profile.',
   },
 };
