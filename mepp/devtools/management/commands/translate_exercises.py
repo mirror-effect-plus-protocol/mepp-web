@@ -26,7 +26,10 @@ from pathlib import Path
 import openai
 from django.core.management.base import BaseCommand
 
-openai.api_key = 'CHANGEME'
+"""
+OpenAI is not part of pip dependencies and should be installed manually
+"""
+openai.api_key = 'changeme'
 
 
 class Command(BaseCommand):
@@ -34,6 +37,7 @@ class Command(BaseCommand):
 
     API_KEY = os.getenv('GOOGLE_TRANSLATE_API_KEY')
     API_URL = f'https://translation.googleapis.com/language/translate/v2?key={API_KEY}'
+
     TRANSLATION_MAPPING = {
         'it': 'Italian',
         'de': 'German',

@@ -1,4 +1,3 @@
-# coding: utf-8
 # MEPP - A web application to guide patients and clinicians in the process of
 # facial palsy rehabilitation, with the help of the mirror effect and principles
 # of motor learning
@@ -18,17 +17,22 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
-import html
 import os
 import re
+import time
 
 import polib
-import requests
+import openai
 from django.conf import settings
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 from mepp.api.enums.language import LanguageEnum
-from mepp.api.models.category import CategoryI18n
+
+"""
+OpenAI is not part of pip dependencies and should be installed manually
+"""
+openai.api_key = 'CHANGEME'
 
 
 class Command(BaseCommand):
@@ -37,10 +41,23 @@ class Command(BaseCommand):
     API_KEY = os.getenv('GOOGLE_TRANSLATE_API_KEY')
     API_URL = f'https://translation.googleapis.com/language/translate/v2?key={API_KEY}'
 
+    TRANSLATION_MAPPING = {
+        'it': 'Italian',
+        'de': 'German',
+        'es': 'Spanish',
+        'pt': 'Portuguese',
+        'en': 'English',
+    }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._translations = {}
+        self._timer = time.time()
+        self._chatgpt_requests = 0
+
     def handle(self, *args, **kwargs):
         self.create_react_files()
         self.create_django_files()
-        self.update_categories_i18n()
 
     def create_django_files(self):
         fr_locale_path = os.path.join(
@@ -65,7 +82,9 @@ class Command(BaseCommand):
                 'LC_MESSAGES',
                 'django.po',
             )
-            self.translate_po_file(fr_locale_path, locale_path, language.value)
+            self.translate_po_file(
+                fr_locale_path, locale_path, language.value
+            )
 
     def create_react_files(self):
         fr_locale_path = os.path.join(
@@ -93,27 +112,101 @@ class Command(BaseCommand):
                 ):
                     self.translate_file(locale_file, language.value)
 
-    def translate_text(self, text: str, target_language: str):
-        try:
-            response = requests.post(self.API_URL, data={'q': text, 'target': target_language})
-            response.raise_for_status()
-            translated_text = response.json()['data']['translations'][0]['translatedText']
-            return html.unescape(translated_text)
-        except requests.exceptions.RequestException as e:
-            print(f'Translation error: {e}')
+    # Translation with Google Translate - DEPRECATED
+    # def translate_text(self, text: str, target_language: str):
+    #     try:
+    #         response = requests.post(self.API_URL, data={'q': text, 'target': target_language})
+    #         response.raise_for_status()
+    #         translated_text = response.json()['data']['translations'][0]['translatedText']
+    #         return html.unescape(translated_text)
+    #     except requests.exceptions.RequestException as e:
+    #         print(f'Translation error: {e}')
+    #         return text
+
+    def translate_text(
+        self,
+        text: str,
+        target_language: str,
+        retries: int = 0,
+    ) -> str:
+        if not text:
+            return ''
+
+        if len(text) == 1 or text.startswith('ra-'):
             return text
+
+        text = text.replace('&nbsp;', ' ')
+
+        self.stdout.write(
+            f'\t\tTranslating {text} in {self.TRANSLATION_MAPPING[target_language]}…'
+        )
+
+        if retries:
+            # wait = 60 * 15 # wait for 15 minutes...
+            wait = 60 - (time.time() - self._timer) + (retries * 60)
+            self.stdout.write(f'\t\tWaiting for {wait} seconds…')
+            time.sleep(wait)
+            self._timer = time.time()
+
+        try:
+            self._chatgpt_requests += 1
+
+            api_prompt = f"""
+            You are a translation assistant for a web application. Your job is to translate, keeping placeholders as-is.
+                1. The input is in French.
+                2. The output is in {self.TRANSLATION_MAPPING[target_language]}.
+                3. Keep all placeholders (starting with "%{" and ending with "}" or "%(" and ending with ")") unchanged.
+                4. Do not add a final dot, if the input does not have one.
+                5. If the input is ambiguous or too short to translate correctly, provide the best possible output (e.g: if it is only one word, translate it with the most know translation).
+                6. Only return "MORE INPUT" if translation cannot be reasonably inferred.
+
+                Your response must strictly follow these rules.
+            """
+
+            response = openai.ChatCompletion.create(
+                model='gpt-4o-mini',
+                messages=[
+                    {
+                        'role': 'system',
+                        'content': api_prompt,
+                    },
+                    {'role': 'user', 'content': text},
+                ],
+            )
+            translated = response['choices'][0]['message']['content']
+            if translated == 'MORE INPUT':
+                message = input(f'Cannot translate {text} in {self.TRANSLATION_MAPPING[target_language]}:')
+                return message.replace("'", '’')
+            return translated.replace("'", '’')
+        except openai.error.RateLimitError:
+            self.stderr.write('ChatGPT RateLimitError:')
+            return self._translate_text(text, target_language, retries + 1)
+        except Exception as e:
+            self.stderr.write('ChatGPT Error:', str(e))
+            return f'({target_language.upper()}) - {text}'
 
     def translate_po_file(
         self, source_file_path: str, target_file_path: str, target_language: str
     ):
         po = polib.pofile(source_file_path)
         for entry in po:
-            if entry.msgstr.strip() != '':
-                translated_msgstr = self.translate_text(entry.msgid, target_language)
+            po_key = entry.msgid.strip()
+            if po_key != '':
+                if ' ' not in po_key and (':' in po_key or '_' in po_key):
+                    self.stdout.write(f'Leave {po_key} as-is')
+                    translated_msgstr = po_key
+                else:
+                    translated_msgstr = self.translate_text(
+                        entry.msgstr, target_language
+                    )
+
                 entry.msgstr = translated_msgstr
 
+        po.metadata['Language'] = target_language  # Par exemple, changer la langue en français
+        po.metadata['Last-Translator'] = 'ChatGPT 4o-mini API'
+        po.metadata['PO-Revision-Date'] = timezone.now().strftime('%Y-%m-%d %H:%M+0000')
         po.save(target_file_path)
-        print(f'Translated file: {target_file_path}')
+        self.stdout.write(f'Translated file: {target_file_path}')
 
     def translate_file(self, original_locale: str, target_language: str):
         original_locale_path = os.path.join(
@@ -148,21 +241,4 @@ class Command(BaseCommand):
         ) as translated_file:
             translated_file.write(file_content)
 
-        print(f'Translated file: {translated_file_path}')
-
-    def update_categories_i18n(self):
-        categories = CategoryI18n.objects.filter(language=LanguageEnum.FR.value)
-
-        for category in categories:
-            for language in LanguageEnum:
-                if CategoryI18n.objects.filter(
-                    language=language.value, parent_id=category.parent_id
-                ).exists():
-                    continue
-
-                category.pk = None
-                category.name = self.translate_text(
-                    category.name, language.value
-                )
-                category.language = language.value
-                category.save()
+        self.stdout.write(f'Translated file: {translated_file_path}')
