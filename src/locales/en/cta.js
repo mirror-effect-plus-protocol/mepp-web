@@ -29,10 +29,8 @@ export default {
     donate: 'Donate',
     description: 'Description',
     history: 'History',
-
     goto_forgot_password: 'Forgot password?',
     goto_login: 'Return to the login screen',
-
     start: 'Start the session',
     settings: 'Configure the effect',
     start_exercise: 'Start',
@@ -42,12 +40,12 @@ export default {
     skip_exercise: 'Jump',
     next_exercise: 'Next',
     authorize: 'Allow',
-
     cancel: 'Cancel',
     close: 'Close',
     save: 'Save',
     modify: 'Edit',
     back: 'Return',
     confirm: 'Ok',
+    support: 'Help',
   },
 };

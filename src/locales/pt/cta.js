@@ -49,5 +49,6 @@ export default {
     modify: 'Modificar',
     back: 'Voltar',
     confirm: 'Ok',
+    support: 'Ajuda',
   },
 };

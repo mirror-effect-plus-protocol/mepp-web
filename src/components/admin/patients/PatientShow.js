@@ -167,14 +167,18 @@ export const PatientShowLayout = ({ record }) => {
                 <TextField source="first_name" />
               </Labeled>
               <>
-                <EmailField source="email" />
-                <IconButton
-                  size="small"
-                  style={{ marginLeft: '0.5em' }}
-                  onClick={handleOpenDialogEmail}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                  }}
                 >
-                  <MailOutlineIcon />
-                </IconButton>
+                  <EmailField source="email" sx={{ marginRight: '5px' }} />
+                  <IconButton size="small" onClick={handleOpenDialogEmail}>
+                    <MailOutlineIcon />
+                  </IconButton>
+                </div>
                 <Dialog open={openDialogEmail}>
                   <DialogTitle>
                     {t('admin.shared.text.emailDialog.title')}

@@ -29,10 +29,8 @@ export default {
     donate: 'Donare',
     description: 'Descrizione',
     history: 'Storico',
-
     goto_forgot_password: 'Password dimenticata?',
     goto_login: 'Torna alla schermata di accesso',
-
     start: 'Iniziare la sessione',
     settings: 'Configura l’effetto',
     start_exercise: 'Iniziare',
@@ -42,12 +40,12 @@ export default {
     skip_exercise: 'Salta',
     next_exercise: 'Successivo',
     authorize: 'Consentire',
-
     cancel: 'Annulla',
     close: 'Chiudere',
     save: 'Salvare',
     modify: 'Modifica',
     back: 'Ritorna',
     confirm: 'Ok',
+    support: 'Aiuto',
   },
 };
