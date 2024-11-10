@@ -102,7 +102,7 @@ const RightSide = ({ showDonate }) => {
           label={t('cta:connexion')}
           inverse
           onClick={() => {
-            window.location.href = '#/';
+            window.location.href = '#/patients';
           }}
         />
       )}
