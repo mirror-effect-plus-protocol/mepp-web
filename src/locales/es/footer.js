@@ -24,8 +24,8 @@ export default {
   footer: {
     title: 'Con la ayuda financiera de',
     copyright: 'Todos los derechos reservados © MEPP 2021',
-    privacy: 'Privacidad',
-    termsofuse: 'Condiciones de uso',
+    privacy: 'Vida privada',
+    termsofuse: 'Términos de uso',
     license: 'Licencia',
   },
 };

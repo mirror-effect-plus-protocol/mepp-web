@@ -24,15 +24,15 @@ export default {
   form: {
     field: {
       email: {
-        label: 'Su dirección de correo electrónico',
-        placeholder: 'dirección de correo electronico',
+        label: 'Tu dirección de correo electrónico',
+        placeholder: 'Dirección de correo electrónico',
       },
       password: {
-        label: 'su contraseña',
+        label: 'Su contraseña',
         placeholder: 'Contraseña',
       },
       oldpassword: {
-        label: 'su contraseña',
+        label: 'Su contraseña',
         placeholder: '',
       },
       confirmpassword: {
@@ -44,13 +44,12 @@ export default {
         placeholder: '',
       },
       error: {
-        login_invalid:
-          'Dirección de correo electrónico o contraseña no válidos',
-        email_invalid: 'Dirección de correo electrónico no válida',
-        pwd_not_match: 'Las contraseñas no son idénticas',
-        pwd: 'Debe contener una letra minúscula, una letra mayúscula, un número y un carácter especial (-_ @$!%*#?&amp;)',
-        min_length: 'Esta contraseña es demasiado corta',
-        required: 'Este campo es obligatorio',
+        login_invalid: 'Dirección de correo electrónico o contraseña inválida',
+        email_invalid: 'Dirección de correo electrónico inválida',
+        pwd_not_match: 'Las contraseñas no son idénticas.',
+        pwd: 'Debe contener una minúscula, una mayúscula, un número y un carácter especial (-_ @$!%*#?&)',
+        min_length: 'Esta contraseña es demasiado corta.',
+        required: 'Este campo es requerido.',
       },
     },
 
@@ -59,16 +58,16 @@ export default {
     },
 
     reset_password: {
-      title: 'Restablecer su contraseña',
-      success: 'Su contraseña ha sido cambiada exitosamente.',
+      title: 'Restablecimiento de su contraseña',
+      success: 'Tu contraseña ha sido modificada con éxito.',
     },
 
     forgot_password: {
-      title: '¿Contraseña olvidada?',
+      title: '¿Olvidaste tu contraseña?',
       introduction:
-        'Ingrese su dirección de correo electrónico y le enviaremos un enlace para restablecer su contraseña.',
+        'Escriba su dirección de correo electrónico y le enviaremos un enlace para restablecer su contraseña.',
       success:
-        'Si su cuenta existe, se enviará un correo electrónico a <span>{{ email }}</span> . Le indicará los pasos a seguir para restablecer su contraseña.',
+        'Si su cuenta existe, se enviará un correo electrónico a <span>{{ email }}</span>. Le indicará los pasos a seguir para restablecer su contraseña.',
     },
   },
 };

@@ -24,68 +24,68 @@ export default {
   admin: {
     shared: {
       labels: {
-        archives: 'Archiv',
-        cancelButton: 'Stornieren',
+        archives: 'Archive',
+        cancelButton: 'Abbrechen',
         confirmButton: 'Bestätigen',
-        archiveButton: 'Archiv',
-        unarchiveButton: 'Dearchivieren',
+        archiveButton: 'Archivieren',
+        unarchiveButton: 'Entpacken',
         activateButton: 'Aktivieren',
         deactivateButton: 'Deaktivieren',
         backButton: 'Zurück',
-        exportButton: 'Exporteur',
-        filterButton: 'Filter',
+        exportButton: 'Exportieren',
+        filterButton: 'Filtern',
         card: {
-          identity: 'Identifizieren',
+          identity: 'Identität',
           informations: 'Profil',
           reset_password: 'Passwort zurücksetzen',
-          create_password: 'Erstellen Sie das Passwort',
+          create_password: 'Ein Passwort erstellen',
         },
         profile: 'Mein Profil',
       },
       notifications: {
         archive: {
-          success: 'Artikel erfolgreich archiviert',
+          success: 'Element erfolgreich archiviert',
           failure: 'Ein Fehler ist aufgetreten',
         },
         unarchive: {
-          success: 'Artikel erfolgreich dearchiviert',
+          success: 'Element erfolgreich wiederhergestellt',
           failure: 'Ein Fehler ist aufgetreten',
         },
         activate: {
-          success: 'Artikel erfolgreich aktiviert',
+          success: 'Element erfolgreich aktiviert',
           failure: 'Ein Fehler ist aufgetreten',
         },
         deactivate: {
-          success: 'Artikel erfolgreich deaktiviert',
+          success: 'Element erfolgreich deaktiviert',
           failure: 'Ein Fehler ist aufgetreten',
         },
         bulkArchive: {
-          success: 'Elemente erfolgreich archiviert',
+          success: 'Archivierte Elemente erfolgreich',
           failure: 'Ein Fehler ist aufgetreten',
         },
         bulkUnarchive: {
-          success: 'Elemente erfolgreich dearchiviert',
+          success: 'Erfolgreich entarchivierte Elemente',
           failure: 'Ein Fehler ist aufgetreten',
         },
-        'Export': {
-          start: 'Der Download beginnt bald',
+        'exportieren': {
+          start: 'Der Download wird bald beginnen.',
           failure: 'Ein Fehler ist aufgetreten',
         },
         mirror: {
           failure: 'Ein Fehler ist aufgetreten',
         },
         language: {
-          success: 'Ihre Sprache wurde erfolgreich aktualisiert',
+          success: 'Ihre Sprache wurde erfolgreich aktualisiert.',
           failure:
-            'Es ist ein Fehler aufgetreten, Ihr Profil wurde nicht aktualisiert',
+            'Ein Fehler ist aufgetreten, Ihr Profil wurde nicht aktualisiert.',
         },
         profile: {
-          success: 'Dein Profil wurde erfolgreich aktualisiert',
+          success: 'Ihr Profil wurde erfolgreich aktualisiert.',
         },
       },
       text: {
         cancelDialog: {
-          title: 'Bist du sicher, dass du abbrechen möchtest?',
+          title: 'Möchten Sie wirklich abbrechen?',
           body: 'Alle Änderungen gehen verloren.',
         },
         emailDialog: {
@@ -94,22 +94,23 @@ export default {
         },
         exerciseFilter: {
           loading: 'Laden...',
-          notfound: 'In dieser Kategorie wurden keine Übungen gefunden!',
+          notfound: 'Keine Übung in dieser Kategorie gefunden!',
         },
       },
       errors: {
         field_required: 'Dieses Feld ist erforderlich',
-        password_mismatch: 'Passwörter stimmen nicht überein',
-        password_too_short: 'Das Passwort muss %{min_length} Zeichen enthalten',
+        password_mismatch: 'Die Passwörter stimmen nicht überein',
+        password_too_short:
+          'Das Passwort muss %{min_length} Zeichen enthalten.',
         password_not_secure:
-          'Das Passwort muss mindestens einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen (-_ @$!%*#?&amp;) enthalten.',
+          'Das Passwort muss mindestens einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen (-_ @$!%*#?&) enthalten.',
         password_required: 'Dieses Feld ist erforderlich',
       },
     },
     dashboard: {
       title: 'Willkommen %{name}',
       labels: {
-        openMirrorButton: 'Offener Spiegel',
+        openMirrorButton: 'Gesichtsspiegel öffnen',
       },
       widgets: {
         daily_repeats: {
@@ -127,11 +128,11 @@ export default {
         labels: {
           completed: 'Vollständig ausgeführt',
           uncompleted: 'Teilweise ausgeführt',
-          since: 'Aus',
+          since: 'Seit',
         },
       },
       mirror_dialog: {
-        title: 'Offener Spiegel',
+        title: 'Gesichtsspiegel öffnen',
         labels: {
           autocomplete: 'Wählen Sie einen Patienten',
         },
@@ -140,37 +141,59 @@ export default {
   },
 
   languages: {
-    'en': 'English',
-    'fr': 'Français',
-    'it': 'Italiano',
-    'es': 'Español',
-    'de': 'Deutsch',
-    'pt': 'Português',
+    en: 'English',
+    fr: 'Français',
+    it: 'Italiano',
+    es: 'Español',
+    de: 'Deutsch',
+    pt: 'Português',
   },
 
   resources: {
+    articles: {
+      name: 'Artikel |||| Artikel',
+      fields: {
+        'i18n.title': 'Titel',
+        'i18n.title.de': 'Titel',
+        'i18n.description': 'Beschreibung',
+        'i18n.description.de': 'Beschreibung',
+        'i18n.external_url': 'Externer Link',
+        'i18n.external_url.de': 'Externer Link',
+      },
+      card: {
+        labels: {
+          add: 'Artikel hinzufügen',
+          more_details: 'Mehr Details',
+          title: 'Titel',
+          description: 'Beschreibung',
+          external_url: 'Externer Link',
+        },
+      },
+      delete: {
+        confirmTitle: 'Artikel %{placeholder} löschen',
+      },
+    },
     categories: {
       name: 'Kategorie |||| Kategorien',
       fields: {
-        'i18n.name.fr': 'Name',
+        'i18n.name.de': 'Name',
         'i18n.name': 'Name',
       },
       labels: {
         category: 'Kategorie',
-        sub_category: 'Unterkategorie',
       },
     },
     clinicians: {
-      name: 'Kliniker |||| Kliniker',
+      name: 'Kliniker(in) |||| Kliniker(innen)',
       fields: {
-        email: 'Email',
+        email: 'E-Mail',
         first_name: 'Vorname',
         full_name: 'Vollständiger Name',
         last_name: 'Name',
         language: 'Sprache',
         password: 'Passwort',
-        confirm_password: 'Bestätige das Passwort',
-        archived: 'Archiv',
+        confirm_password: 'Bestätigen Sie das Passwort',
+        archived: 'Archive',
         is_superuser: 'Administrator',
       },
       list: {
@@ -180,31 +203,35 @@ export default {
       },
       card: {
         title: {
-          default: 'Kliniker %{placeholder}',
-          create: 'Fügen Sie einen Arzt hinzu',
+          default: 'Kliniker(in) %{placeholder}',
+          create: 'Einen/eine Kliniker/in hinzufügen',
         },
       },
       delete: {
-        confirmTitle: 'Kliniker %{placeholder} löschen',
+        confirmTitle: 'Den klinischen %{placeholder} entfernen.',
       },
       errors: {
-        email: 'E-Mail-Adresse wird schon verwendet',
+        email: 'E-Mail-Adresse bereits verwendet',
       },
     },
     exercises: {
       name: 'Übung |||| Übungen',
+      empty: {
+        title: 'Keine Übung',
+        description:
+          'Bitte wählen Sie eine Kategorie, indem Sie auf die Schaltfläche Filtern klicken.',
+      },
       fields: {
-        archived: 'Archiv',
-        'i18n.description.fr': 'Beschreibung',
-        'i18n.Beschreibung': 'Beschreibung',
+        archived: 'Archive',
+        'i18n.description.de': 'Beschreibung',
+        'i18n.description': 'Beschreibung',
         movement_duration: 'Dauer',
         pause: 'Pause',
-        repetition: 'Proben',
-        clinician_uid: 'Kliniker',
+        repetition: 'Wiederholungen',
+        clinician_uid: 'Kliniker(in)',
         category__uid: 'Kategorie',
-        uid: 'Unterkategorie',
-        is_system: 'System',
-        sub_categories: 'Kategorien und Unterkategorien',
+        uid: 'Kategorie',
+        categories: 'Kategorien',
         empty: {
           categories: {
             label: 'Wählen Sie eine Kategorie',
@@ -214,11 +241,15 @@ export default {
       card: {
         title: {
           default: 'Übung %{placeholder}',
-          create: 'Fügen Sie eine Übung hinzu',
+          create: 'Übung hinzufügen',
         },
         labels: {
           definition: 'Merkmale',
-          classification: 'Einstufung',
+          classification: 'Klassifizierung',
+          video: 'Video',
+        },
+        text: {
+          no_video_available: 'Keine Video verfügbar',
         },
       },
       list: {
@@ -231,80 +262,84 @@ export default {
         confirmTitle: 'Übung %{placeholder} löschen',
       },
       errors: {
-        sub_categories:
-          'Sie müssen mindestens eine Kategorie/Unterkategorie auswählen',
-        gt_zero: 'Muss größer als Null sein',
+        categories: 'Sie müssen mindestens eine Kategorie auswählen.',
+        gt_zero: 'Muss größer als null sein',
       },
     },
     patients: {
-      name: 'Patient(en) |||| Patient(en)',
+      name: 'Patient(in) |||| Patient(inn)en',
       fields: {
-        archived: 'Archiv',
-        clinician_uid: 'Kliniker',
-        email: 'Email',
+        archived: 'Archive',
+        clinician_uid: 'Kliniker(in)',
+        email: 'E-Mail',
         first_name: 'Vorname',
         full_name: 'Vollständiger Name',
         last_name: 'Name',
         side: 'Gelähmte Seite',
-        use_audio: 'Aktives Audio',
+        use_audio: 'Aktiver Audio',
+        has_cognitive_issues: 'Kognitive Probleme',
         language: 'Sprache',
         password: 'Passwort',
-        confirm_password: 'Bestätige das Passwort',
+        confirm_password: 'Bestätigen Sie das Passwort',
       },
       card: {
         title: {
           default: 'Patient(in) %{placeholder}',
-          create: 'Fügen Sie einen Patienten hinzu',
+          create: 'Einen Patienten/eine Patientin hinzufügen',
         },
         labels: {
           plans: 'Interventionspläne',
         },
         plan_dialog: {
-          title: 'Fügen Sie einen Interventionsplan hinzu',
+          title: 'Einen Interventionsplan hinzufügen',
           labels: {
             autocomplete: 'Name',
-            radio_new: 'Erstellen Sie einen neuen Interventionsplan',
+            radio_new: 'Einen neuen Interventionsplan erstellen',
             radio_template: 'Verwenden Sie eine vorhandene Vorlage',
           },
         },
         actions: {
-          copy: 'Erstellen Sie eine Vorlage',
+          copy: 'Ein Modell erstellen',
         },
       },
       errors: {
-        email: 'E-Mail-Adresse wird schon verwendet',
+        email: 'E-Mail-Adresse bereits verwendet',
       },
       filters: {
-        last_visited: 'letzter Besuch',
+        last_visited: 'Letzte Besuch',
         today: 'Heute',
         this_week: 'Diese Woche',
         this_month: 'Diesen Monat',
       },
       shared: {
         side: {
-          '0': 'LINKS',
-          '1': 'Rechts',
+          '0': 'Links',
+          '1': 'Recht',
         },
         audio: {
-          'WAHR': 'Ja',
-          'FALSCH': 'Nicht',
+          'true': 'Ja',
+          'false': 'Nein',
+        },
+        video: {
+          'true': 'Ja',
+          'false': 'Nein',
         },
       },
       delete: {
-        confirmTitle: 'Patient %{placeholder} löschen',
+        confirmTitle: 'Patient(en) %{placeholder} löschen',
       },
       notifications: {
         plans: {
           add: {
-            success: 'Aktionsplan erfolgreich hinzugefügt',
+            success: 'Interventionsplan erfolgreich hinzugefügt',
             failure: 'Ein Fehler ist aufgetreten',
           },
         },
         email: {
           send: {
-            success: 'Email wurde erfolgreich Versendet',
+            success: 'E-Mail erfolgreich gesendet',
             failure:
-              'Ein Fehler ist aufgetreten. Es wurde keine E-Mail gesendet',
+              'Ein Fehler ist aufgetreten. Es wurde keine E-Mail gesendet.',
           },
         },
       },
@@ -313,22 +348,22 @@ export default {
       name: 'Interventionsplan |||| Interventionspläne',
       fields: {
         name: 'Name',
-        'i18n.name.fr': 'Name',
         'i18n.name': 'Name',
-        'i18n.description.fr': 'Zusatzinformation',
-        'i18n.Beschreibung': 'Zusatzinformation',
-        clinician_uid: 'Kliniker',
-        archived: 'Archiv',
+        'i18n.name.de': 'Name',
+        'i18n.description': 'Zusätzliche Informationen',
+        'i18n.description.de': 'Zusätzliche Informationen',
+        clinician_uid: 'Kliniker(in)',
+        archived: 'Archive',
         daily_repeat: 'Tägliche Frequenzen',
         randomize: 'Zufällige Reihenfolge',
         is_system: 'System',
         start_date: 'Startdatum',
-        end_date: 'Endtermin',
+        end_date: 'Enddatum',
         exercise: {
           description: 'Beschreibung',
           movement_duration: 'Dauer',
           pause: 'Pause',
-          repetition: 'Proben',
+          repetition: 'Wiederholungen',
           empty: {
             exercise: {
               label: 'Wählen Sie eine Übung',
@@ -351,11 +386,11 @@ export default {
         title: 'Interventionsplan %{placeholder}',
       },
       delete: {
-        confirmTitle: 'Interventionsplan %{placeholder} löschen',
+        confirmTitle: 'Löschen Sie den Interventionsplan %{placeholder}',
       },
       card: {
         exercise_dialog: {
-          title: 'Fügen Sie eine Übung hinzu',
+          title: 'Übung hinzufügen',
           labels: {
             autocomplete: {
               category: 'Kategorie',
@@ -367,22 +402,24 @@ export default {
         },
         title: {
           default: 'Interventionsplan %{placeholder}',
-          create: 'Fügen Sie einen Interventionsplan hinzu',
+          create: 'Einen Interventionsplan hinzufügen',
         },
         labels: {
           definition: 'Merkmale',
           exercises: 'Übungen',
           is_system_warning:
-            'Alle dazugehörigen Übungen werden auch öffentlich zugänglich sein',
+            'Alle zugehörigen Übungen werden ebenfalls öffentlich zugänglich sein.',
         },
       },
     },
     shared: {
       labels: {
         translate_on_save:
-          'Dieses Feld wird beim Speichern automatisch in andere (nicht manuell eingegebene) Sprachen übersetzt',
+          'Beim Speichern wird dieses Feld automatisch in die Sprachen übersetzt, für die keine manuelle Eingabe erfolgt ist.',
         overwrite_existing_translations:
-          'Ersetzen Sie vorhandene Übersetzungen',
+          'Ersetzen Sie auch die vorhandenen Übersetzungen.',
+        copy_on_save:
+          'Beim Speichern wird dieses Feld automatisch in die Sprachen kopiert, für die keine manuelle Eingabe erfolgt ist.',
       },
     },
   },

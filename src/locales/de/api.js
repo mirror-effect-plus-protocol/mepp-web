@@ -23,14 +23,13 @@
 export default {
   api: {
     success: {
-      settings_update: 'Effekt erfolgreich geändert',
-      profile_update:
-        'Die Bearbeitung Ihres Profils wurde erfolgreich abgeschlossen',
+      settings_update: 'Änderung des Effekts erfolgreich durchgeführt',
+      profile_update: 'Änderung Ihres Profils erfolgreich durchgeführt',
     },
     error: {
-      generic: 'Ein unbekannter Fehler ist aufgetreten',
-      token_invalid: 'Ihr Änderungsantrag ist ungültig oder abgelaufen',
-      pwd_invalid: 'Dein Passwort ist ungültig',
+      generic: 'Ein unbekannter Fehler ist aufgetreten.',
+      token_invalid: 'Ihre Änderungsanfrage ist ungültig oder abgelaufen.',
+      pwd_invalid: 'Ihr Passwort ist ungültig.',
     },
   },
 };

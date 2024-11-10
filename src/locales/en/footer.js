@@ -22,9 +22,9 @@
 
 export default {
   footer: {
-    title: 'With the financial aid from',
+    title: 'With the financial assistance of',
     copyright: 'All rights reserved © MEPP 2021',
-    privacy: 'Privacy\u00A0policy',
+    privacy: 'Privacy',
     termsofuse: 'Terms of Use',
     license: 'License',
   },

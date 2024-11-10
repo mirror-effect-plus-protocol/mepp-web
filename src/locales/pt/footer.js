@@ -25,7 +25,7 @@ export default {
     title: 'Com a ajuda financeira de',
     copyright: 'Todos os direitos reservados © MEPP 2021',
     privacy: 'Privacidade',
-    termsofuse: 'Termos de uso',
+    termsofuse: 'Condições de utilização',
     license: 'Licença',
   },
 };

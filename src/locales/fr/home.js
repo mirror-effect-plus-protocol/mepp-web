@@ -56,7 +56,7 @@ export default {
           title: 'Orthophoniste et chercheure',
         },
         person3: {
-          name: 'Dr Akram Rahal',
+          name: 'Dr. Akram Rahal',
           title: 'ORL et professeur de clinique à l’Université de Montréal',
         },
       },

@@ -141,12 +141,12 @@ export default {
   },
 
   languages: {
-    'en': 'English',
-    'fr': 'Français',
-    'it': 'Italiano',
-    'es': 'Español',
-    'de': 'Deutsch',
-    'pt': 'Português',
+    en: 'English',
+    fr: 'Français',
+    it: 'Italiano',
+    es: 'Español',
+    de: 'Deutsch',
+    pt: 'Português',
   },
 
   resources: {
@@ -393,9 +393,7 @@ export default {
           labels: {
             autocomplete: {
               category: 'Catégorie',
-              sub_category: 'Sous-catégorie',
               exercise: 'Description',
-              sub_category_empty_label: 'Toutes',
             },
           },
         },

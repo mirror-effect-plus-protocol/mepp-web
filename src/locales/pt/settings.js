@@ -24,7 +24,7 @@ export default {
   settings: {
     title: 'Configurações',
     nav: {
-      languages: 'Linguagem',
+      languages: 'Idioma',
       infos: 'Identificador',
     },
   },

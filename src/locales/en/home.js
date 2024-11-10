@@ -24,56 +24,46 @@ export default {
   home: {
     intro: {
       title:
-        'Une Innovation Cruciale pour la Rééducation Faciale Basée sur la Réalité Augmentée',
-      text: 'Le MEPP est un outil innovant de rééducation faciale, destiné à traiter la paralysie faciale. Issu de recherches collaboratives québécoises, il rassemble chercheurs.res, patients.tes, cliniciens.nes, technologues et étudiants.tes pour améliorer la qualité de vie des personnes atteintes de paralysie faciale. Le MEPP utilise la réalité augmentée et se base sur des données probantes pour rendre la rééducation faciale plus accessible.',
-      financialTitle: 'Avec l’aide financière de:',
+        'A Crucial Innovation for Facial Rehabilitation Based on Augmented Reality',
+      text: 'The MEPP is an innovative tool for facial rehabilitation, aimed at treating facial paralysis. Born from collaborative research in Quebec, it brings together researchers, patients, clinicians, technologists, and students to improve the quality of life for people with facial paralysis. The MEPP uses augmented reality and is based on evidence to make facial rehabilitation more accessible.',
+      financialTitle: 'With the financial support of:',
     },
     description: {
-      title: 'La thérapie miroir en rééducation du visage',
-      text: 'Le MEPP est assorti d’une application pour appareils mobiles. Il permet à un.e thérapeute d’offrir de la thérapie miroir en rééducation du visage, pour des patients.tes atteints de paralysie faciale. Le MEPP offrant une plateforme aux cliniciens.nes afin de gérer une base d’exercices, de produire des plans d’exercices individualisés et d’ajouter plusieurs utilisateurs. De plus, le site offre un espace virtuel personnalisé permettant aux personnes ayant besoin de rééducation de réaliser leurs exercices.',
+      title: 'Mirror therapy in facial rehabilitation',
+      text: 'The MEPP comes with an application for mobile devices. It allows a therapist to provide mirror therapy in facial rehabilitation for patients suffering from facial paralysis. The MEPP offers a platform for clinicians to manage a database of exercises, produce individualized exercise plans, and add multiple users. In addition, the site provides a personalized virtual space allowing individuals in need of rehabilitation to perform their exercises.',
       list: {
         title:
-          'Plusieurs études ont été réalisées afin de tester l’utilisabilité et l’efficacité du MEPP:',
-        item1: {
-          text: 'Development of an open-source and free facial rehabilitation website for severe bell’s palsy: a within-subject study on user experience and patient’s compliance with the MEPP-website',
-        },
-        item2: {
-          text: 'The “Mirror Effect Plus Protocol” for acute Bell’s palsy: A randomized controlled trial with 1-year follow-up',
-        },
-        item3: {
-          text: 'Comparison of Objective Facial Metrics on Both Sides of the Face Among Patients with Severe Bell’s Palsy Treated with Mirror Effect Plus Protocol Rehabilitation Versus Controls',
-        },
-        item4: {
-          text: 'Measuring the Potential Effects of Mirror Therapy Added to the Gold Standard Facial Neuromuscular Retraining in Patients With Chronic Peripheral Facial Palsy: Protocol for a Randomized Controlled Trial.',
-        },
+          'Several studies have been conducted to test the usability and effectiveness of the MEPP:',
+        loading: 'Loading in progress…',
+        error: 'An error occurred during loading!',
       },
     },
     history: {
       title:
-        'Environ <span style="color:#008EDE;">15,4 millions</span> de personnes par année dans le monde auront une paralysie faciale, occasionnée par la paralysie de Bell ou un AVC.',
+        'Approximately <span style="color:#008EDE;">15.4 million</span> people worldwide each year will experience facial paralysis caused by Bell’s palsy or a stroke.',
       text1:
-        'Environ 15,4 millions (M) de personnes par année dans le monde auront une paralysie faciale, occasionnée par la paralysie de Bell ou un AVC (Feigin et al, 2022). Ceci représente ≈110,000 et ≈23,000 personnes chaque année au Canada et au Québec. Pour ces personnes, la réadaptation est donc essentielle pour favoriser la récupération des fonctions et pour améliorer leur qualité de vie. La réadaptation se fait grâce au travail conjoint des patients.tes avec des professionnels.les de la santé, spécialisés.es dans la l’évaluation et la rééducation de la paralysie faciale. Or, pour ces professionnels.les, très peu d’outils spécialisés et basés sur les données probantes sont actuellement disponibles. Ils doivent donc principalement travailler en explorant, à tâtons, une littérature foisonnante et disparate, ce qui entrave l’efficacité de leurs interventions, et peut mener à de moins bons résultats cliniques.',
+        'Approximately 15.4 million (M) people worldwide each year will experience facial paralysis due to Bell’s palsy or a stroke (Feigin et al, 2022). This represents ≈110,000 and ≈23,000 people each year in Canada and Quebec, respectively. For these individuals, rehabilitation is therefore essential to promote the recovery of functions and to improve their quality of life. Rehabilitation is carried out through the joint efforts of patients and health professionals specialized in the assessment and rehabilitation of facial paralysis. However, for these professionals, very few specialized and evidence-based tools are currently available. They must primarily work by exploring, tentatively, a vast and disparate literature, which hinders the effectiveness of their interventions and may lead to poorer clinical outcomes.',
       text2:
-        'Afin de régler cette problématique importante, l’équipe de recherche formée de docteure Sarah Martineau, orthophoniste et professeure adjointe de clinique à l’Université de Montréal, de docteure Karine Marcotte, orthophoniste et chercheure, et de docteur Akram Rahal, ORL et professeur de clinique à l’Université de Montréal, a développé le Mirror Effect Plus Protocol (MEPP), entre 2017 et 2023. Cette rééducation, et le site web qui l’accompagne, se base sur les principes d’intervention importants en paralysie faciale, ainsi que sur la thérapie miroir. Le site intègre une progression des exercices et une aide visuelle pour faciliter la réadaptation des personnes ayant des atteintes neurologiques au visage. Le MEPP propose une approche personnalisée de réduplication du visage, unique par rapport aux logiciels de rééducation du visage disponibles sur le marché. De plus, les protocoles de réadaptation et les exercices intégrés dans le site s’appuient sur les plus récentes données probantes. Cet outil facilite donc grandement le travail des professionnels.les, de même que le processus thérapeutique des patients.tes, puisqu’il offre une structure claire, basée sur la littérature scientifique, tout en facilitant l’accessibilité aux exercices à domicile et la télé-réadaptation dans le domaine de la paralysie faciale.',
+        'In order to address this important issue, the research team composed of Dr. Sarah Martineau, speech-language pathologist and assistant clinical professor at the Université de Montréal, Dr. Karine Marcotte, speech-language pathologist and researcher, and Dr. Akram Rahal, ENT specialist and clinical professor at the Université de Montréal, developed the Mirror Effect Plus Protocol (MEPP) between 2017 and 2023. This rehabilitation, along with the accompanying website, is based on important intervention principles in facial paralysis, as well as on mirror therapy. The site integrates a progression of exercises and visual aids to facilitate the rehabilitation of individuals with neurological impairments of the face. The MEPP offers a personalized approach to facial rehabilitation, unique compared to the available facial rehabilitation software on the market. Furthermore, the rehabilitation protocols and exercises integrated into the site are based on the latest evidence-based data. This tool greatly facilitates the work of professionals, as well as the therapeutic process for patients, since it offers a clear structure based on scientific literature, while also facilitating access to home exercises and tele-rehabilitation in the field of facial paralysis.',
       persons: {
         person1: {
-          name: 'Dre Sarah Martineau',
+          name: 'Dr. Sarah Martineau',
           title:
-            'Orthophoniste et professeure adjointe de clinique à l’Université de Montréal',
+            'Speech-language pathologist and assistant clinical professor at the University of Montreal',
         },
         person2: {
-          name: 'Dre Karine Marcotte',
-          title: 'Orthophoniste et chercheure',
+          name: 'Dr. Karine Marcotte',
+          title: 'Speech therapist and researcher',
         },
         person3: {
           name: 'Dr Akram Rahal',
-          title: 'ORL et professeur de clinique à l’Université de Montréal',
+          title: 'ENT and clinical professor at the University of Montreal',
         },
       },
     },
     donate: {
-      title: 'Aidez-nous à faire en sorte que le MEPP soit accessible à tous.',
-      text: 'Tous les dons soutiennent directement le développement du MEPP, afin que nous puissions fournir un accès gratuit à nos outils aux personnes qui en ont le plus besoin. Faites un don unique ou configurez un don mensuel récurrent.',
+      title: 'Help us make the MEPP accessible to everyone.',
+      text: 'All donations directly support the development of the MEPP, so we can provide free access to our tools to those who need them most. Make a one-time donation or set up a recurring monthly donation.',
     },
   },
 };

@@ -40,21 +40,21 @@ export default {
         placeholder: '',
       },
       newpassword: {
-        label: 'Neues Kennwort',
+        label: 'Neues Passwort',
         placeholder: '',
       },
       error: {
-        login_invalid: 'Ungültige Emailadresse oder Passwort',
+        login_invalid: 'Ungültige E-Mail-Adresse oder Passwort',
         email_invalid: 'Ungültige E-Mail-Adresse',
-        pwd_not_match: 'Passwörter sind nicht identisch',
-        pwd: 'Muss einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen (-_ @$!%*#?&amp;) enthalten.',
-        min_length: 'Dieses Passwort ist zu kurz',
-        required: 'Dieses Feld ist erforderlich',
+        pwd_not_match: 'Die Passwörter sind nicht identisch.',
+        pwd: 'Muss einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen (-_ @$!%*#?&) enthalten.',
+        min_length: 'Dieses Passwort ist zu kurz.',
+        required: 'Dieses Feld ist erforderlich.',
       },
     },
 
     login: {
-      title: 'Verbindung',
+      title: 'Anmeldung',
     },
 
     reset_password: {
@@ -63,11 +63,11 @@ export default {
     },
 
     forgot_password: {
-      title: 'Haben Sie Ihr Passwort vergessen?',
+      title: 'Passwort vergessen?',
       introduction:
-        'Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.',
+        'Geben Sie Ihre E-Mail-Adresse ein, und wir senden Ihnen einen Link zur Zurücksetzung Ihres Passworts.',
       success:
-        'Wenn Ihr Konto vorhanden ist, wird eine E-Mail an <span>{{ email }}</span> gesendet. Es zeigt Ihnen die Schritte an, die Sie befolgen müssen, um Ihr Passwort zurückzusetzen.',
+        'Wenn Ihr Konto existiert, wird eine E-Mail an <span>{{ email }}</span> gesendet. Diese wird Ihnen die Schritte zur Rücksetzung Ihres Passworts mitteilen.',
     },
   },
 };

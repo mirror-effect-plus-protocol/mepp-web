@@ -23,13 +23,13 @@
 export default {
   api: {
     success: {
-      settings_update: 'Effetto modificato con successo',
-      profile_update: 'Modifica del tuo profilo completata con successo',
+      settings_update: 'Modifica dell’effetto eseguita con successo',
+      profile_update: 'Modifica del tuo profilo effettuata con successo',
     },
     error: {
-      generic: 'Si è verificato un errore sconosciuto',
-      token_invalid: 'La tua richiesta di modifica non è valida o è scaduta',
-      pwd_invalid: 'La tua password non è valida',
+      generic: 'Si è verificato un errore sconosciuto.',
+      token_invalid: 'La tua richiesta di modifica è non valida o scaduta.',
+      pwd_invalid: 'La tua password è invalida',
     },
   },
 };

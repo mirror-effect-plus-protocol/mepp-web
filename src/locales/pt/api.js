@@ -23,13 +23,13 @@
 export default {
   api: {
     success: {
-      settings_update: 'Efeito alterado com sucesso',
-      profile_update: 'Edição do seu perfil concluída com sucesso',
+      settings_update: 'Modificação do efeito realizada com sucesso',
+      profile_update: 'Modificação do seu perfil realizada com sucesso',
     },
     error: {
       generic: 'Um erro desconhecido ocorreu',
-      token_invalid: 'Sua solicitação de alteração é inválida ou expirou',
-      pwd_invalid: 'Sua senha é invalida',
+      token_invalid: 'Sua solicitação de alteração é inválida ou expirou.',
+      pwd_invalid: 'Sua senha é inválida',
     },
   },
 };

@@ -24,8 +24,8 @@ export default {
   form: {
     field: {
       email: {
-        label: 'Seu endereço de email',
-        placeholder: 'Endereço de email',
+        label: 'Seu endereço de e-mail',
+        placeholder: 'Endereço de e-mail',
       },
       password: {
         label: 'Sua senha',
@@ -40,15 +40,15 @@ export default {
         placeholder: '',
       },
       newpassword: {
-        label: 'Nova Senha',
+        label: 'Nova senha',
         placeholder: '',
       },
       error: {
-        login_invalid: 'E-mail ou senha inválidos',
-        email_invalid: 'Endereço de email invalido',
+        login_invalid: 'Endereço de e-mail ou senha inválido',
+        email_invalid: 'Endereço de e-mail inválido',
         pwd_not_match: 'As senhas não são idênticas',
-        pwd: 'Deve conter uma letra minúscula, uma letra maiúscula, um número e um caractere especial (-_ @$!%*#?&amp;)',
-        min_length: 'Esta senha é muito curta',
+        pwd: 'Deve conter uma letra minúscula, uma letra maiúscula, um dígito e um caractere especial (-_ @$!%*#?&)',
+        min_length: 'A senha é muito curta.',
         required: 'Este campo é obrigatório',
       },
     },
@@ -58,16 +58,16 @@ export default {
     },
 
     reset_password: {
-      title: 'Redefinindo sua senha',
+      title: 'Redefinição da sua senha',
       success: 'Sua senha foi alterada com sucesso.',
     },
 
     forgot_password: {
-      title: 'Esqueceu sua senha?',
+      title: 'Esqueceu a senha?',
       introduction:
-        'Digite seu endereço de e-mail e enviaremos um link para redefinir sua senha.',
+        'Insira seu endereço de e-mail e nós lhe enviaremos um link para redefinir sua senha.',
       success:
-        'Se sua conta existir, um e-mail será enviado para <span>{{ email }}</span> . Ele lhe dirá as etapas a seguir para redefinir sua senha.',
+        'Se a sua conta existir, um e-mail será enviado para <span>{{ email }}</span>. Ele lhe indicará os passos a seguir para redefinir sua senha.',
     },
   },
 };

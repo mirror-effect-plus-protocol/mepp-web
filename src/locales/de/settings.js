@@ -25,7 +25,7 @@ export default {
     title: 'Einstellungen',
     nav: {
       languages: 'Sprache',
-      infos: 'Kennung',
+      infos: 'Identifikator',
     },
   },
 };

@@ -24,15 +24,15 @@ export default {
   intro: {
     title: 'Hallo {{name}}',
     introduction:
-      'Bereit, mit dem Training zu beginnen? Konzentrieren Sie sich auf Muskelkontraktionen und versuchen Sie, sie zu spüren, auch wenn Sie keine Bewegung sehen. Lassen Sie den Rest des Gesichts ruhen.',
+      'Bereit, Ihre Übungseinheit zu beginnen? Konzentrieren Sie sich auf die Muskelkontraktionen und versuchen Sie, sie zu spüren, auch wenn Sie nichts bewegen sehen. Lassen Sie den Rest des Gesichts ruhen.',
     instruction:
-      'Machen Sie die Übungen langsam und folgen Sie dabei dem empfohlenen Tempo.',
+      'Machen Sie die Übungen langsam, indem Sie dem vorgeschlagenen Rhythmus folgen.',
   },
   permission: {
-    title: 'Erlaubnis',
+    title: 'Berechtigung',
     introduction:
-      'Um Ihre Sitzung fortsetzen zu können, müssen Sie den Zugriff auf diese Webseite durch Ihre Kamera und Ihr Mikrofon zulassen.',
+      'Um Ihr Sitzung fortzusetzen, müssen Sie den Zugriff dieser Webseite auf Ihre Kamera und Ihr Mikrofon erlauben.',
     instruction:
-      'Um auf Ihre Sitzung zuzugreifen, müssen Sie diese zunächst autorisieren, indem Sie Ihre Browsereinstellungen ändern.',
+      'Um auf Ihre Sitzung zugreifen zu können, müssen Sie sie zunächst autorisieren, indem Sie die Einstellungen Ihres Browsers ändern.',
   },
 };

@@ -22,16 +22,16 @@
 
 export default {
   intro: {
-    title: 'Olá {{nome}}',
+    title: 'Olá {{name}}',
     introduction:
-      'Pronto para começar seu treino? Concentre-se nas contrações musculares e tente senti-las, mesmo que não veja nada se movendo. Deixe o resto do rosto descansar.',
-    instruction: 'Faça os exercícios lentamente, seguindo o ritmo sugerido.',
+      'Pronto(a) para começar sua sessão de exercícios? Concentre-se nas contrações musculares e tente senti-las, mesmo que você não veja nada se movendo. Deixe o resto do rosto em repouso.',
+    instruction: 'Faça os exercícios lentamente, seguindo o ritmo proposto.',
   },
   permission: {
     title: 'Permissão',
     introduction:
-      'Para poder continuar sua sessão, você deve permitir que esta página da web seja acessada por sua câmera e microfone.',
+      'Para poder continuar sua sessão, você deve permitir o acesso desta página da Web à sua câmera e ao seu microfone.',
     instruction:
-      'Para acessar sua sessão, primeiro você precisará autorizá-la alterando as configurações do seu navegador.',
+      'Para acessar sua sessão, você precisará primeiro autorizá-la alterando as configurações do seu navegador.',
   },
 };

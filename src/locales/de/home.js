@@ -24,56 +24,48 @@ export default {
   home: {
     intro: {
       title:
-        'Une Innovation Cruciale pour la Rééducation Faciale Basée sur la Réalité Augmentée',
-      text: 'Le MEPP est un outil innovant de rééducation faciale, destiné à traiter la paralysie faciale. Issu de recherches collaboratives québécoises, il rassemble chercheurs.res, patients.tes, cliniciens.nes, technologues et étudiants.tes pour améliorer la qualité de vie des personnes atteintes de paralysie faciale. Le MEPP utilise la réalité augmentée et se base sur des données probantes pour rendre la rééducation faciale plus accessible.',
-      financialTitle: 'Avec l’aide financière de:',
+        'Eine entscheidende Innovation für die Gesichtsrehabilitation basierend auf Augmented Reality',
+      text: 'Das MEPP ist ein innovatives Werkzeug zur Gesichtswiederherstellung, das zur Behandlung von Gesichtslähmungen dient. Es stammt aus kooperativen Forschungsprojekten in Quebec und bringt Forscher*innen, Patient*innen, Kliniker*innen, Technologen*innen und Studierende zusammen, um die Lebensqualität von Menschen mit Gesichtslähmung zu verbessern. Das MEPP nutzt Augmented Reality und basiert auf evidenzbasierten Daten, um die Gesichtswiederherstellung zugänglicher zu machen.',
+      financialTitle: 'Mit finanzieller Unterstützung von:',
     },
     description: {
-      title: 'La thérapie miroir en rééducation du visage',
-      text: 'Le MEPP est assorti d’une application pour appareils mobiles. Il permet à un.e thérapeute d’offrir de la thérapie miroir en rééducation du visage, pour des patients.tes atteints de paralysie faciale. Le MEPP offrant une plateforme aux cliniciens.nes afin de gérer une base d’exercices, de produire des plans d’exercices individualisés et d’ajouter plusieurs utilisateurs. De plus, le site offre un espace virtuel personnalisé permettant aux personnes ayant besoin de rééducation de réaliser leurs exercices.',
+      title: 'Die Spiegeltherapie in der Gesichtstherapie',
+      text: 'Die MEPP ist mit einer Anwendung für mobile Geräte ausgestattet. Sie ermöglicht es einem Therapeut:in, Spiegeltherapie in der Gesichtstherapie anzubieten, für Patient:innen mit Gesichtslähmung. Die MEPP bietet eine Plattform für Kliniker:innen, um eine Übungsdatenbank zu verwalten, individuelle Übungspläne zu erstellen und mehrere Benutzer hinzuzufügen. Darüber hinaus bietet die Website einen personalisierten virtuellen Raum, in dem Personen, die Rehabilitationsbedarf haben, ihre Übungen durchführen können.',
       list: {
         title:
-          'Plusieurs études ont été réalisées afin de tester l’utilisabilité et l’efficacité du MEPP:',
-        item1: {
-          text: 'Development of an open-source and free facial rehabilitation website for severe bell’s palsy: a within-subject study on user experience and patient’s compliance with the MEPP-website',
-        },
-        item2: {
-          text: 'The “Mirror Effect Plus Protocol” for acute Bell’s palsy: A randomized controlled trial with 1-year follow-up',
-        },
-        item3: {
-          text: 'Comparison of Objective Facial Metrics on Both Sides of the Face Among Patients with Severe Bell’s Palsy Treated with Mirror Effect Plus Protocol Rehabilitation Versus Controls',
-        },
-        item4: {
-          text: 'Measuring the Potential Effects of Mirror Therapy Added to the Gold Standard Facial Neuromuscular Retraining in Patients With Chronic Peripheral Facial Palsy: Protocol for a Randomized Controlled Trial.',
-        },
+          'Mehrere Studien wurden durchgeführt, um die Benutzbarkeit und die Wirksamkeit des MEPP zu testen:',
+        loading: 'Wird geladen…',
+        error: 'Ein Fehler ist beim Laden aufgetreten!',
       },
     },
     history: {
       title:
-        'Environ <span style="color:#008EDE;">15,4 millions</span> de personnes par année dans le monde auront une paralysie faciale, occasionnée par la paralysie de Bell ou un AVC.',
+        'Jährlich werden etwa <span style="color:#008EDE;">15,4 Millionen</span> Menschen weltweit mit einer Gesichtslähmung zu kämpfen haben, verursacht durch die Bell-Lähmung oder einen Schlaganfall.',
       text1:
-        'Environ 15,4 millions (M) de personnes par année dans le monde auront une paralysie faciale, occasionnée par la paralysie de Bell ou un AVC (Feigin et al, 2022). Ceci représente ≈110,000 et ≈23,000 personnes chaque année au Canada et au Québec. Pour ces personnes, la réadaptation est donc essentielle pour favoriser la récupération des fonctions et pour améliorer leur qualité de vie. La réadaptation se fait grâce au travail conjoint des patients.tes avec des professionnels.les de la santé, spécialisés.es dans la l’évaluation et la rééducation de la paralysie faciale. Or, pour ces professionnels.les, très peu d’outils spécialisés et basés sur les données probantes sont actuellement disponibles. Ils doivent donc principalement travailler en explorant, à tâtons, une littérature foisonnante et disparate, ce qui entrave l’efficacité de leurs interventions, et peut mener à de moins bons résultats cliniques.',
+        'Etwa 15,4 Millionen (M) Menschen weltweit werden jährlich von Gesichtslähmung betroffen sein, die durch eine Bell-Lähmung oder einen Schlaganfall verursacht wird (Feigin et al, 2022). Dies entspricht etwa 110.000 und etwa 23.000 Personen jährlich in Kanada und Quebec. Für diese Personen ist Rehabilitation daher entscheidend, um die Wiederherstellung der Funktionen zu fördern und ihre Lebensqualität zu verbessern. Die Rehabilitation erfolgt durch die Zusammenarbeit der Patient:innen mit Fachleuten der Gesundheitsversorgung, die auf die Bewertung und Rehabilitation von Gesichtslähmungen spezialisiert sind. Allerdings sind für diese Fachleute derzeit sehr wenige spezialisierte und evidenzbasierte Werkzeuge verfügbar. Sie müssen daher hauptsächlich durch das Durchforsten einer umfangreichen und disparaten Literatur arbeiten, was die Effektivität ihrer Interventionen beeinträchtigt und zu schlechteren klinischen Ergebnissen führen kann.',
       text2:
-        'Afin de régler cette problématique importante, l’équipe de recherche formée de docteure Sarah Martineau, orthophoniste et professeure adjointe de clinique à l’Université de Montréal, de docteure Karine Marcotte, orthophoniste et chercheure, et de docteur Akram Rahal, ORL et professeur de clinique à l’Université de Montréal, a développé le Mirror Effect Plus Protocol (MEPP), entre 2017 et 2023. Cette rééducation, et le site web qui l’accompagne, se base sur les principes d’intervention importants en paralysie faciale, ainsi que sur la thérapie miroir. Le site intègre une progression des exercices et une aide visuelle pour faciliter la réadaptation des personnes ayant des atteintes neurologiques au visage. Le MEPP propose une approche personnalisée de réduplication du visage, unique par rapport aux logiciels de rééducation du visage disponibles sur le marché. De plus, les protocoles de réadaptation et les exercices intégrés dans le site s’appuient sur les plus récentes données probantes. Cet outil facilite donc grandement le travail des professionnels.les, de même que le processus thérapeutique des patients.tes, puisqu’il offre une structure claire, basée sur la littérature scientifique, tout en facilitant l’accessibilité aux exercices à domicile et la télé-réadaptation dans le domaine de la paralysie faciale.',
+        'Um dieses wichtige Problem zu lösen, hat das Forschungsteam bestehend aus Dr. Sarah Martineau, Sprachtherapeutin und Assistenzprofessorin für klinische Forschung an der Universität Montreal, Dr. Karine Marcotte, Sprachtherapeutin und Forscherin, und Dr. Akram Rahal, HNO-Arzt und klinischer Professor an der Universität Montreal, zwischen 2017 und 2023 das Mirror Effect Plus Protocol (MEPP) entwickelt. Diese Rehabilitation und die begleitende Website basieren auf den wichtigen Interventionsprinzipien bei Gesichtslähmungen sowie auf der Spiegelftherapie. Die Website integriert eine Progression der Übungen und visuelle Hilfsmittel, um die Rehabilitation von Menschen mit neurologischen Beeinträchtigungen im Gesicht zu erleichtern. Das MEPP bietet einen personalisierten Ansatz zur Gesichtswiederherstellung, der einzigartig im Vergleich zu den auf dem Markt verfügbaren Gesichtstherapie-Software ist. Darüber hinaus stützen sich die Rehabilitationsprotokolle und die in die Website integrierten Übungen auf die neuesten wissenschaftlichen Erkenntnisse. Dieses Werkzeug erleichtert somit erheblich die Arbeit der Fachleute sowie den therapeutischen Prozess der Patienten, da es eine klare Struktur bietet, die auf der wissenschaftlichen Literatur basiert, und gleichzeitig die Zugänglichkeit zu den Übungen zu Hause sowie die Tele-Rehabilitation im Bereich der Gesichtslähmung erleichtert.',
       persons: {
         person1: {
-          name: 'Dre Sarah Martineau',
+          name: 'Dr. Sarah Martineau',
           title:
-            'Orthophoniste et professeure adjointe de clinique à l’Université de Montréal',
+            'Logopäde und außerordentliche Professorin für Klinische Wissenschaften an der Universität Montreal',
         },
         person2: {
           name: 'Dre Karine Marcotte',
-          title: 'Orthophoniste et chercheure',
+          title: 'Logopädin und Forscherin',
         },
         person3: {
           name: 'Dr Akram Rahal',
-          title: 'ORL et professeur de clinique à l’Université de Montréal',
+          title:
+            'HNO-Arzt und klinischer Professor an der Universität Montréal',
         },
       },
     },
     donate: {
-      title: 'Aidez-nous à faire en sorte que le MEPP soit accessible à tous.',
-      text: 'Tous les dons soutiennent directement le développement du MEPP, afin que nous puissions fournir un accès gratuit à nos outils aux personnes qui en ont le plus besoin. Faites un don unique ou configurez un don mensuel récurrent.',
+      title:
+        'Helfen Sie uns, sicherzustellen, dass der MEPP für alle zugänglich ist.',
+      text: 'Alle Spenden unterstützen direkt die Entwicklung des MEPP, damit wir denjenigen, die es am dringendsten benötigen, kostenlosen Zugang zu unseren Werkzeugen bieten können. Tätigen Sie eine einmalige Spende oder richten Sie eine wiederkehrende monatliche Spende ein.',
     },
   },
 };

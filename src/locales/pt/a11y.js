@@ -22,8 +22,8 @@
 
 export default {
   a11y: {
-    show_password: 'Ver sua senha',
-    settings: 'Vá para as configurações da sua conta',
+    show_password: 'Visualizar sua senha',
+    settings: 'Vá para suas configurações de conta',
     support: 'Vá para a página de ajuda',
   },
 };

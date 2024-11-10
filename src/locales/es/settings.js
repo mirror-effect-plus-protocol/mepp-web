@@ -22,9 +22,9 @@
 
 export default {
   settings: {
-    title: 'configuraciones',
+    title: 'Configuraciones',
     nav: {
-      languages: 'Lengua',
+      languages: 'Idioma',
       infos: 'Identificador',
     },
   },

@@ -24,20 +24,20 @@ export default {
   admin: {
     shared: {
       labels: {
-        archives: 'Archivi',
+        archives: 'Archivio',
         cancelButton: 'Annulla',
         confirmButton: 'Confermare',
-        archiveButton: 'Archivio',
-        unarchiveButton: 'Annulla l’archiviazione',
-        activateButton: 'Abilitare',
-        deactivateButton: 'disattivare',
-        backButton: 'Indietro',
-        exportButton: 'Esportatore',
-        filterButton: 'Filtro',
+        archiveButton: 'Archiviare',
+        unarchiveButton: 'Estrarre',
+        activateButton: 'Attivare',
+        deactivateButton: 'Disattivare',
+        backButton: 'Ritorna',
+        exportButton: 'Esporta',
+        filterButton: 'Filtrare',
         card: {
-          identity: 'Identificare',
+          identity: 'Identità',
           informations: 'Profilo',
-          reset_password: 'Resetta la password',
+          reset_password: 'Reimposta la password',
           create_password: 'Crea la password',
         },
         profile: 'Il mio profilo',
@@ -45,76 +45,76 @@ export default {
       notifications: {
         archive: {
           success: 'Elemento archiviato con successo',
-          failure: 'C’è stato un errore',
+          failure: 'Si è verificato un errore',
         },
         unarchive: {
-          success: 'Elemento annullato con successo',
-          failure: 'C’è stato un errore',
+          success: 'Elemento dearchiviato con successo',
+          failure: 'Si è verificato un errore',
         },
         activate: {
-          success: 'Articolo attivato con successo',
-          failure: 'C’è stato un errore',
+          success: 'Elemento attivato con successo',
+          failure: 'Si è verificato un errore',
         },
         deactivate: {
-          success: 'Elemento disabilitato con successo',
-          failure: 'C’è stato un errore',
+          success: 'Elemento disattivato con successo',
+          failure: 'Si è verificato un errore',
         },
         bulkArchive: {
-          success: 'Elementi archiviati correttamente',
-          failure: 'C’è stato un errore',
+          success: 'Elementi archiviati con successo',
+          failure: 'Si è verificato un errore',
         },
         bulkUnarchive: {
-          success: 'Elementi annullati con successo',
-          failure: 'C’è stato un errore',
+          success: 'Elementi dearchiviati con successo',
+          failure: 'Si è verificato un errore',
         },
-        'esportare': {
-          start: 'Il download inizierà a breve',
-          failure: 'C’è stato un errore',
+        export: {
+          start: 'Il download inizierà a breve.',
+          failure: 'Si è verificato un errore',
         },
         mirror: {
-          failure: 'C’è stato un errore',
+          failure: 'Si è verificato un errore',
         },
         language: {
-          success: 'La tua lingua è stata aggiornata con successo',
+          success: 'La tua lingua è stata aggiornata con successo.',
           failure:
-            'Si è verificato un errore, il tuo profilo non è stato aggiornato',
+            'Si è verificato un errore, il tuo profilo non è stato aggiornato.',
         },
         profile: {
-          success: 'Il tuo profilo è stato aggiornato con successo',
+          success: 'Il tuo profilo è stato aggiornato con successo.',
         },
       },
       text: {
         cancelDialog: {
-          title: 'Sei sicuro di voler annullare?',
-          body: 'Tutte le modifiche andranno perse.',
+          title: 'Vuoi davvero annullare?',
+          body: 'Tutte le modifiche saranno perse.',
         },
         emailDialog: {
-          title: 'E-mail di benvenuto',
-          body: 'Vuoi inviare nuovamente l’e-mail?',
+          title: 'Email di benvenuto',
+          body: 'Vuoi rinviare l’e-mail?',
         },
         exerciseFilter: {
-          loading: 'Caricamento...',
+          loading: 'Caricamento in corso...',
           notfound: 'Nessun esercizio trovato in questa categoria!',
         },
       },
       errors: {
         field_required: 'Questo campo è obbligatorio',
-        password_mismatch: 'le passwords non corrispondono',
+        password_mismatch: 'Le password non corrispondono.',
         password_too_short:
-          'La password deve contenere %{min_length} caratteri',
+          'La password deve contenere %{min_length} caratteri.',
         password_not_secure:
-          'La password deve contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (-_ @$!%*#?&amp;)',
+          'La password deve contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (-_ @$!%*#?&)',
         password_required: 'Questo campo è obbligatorio',
       },
     },
     dashboard: {
-      title: 'Benvenuto %{nome}',
+      title: 'Benvenuto %{name}',
       labels: {
-        openMirrorButton: 'Specchio facciale aperto',
+        openMirrorButton: 'Apri lo specchio facciale',
       },
       widgets: {
         daily_repeats: {
-          card_header: 'Frequenze giornaliere raggiunte',
+          card_header: 'Frequenze quotidiane raggiunte',
         },
         sessions: {
           card_header: 'Sessioni',
@@ -126,52 +126,74 @@ export default {
           all: 'l’inizio',
         },
         labels: {
-          completed: 'Completamente eseguito',
-          uncompleted: 'Parzialmente eseguito',
+          completed: 'Completamente eseguite',
+          uncompleted: 'Parzialmente eseguite',
           since: 'Da',
         },
       },
       mirror_dialog: {
-        title: 'Specchio facciale aperto',
+        title: 'Apri lo specchio facciale',
         labels: {
-          autocomplete: 'Scegli un paziente',
+          autocomplete: 'Scegliere un paziente',
         },
       },
     },
   },
 
   languages: {
-    'en': 'English',
-    'fr': 'Français',
-    'it': 'Italiano',
-    'es': 'Español',
-    'de': 'Deutsch',
-    'pt': 'Português',
+    en: 'English',
+    fr: 'Français',
+    it: 'Italiano',
+    es: 'Español',
+    de: 'Deutsch',
+    pt: 'Português',
   },
 
   resources: {
+    articles: {
+      name: 'Articolo |||| Articoli',
+      fields: {
+        'i18n.title': 'Titolo',
+        'i18n.title.it': 'Titolo',
+        'i18n.description.it': 'Descrizione',
+        'i18n.description': 'Descrizione',
+        'i18n.external_url': 'Collegamento esterno',
+        'i18n.external_url.it': 'Collegamento esterno',
+      },
+      card: {
+        labels: {
+          add: 'Aggiungi un articolo',
+          more_details: 'Maggiore dettaglio',
+          title: 'Titolo',
+          description: 'Descrizione',
+          external_url: 'Collegamento esterno',
+        },
+      },
+      delete: {
+        confirmTitle: 'Elimina l’articolo %{placeholder}',
+      },
+    },
     categories: {
       name: 'Categoria |||| Categorie',
       fields: {
-        'i18n.name.fr': 'Nome',
         'i18n.name': 'Nome',
+        'i18n.name.it': 'Nome',
       },
       labels: {
         category: 'Categoria',
-        sub_category: 'Sottocategoria',
       },
     },
     clinicians: {
-      name: 'Clinico |||| Medici',
+      name: 'Clinico(a) |||| Clinici(e)',
       fields: {
-        email: 'E-mail',
+        email: 'Email',
         first_name: 'Nome',
-        full_name: 'Nome e cognome',
+        full_name: 'Nome completo',
         last_name: 'Nome',
         language: 'Lingua',
-        password: 'Parola d’ordine',
-        confirm_password: 'Conferma password',
-        archived: 'Archivi',
+        password: 'Password',
+        confirm_password: 'Conferma la password',
+        archived: 'Archivio',
         is_superuser: 'Amministratore',
       },
       list: {
@@ -181,45 +203,53 @@ export default {
       },
       card: {
         title: {
-          default: 'Medico %{placeholder}',
-          create: 'Aggiungi un medico',
+          default: 'Clinico(a) %{placeholder}',
+          create: 'Aggiungere un(a) clinico(a)',
         },
       },
       delete: {
-        confirmTitle: 'Elimina medico %{placeholder}',
+        confirmTitle: 'Eliminare il(la) clinico(a) %{placeholder}',
       },
       errors: {
-        email: 'indirizzo email già in uso',
+        email: 'Indirizzo email già utilizzato',
       },
     },
     exercises: {
       name: 'Esercizio |||| Esercizi',
+      empty: {
+        title: 'Nessun esercizio',
+        description:
+          'Si prega di scegliere una categoria facendo clic sul pulsante Filtra.',
+      },
       fields: {
-        archived: 'Archivi',
-        'i18n.description.it': 'Descrizione',
+        archived: 'Archivio',
         'i18n.description': 'Descrizione',
+        'i18n.description.it': 'Descrizione',
         movement_duration: 'Durata',
         pause: 'Pausa',
-        repetition: 'Prove',
-        clinician_uid: 'Clinico',
+        repetition: 'Ripetizioni',
+        clinician_uid: 'Clinico(a)',
         category__uid: 'Categoria',
-        uid: 'Sottocategoria',
-        is_system: 'Sistema',
-        sub_categories: 'Categorie e sottocategorie',
+        uid: 'Categoria',
+        categories: 'Categorie',
         empty: {
           categories: {
-            label: 'Scegli una categoria',
+            label: 'Scegliere una categoria',
           },
         },
       },
       card: {
         title: {
           default: 'Esercizio %{placeholder}',
-          create: 'Aggiungi un esercizio',
+          create: 'Aggiungere un esercizio',
         },
         labels: {
           definition: 'Caratteristiche',
           classification: 'Classificazione',
+          video: 'Video',
+        },
+        text: {
+          no_video_available: 'Nessun video disponibile',
         },
       },
       list: {
@@ -229,109 +259,115 @@ export default {
         },
       },
       delete: {
-        confirmTitle: 'Elimina esercizio %{placeholder}',
+        confirmTitle: 'Elimina l’esercizio %{placeholder}',
       },
       errors: {
-        sub_categories: 'Devi scegliere almeno una categoria/sottocategoria',
-        gt_zero: 'Deve essere maggiore di zero',
+        categories: 'Devi scegliere almeno una categoria.',
+        gt_zero: 'Deve essere superiore a zero',
       },
     },
     patients: {
-      name: 'Paziente(e) |||| Paziente/i',
+      name: 'Paziente |||| Pazienti',
       fields: {
-        archived: 'Archivi',
-        clinician_uid: 'Clinico',
-        email: 'E-mail',
+        archived: 'Archivio',
+        clinician_uid: 'Clinico(a)',
+        email: 'Email',
         first_name: 'Nome',
-        full_name: 'Nome e cognome',
+        full_name: 'Nome completo',
         last_name: 'Nome',
         side: 'Lato paralizzato',
         use_audio: 'Audio attivo',
+        has_cognitive_issues: 'Problemi cognitivi',
         language: 'Lingua',
-        password: 'Parola d’ordine',
-        confirm_password: 'Conferma password',
+        password: 'Password',
+        confirm_password: 'Conferma la password',
       },
       card: {
         title: {
-          default: 'Paziente(e) %{placeholder}',
-          create: 'Aggiungi un paziente',
+          default: 'Paziente %{placeholder}',
+          create: 'Aggiungere un(a) paziente(a)',
         },
         labels: {
           plans: 'Piani di intervento',
         },
         plan_dialog: {
-          title: 'Aggiungi un piano di intervento',
+          title: 'Aggiungere un piano di intervento',
           labels: {
             autocomplete: 'Nome',
             radio_new: 'Creare un nuovo piano di intervento',
-            radio_template: 'Utilizza un modello esistente',
+            radio_template: 'Utilizzare un modello esistente',
           },
         },
         actions: {
-          copy: 'Crea un modello',
+          copy: 'Creare un modello',
         },
       },
       errors: {
-        email: 'indirizzo email già in uso',
+        email: 'Indirizzo email già utilizzato',
       },
       filters: {
-        last_visited: 'l’ultima visita',
+        last_visited: 'Ultima visita',
         today: 'Oggi',
         this_week: 'Questa settimana',
         this_month: 'Questo mese',
       },
       shared: {
         side: {
-          '0': 'SINISTRA',
+          '0': 'Sinistra',
           '1': 'Diritto',
         },
         audio: {
-          'VERO': 'SÌ',
-          'falso': 'Non',
+          'true': 'Sì',
+          'false': 'No',
+        },
+        video: {
+          'true': 'Sì',
+          'false': 'No',
         },
       },
       delete: {
-        confirmTitle: 'Elimina paziente %{placeholder}',
+        confirmTitle: 'Eliminare il(la) paziente %{placeholder}',
       },
       notifications: {
         plans: {
           add: {
-            success: 'Piano d’azione aggiunto correttamente',
-            failure: 'C’è stato un errore',
+            success: 'Piano di intervento aggiunto con successo',
+            failure: 'Si è verificato un errore',
           },
         },
         email: {
           send: {
-            success: 'email inviata correttamente',
-            failure: 'C’è stato un errore. Non è stata inviata alcuna email',
+            success: 'Email inviato con successo',
+            failure:
+              'Si è verificato un errore. Nessuna email è stata inviata.',
           },
         },
       },
     },
     plans: {
-      name: 'Piano d’intervento |||| Piani di intervento',
+      name: 'Piano di intervento |||| Piani di intervento',
       fields: {
         name: 'Nome',
-        'i18n.name.it': 'Nome',
         'i18n.name': 'Nome',
-        'i18n.description.it': 'Ulteriori informazioni',
+        'i18n.name.it': 'Nome',
         'i18n.description': 'Ulteriori informazioni',
-        clinician_uid: 'Clinico',
-        archived: 'Archivi',
-        daily_repeat: 'Frequenze giornaliere',
+        'i18n.description.it': 'Ulteriori informazioni',
+        clinician_uid: 'Clinico(a)',
+        archived: 'Archivio',
+        daily_repeat: 'Frequenze quotidiane',
         randomize: 'Ordine casuale',
         is_system: 'Sistema',
-        start_date: 'Data d’inizio',
+        start_date: 'Data di inizio',
         end_date: 'Data di fine',
         exercise: {
           description: 'Descrizione',
           movement_duration: 'Durata',
           pause: 'Pausa',
-          repetition: 'Prove',
-        },
-        empty: {
-          exercise: {
-            label: 'Scegli un esercizio',
+          repetition: 'Ripetizioni',
+          empty: {
+            exercise: {
+              label: 'Scegliere un esercizio',
+            },
           },
         },
       },
@@ -344,43 +380,38 @@ export default {
         },
       },
       edit: {
-        title: 'Piano d’intervento %{placeholder}',
+        title: 'Piano di intervento %{placeholder}',
       },
       show: {
-        title: 'Piano d’intervento %{placeholder}',
+        title: 'Piano di intervento %{placeholder}',
       },
       delete: {
-        confirmTitle: 'Elimina piano di intervento %{placeholder}',
+        confirmTitle: 'Elimina il piano di intervento %{placeholder}',
       },
       card: {
         exercise_dialog: {
-          title: 'Aggiungi un esercizio',
-          labels: {
-            autocomplete: {
-              category: 'Categoria',
-              sub_category: 'Sottocategoria',
-              exercise: 'Descrizione',
-              sub_category_empty_label: 'Tutte',
-            },
-          },
+          title: 'Aggiungere un esercizio',
         },
         title: {
-          default: 'Piano d’intervento %{placeholder}',
-          create: 'Aggiungi un piano di intervento',
+          default: 'Piano di intervento %{placeholder}',
+          create: 'Aggiungere un piano di intervento',
         },
         labels: {
           definition: 'Caratteristiche',
           exercises: 'Esercizi',
           is_system_warning:
-            'Anche tutti gli esercizi associati saranno accessibili al pubblico',
+            'Tutti gli esercizi associati saranno anch’essi accessibili pubblicamente.',
         },
       },
     },
     shared: {
       labels: {
         translate_on_save:
-          'Questo campo verrà automaticamente tradotto in altre lingue (non inserite manualmente) durante il salvataggio',
-        overwrite_existing_translations: 'Sostituisci le traduzioni esistenti',
+          'Durante il salvataggio, questo campo sarà tradotto automaticamente nelle lingue per le quali non è stata effettuata alcuna immissione manuale.',
+        overwrite_existing_translations:
+          'Sostituire anche le traduzioni esistenti',
+        copy_on_save:
+          'Durante il salvataggio, questo campo verrà copiato automaticamente nelle lingue per le quali non è stata effettuata alcuna immissione manuale.',
       },
     },
   },

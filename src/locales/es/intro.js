@@ -22,16 +22,17 @@
 
 export default {
   intro: {
-    title: 'Hola {{nombre}}',
+    title: 'Hola {{name}}',
     introduction:
-      '¿Listo para comenzar tu entrenamiento? Concéntrate en las contracciones de los músculos y trata de sentirlas, incluso si no ves nada en movimiento. Deja reposar el resto del rostro.',
-    instruction: 'Haz los ejercicios lentamente, siguiendo el ritmo sugerido.',
+      '¿Listo(a) para comenzar su sesión de ejercicios? Concéntrese en las contracciones musculares y trate de sentirlas, aunque no vea nada moverse. Deje el resto de la cara en reposo.',
+    instruction:
+      'Realiza los ejercicios lentamente siguiendo el ritmo propuesto.',
   },
   permission: {
     title: 'Permiso',
     introduction:
-      'Para poder continuar su sesión, debe permitir que su cámara y micrófono accedan a esta página web.',
+      'Para poder continuar con su sesión, debe permitir el acceso de esta página web a su cámara y a su micrófono.',
     instruction:
-      'Para acceder a su sesión, primero deberá autorizarla cambiando la configuración de su navegador.',
+      'Para acceder a su sesión, primero deberá autorizarla modificando la configuración de su navegador.',
   },
 };

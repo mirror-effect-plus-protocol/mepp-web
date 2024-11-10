@@ -23,13 +23,13 @@
 export default {
   exercise: {
     name: 'Esercizio',
-    rest: 'Riposati un attimo.',
+    rest: 'Riposatevi un momento.',
     pause: 'Sei in pausa',
     pauseMessage:
-      'Prenditi il ​​tuo tempo e quando sei pronto premi il pulsante qui sotto.',
-    complete: 'Esercizio completato.',
-    end: 'Congratulazioni! Sei alla fine della sessione di allenamento. Continua così: la perseveranza è una condizione essenziale per il tuo successo.',
+      'Prenditi il tuo tempo e quando sei pronto premi il pulsante qui sotto.',
+    complete: 'Esercizio terminato.',
+    end: 'Congratulazioni! Sei arrivato alla fine della tua sessione di esercizi. Continua così: la perseveranza è una condizione essenziale per il tuo successo.',
     empty:
-      'Nessun piano di intervento è stato ancora creato per te. Consulta il tuo medico per attivare il tuo profilo di allenamento.',
+      'Nessun piano d’intervento è stato ancora creato per te. Contatta il tuo clinico per attivare il tuo profilo di esercizi.',
   },
 };

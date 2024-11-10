@@ -24,12 +24,12 @@ export default {
   form: {
     field: {
       email: {
-        label: 'Il tuo indirizzo di posta elettronica',
-        placeholder: 'Indirizzo e-mail',
+        label: 'Il tuo indirizzo email',
+        placeholder: 'Indirizzo email',
       },
       password: {
         label: 'La tua password',
-        placeholder: 'Parola d&#39;ordine',
+        placeholder: 'Password',
       },
       oldpassword: {
         label: 'La tua password',
@@ -40,34 +40,34 @@ export default {
         placeholder: '',
       },
       newpassword: {
-        label: 'nuova password',
+        label: 'Nuova password',
         placeholder: '',
       },
       error: {
-        login_invalid: 'indirizzo email o password non validi',
-        email_invalid: 'indirizzo email non valido',
-        pwd_not_match: 'Le password non sono identiche',
-        pwd: 'Deve contenere una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (-_ @$!%*#?&amp;)',
+        login_invalid: 'Indirizzo email o password non validi',
+        email_invalid: 'Indirizzo email non valido',
+        pwd_not_match: 'Le password non sono identici.',
+        pwd: 'Deve contenere una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (-_ @$!%*#?&)',
         min_length: 'Questa password è troppo corta',
         required: 'Questo campo è obbligatorio',
       },
     },
 
     login: {
-      title: 'Connessione',
+      title: 'Accesso',
     },
 
     reset_password: {
-      title: 'Reimpostazione della password',
-      success: 'La tua password è stata cambiata con successo.',
+      title: 'Reimpostazione della tua password',
+      success: 'La tua password è stata modificata con successo.',
     },
 
     forgot_password: {
-      title: 'Hai dimenticato la password?',
+      title: 'Password dimenticata?',
       introduction:
-        'Inserisci il tuo indirizzo email e ti invieremo un collegamento per reimpostare la password.',
+        'Inserisci il tuo indirizzo email e ti invieremo un link per reimpostare la tua password.',
       success:
-        'Se il tuo account esiste, verrà inviata un&#39;e-mail a <span>{{ email }}</span> . Ti dirà i passaggi da seguire per reimpostare la password.',
+        'Se il tuo account esiste, verrà inviato un’email a <span>{{ email }}</span>. Ti indicherà i passaggi da seguire per reimpostare la tua password.',
     },
   },
 };

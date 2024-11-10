@@ -22,10 +22,10 @@
 
 export default {
   footer: {
-    title: 'Con il contributo economico di',
+    title: 'Con il supporto finanziario di %{placeholder}.',
     copyright: 'Tutti i diritti riservati © MEPP 2021',
     privacy: 'Privacy',
-    termsofuse: 'Termini di utilizzo',
+    termsofuse: 'Condizioni d’uso',
     license: 'Licenza',
   },
 };

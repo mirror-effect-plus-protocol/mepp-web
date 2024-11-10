@@ -34,11 +34,10 @@ import settings from './settings';
 
 const RaLanguageOverride = { ...RaLanguage };
 RaLanguageOverride.ra.action.show = 'Ver';
-RaLanguageOverride.ra.action.edit = 'Modificador';
+RaLanguageOverride.ra.action.edit = 'Modificar';
 RaLanguageOverride.ra.notification.updated =
-  'Artículo actualizado correctamente |||| %{smart_count} elementos actualizados correctamente';
-RaLanguageOverride.ra.notification.created = 'Artículo creado exitosamente';
-RaLanguageOverride.ra.page.dashboard = 'Salpicadero';
+  'Elemento actualizado con éxito |||| %{smart_count} elementos actualizados con éxito';
+RaLanguageOverride.ra.notification.created = 'Elemento creado con éxito';
 
 export default {
   ...RaLanguageOverride,
@@ -54,43 +53,43 @@ export default {
   ...home,
 
   temporaryProfile: {
-    label: 'Has iniciado sesión en una sesión temporal',
+    label: 'Estás conectado(a) en una sesión temporal.',
   },
 
   browserSupport: {
-    label: '{nombre} versión {versión} no es compatible',
+    label: 'La versión {version} de {name} no es compatible.',
   },
 
   GUI: {
-    title: 'Configuración de efectos',
+    title: 'Configuraciones del efecto',
     folders: {
       position: 'Posición',
       rotation: 'Rotación',
-      scale: 'Escalera',
+      scale: 'escala',
     },
     labels: {
       position: {
         x: 'Izquierda ↔ Derecha',
         y: 'Arriba ↕ Abajo',
-        z: 'Frente ↹ Atrás',
+        z: 'Delante ↹ Atrás',
       },
       rotation: {
-        x: 'X',
+        x: 'x',
         y: 'y',
         z: '↺ | ↻',
       },
       scale: {
-        x: 'Estrecho ↔ Ancho',
+        x: 'Estrecho ↔ Amplio',
         y: 'Pequeño ↕ Largo',
-        z: 'Con',
+        z: 'z',
       },
     },
     cta: {
-      profile: 'Valores de perfil',
-      default: 'Valores predeterminados',
+      profile: 'Valores del perfil',
+      default: 'Valores por defecto',
     },
     confirm: {
-      title: '¿Está seguro de que desea salir sin guardar?',
+      title: '¿Realmente quiere salir sin guardar?',
     },
   },
 };

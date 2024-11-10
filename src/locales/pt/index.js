@@ -34,11 +34,10 @@ import settings from './settings';
 
 const RaLanguageOverride = { ...RaLanguage };
 RaLanguageOverride.ra.action.show = 'Ver';
-RaLanguageOverride.ra.action.edit = 'Modificador';
+RaLanguageOverride.ra.action.edit = 'Modificar';
 RaLanguageOverride.ra.notification.updated =
-  'Item atualizado com sucesso |||| %{smart_count} itens atualizados com sucesso';
-RaLanguageOverride.ra.notification.created = 'Item criado com sucesso';
-RaLanguageOverride.ra.page.dashboard = 'Painel';
+  'Elemento atualizado com sucesso |||| %{smart_count} elementos atualizados com sucesso';
+RaLanguageOverride.ra.notification.created = 'Elemento criado com sucesso';
 
 export default {
   ...RaLanguageOverride,
@@ -54,43 +53,43 @@ export default {
   ...home,
 
   temporaryProfile: {
-    label: 'Você está logado em uma sessão temporária',
+    label: 'Você está conectado(a) em uma sessão temporária.',
   },
 
   browserSupport: {
-    label: '{name} versão {version} não é compatível',
+    label: 'A versão {version} do {name} não é suportada.',
   },
 
   GUI: {
-    title: 'Configurações de efeito',
+    title: 'Configurações do efeito',
     folders: {
       position: 'Posição',
       rotation: 'Rotação',
-      scale: 'Escada',
+      scale: 'escala',
     },
     labels: {
       position: {
         x: 'Esquerda ↔ Direita',
-        y: 'Superior ↕ Inferior',
-        z: 'Frente ↹ Verso',
+        y: 'Cima ↕ Baixo',
+        z: 'Frente ↹ Atrás',
       },
       rotation: {
         x: 'x',
-        y: 'e',
+        y: 'y',
         z: '↺ | ↻',
       },
       scale: {
         x: 'Estreito ↔ Largo',
         y: 'Pequeno ↕ Longo',
-        z: 'Com',
+        z: 'z',
       },
     },
     cta: {
-      profile: 'Valores de perfil',
+      profile: 'Valores do perfil',
       default: 'Valores padrão',
     },
     confirm: {
-      title: 'Tem certeza de que deseja sair sem salvar?',
+      title: 'Você realmente deseja sair sem salvar?',
     },
   },
 };

@@ -28,9 +28,9 @@ export default {
         cancelButton: 'Cancel',
         confirmButton: 'Confirm',
         archiveButton: 'Archive',
-        unarchiveButton: 'Restore',
+        unarchiveButton: 'Unarchive',
         activateButton: 'Activate',
-        deactivateButton: 'Desactivate',
+        deactivateButton: 'Disable',
         backButton: 'Back',
         exportButton: 'Export',
         filterButton: 'Filter',
@@ -44,75 +44,76 @@ export default {
       },
       notifications: {
         archive: {
-          success: 'Item has been archived successfully',
-          failure: 'An error has occurred',
+          success: 'Element archived successfully',
+          failure: 'An error has occurred.',
         },
         unarchive: {
-          success: 'Item has been restored successfully',
-          failure: 'An error has occurred',
+          success: 'Successfully unarchived item',
+          failure: 'An error has occurred.',
         },
         activate: {
-          success: 'Item has been activated successfully',
-          failure: 'An error has occurred',
+          success: 'Element successfully activated',
+          failure: 'An error has occurred.',
         },
         deactivate: {
-          success: 'Item has been deactivated successfully',
-          failure: 'An error has occurred',
+          success: 'Element successfully disabled',
+          failure: 'An error has occurred.',
         },
         bulkArchive: {
-          success: 'Items have been archived successfully',
-          failure: 'An error has occurred',
+          success: 'Elements archived successfully',
+          failure: 'An error has occurred.',
         },
         bulkUnarchive: {
-          success: 'Items have been restored successfully',
-          failure: 'An error has occurred',
+          success: 'Successfully unarchived items',
+          failure: 'An error has occurred.',
         },
         'export': {
-          start: 'The download still start soon',
-          failure: 'An error has occurred',
+          start: 'The download will start soon.',
+          failure: 'An error has occurred.',
         },
         mirror: {
-          failure: 'An error has occurred',
+          failure: 'An error has occurred.',
         },
         language: {
-          success: 'Your language has been updated successfully',
-          failure: 'An error has occurred. Your profile has not been updated',
+          success: 'Your language has been successfully updated.',
+          failure: 'An error occurred, your profile has not been updated.',
         },
         profile: {
-          success: 'Your profile has been updated successfully',
+          success: 'Your profile has been successfully updated.',
         },
       },
       text: {
         cancelDialog: {
-          title: 'Are your sure?',
-          body: 'All the changes will be lost',
+          title: 'Do you really want to cancel?',
+          body: 'All changes will be lost.',
         },
         emailDialog: {
-          title: 'Onboarding e-mail',
-          body: 'Are you sure you want to send the e-mail again?',
+          title: 'Welcome email',
+          body: 'Do you want to resend the email?',
         },
         exerciseFilter: {
           loading: 'Loading...',
-          notfound: 'No exercises found in this category!',
+          notfound: 'No exercise found in this category!',
         },
       },
       errors: {
-        field_required: 'This field is required',
-        password_mismatch: 'Passwords do not match',
-        password_too_short: 'Password must be %{min_length} characters long',
+        field_required: 'This field is required.',
+        password_mismatch: 'The passwords do not match.',
+        password_too_short:
+          'The password must contain %{min_length} characters.',
         password_not_secure:
-          'Password must contain at least one lower case, one upper case one number and one special character (-_ @$!%*#?&)',
-        password_required: 'This field is required',
+          'The password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (-_ @$!%*#?&)',
+        password_required: 'This field is required.',
       },
     },
     dashboard: {
       title: 'Welcome %{name}',
       labels: {
-        openMirrorButton: 'Open the facial mirror',
+        openMirrorButton: 'Open the face mirror',
       },
       widgets: {
         daily_repeats: {
-          card_header: 'Completed repetitions',
+          card_header: 'Daily frequencies reached',
         },
         sessions: {
           card_header: 'Sessions',
@@ -121,16 +122,16 @@ export default {
           one_week: 'the last 7 days',
           two_weeks: 'the last 14 days',
           one_month: 'the last 30 days',
-          all: 'all time',
+          all: 'the beginning',
         },
         labels: {
-          completed: 'Completed',
-          uncompleted: 'Uncompleted',
-          since: 'For',
+          completed: 'Fully executed',
+          uncompleted: 'Partially executed',
+          since: 'Since',
         },
       },
       mirror_dialog: {
-        title: 'Open the facial mirror',
+        title: 'Open the face mirror',
         labels: {
           autocomplete: 'Choose a patient',
         },
@@ -139,32 +140,58 @@ export default {
   },
 
   languages: {
-    'en': 'English',
-    'fr': 'Français',
-    'it': 'Italiano',
-    'es': 'Español',
-    'de': 'Deutsch',
-    'pt': 'Português',
+    en: 'English',
+    fr: 'Français',
+    it: 'Italiano',
+    es: 'Español',
+    de: 'Deutsch',
+    pt: 'Português',
   },
 
   resources: {
+    articles: {
+      name: 'Article |||| Articles',
+      fields: {
+        'i18n.title': 'Title',
+        'i18n.title.en': 'Title',
+        'i18n.description': 'Description',
+        'i18n.description.en': 'Description',
+        'i18n.external_url': 'External link',
+        'i18n.external_url.en': 'External link',
+      },
+      card: {
+        labels: {
+          add: 'Add an item',
+          more_details: 'More details',
+          title: 'Title',
+          description: 'Description',
+          external_url: 'External link',
+        },
+      },
+      delete: {
+        confirmTitle: 'Delete the article %{placeholder}',
+      },
+    },
     categories: {
       name: 'Category |||| Categories',
       fields: {
         'i18n.name.en': 'Name',
         'i18n.name': 'Name',
       },
+      labels: {
+        category: 'Category',
+      },
     },
     clinicians: {
       name: 'Clinician |||| Clinicians',
       fields: {
-        email: 'E-mail',
+        email: 'Email',
         first_name: 'First name',
         full_name: 'Full name',
-        last_name: 'Last name',
+        last_name: 'Name',
         language: 'Language',
         password: 'Password',
-        confirm_password: 'Confirm the password',
+        confirm_password: 'Confirm password',
         archived: 'Archives',
         is_superuser: 'Administrator',
       },
@@ -183,15 +210,15 @@ export default {
         confirmTitle: 'Delete the clinician %{placeholder}',
       },
       errors: {
-        email: 'E-mail address already in use',
+        email: 'Email address already in use',
       },
     },
     exercises: {
       name: 'Exercise |||| Exercises',
       empty: {
-        title: 'No exercises',
+        title: 'No exercise',
         description:
-          'Please filter the categories by clicking on the Filter button',
+          'Please choose a category by clicking on the Filter button.',
       },
       fields: {
         archived: 'Archives',
@@ -202,9 +229,8 @@ export default {
         repetition: 'Repetitions',
         clinician_uid: 'Clinician',
         category__uid: 'Category',
-        uid: 'Sub-category',
-        is_system: 'System',
-        sub_categories: 'Categories and sub-categories',
+        uid: 'Category',
+        categories: 'Categories',
         empty: {
           categories: {
             label: 'Choose a category',
@@ -217,8 +243,12 @@ export default {
           create: 'Add an exercise',
         },
         labels: {
-          definition: 'Definition',
+          definition: 'Features',
           classification: 'Classification',
+          video: 'Video',
+        },
+        text: {
+          no_video_available: 'No video available',
         },
       },
       list: {
@@ -231,7 +261,7 @@ export default {
         confirmTitle: 'Delete the exercise %{placeholder}',
       },
       errors: {
-        sub_categories: 'You must choose at least one category/sub-category',
+        categories: 'You must select at least one category.',
         gt_zero: 'Must be greater than zero',
       },
     },
@@ -240,15 +270,16 @@ export default {
       fields: {
         archived: 'Archives',
         clinician_uid: 'Clinician',
-        email: 'E-mail',
+        email: 'Email',
         first_name: 'First name',
         full_name: 'Full name',
-        last_name: 'Last name',
+        last_name: 'Name',
         side: 'Paralyzed side',
-        use_audio: 'Audio on',
+        use_audio: 'Active audio',
+        has_cognitive_issues: 'Cognitive issues',
         language: 'Language',
         password: 'Password',
-        confirm_password: 'Confirm the password',
+        confirm_password: 'Confirm password',
       },
       card: {
         title: {
@@ -256,22 +287,22 @@ export default {
           create: 'Add a patient',
         },
         labels: {
-          plans: 'Treatment plan',
+          plans: 'Intervention plans',
         },
         plan_dialog: {
-          title: 'Add a treatment plan',
+          title: 'Add an intervention plan',
           labels: {
             autocomplete: 'Name',
-            radio_new: 'Create a new treatment plan',
+            radio_new: 'Create a new intervention plan',
             radio_template: 'Use an existing template',
           },
         },
         actions: {
-          copy: 'Create a template',
+          copy: 'Create a model',
         },
       },
       errors: {
-        email: 'E-mail address already in use',
+        email: 'Email address already in use',
       },
       filters: {
         last_visited: 'Last visit',
@@ -282,9 +313,13 @@ export default {
       shared: {
         side: {
           '0': 'Left',
-          '1': 'Right',
+          '1': 'Law',
         },
         audio: {
+          'true': 'Yes',
+          'false': 'No',
+        },
+        video: {
           'true': 'Yes',
           'false': 'No',
         },
@@ -295,30 +330,30 @@ export default {
       notifications: {
         plans: {
           add: {
-            success: 'Treatment plan added successfully',
-            failure: 'An error has occurred',
+            success: 'Intervention plan added successfully',
+            failure: 'An error has occurred.',
           },
         },
         email: {
           send: {
-            success: 'E-mail has been sent successfully',
-            failure: 'An error has occurred. No e-mails have been sent',
+            success: 'Email sent successfully.',
+            failure: 'An error occurred. No email has been sent.',
           },
         },
       },
     },
     plans: {
-      name: 'Treatment plan |||| Treatment plans',
+      name: 'Intervention plan |||| Intervention plans',
       fields: {
         name: 'Name',
-        'i18n.name.en': 'Name',
         'i18n.name': 'Name',
-        'i18n.description.en': 'Description',
-        'i18n.description': 'Description',
+        'i18n.name.en': 'Name',
+        'i18n.description': 'Additional information',
+        'i18n.description.en': 'Additional information',
         clinician_uid: 'Clinician',
         archived: 'Archives',
-        daily_repeat: 'Daily repetitions',
-        randomize: 'Random positions',
+        daily_repeat: 'Daily frequencies',
+        randomize: 'Random order',
         is_system: 'System',
         start_date: 'Start date',
         end_date: 'End date',
@@ -337,19 +372,19 @@ export default {
       list: {
         labels: {
           exercises_count: 'Exercises',
-          user: 'My templates',
-          admin: 'Templates',
+          user: 'My models',
+          admin: 'Models',
           system: 'System',
         },
       },
       edit: {
-        title: 'Treatment plan %{placeholder}',
+        title: 'Intervention plan %{placeholder}',
       },
       show: {
-        title: 'Treatment plan %{placeholder}',
+        title: 'Intervention plan %{placeholder}',
       },
       delete: {
-        confirmTitle: 'Delete the treatment plan %{placeholder}',
+        confirmTitle: 'Delete the intervention plan %{placeholder}',
       },
       card: {
         exercise_dialog: {
@@ -357,29 +392,30 @@ export default {
           labels: {
             autocomplete: {
               category: 'Category',
-              sub_category: 'Sub-category',
               exercise: 'Description',
-              sub_category_empty_label: 'All',
             },
           },
         },
         title: {
-          default: 'Treatment plan %{placeholder}',
-          create: 'Add a treatment plan',
+          default: 'Intervention plan %{placeholder}',
+          create: 'Add an intervention plan',
         },
         labels: {
-          definition: 'Definition',
+          definition: 'Features',
           exercises: 'Exercises',
           is_system_warning:
-            'All related exercises will be publicly accessible',
+            'All associated exercises will also be publicly accessible.',
         },
       },
     },
     shared: {
       labels: {
         translate_on_save:
-          'This field will be automatically translated into other (not manually filled in) languages when saving',
-        overwrite_existing_translations: 'Overwrite existing translations',
+          'During saving, this field will be automatically translated into the languages for which no manual input has been made.',
+        overwrite_existing_translations:
+          'Replace also the existing translations.',
+        copy_on_save:
+          'When saving, this field will be automatically copied into the languages for which no manual input has been made.',
       },
     },
   },

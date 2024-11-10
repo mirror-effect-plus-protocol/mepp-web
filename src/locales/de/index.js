@@ -34,10 +34,10 @@ import settings from './settings';
 
 const RaLanguageOverride = { ...RaLanguage };
 RaLanguageOverride.ra.action.show = 'Sehen';
-RaLanguageOverride.ra.action.edit = 'Modifikator';
+RaLanguageOverride.ra.action.edit = 'Ändern';
 RaLanguageOverride.ra.notification.updated =
-  'Element erfolgreich aktualisiert |||| %{smart_count} Elemente wurden erfolgreich aktualisiert';
-RaLanguageOverride.ra.notification.created = 'Artikel erfolgreich erstellt';
+  'Element erfolgreich aktualisiert |||| %{smart_count} Elemente erfolgreich aktualisiert';
+RaLanguageOverride.ra.notification.created = 'Element erfolgreich erstellt';
 
 export default {
   ...RaLanguageOverride,
@@ -53,11 +53,11 @@ export default {
   ...home,
 
   temporaryProfile: {
-    label: 'Sie sind in einer temporären Sitzung angemeldet',
+    label: 'Sie sind in einer temporären Sitzung angemeldet.',
   },
 
   browserSupport: {
-    label: '{name}-Version {version} wird nicht unterstützt',
+    label: 'Die Version {version} von {name} wird nicht unterstützt.',
   },
 
   GUI: {
@@ -65,23 +65,23 @@ export default {
     folders: {
       position: 'Position',
       rotation: 'Drehung',
-      scale: 'Leiter',
+      scale: 'Skala',
     },
     labels: {
       position: {
         x: 'Links ↔ Rechts',
         y: 'Oben ↕ Unten',
-        z: 'Vorne ↹ Hinten',
+        z: 'Vor ↹ Zurück',
       },
       rotation: {
-        x: 'X',
-        y: 'Und',
+        x: 'x',
+        y: 'y',
         z: '↺ | ↻',
       },
       scale: {
-        x: 'Schmal ↔ Breit',
+        x: 'Eng ↔ Weit',
         y: 'Klein ↕ Lang',
-        z: 'Mit',
+        z: 'z',
       },
     },
     cta: {
@@ -89,8 +89,7 @@ export default {
       default: 'Standardwerte',
     },
     confirm: {
-      title:
-        'Sind Sie sicher, dass Sie den Vorgang beenden möchten, ohne zu speichern?',
+      title: 'Möchten Sie wirklich ohne Speichern verlassen?',
     },
   },
 };

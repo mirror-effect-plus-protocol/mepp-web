@@ -32,8 +32,15 @@ import home from './home';
 import intro from './intro';
 import settings from './settings';
 
+const RaLanguageOverride = { ...RaLanguage };
+RaLanguageOverride.ra.action.show = 'See';
+RaLanguageOverride.ra.action.edit = 'Modify';
+RaLanguageOverride.ra.notification.updated =
+  'Element updated successfully |||| %{smart_count} elements updated successfully';
+RaLanguageOverride.ra.notification.created = 'Element created successfully';
+
 export default {
-  ...RaLanguage,
+  ...RaLanguageOverride,
   ...admin,
   ...a11y,
   ...cta,
@@ -46,11 +53,11 @@ export default {
   ...home,
 
   temporaryProfile: {
-    label: 'You are connected a temporary session',
+    label: 'You are logged in to a temporary session.',
   },
 
   browserSupport: {
-    label: '{name} version {version} is not supported',
+    label: '{name} version {version} is not supported.',
   },
 
   GUI: {
@@ -72,8 +79,8 @@ export default {
         z: '↺ | ↻',
       },
       scale: {
-        x: 'Narrow ↔ Large',
-        y: 'Small ↕ Long',
+        x: 'Narrow ↔ Wide',
+        y: 'Short ↕ Long',
         z: 'z',
       },
     },
@@ -82,7 +89,7 @@ export default {
       default: 'Default values',
     },
     confirm: {
-      title: 'Are you sure you want to exit without saving?',
+      title: 'Do you really want to leave without saving?',
     },
   },
 };

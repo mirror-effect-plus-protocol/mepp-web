@@ -22,8 +22,8 @@
 
 export default {
   a11y: {
-    show_password: 'Sehen Sie sich Ihr Passwort an',
-    settings: 'Gehen Sie zu Ihren Kontoeinstellungen',
-    support: 'Gehen Sie zur Hilfeseite',
+    show_password: 'Passwort anzeigen',
+    settings: 'Gehen Sie zu Ihren Kontoeinstellungen.',
+    support: 'Gehe zur Hilfeseite',
   },
 };

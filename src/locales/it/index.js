@@ -33,12 +33,11 @@ import intro from './intro';
 import settings from './settings';
 
 const RaLanguageOverride = { ...RaLanguage };
-RaLanguageOverride.ra.action.show = 'Vedere';
-RaLanguageOverride.ra.action.edit = 'Modificatore';
+RaLanguageOverride.ra.action.show = 'Vedi';
+RaLanguageOverride.ra.action.edit = 'Modifica';
 RaLanguageOverride.ra.notification.updated =
-  'Elemento aggiornato con successo |||| %{smart_count} elementi aggiornati correttamente';
-RaLanguageOverride.ra.notification.created = 'Articolo creato con successo';
-RaLanguageOverride.ra.page.dashboard = 'Pannello di controllo';
+  'Elemento aggiornato con successo |||| %{smart_count} elementi aggiornati con successo';
+RaLanguageOverride.ra.notification.created = 'Elemento creato con successo';
 
 export default {
   ...RaLanguageOverride,
@@ -54,43 +53,43 @@ export default {
   ...home,
 
   temporaryProfile: {
-    label: 'Hai effettuato l’accesso in una sessione temporanea',
+    label: 'Sei connesso(a) in una sessione temporanea',
   },
 
   browserSupport: {
-    label: 'La versione {nome} {versione} non è supportata',
+    label: 'La versione %{version} di %{name} non è supportata.',
   },
 
   GUI: {
-    title: 'Impostazioni degli effetti',
+    title: 'Configurazioni dell’effetto',
     folders: {
       position: 'Posizione',
       rotation: 'Rotazione',
-      scale: 'Scala',
+      scale: 'scala',
     },
     labels: {
       position: {
         x: 'Sinistra ↔ Destra',
-        y: 'In alto ↕ In basso',
-        z: 'Davanti ↹ Dietro',
+        y: 'Su ↕ Giù',
+        z: 'Avanti ↹ Indietro',
       },
       rotation: {
-        x: 'X',
-        y: 'E',
+        x: 'x',
+        y: 'y',
         z: '↺ | ↻',
       },
       scale: {
         x: 'Stretto ↔ Largo',
         y: 'Piccolo ↕ Lungo',
-        z: 'Con',
+        z: 'z',
       },
     },
     cta: {
       profile: 'Valori del profilo',
-      default: 'Valori standard',
+      default: 'Valori predefiniti',
     },
     confirm: {
-      title: 'Sei sicuro di voler uscire senza salvare?',
+      title: 'Vuoi davvero uscire senza salvare?',
     },
   },
 };
