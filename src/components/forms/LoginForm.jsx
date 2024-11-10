@@ -97,6 +97,9 @@ const LoginForm = ({ onSwitch }) => {
                 >
                   {t('cta:goto_forgot_password')}
                 </LinkPassword>
+                <LinkHelp href="#/support" aria-label={t('a11y:support')}>
+                  {t('cta:support')}
+                </LinkHelp>
               </ButtonWrapper>
             </>
           )}
@@ -128,6 +131,10 @@ const ButtonWrapper = styled.div`
 
 const LinkPassword = styled(Href)`
   margin: ${spacings.default * 2}px 0 0;
+`;
+
+const LinkHelp = styled(Href)`
+  margin: ${spacings.default / 2}px 0 0;
 `;
 
 const FieldError = styled(P)`

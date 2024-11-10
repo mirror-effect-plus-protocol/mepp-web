@@ -49,5 +49,7 @@ export default {
     modify: 'Modificatore',
     back: 'Indietro',
     confirm: 'OK',
+
+    support: 'Aiuto',
   },
 };

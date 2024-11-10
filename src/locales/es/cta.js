@@ -49,5 +49,7 @@ export default {
     modify: 'Modificador',
     back: 'Atrás',
     confirm: 'De acuerdo',
+
+    support: 'Ayuda',
   },
 };
