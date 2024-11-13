@@ -90,6 +90,9 @@ const ProgressBarBackground = styled.div`
   height: 100%;
   opacity: 0.3;
   background: ${({ theme }) => theme.colors.white};
+  &:last-child: {
+    width: 100%;
+  }
 `;
 
 export default ExerciseProgress;

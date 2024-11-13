@@ -340,7 +340,7 @@ const Background = styled.div`
 const ExerciseWrapper = styled(FlexAlignMiddle.Component)`
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   z-index: 1;
 `;
 
