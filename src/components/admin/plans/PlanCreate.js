@@ -22,7 +22,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   BooleanInput,
-  FormDataConsumer,
   NumberInput,
   SimpleForm,
   TextInput,
@@ -39,7 +38,6 @@ import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
-import IsSystemInput from '@components/admin/plans/IsSystem';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
@@ -57,7 +55,7 @@ export const PlanCreate = () => {
   const { locale } = useLocale();
   const [patientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
-  const [, setRandomize] = useState(false);
+  const [randomize, setRandomize] = useState(false);
   const [searchParams] = useSearchParams();
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'name');
@@ -108,9 +106,7 @@ export const PlanCreate = () => {
           </div>
         </TranslatableInputs>
         {permissions === 'admin' && asTemplate && (
-          <FormDataConsumer>
-            {({ formData }) => <IsSystemInput data={formData} />}
-          </FormDataConsumer>
+          <BooleanInput source="is_system" />
         )}
         <NumberInput source="daily_repeat" validate={validateNumber} />
 
@@ -157,7 +153,7 @@ export const PlanCreate = () => {
             },
           }}
         >
-          <SimpleFormIterator inline>
+          <SimpleFormIterator inline disableReordering={randomize}>
             <ExerciceRow />
           </SimpleFormIterator>
         </ArrayInput>

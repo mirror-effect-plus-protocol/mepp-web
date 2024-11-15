@@ -38,6 +38,8 @@ RaLanguageOverride.ra.action.edit = 'Modifier';
 RaLanguageOverride.ra.notification.updated =
   'Élément mis à jour avec succès |||| %{smart_count} élements mis à jour avec succès';
 RaLanguageOverride.ra.notification.created = 'Élément créé avec succès';
+RaLanguageOverride.ra.input.file.upload_single =
+  'Déposez le fichier à téléverser, ou cliquez pour le sélectionner';
 
 export default {
   ...RaLanguageOverride,

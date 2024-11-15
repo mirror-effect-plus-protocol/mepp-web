@@ -120,16 +120,25 @@ export const ExerciseEdit = () => {
             source="movement_duration"
             validate={validateNumber}
             label={t('resources.exercises.fields.movement_duration')}
+            InputProps={{
+              inputProps: { min: 1 },
+            }}
           />
           <NumberInput
             source="pause"
             validate={validateNumber}
             label={t('resources.exercises.fields.pause')}
+            InputProps={{
+              inputProps: { min: 0 },
+            }}
           />
           <NumberInput
             source="repetition"
             validate={validateNumber}
             label={t('resources.exercises.fields.repetition')}
+            InputProps={{
+              inputProps: { min: 0 },
+            }}
           />
         </Div>
         <Typography variant="h6" gutterBottom gutterTop>

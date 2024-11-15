@@ -105,6 +105,9 @@ export default {
         password_not_secure:
           'La password deve contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (-_ @$!%*#?&)',
         password_required: 'Questo campo è obbligatorio',
+        url_missing_scheme:
+          'Il formato del link non sembra valido (es.: https://example.org)',
+        gt_zero: 'Deve essere maggiore di zero',
       },
     },
     dashboard: {
@@ -171,6 +174,9 @@ export default {
       },
       delete: {
         confirmTitle: 'Elimina l’articolo %{placeholder}',
+      },
+      errors: {
+        i18n: 'Alcuni campi non sono validi',
       },
     },
     categories: {
@@ -264,6 +270,9 @@ export default {
       errors: {
         categories: 'Devi scegliere almeno una categoria.',
         gt_zero: 'Deve essere superiore a zero',
+        movement_duration: 'Formato non valido',
+        repetition: 'Formato non valido',
+        pause: 'Formato non valido',
       },
     },
     patients: {
@@ -313,8 +322,8 @@ export default {
       },
       shared: {
         side: {
-          '0': 'Sinistra',
-          '1': 'Diritto',
+          '0': 'Sinistro',
+          '1': 'Destro',
         },
         audio: {
           'true': 'Sì',
@@ -399,19 +408,17 @@ export default {
         labels: {
           definition: 'Caratteristiche',
           exercises: 'Esercizi',
-          is_system_warning:
-            'Tutti gli esercizi associati saranno anch’essi accessibili pubblicamente.',
         },
       },
     },
     shared: {
       labels: {
         translate_on_save:
-          'Durante il salvataggio, questo campo sarà tradotto automaticamente nelle lingue per le quali non è stata effettuata alcuna immissione manuale.',
+          'Al salvataggio, questo campo verrà tradotto automaticamente nelle lingue in cui non sono stati inseriti dati',
         overwrite_existing_translations:
           'Sostituire anche le traduzioni esistenti',
         copy_on_save:
-          'Durante il salvataggio, questo campo verrà copiato automaticamente nelle lingue per le quali non è stata effettuata alcuna immissione manuale.',
+          'Ao salvar, este campo será traduzido automaticamente para os idiomas onde nenhum dado foi inserido',
       },
     },
   },

@@ -105,6 +105,9 @@ export default {
         password_not_secure:
           'Das Passwort muss mindestens einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen (-_ @$!%*#?&) enthalten.',
         password_required: 'Dieses Feld ist erforderlich',
+        url_missing_scheme:
+          'Das Linkformat scheint nicht gültig zu sein (z. B. https://example.org)',
+        gt_zero: 'Muss größer als null sein',
       },
     },
     dashboard: {
@@ -171,6 +174,9 @@ export default {
       },
       delete: {
         confirmTitle: 'Artikel %{placeholder} löschen',
+      },
+      errors: {
+        i18n: 'Einige Felder sind nicht gültig',
       },
     },
     categories: {
@@ -264,6 +270,9 @@ export default {
       errors: {
         categories: 'Sie müssen mindestens eine Kategorie auswählen.',
         gt_zero: 'Muss größer als null sein',
+        movement_duration: 'Ungültiges Format',
+        repetition: 'Ungültiges Format',
+        pause: 'Ungültiges Format',
       },
     },
     patients: {
@@ -407,19 +416,17 @@ export default {
         labels: {
           definition: 'Merkmale',
           exercises: 'Übungen',
-          is_system_warning:
-            'Alle zugehörigen Übungen werden ebenfalls öffentlich zugänglich sein.',
         },
       },
     },
     shared: {
       labels: {
         translate_on_save:
-          'Beim Speichern wird dieses Feld automatisch in die Sprachen übersetzt, für die keine manuelle Eingabe erfolgt ist.',
+          'Beim Speichern wird dieses Feld automatisch in Sprachen übersetzt, in denen keine Daten eingegeben wurden',
         overwrite_existing_translations:
           'Ersetzen Sie auch die vorhandenen Übersetzungen.',
         copy_on_save:
-          'Beim Speichern wird dieses Feld automatisch in die Sprachen kopiert, für die keine manuelle Eingabe erfolgt ist.',
+          'Beim Speichern wird dieses Feld automatisch in die Sprachen kopiert, für die keine manuelle Eingabe erfolgt ist',
       },
     },
   },

@@ -49,6 +49,7 @@ class ClinicianViewSet(UUIDLookupFieldViewSet):
         'date_joined',
         'clinician__first_name',
         'clinician__last_name',
+        'is_superuser',
     ]
 
     @action(detail=True, methods=['POST'])

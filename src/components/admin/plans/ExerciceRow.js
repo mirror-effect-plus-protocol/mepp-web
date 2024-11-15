@@ -131,18 +131,27 @@ const ExerciceRow = (props) => {
               validate={validateNumber}
               label={t('resources.plans.fields.exercise.movement_duration')}
               defaultValue="10"
+              InputProps={{
+                inputProps: { min: 1 },
+              }}
             />
             <NumberInput
               source={`${props.source}.pause`}
               validate={validateNumber}
               label={t('resources.plans.fields.exercise.pause')}
               defaultValue="5"
+              InputProps={{
+                inputProps: { min: 0 },
+              }}
             />
             <NumberInput
               source={`${props.source}.repetition`}
               validate={validateNumber}
               label={t('resources.plans.fields.exercise.repetition')}
               defaultValue="10"
+              InputProps={{
+                inputProps: { min: 0 },
+              }}
             />
           </div>
         </>

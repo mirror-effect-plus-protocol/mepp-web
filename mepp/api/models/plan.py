@@ -57,14 +57,15 @@ class TreatmentPlan(BaseModel, Archivable, Template, Searchable):
         null=False,
         related_name='clinician_treatment_plans',
     )
-    exercises = models.ManyToManyField(Exercise,
-                                       through='TreatmentPlanExerciseM2M')
+    exercises = models.ManyToManyField(
+        Exercise, through='TreatmentPlanExerciseM2M'
+    )
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
     daily_repeat = models.PositiveSmallIntegerField(null=False, default=3)
     active = models.BooleanField(null=True)
     randomize = models.BooleanField(default=False)
-    auto_translate = models.BooleanField(default=True)
+    auto_translate = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['i18n__name']

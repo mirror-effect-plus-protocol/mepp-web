@@ -103,6 +103,9 @@ export default {
         password_not_secure:
           'A senha deve conter pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial (-_ @$!%*#?&)',
         password_required: 'Este campo é obrigatório',
+        url_missing_scheme:
+          'O formato do link não parece válido (ex.: https://example.org)',
+        gt_zero: 'Deve ser maior que zero',
       },
     },
     dashboard: {
@@ -169,6 +172,9 @@ export default {
       },
       delete: {
         confirmTitle: 'Remover o artigo %{placeholder}',
+      },
+      errors: {
+        i18n: 'Alguns campos não são válidos',
       },
     },
     categories: {
@@ -262,6 +268,9 @@ export default {
       errors: {
         categories: 'Você deve escolher pelo menos uma categoria.',
         gt_zero: 'Deve ser superior a zero',
+        movement_duration: 'Formato inválido',
+        repetition: 'Formato inválido',
+        pause: 'Formato inválido',
       },
     },
     patients: {
@@ -396,19 +405,17 @@ export default {
         labels: {
           definition: 'Características',
           exercises: 'Exercícios',
-          is_system_warning:
-            'Todos os exercícios associados também serão publicamente acessíveis.',
         },
       },
     },
     shared: {
       labels: {
         translate_on_save:
-          'Ao salvar, este campo será traduzido automaticamente nas línguas para as quais nenhuma entrada manual foi realizada.',
+          'Ao salvar, este campo será traduzido automaticamente para os idiomas onde nenhum dado foi inserido',
         overwrite_existing_translations:
           'Substituir também as traduções existentes',
         copy_on_save:
-          'Ao salvar, este campo será copiado automaticamente para os idiomas para os quais nenhuma entrada manual foi feita.',
+          'Ao salvar, este campo será copiado automaticamente para os idiomas para os quais nenhuma entrada manual foi feita',
       },
     },
   },

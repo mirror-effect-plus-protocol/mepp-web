@@ -95,18 +95,27 @@ export const ExerciseCreate = () => {
             validate={validateNumber}
             label={t('resources.exercises.fields.movement_duration')}
             defaultValue="10"
+            InputProps={{
+              inputProps: { min: 1 },
+            }}
           />
           <NumberInput
             source="pause"
             validate={validateNumber}
             label={t('resources.exercises.fields.pause')}
             defaultValue="10"
+            InputProps={{
+              inputProps: { min: 0 },
+            }}
           />
           <NumberInput
             source="repetition"
             validate={validateNumber}
             label={t('resources.exercises.fields.repetition')}
             defaultValue="5"
+            InputProps={{
+              inputProps: { min: 0 },
+            }}
           />
         </Div>
         <Typography variant="h6" gutterBottom gutterTop>

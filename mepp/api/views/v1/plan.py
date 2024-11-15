@@ -51,4 +51,5 @@ class TreatmentPlanViewSet(UUIDLookupFieldViewSet):
         'daily_repeat',
         'clinician__first_name',
         'clinician__last_name',
+        'randomize'
     ]
