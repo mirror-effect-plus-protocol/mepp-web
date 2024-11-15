@@ -155,6 +155,7 @@ export const ArticleEdit = () => {
             source="i18n.external_url"
             fullWidth
             validate={validateI18nExternalUrl}
+            placeholder="https://example.org"
           />
           <div
             style={{

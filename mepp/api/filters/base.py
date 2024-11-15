@@ -1,5 +1,3 @@
-# coding: utf-8
-
 # MEPP - A web application to guide patients and clinicians in the process of
 # facial palsy rehabilitation, with the help of the mirror effect and principles
 # of motor learning

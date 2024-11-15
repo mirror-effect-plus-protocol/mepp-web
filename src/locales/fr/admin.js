@@ -105,6 +105,9 @@ export default {
         password_not_secure:
           'Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial (-_ @$!%*#?&)',
         password_required: 'Ce champ est requis',
+        url_missing_scheme:
+          'Le format du lien ne semble pas valide (ex: https://example.org)',
+        gt_zero: 'Doit être plus grand que zéro',
       },
     },
     dashboard: {
@@ -171,6 +174,9 @@ export default {
       },
       delete: {
         confirmTitle: 'Supprimer l’article %{placeholder}',
+      },
+      errors: {
+        i18n: 'Certains champs ne sont pas valides',
       },
     },
     categories: {
@@ -263,6 +269,9 @@ export default {
       },
       errors: {
         categories: 'Vous devez choisir au moins une catégorie',
+        movement_duration: 'Format invalide',
+        repetition: 'Format invalide',
+        pause: 'Format invalide',
         gt_zero: 'Doit être supérieur à zéro',
       },
     },
@@ -404,15 +413,13 @@ export default {
         labels: {
           definition: 'Caractéristiques',
           exercises: 'Exercices',
-          is_system_warning:
-            'Tous les exercices associés seront aussi publiquement accessibles',
         },
       },
     },
     shared: {
       labels: {
         translate_on_save:
-          "Lors de la sauvegarde, ce champ sera traduit automatiquement dans les langues pour lesquelles aucune saisie manuelle n'a été effectuée",
+          "Lors de la sauvegarde, ce champ sera automatiquement traduit dans les langues où aucune donnée n'a été saisie",
         overwrite_existing_translations:
           'Remplacer aussi les traductions existantes',
         copy_on_save:

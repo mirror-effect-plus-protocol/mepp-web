@@ -10,8 +10,11 @@ const ResourceList = ({
   filterDefaultValues,
   ...props
 }) => {
+  const showArchivableFilter = props?.showArchivableFilter !== false;
+  const showCreate = props?.showCreate !== false;
   const showExercisesFilter = props?.showExercisesFilter || false;
   const showExport = props?.showExport || false;
+
   const mergedFilterDefaultValues = {
     archived: false,
     ...filterDefaultValues,
@@ -20,13 +23,14 @@ const ResourceList = ({
   return (
     <List
       sort={{ field: sortField, order: 'ASC' }}
-      filters={<ArchivableFilter />}
+      filters={<ArchivableFilter show={showArchivableFilter} />}
       filterDefaultValues={mergedFilterDefaultValues}
       perPage={25}
       actions={
         <ListActions
           showExport={showExport}
           showExercisesFilter={showExercisesFilter}
+          showCreate={showCreate}
         />
       }
       {...props}

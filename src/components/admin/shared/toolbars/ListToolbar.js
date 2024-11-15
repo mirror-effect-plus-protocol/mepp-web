@@ -20,9 +20,12 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import { TopToolbar, CreateButton, useResourceContext } from 'react-admin';
-
-import Divider from '@mui/material/Divider';
+import {
+  TopToolbar,
+  CreateButton,
+  useResourceContext,
+  useListFilterContext,
+} from 'react-admin';
 
 import { CategoryFilterModal } from '@components/admin/exercises/CategoryFilter';
 import ExportButton from '@components/admin/shared/buttons/ExportButton';
@@ -30,23 +33,15 @@ import ExportButton from '@components/admin/shared/buttons/ExportButton';
 const ListActions = ({
   showExport = false,
   showExercisesFilter = false,
-  ...props
+  showCreate = true,
 }) => {
   const resourceName = useResourceContext();
+  const { filterValues } = useListFilterContext();
+
   return (
     <TopToolbar>
       {showExercisesFilter && (
-        <>
-          <CategoryFilterModal storekey="CategorieFilterIndex" />
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{
-              marginRight: 2,
-              marginLeft: 2,
-            }}
-          />
-        </>
+        <CategoryFilterModal storekey="CategorieFilterIndex" />
       )}
       {showExport && (
         <ExportButton
@@ -58,10 +53,10 @@ const ListActions = ({
               md: 0, // theme.breakpoints.up('md')
             },
           }}
-          filterValues={props.filterValues}
+          filterValues={filterValues}
         />
       )}
-      <CreateButton variant="outlined" />
+      {showCreate && <CreateButton variant="outlined" />}
     </TopToolbar>
   );
 };

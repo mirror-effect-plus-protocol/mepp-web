@@ -93,8 +93,9 @@ class PatientViewSet(UUIDLookupFieldViewSet):
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
 
-    @action(detail=False, methods=['GET'],
-            permission_classes=[MeppExportPermission])
+    @action(
+        detail=False, methods=['GET'], permission_classes=[MeppExportPermission]
+    )
     def export(self, request, *args, **kwargs) -> HttpResponse:
         output = io.BytesIO()
         language = request.query_params.get(

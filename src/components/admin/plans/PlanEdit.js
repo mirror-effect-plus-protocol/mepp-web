@@ -41,7 +41,6 @@ import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
-import IsSystemInput from '@components/admin/plans/IsSystem';
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
@@ -82,7 +81,7 @@ const SimplePlanEditForm = ({ locale, asTemplate }) => {
   const record = useRecordContext();
   const { permissions } = usePermissions();
   const t = useTranslate();
-  const [, setRandomize] = useState(record.randomize);
+  const [randomize, setRandomize] = useState(record.randomize);
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'name');
   };
@@ -134,9 +133,7 @@ const SimplePlanEditForm = ({ locale, asTemplate }) => {
         </div>
       </TranslatableInputs>
       {permissions === 'admin' && asTemplate && (
-        <FormDataConsumer>
-          {({ formData }) => <IsSystemInput data={formData} />}
-        </FormDataConsumer>
+        <BooleanInput source="is_system" />
       )}
       <NumberInput source="daily_repeat" validate={validateNumber} />
 
@@ -183,7 +180,7 @@ const SimplePlanEditForm = ({ locale, asTemplate }) => {
           },
         }}
       >
-        <SimpleFormIterator inline>
+        <SimpleFormIterator inline disableReordering={randomize}>
           <ExerciceRow />
         </SimpleFormIterator>
       </ArrayInput>

@@ -104,6 +104,9 @@ export default {
         password_not_secure:
           'The password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (-_ @$!%*#?&)',
         password_required: 'This field is required.',
+        url_missing_scheme:
+          "The link format doesn't seem valid (e.g., https://example.org)",
+        gt_zero: 'Must be greater than zero',
       },
     },
     dashboard: {
@@ -170,6 +173,9 @@ export default {
       },
       delete: {
         confirmTitle: 'Delete the article %{placeholder}',
+      },
+      errors: {
+        i18n: 'Some fields are not valid',
       },
     },
     categories: {
@@ -263,6 +269,9 @@ export default {
       errors: {
         categories: 'You must select at least one category.',
         gt_zero: 'Must be greater than zero',
+        movement_duration: 'Invalid format',
+        repetition: 'Invalid format',
+        pause: 'Invalid format',
       },
     },
     patients: {
@@ -313,7 +322,7 @@ export default {
       shared: {
         side: {
           '0': 'Left',
-          '1': 'Law',
+          '1': 'Right',
         },
         audio: {
           'true': 'Yes',
@@ -403,19 +412,17 @@ export default {
         labels: {
           definition: 'Features',
           exercises: 'Exercises',
-          is_system_warning:
-            'All associated exercises will also be publicly accessible.',
         },
       },
     },
     shared: {
       labels: {
         translate_on_save:
-          'During saving, this field will be automatically translated into the languages for which no manual input has been made.',
+          'When saving, this field will be automatically translated into languages where no data has been entered',
         overwrite_existing_translations:
           'Replace also the existing translations.',
         copy_on_save:
-          'When saving, this field will be automatically copied into the languages for which no manual input has been made.',
+          'When saving, this field will be automatically copied into the languages for which no manual input has been made',
       },
     },
   },

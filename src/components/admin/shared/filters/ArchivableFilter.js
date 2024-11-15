@@ -23,10 +23,12 @@ import React from 'react';
 import { BooleanInput, Filter } from 'react-admin';
 
 const ArchivableFilter = (props) => {
-  return (
+  return props.show ? (
     <Filter {...props}>
       <BooleanInput size="large" source="archived" alwaysOn />
     </Filter>
+  ) : (
+    <></>
   );
 };
 

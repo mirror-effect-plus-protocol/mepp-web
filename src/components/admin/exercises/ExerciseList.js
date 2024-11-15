@@ -84,6 +84,8 @@ export const ExerciseList = () => {
         language: locale,
         category__uid: -1,
       }}
+      showArchivableFilter={permissions === 'admin'}
+      showCreate={permissions === 'admin'}
       showExercisesFilter
     >
       <Datagrid
@@ -91,7 +93,11 @@ export const ExerciseList = () => {
         empty={<CustomEmpty />}
       >
         <TextField source={`i18n.description.${locale}`} />
-        <RowActionToolbar permissions={permissions} clonable />
+        <RowActionToolbar
+          permissions={permissions}
+          clonable={permissions === 'admin'}
+          editable={permissions === 'admin'}
+        />
       </Datagrid>
     </ResourceList>
   );

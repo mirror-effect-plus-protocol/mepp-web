@@ -119,9 +119,10 @@ class MeppExportPermission(BasePermission):
         except KeyError:
             return False
 
-        if ExpiringToken.objects.filter(
+        if token := ExpiringToken.objects.filter(
             key=token, expiry_date__gte=now()
-        ).exists():
+        ).first():
+            request.user = token.user
             return True
 
         return False
