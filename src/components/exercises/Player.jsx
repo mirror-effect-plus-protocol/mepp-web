@@ -115,7 +115,7 @@ const Player = () => {
           canvas.current.width = window.innerWidth;
           canvas.current.height = window.innerHeight;
         }
-      }, 100);
+      }, 300);
     };
 
     window.addEventListener('resize', onResize);
