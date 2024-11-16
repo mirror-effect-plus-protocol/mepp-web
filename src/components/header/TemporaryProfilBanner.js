@@ -35,6 +35,9 @@ const TemporaryProfilBanner = () => {
 };
 
 const Container = styled(FlexAlignCenter.Component)`
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
   padding: 5px;
   font-size: ${rem(12)};
   color: ${({ theme }) => theme.colors.text};
