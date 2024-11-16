@@ -414,6 +414,9 @@ export default {
           exercises: 'Exercises',
         },
       },
+      errors: {
+        is_system: 'You are not allowed to modify the value of `is_system`',
+      },
     },
     shared: {
       labels: {

@@ -418,6 +418,9 @@ export default {
           exercises: 'Übungen',
         },
       },
+      errors: {
+        is_system: 'Sie dürfen den Wert von `is_system` nicht ändern',
+      },
     },
     shared: {
       labels: {

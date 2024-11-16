@@ -42,6 +42,7 @@ import GTranslateIcon from '@mui/icons-material/GTranslate';
 import { useLocale } from '@hooks/locale/useLocale';
 
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
+import { validateExercises } from '@components/admin/plans/validators';
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
 import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
@@ -54,6 +55,7 @@ import { LANGUAGES } from '../../../locales';
 import ExerciceRow from './ExerciceRow';
 
 export const PlanEdit = () => {
+  const { permissions } = usePermissions();
   const [patientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
   const { locale } = useLocale();
@@ -62,7 +64,7 @@ export const PlanEdit = () => {
     [patientUid],
   );
   const transform = useCallback(
-    (record) => preSave(record, locale, patientUid, asTemplate),
+    (record) => preSave(record, locale, patientUid, asTemplate, permissions),
     [patientUid, asTemplate],
   );
 
@@ -72,14 +74,17 @@ export const PlanEdit = () => {
 
   return (
     <ResourceEdit redirect={redirect} transform={transform}>
-      <SimplePlanEditForm locale={locale} asTemplate={asTemplate} />
+      <SimplePlanEditForm
+        locale={locale}
+        asTemplate={asTemplate}
+        permissions={permissions}
+      />
     </ResourceEdit>
   );
 };
 
-const SimplePlanEditForm = ({ locale, asTemplate }) => {
+const SimplePlanEditForm = ({ locale, asTemplate, permissions }) => {
   const record = useRecordContext();
-  const { permissions } = usePermissions();
   const t = useTranslate();
   const [randomize, setRandomize] = useState(record.randomize);
   const validateI18n = (value, record) => {
@@ -179,6 +184,7 @@ const SimplePlanEditForm = ({ locale, asTemplate }) => {
             },
           },
         }}
+        validate={validateExercises}
       >
         <SimpleFormIterator inline disableReordering={randomize}>
           <ExerciceRow />

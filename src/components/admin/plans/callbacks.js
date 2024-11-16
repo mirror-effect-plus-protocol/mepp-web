@@ -27,7 +27,13 @@ export const contextualRedirect = (patientUid) => {
   return patientUid ? `patients/${patientUid}/show` : `plans`;
 };
 
-export const preSave = async (record, locale, patientUid, asTemplate) => {
+export const preSave = async (
+  record,
+  locale,
+  patientUid,
+  asTemplate,
+  permissions,
+) => {
   let localizedName = '';
 
   // Try to get i18n field from then current language
@@ -63,7 +69,7 @@ export const preSave = async (record, locale, patientUid, asTemplate) => {
   await Promise.all(promises);
 
   // Remove i18n from exercises.
-  // We cannot update description of exercises from here.
+  // We cannot update the description of exercises from here.
   record.exercises = record.exercises.map((exercise) => {
     delete exercise.i18n;
     return exercise;
@@ -79,6 +85,10 @@ export const preSave = async (record, locale, patientUid, asTemplate) => {
     record.patient_uid = patientUid;
   }
   record.is_template = asTemplate;
+
+  if (permissions !== 'admin') {
+    delete record.is_system;
+  }
 
   // ensure record is not archived (useful when duplicating a record)
   record.archived = false;
