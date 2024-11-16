@@ -415,6 +415,10 @@ export default {
           exercises: 'Exercices',
         },
       },
+      errors: {
+        is_system:
+          'Vous n’êtes pas autorisé à modifier la valeur de `is_system`',
+      },
     },
     shared: {
       labels: {

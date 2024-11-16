@@ -410,6 +410,9 @@ export default {
           exercises: 'Esercizi',
         },
       },
+      errors: {
+        is_system: 'Non sei autorizzato a modificare il valore di `is_system`',
+      },
     },
     shared: {
       labels: {

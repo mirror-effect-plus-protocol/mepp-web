@@ -45,9 +45,7 @@ const PrivacyPage = () => {
   useTrackingView('/privacy');
 
   // Dynamically import the correct Privacy component based on the locale
-  const PrivacyComponent = React.lazy(() =>
-    import(`@pages/privacy/${locale}`)
-  );
+  const PrivacyComponent = React.lazy(() => import(`@pages/privacy/${locale}`));
 
   return (
     <BasicLayout

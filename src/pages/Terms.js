@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, {Suspense} from 'react';
+import React, { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -44,9 +44,7 @@ const TermsPage = () => {
   const { t } = useTranslation();
   useTrackingView('/termofuse');
 
-  const TermsComponent = React.lazy(() =>
-    import(`@pages/terms/${locale}`)
-  );
+  const TermsComponent = React.lazy(() => import(`@pages/terms/${locale}`));
 
   return (
     <BasicLayout

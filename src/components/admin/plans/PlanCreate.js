@@ -21,16 +21,17 @@
  */
 import React, { useCallback, useEffect, useState } from 'react';
 import {
+  ArrayInput,
   BooleanInput,
   NumberInput,
   SimpleForm,
+  SimpleFormIterator,
   TextInput,
   TranslatableInputs,
-  usePermissions,
   useStore,
+  usePermissions,
   useTranslate,
-  SimpleFormIterator,
-  ArrayInput,
+  FormDataConsumer,
 } from 'react-admin';
 import { useSearchParams } from 'react-router-dom';
 
@@ -39,7 +40,9 @@ import GTranslateIcon from '@mui/icons-material/GTranslate';
 import { useLocale } from '@hooks/locale/useLocale';
 
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
+import { validateExercises } from '@components/admin/plans/validators';
 import { Typography } from '@components/admin/shared/dom/sanitize';
+import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
 import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
@@ -64,15 +67,17 @@ export const PlanCreate = () => {
     () => contextualRedirect(patientUid),
     [patientUid],
   );
+
   const transform = useCallback(
-    (record) => preSave(record, locale, patientUid, asTemplate),
+    (record) => preSave(record, locale, patientUid, asTemplate, permissions),
     [patientUid, asTemplate],
   );
 
+  const cloned = !!searchParams.get('source');
+
   useEffect(() => {
-    const createTemplate = !!searchParams.get('source');
     if (patientUid) {
-      setAsTemplate(createTemplate);
+      setAsTemplate(cloned);
     }
   }, [patientUid]);
 
@@ -81,7 +86,11 @@ export const PlanCreate = () => {
   };
 
   return (
-    <ResourceCreate transform={transform} redirect={redirect}>
+    <ResourceCreate
+      transform={transform}
+      redirect={redirect}
+      permissions={permissions}
+    >
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}
@@ -104,6 +113,17 @@ export const PlanCreate = () => {
           >
             <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
           </div>
+          {cloned && (
+            <div
+              style={{
+                fontSize: '0.7em',
+              }}
+            >
+              <FormDataConsumer>
+                {({ formData }) => <AutoTranslate data={formData} />}
+              </FormDataConsumer>
+            </div>
+          )}
         </TranslatableInputs>
         {permissions === 'admin' && asTemplate && (
           <BooleanInput source="is_system" />
@@ -152,6 +172,7 @@ export const PlanCreate = () => {
               },
             },
           }}
+          validate={validateExercises}
         >
           <SimpleFormIterator inline disableReordering={randomize}>
             <ExerciceRow />
