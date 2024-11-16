@@ -285,6 +285,17 @@ server {
     location /media {
         sendfile on;
         root /www;
+
+        # Specific to mp4
+        location ~* \.mp4$ {
+            mp4;
+            mp4_buffer_size 1m;
+            mp4_max_buffer_size 5m;
+            add_header Cache-Control "public, max-age=3600, immutable";
+            gzip off;
+            limit_rate_after 10m;
+            limit_rate 1m;
+        }
     }
 
     location / {
