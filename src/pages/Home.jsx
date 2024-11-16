@@ -174,7 +174,7 @@ const IntroVideoRounded = () => {
 
   return (
     <IntroVideoWrapper>
-      <video muted loop ref={ref}>
+      <video muted loop ref={ref} playsInline>
         <source src="/assets/mirror-effect.mp4" type="video/mp4" />
       </video>
     </IntroVideoWrapper>
