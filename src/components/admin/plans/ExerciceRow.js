@@ -150,7 +150,7 @@ const ExerciceRow = (props) => {
               label={t('resources.plans.fields.exercise.repetition')}
               defaultValue="10"
               InputProps={{
-                inputProps: { min: 0 },
+                inputProps: { min: 1 },
               }}
             />
           </div>

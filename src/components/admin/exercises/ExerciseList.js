@@ -33,7 +33,7 @@ import { Box, Typography } from '@mui/material';
 import { useLocale } from '@hooks/locale/useLocale';
 
 import ResourceList from '@components/admin/shared/resources/ResourceList';
-import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
+import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionButtons';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
 
 import { CategoryFilterModal } from './CategoryFilter';

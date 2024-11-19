@@ -30,7 +30,7 @@ import {
 import ResourceList from '@components/admin/shared/resources/ResourceList';
 
 import Datagrid from '../shared/Datagrid';
-import BulkActionButtons from '../shared/toolbars/BulkActionsToolbar';
+import BulkActionButtons from '../shared/toolbars/BulkActionButtons';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
 import PatientListAside from './PatientListAside';
 

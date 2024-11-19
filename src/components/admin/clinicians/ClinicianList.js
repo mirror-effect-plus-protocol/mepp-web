@@ -31,7 +31,7 @@ import {
 
 import Datagrid from '@components/admin/shared/Datagrid';
 import ResourceList from '@components/admin/shared/resources/ResourceList';
-import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
+import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionButtons';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
 
 export const ClinicianList = () => {
