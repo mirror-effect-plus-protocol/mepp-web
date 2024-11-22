@@ -137,7 +137,7 @@ class User(AbstractUser, Archivable, Searchable):
         self.clinician_treatment_plans.all().delete()
         return super().delete(using=using, keep_parents=keep_parents)
 
-    def generate_new_token(self) -> ExpiringToken:
+    def generate_new_token(self) -> str:
         try:
             token = ExpiringToken.objects.get(user=self, temporary=False)
         except ExpiringToken.DoesNotExist:
