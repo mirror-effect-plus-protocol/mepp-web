@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -302,10 +302,18 @@ const EmptyExercise = () => {
 };
 
 const Video = ({ src, cognitive }) => {
+  const ref = useRef();
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current?.load();
+    }
+  }, [src]);
+
   return (
     <VideoWrapper cognitive={cognitive}>
       <VideoInner>
-        <video autoPlay muted loop playsInline>
+        <video autoPlay muted loop playsInline ref={ref}>
           <source src={src} type="video/mp4" />
         </video>
         <LoadingCircle />
