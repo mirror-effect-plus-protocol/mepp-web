@@ -305,7 +305,7 @@ const Video = ({ src, cognitive }) => {
   return (
     <VideoWrapper cognitive={cognitive}>
       <VideoInner>
-        <video autoPlay muted loop>
+        <video autoPlay muted loop playsInline>
           <source src={src} type="video/mp4" />
         </video>
         <LoadingCircle />
