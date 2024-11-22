@@ -114,7 +114,7 @@ export const ExerciseCreate = () => {
             label={t('resources.exercises.fields.repetition')}
             defaultValue="5"
             InputProps={{
-              inputProps: { min: 0 },
+              inputProps: { min: 1 },
             }}
           />
         </Div>

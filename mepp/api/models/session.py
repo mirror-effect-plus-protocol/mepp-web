@@ -188,7 +188,7 @@ class Session(BaseModel):
         exercises = []
         for exercise_through in exercises_through:
             video = exercise_through.exercise.video
-            video_url = video.url if video else ''
+            video_url = self.__get_url_with_scheme(video.url) if video else ''
             exercise = {
                 'movement_duration': exercise_through.movement_duration,
                 'repetition': exercise_through.repetition,
@@ -205,3 +205,10 @@ class Session(BaseModel):
 
             exercises.append(exercise)
         self.exercises = exercises
+
+    @staticmethod
+    def __get_url_with_scheme(url: str) -> str:
+        if url.startswith('http'):
+            return url
+
+        return settings.HTTP_HOST + url

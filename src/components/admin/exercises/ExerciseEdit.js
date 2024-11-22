@@ -137,7 +137,7 @@ export const ExerciseEdit = () => {
             validate={validateNumber}
             label={t('resources.exercises.fields.repetition')}
             InputProps={{
-              inputProps: { min: 0 },
+              inputProps: { min: 1 },
             }}
           />
         </Div>

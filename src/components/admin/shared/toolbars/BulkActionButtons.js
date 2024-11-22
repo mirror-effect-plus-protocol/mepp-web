@@ -20,12 +20,12 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { Fragment } from 'react';
-import { BulkDeleteButton, useResourceContext } from 'react-admin';
+import {BulkDeleteButton, useResourceContext} from 'react-admin';
 
 import ExportButton from '@components/admin/shared/buttons/ExportButton';
 import ToggleBulkArchiveButton from '@components/admin/shared/buttons/ToggleBulkArchiveButton';
 
-const BulkActionsToolbar = ({ permissions, showExport, ...props }) => {
+const BulkActionButtons = ({ permissions, showExport, ...props }) => {
   const filterValues = props.filterValues;
   const resourceName = useResourceContext();
 
@@ -67,4 +67,4 @@ const BulkActionsToolbar = ({ permissions, showExport, ...props }) => {
   }
 };
 
-export default BulkActionsToolbar;
+export default BulkActionButtons;
