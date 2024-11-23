@@ -34,6 +34,7 @@ export default {
         backButton: 'Ritorna',
         exportButton: 'Esporta',
         filterButton: 'Filtrare',
+        resetFilterButton: 'Reimposta',
         card: {
           identity: 'Identità',
           informations: 'Profilo',
@@ -285,8 +286,8 @@ export default {
         full_name: 'Nome completo',
         last_name: 'Nome',
         side: 'Lato paralizzato',
-        use_audio: 'Audio attivo',
-        has_cognitive_issues: 'Problemi cognitivi',
+        use_audio: 'Testo in voce su iOS',
+        has_cognitive_issues: 'Senza lettura',
         language: 'Lingua',
         password: 'Password',
         confirm_password: 'Conferma la password',

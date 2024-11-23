@@ -48,5 +48,7 @@ class CategoryViewSet(UUIDLookupFieldViewSet):
     ]
 
     def get_queryset(self):
-        queryset = Category.objects.filter(parent_id__isnull=True)
-        return queryset
+        if self.action == 'list':
+            return Category.objects.filter(parent_id__isnull=True)
+        else:
+            return Category.objects.all()

@@ -23,6 +23,7 @@ import React, { useEffect, useCallback } from 'react';
 import {
   Datagrid,
   TextField,
+  useListFilterContext,
   usePermissions,
   useStore,
   useTranslate,
@@ -41,7 +42,6 @@ import { CategoryFilterModal } from './CategoryFilter';
 export const ExerciseList = () => {
   const { permissions } = usePermissions();
   const { locale } = useLocale();
-
   const [, setPatientUid] = useStore('patient.uid', false);
 
   useEffect(() => {
@@ -50,6 +50,8 @@ export const ExerciseList = () => {
 
   const CustomEmpty = useCallback(() => {
     const t = useTranslate();
+    const {filterValues} = useListFilterContext();
+    const category_uid = filterValues?.category__uid;
 
     return (
       <Box
@@ -60,9 +62,11 @@ export const ExerciseList = () => {
         height="100%"
         padding="2rem"
       >
-        <Typography variant="h6">
-          {t('resources.exercises.empty.title')}
-        </Typography>
+        {category_uid && (
+          <Typography variant="h6">
+            {t('resources.exercises.empty.title')}
+          </Typography>
+        )}
         <Typography
           variant="body1"
           align="center"
