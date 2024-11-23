@@ -293,7 +293,7 @@ const CategoryFilterCancelButton = ({ onClick }) => {
       color="primary"
       startIcon={<FilterListOffRounded />}
     >
-      {t('admin.shared.labels.cancelButton')}
+      {t('admin.shared.labels.resetFilterButton')}
     </Button>
   );
 };
