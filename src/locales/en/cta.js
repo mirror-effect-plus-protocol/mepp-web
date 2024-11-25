@@ -37,7 +37,7 @@ export default {
     restart: 'Restart',
     restart_exercise: 'Continue the exercise',
     pause_exercise: 'Pause',
-    skip_exercise: 'Jump',
+    skip_exercise: 'Skip',
     next_exercise: 'Next',
     authorize: 'Allow',
     cancel: 'Cancel',

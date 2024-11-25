@@ -157,7 +157,7 @@ export const PatientShowLayout = ({ record }) => {
   return (
     <BoxedShowLayout className={classes.container}>
       <RaBox className={classes.root}>
-        <RaBox className={classes.leftColumn}>
+        <RaBox className={classes.oneColumn}>
           <Typography variant="h6" gutterBottom>
             {t('admin.shared.labels.card.identity')}
           </Typography>
@@ -221,52 +221,65 @@ export const PatientShowLayout = ({ record }) => {
             </RaBox>
           </RaBox>
         </RaBox>
-
-        <RaBox className={classes.rightColumn}>
-          <Typography variant="h6" gutterBottom>
-            {t('admin.shared.labels.card.informations')}
-          </Typography>
-          <RaBox className={classes.columnChild}>
-            <RaBox className={classes.innerChild}>
-              <Labeled>
-                <FunctionField
-                  label={t('resources.patients.fields.use_audio')}
-                  render={(record) =>
-                    t(`resources.patients.shared.audio.${record.use_audio}`)
-                  }
-                />
-              </Labeled>
-              <Labeled>
-                <FunctionField
-                  label={t('resources.patients.fields.language')}
-                  render={(record) => t(`languages.${record.language}`)}
-                />
-              </Labeled>
-            </RaBox>
-            <RaBox className={classes.innerChild}>
-              <Labeled>
-                <FunctionField
-                  label={t('resources.patients.fields.side')}
-                  render={(record) =>
-                    t(`resources.patients.shared.side.${record.side}`)
-                  }
-                />
-              </Labeled>
-              <Labeled>
-                <FunctionField
-                  label={t('resources.patients.fields.has_cognitive_issues')}
-                  render={(record) =>
-                    t(
-                      `resources.patients.shared.video.${record.has_cognitive_issues}`,
-                    )
-                  }
-                />
-              </Labeled>
+      </RaBox>
+      <RaBox className={classes.root}>
+        <RaBox className={classes.oneColumn}>
+            <Typography variant="h6" gutterBottom>
+              {t('admin.shared.labels.card.informations')}
+            </Typography>
+            <RaBox className={classes.columnChild}>
+              <RaBox className={classes.innerChild}>
+                <Labeled>
+                  <FunctionField
+                    label={t('resources.patients.fields.language')}
+                    render={(record) => t(`languages.${record.language}`)}
+                  />
+                </Labeled>
+              </RaBox>
+              <RaBox className={classes.innerChild}>
+                <Labeled>
+                  <FunctionField
+                    label={t('resources.patients.fields.side')}
+                    render={(record) =>
+                      t(`resources.patients.shared.side.${record.side}`)
+                    }
+                  />
+                </Labeled>
+              </RaBox>
             </RaBox>
           </RaBox>
-        </RaBox>
       </RaBox>
-
+      <RaBox className={classes.root}>
+        <RaBox className={classes.oneColumn}>
+            <Typography variant="h6" gutterBottom>
+              {t('admin.shared.labels.card.instructions')}
+            </Typography>
+            <RaBox className={classes.columnChild}>
+              <RaBox className={classes.innerChild}>
+                <Labeled>
+                  <FunctionField
+                    label={t('resources.patients.fields.use_audio')}
+                    render={(record) =>
+                      t(`resources.patients.shared.audio.${record.use_audio}`)
+                    }
+                  />
+                </Labeled>
+              </RaBox>
+              <RaBox className={classes.innerChild}>
+                <Labeled>
+                  <FunctionField
+                    label={t('resources.patients.fields.use_video_only')}
+                    render={(record) =>
+                      t(
+                        `resources.patients.shared.video.${record.use_video_only}`,
+                      )
+                    }
+                  />
+                </Labeled>
+              </RaBox>
+            </RaBox>
+          </RaBox>
+      </RaBox>
       <RaBox className={classes.buttonLine}>
         <RaBox className={classes.buttonLineLeft}>
           <Typography variant="h6" gutterBottom>

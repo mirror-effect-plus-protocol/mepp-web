@@ -63,7 +63,7 @@ class MeAPITestCase(BaseV1TestCase):
                 'email': 'john.smith@example.org',
                 'language': 'fr',
                 'use_audio': True,
-                'has_cognitive_issues': False,
+                'use_video_only': False,
                 'side': 0,
                 'mirror_settings': {
                     'position': {'x': 0, 'y': 0, 'z': 0},
@@ -80,7 +80,7 @@ class MeAPITestCase(BaseV1TestCase):
         auth_headers = {
             'HTTP_AUTHORIZATION': f'Token {token}'
         }
-        self.patient_john.has_cognitive_issues = True
+        self.patient_john.use_video_only = True
         self.patient_john.use_audio = False
         self.patient_john.language = LanguageEnum.EN.value
         self.patient_john.side = SideEnum.RIGHT.value
@@ -100,7 +100,7 @@ class MeAPITestCase(BaseV1TestCase):
                 'email': 'john.smith@example.org',
                 'language': 'en',
                 'use_audio': False,
-                'has_cognitive_issues': True,
+                'use_video_only': True,
                 'side': 1,
                 'mirror_settings': {
                     'position': {'x': 0, 'y': 0, 'z': 0},

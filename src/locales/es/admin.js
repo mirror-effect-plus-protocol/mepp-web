@@ -38,6 +38,7 @@ export default {
         card: {
           identity: 'Identidad',
           informations: 'Perfil',
+          instructions: 'Instrucciones para ejercicios',
           reset_password: 'Restablecer la contraseña',
           create_password: 'Crear la contraseña',
         },
@@ -286,7 +287,7 @@ export default {
         last_name: 'Nombre',
         side: 'Lado paralizado',
         use_audio: 'Texto a voz en iOS',
-        has_cognitive_issues: 'Sin lectura',
+        use_video_only: 'Solo video',
         language: 'Idioma',
         password: 'Contraseña',
         confirm_password: 'Confirmar la contraseña',

@@ -47,6 +47,15 @@ export const useRaBoxStyles = makeStyles(() => ({
     borderRight: 'solid thin',
     marginRight: '10px',
   },
+  oneColumn: {
+    flexDirection: 'column',
+    flex: '0 0 50%',
+    flexGrow: '3',
+    justifyContent: 'center',
+    marginBottom: '10px',
+    paddingRight: '10px',
+    marginRight: '10px',
+  },
   rightColumn: {
     flex: '0 0 50%',
     flexDirection: 'column',
