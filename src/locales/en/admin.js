@@ -42,6 +42,11 @@ export default {
           reset_password: 'Reset the password',
           create_password: 'Create the password',
         },
+        modal: {
+          category_filter: {
+            title: 'Please choose a category'
+          }
+        },
         profile: 'My profile',
       },
       notifications: {

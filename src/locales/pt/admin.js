@@ -42,6 +42,11 @@ export default {
           reset_password: 'Redefinir a senha',
           create_password: 'Criar a senha',
         },
+        modal: {
+          category_filter: {
+            title: 'Por favor, escolha uma categoria'
+          }
+        },
         profile: 'Meu perfil',
       },
       notifications: {

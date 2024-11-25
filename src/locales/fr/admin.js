@@ -42,6 +42,11 @@ export default {
           reset_password: 'Réinitialiser le mot de passe',
           create_password: 'Créer le mot de passe',
         },
+        modal: {
+          category_filter: {
+            title: 'Veuillez choisir une catégorie'
+          }
+        },
         profile: 'Mon profil',
       },
       notifications: {

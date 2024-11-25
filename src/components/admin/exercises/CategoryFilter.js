@@ -1,3 +1,24 @@
+/*
+ * MEPP - A web application to guide patients and clinicians in the process of
+ * facial palsy rehabilitation, with the help of the mirror effect and principles
+ * of motor learning
+ * Copyright (C) 2021 MEPP <info@mirroreffectplus.org>
+ *
+ * This file is part of MEPP.
+ *
+ * MEPP is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * MEPP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
+ */
 import React, { useEffect, useState } from 'react';
 import {
   useListContext,
@@ -24,6 +45,7 @@ import {
   ListItemButton,
   Button,
   Divider,
+  Typography,
 } from '@mui/material';
 import { keyframes } from '@mui/system';
 
@@ -45,17 +67,21 @@ const styles = {
     backgroundColor: 'rgba(7, 142, 228, .5)',
   },
   modal: {
-    position: 'absolute',
-    right: '0',
-    height: '100%',
-    minWidth: 400,
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)', // Centre le modal
+    width: '50%',
     bgcolor: 'background.paper',
+    maxHeight: '90vh',
     overflowY: 'auto',
     padding: 2,
+    boxShadow: 24, // Ajoute une ombre pour le modal
+    borderRadius: 4, // Ajoute des coins arrondis si désiré
     animation: `${keyframes`
-      from { transform: translateX(450px); }
-      to { transform: translateY(0); }
-    `} .5s ease`,
+      from { opacity: 0; transform: translate(-50%, -40%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    `} 0.5s ease`,
   },
 };
 
@@ -200,10 +226,14 @@ const CategoryFilterModal = ({
           <div
             style={{
               display: 'flex',
-              justifyContent: 'flex-end',
               marginBottom: 20,
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
           >
+            <Typography variant="h6" component="h2">
+              {t('admin.shared.labels.modal.category_filter.title')}
+            </Typography>
             <IconButton onClick={handleClose}>
               <Close />
             </IconButton>
