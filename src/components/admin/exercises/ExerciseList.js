@@ -50,7 +50,7 @@ export const ExerciseList = () => {
 
   const CustomEmpty = useCallback(() => {
     const t = useTranslate();
-    const {filterValues} = useListFilterContext();
+    const { filterValues } = useListFilterContext();
     const category_uid = filterValues?.category__uid;
 
     return (
@@ -74,7 +74,7 @@ export const ExerciseList = () => {
           style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
         >
           {t('resources.exercises.empty.description')}
-          <CategoryFilterModal storekey="CategorieFilterIndex" />
+          <CategoryFilterModal storekey="CategorieFilterIndex" autoOpen />
         </Typography>
       </Box>
     );

@@ -47,9 +47,10 @@ import {
   Divider,
   Typography,
 } from '@mui/material';
-import { keyframes } from '@mui/system';
 
 import { useLocale } from '@hooks/locale/useLocale';
+
+let globalModalOpen = false;
 
 const styles = {
   list: {
@@ -78,10 +79,6 @@ const styles = {
     padding: 2,
     boxShadow: 24, // Ajoute une ombre pour le modal
     borderRadius: 4, // Ajoute des coins arrondis si désiré
-    animation: `${keyframes`
-      from { opacity: 0; transform: translate(-50%, -40%); }
-      to { opacity: 1; transform: translate(-50%, -50%); }
-    `} 0.5s ease`,
   },
 };
 
@@ -206,18 +203,37 @@ const CategoryFilterModal = ({
   buttonIcon,
   onSelect,
   storekey,
+  autoOpen,
 }) => {
   const { filterValues } = useListContext();
   const [open, setOpen] = useState(false);
   const t = useTranslate();
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {
+    globalModalOpen = true;
+    setOpen(true);
+  };
+  const handleClose = () => {
+    globalModalOpen = false;
+    setOpen(false);
+  };
 
   // close after setting filter
   useEffect(() => {
     if (filterValues?.category__uid) setOpen(false);
   }, [filterValues]);
+
+  useEffect(() => {
+    if (autoOpen && !globalModalOpen) {
+      handleOpen();
+    }
+  }, [autoOpen]);
+
+  useEffect(() => {
+    return () => {
+      globalModalOpen = false;
+    };
+  }, []);
 
   return (
     <>
@@ -278,7 +294,7 @@ const CategoryFilterModal = ({
   );
 };
 
-const CategoryFilterCancelButton = ({ onClick }) => {
+const CategoryFilterCancelButton = () => {
   const { filterValues, setFilters } = useListContext();
   const [activeIndexKeys, setActiveIndexKeys] = useStore(
     'CategoriesAllKeys',
@@ -302,8 +318,6 @@ const CategoryFilterCancelButton = ({ onClick }) => {
     // remove all key from store (filter keys only)
     activeIndexKeys.forEach((key) => removeItem(key));
     setActiveIndexKeys([]);
-
-    onClick && onClick();
   };
 
   // show button according when filters are selecting
