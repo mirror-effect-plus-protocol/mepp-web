@@ -276,7 +276,7 @@ const CategoryFilterModal = ({
               marginTop: 30,
             }}
           >
-            {storekey && <CategoryFilterCancelButton onClick={handleClose} />}
+            {storekey && <CategoryFilterCancelButton />}
           </div>
         </Box>
       </Modal>
