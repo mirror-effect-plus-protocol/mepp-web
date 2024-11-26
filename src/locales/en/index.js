@@ -33,8 +33,6 @@ import intro from './intro';
 import settings from './settings';
 
 const RaLanguageOverride = { ...RaLanguage };
-RaLanguageOverride.ra.action.show = 'See';
-RaLanguageOverride.ra.action.edit = 'Modify';
 RaLanguageOverride.ra.notification.updated =
   'Element updated successfully |||| %{smart_count} elements updated successfully';
 RaLanguageOverride.ra.notification.created = 'Element created successfully';
