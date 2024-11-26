@@ -38,8 +38,15 @@ export default {
         card: {
           identity: 'Identità',
           informations: 'Profilo',
+          instructions: 'Istruzioni per gli esercizi',
           reset_password: 'Reimposta la password',
           create_password: 'Crea la password',
+        },
+        modal: {
+          title: {
+            category_filter: 'Si prega di scegliere una categoria',
+            exercise_filter: 'Seleziona prima una categoria'
+          }
         },
         profile: 'Il mio profilo',
       },
@@ -287,7 +294,7 @@ export default {
         last_name: 'Nome',
         side: 'Lato paralizzato',
         use_audio: 'Testo in voce su iOS',
-        has_cognitive_issues: 'Senza lettura',
+        use_video_only: 'Solo video',
         language: 'Lingua',
         password: 'Password',
         confirm_password: 'Conferma la password',

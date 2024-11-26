@@ -52,6 +52,7 @@ import {
   validateClinician,
   validateSide,
 } from './validators';
+import {RaBox} from "ra-compact-ui";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -92,20 +93,6 @@ export const PatientEdit = () => {
         </Typography>
         <Box className={classes.root}>
           <SelectInput
-            source="use_audio"
-            choices={options.audio}
-            fullWidth
-            validate={validateAudio}
-          />
-          <SelectInput
-            source="has_cognitive_issues"
-            validate={validateVideo}
-            choices={options.video}
-            fullWidth
-          />
-        </Box>
-        <Box className={classes.root}>
-          <SelectInput
             source="side"
             validate={validateSide}
             choices={options.sides}
@@ -118,6 +105,23 @@ export const PatientEdit = () => {
             validate={validateLanguage}
           />
         </Box>
+        <Typography variant="h6" gutterBottom>
+          {t('admin.shared.labels.card.instructions')}
+        </Typography>
+        <RaBox className={classes.root}>
+          <SelectInput
+            source="use_audio"
+            validate={validateAudio}
+            choices={options.audio}
+            fullWidth
+          />
+          <SelectInput
+            source="use_video_only"
+            validate={validateVideo}
+            choices={options.video}
+            fullWidth
+          />
+        </RaBox>
         {permissions === 'admin' && (
           <Box className={classes.root}>
             <ReferenceInput

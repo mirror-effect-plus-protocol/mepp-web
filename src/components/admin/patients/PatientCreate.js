@@ -92,20 +92,6 @@ export const PatientCreate = () => {
         </Typography>
         <RaBox className={classes.root}>
           <SelectInput
-            source="use_audio"
-            validate={validateAudio}
-            choices={options.audio}
-            fullWidth
-          />
-          <SelectInput
-            source="has_cognitive_issues"
-            validate={validateVideo}
-            choices={options.video}
-            fullWidth
-          />
-        </RaBox>
-        <RaBox className={classes.root}>
-          <SelectInput
             source="side"
             validate={validateSide}
             choices={options.sides}
@@ -116,6 +102,23 @@ export const PatientCreate = () => {
             choices={options.languages}
             fullWidth
             validate={validateLanguage}
+          />
+        </RaBox>
+        <Typography variant="h6" gutterBottom>
+          {t('admin.shared.labels.card.instructions')}
+        </Typography>
+        <RaBox className={classes.root}>
+          <SelectInput
+            source="use_audio"
+            validate={validateAudio}
+            choices={options.audio}
+            fullWidth
+          />
+          <SelectInput
+            source="use_video_only"
+            validate={validateVideo}
+            choices={options.video}
+            fullWidth
           />
         </RaBox>
         {permissions === 'admin' && (

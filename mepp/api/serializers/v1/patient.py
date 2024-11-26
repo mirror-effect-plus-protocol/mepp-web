@@ -58,7 +58,7 @@ class PatientSerializer(
             'last_name',
             'full_name',
             'use_audio',
-            'has_cognitive_issues',
+            'use_video_only',
             'side',
             'clinician_uid',
             'archived',
