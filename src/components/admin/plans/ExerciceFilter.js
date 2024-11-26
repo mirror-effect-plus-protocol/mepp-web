@@ -38,6 +38,7 @@ import {
   ListItemButton,
   Button,
   Divider,
+  Typography,
 } from '@mui/material';
 import { keyframes } from '@mui/system';
 
@@ -52,17 +53,21 @@ const styles = {
   },
 
   modal: {
-    position: 'absolute',
-    right: '0',
-    height: '100%',
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: '50%',
     bgcolor: 'background.paper',
+    maxHeight: '90vh',
     overflowY: 'auto',
     padding: 2,
+    boxShadow: 24,
+    borderRadius: 4,
     animation: `${keyframes`
-      from { transform: translateX(450px); }
-      to { transform: translateY(0); }
-    `} .5s ease`,
+      from { opacity: 0; transform: translate(-50%, -40%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    `} 0.5s ease`,
   },
 };
 
@@ -218,10 +223,14 @@ const ExerciceFilterModal = ({ buttonLabel, buttonIcon, onSelect }) => {
           <div
             style={{
               display: 'flex',
-              justifyContent: 'flex-end',
               marginBottom: 20,
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
           >
+            <Typography variant="h6" component="h2">
+              {t('admin.shared.labels.modal.title.exercise_filter')}
+            </Typography>
             <IconButton onClick={handleClose}>
               <Close />
             </IconButton>

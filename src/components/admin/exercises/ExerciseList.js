@@ -74,7 +74,7 @@ export const ExerciseList = () => {
           style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
         >
           {t('resources.exercises.empty.description')}
-          <CategoryFilterModal storekey="CategorieFilterIndex" />
+          <CategoryFilterModal autoOpen storekey="CategorieFilterIndex" />
         </Typography>
       </Box>
     );

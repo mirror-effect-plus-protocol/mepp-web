@@ -35,6 +35,7 @@ import settings from './settings';
 const RaLanguageOverride = { ...RaLanguage };
 RaLanguageOverride.ra.action.show = 'Ver';
 RaLanguageOverride.ra.action.edit = 'Modificar';
+RaLanguageOverride.ra.action.search = 'Buscar';
 RaLanguageOverride.ra.notification.updated =
   'Elemento actualizado con éxito |||| %{smart_count} elementos actualizados con éxito';
 RaLanguageOverride.ra.notification.created = 'Elemento creado con éxito';

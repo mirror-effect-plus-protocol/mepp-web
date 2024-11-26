@@ -43,8 +43,9 @@ export default {
           create_password: 'Criar a senha',
         },
         modal: {
-          category_filter: {
-            title: 'Por favor, escolha uma categoria'
+          title: {
+            category_filter: 'Por favor, escolha uma categoria',
+            exercise_filter: 'Selecione uma categoria primeiro'
           }
         },
         profile: 'Meu perfil',

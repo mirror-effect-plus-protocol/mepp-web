@@ -70,14 +70,14 @@ const styles = {
     position: 'fixed',
     top: '50%',
     left: '50%',
-    transform: 'translate(-50%, -50%)', // Centre le modal
+    transform: 'translate(-50%, -50%)',
     width: '50%',
     bgcolor: 'background.paper',
     maxHeight: '90vh',
     overflowY: 'auto',
     padding: 2,
-    boxShadow: 24, // Ajoute une ombre pour le modal
-    borderRadius: 4, // Ajoute des coins arrondis si désiré
+    boxShadow: 24,
+    borderRadius: 4,
     animation: `${keyframes`
       from { opacity: 0; transform: translate(-50%, -40%); }
       to { opacity: 1; transform: translate(-50%, -50%); }
@@ -97,7 +97,7 @@ const CategoryFilter = ({ categories, level, onSelect, storekey }) => {
   const [activeIndex, setActiveIndex] = useStore(key, null);
   const [activeIndexKeys, setActiveIndexKeys] = useStore(
     'CategoriesAllKeys',
-    [],
+    []
   );
 
   const Sublist = ({ category, level }) => {
@@ -206,9 +206,10 @@ const CategoryFilterModal = ({
   buttonIcon,
   onSelect,
   storekey,
+  autoOpen = false,
 }) => {
   const { filterValues } = useListContext();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(autoOpen);
   const t = useTranslate();
 
   const handleOpen = () => setOpen(true);
@@ -232,7 +233,7 @@ const CategoryFilterModal = ({
             }}
           >
             <Typography variant="h6" component="h2">
-              {t('admin.shared.labels.modal.category_filter.title')}
+              {t('admin.shared.labels.modal.title.category_filter')}
             </Typography>
             <IconButton onClick={handleClose}>
               <Close />

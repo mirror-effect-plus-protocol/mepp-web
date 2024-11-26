@@ -43,8 +43,9 @@ export default {
           create_password: 'Ein Passwort erstellen',
         },
         modal: {
-          category_filter: {
-            title: 'Bitte wählen Sie eine Kategorie'
+          title: {
+            category_filter: 'Bitte wählen Sie eine Kategorie',
+            exercise_filter: 'Wählen Sie zuerst eine Kategorie aus'
           }
         },
         profile: 'Mein Profil',

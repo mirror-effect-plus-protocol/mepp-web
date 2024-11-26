@@ -43,8 +43,9 @@ export default {
           create_password: 'Crea la password',
         },
         modal: {
-          category_filter: {
-            title: 'Si prega di scegliere una categoria'
+          title: {
+            category_filter: 'Si prega di scegliere una categoria',
+            exercise_filter: 'Seleziona prima una categoria'
           }
         },
         profile: 'Il mio profilo',
