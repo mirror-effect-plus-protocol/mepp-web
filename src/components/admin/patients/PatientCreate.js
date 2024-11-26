@@ -104,6 +104,22 @@ export const PatientCreate = () => {
             validate={validateLanguage}
           />
         </RaBox>
+        {permissions === 'admin' && (
+          <RaBox className={classes.root}>
+            <ReferenceInput
+              source="clinician_uid"
+              reference="clinicians"
+              perPage={9999}
+              sort={{ field: 'full_name', order: 'ASC' }}
+            >
+              <SelectInput
+                optionText="full_name"
+                validate={validateClinician}
+                style={{ width: '100%' }}
+              />
+            </ReferenceInput>
+          </RaBox>
+        )}
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.instructions')}
         </Typography>
@@ -121,22 +137,6 @@ export const PatientCreate = () => {
             fullWidth
           />
         </RaBox>
-        {permissions === 'admin' && (
-          <RaBox className={classes.root}>
-            <ReferenceInput
-              source="clinician_uid"
-              reference="clinicians"
-              perPage={9999}
-              sort={{ field: 'full_name', order: 'ASC' }}
-            >
-              <SelectInput
-                optionText="full_name"
-                validate={validateClinician}
-                style={{ width: '100%' }}
-              />
-            </ReferenceInput>
-          </RaBox>
-        )}
         <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.create_password')}
         </Typography>
