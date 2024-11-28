@@ -37,6 +37,7 @@ class Category(BaseModel):
     parent = models.ForeignKey(
         'Category', related_name='children', on_delete=models.CASCADE, null=True
     )
+    index = models.IntegerField(default=0)
 
     def __str__(self):
         name = (

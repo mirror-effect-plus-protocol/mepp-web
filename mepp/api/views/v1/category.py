@@ -42,9 +42,9 @@ class CategoryViewSet(UUIDLookupFieldViewSet):
         CategoryFilter,
         CategoryOrderingFilter,
     ]
-    ordering = 'i18n__name'
+    ordering = 'index'
     ordering_fields = [
-        'i18n__name',
+        'index',
     ]
 
     def get_queryset(self):

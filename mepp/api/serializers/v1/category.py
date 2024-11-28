@@ -64,7 +64,7 @@ class CategorySerializer(HyperlinkedModelUUIDSerializer):
             'language', LanguageEnum.default.value
         )
         children = category.children.filter(i18n__language=language).order_by(
-            'i18n__name'
+            'index'
         )
         if children.exists():
             return CategorySerializer(children, many=True, context=self.context).data
