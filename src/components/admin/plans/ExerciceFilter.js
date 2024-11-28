@@ -137,7 +137,7 @@ const CategoryFilterHandle = ({ onSelect }) => {
   const { locale } = useLocale();
   const { data: categories, isLoading } = useGetList('categories', {
     pagination: { page: 1, perPage: 9999 },
-    sort: { field: `i18n.name.${locale}`, order: 'ASC' },
+    sort: { field: 'index', order: 'ASC' },
     filter: { language: locale },
   });
 

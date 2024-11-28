@@ -10,12 +10,11 @@ pytest = "*"
 pytest-django = "*"
 pytest-env = "*"
 mock = "*"
-pip-licenses = "*"
 polib = "*"
 ruff = "*"
 
 [packages]
-django = "==4.2.11"
+django = "==4.2.16"
 werkzeug = "*"
 django-extensions = "*"
 djangorestframework = "*"
