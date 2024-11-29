@@ -21,8 +21,7 @@
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from mepp.api.filters.clinician import ClinicianFilter
-from mepp.api.filters.patient import PatientOrderingFilter
+from mepp.api.filters.clinician import ClinicianFilter, ClinicianOrderingFilter
 from mepp.api.helpers.emails import send_onboarding_email
 from mepp.api.models.user import User
 from mepp.api.permissions import (
@@ -41,7 +40,16 @@ class ClinicianViewSet(UUIDLookupFieldViewSet):
     permission_classes = [MeppStaffProfilePermission]
     filter_backends = [
         ClinicianFilter,
-        PatientOrderingFilter,
+        ClinicianOrderingFilter,
+    ]
+
+    ordering_fields = [
+        'first_name',
+        'last_name',
+        'date_joined',
+        'clinician__first_name',
+        'clinician__last_name',
+        'is_superuser',
     ]
 
     @action(detail=True, methods=['POST'])

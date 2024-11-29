@@ -23,26 +23,26 @@ import React, { Fragment, useEffect, useState } from 'react';
 import {
   Datagrid,
   FunctionField,
-  List,
   ListContextProvider,
   ReferenceField,
   TextField,
   BooleanField,
   useListContext,
   usePermissions,
-  useResourceContext, useStore,
+  useResourceContext,
+  useStore,
   useTranslate,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import { Divider, Tabs, Tab } from '@mui/material';
 
+import { useLocale } from '@hooks/locale/useLocale';
+
 import PlanListAside from '@components/admin/plans/PlanListAside';
-import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
+import ResourceList from '@components/admin/shared/resources/ResourceList';
+import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionButtons';
 
 import Spinner from '../shared/Spinner';
-import ArchivableFilter from '../shared/filters/ArchivableFilter';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
 
 const tabs = [
@@ -51,7 +51,6 @@ const tabs = [
 ];
 
 const PlanDatagrid = ({ permissions }) => {
-
   const { locale } = useLocale();
   const t = useTranslate();
 
@@ -71,11 +70,8 @@ const PlanDatagrid = ({ permissions }) => {
           <TextField source="full_name" />
         </ReferenceField>
       )}
-      <BooleanField
-        source="randomize"
-        textAlign="center"
-      />
-      <RowActionToolbar permissions={permissions} clonable={true} />
+      <BooleanField source="randomize" textAlign="center" />
+      <RowActionToolbar permissions={permissions} clonable />
     </Datagrid>
   );
 };
@@ -143,26 +139,22 @@ export const PlanList = () => {
   const { permissions } = usePermissions();
   const { locale } = useLocale();
 
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [, setPatientUid] = useStore('patient.uid', false);
   useEffect(() => {
     setPatientUid(false);
   }, []);
 
   return (
-    <List
+    <ResourceList
       filterDefaultValues={{
-        archived: false,
         is_system: false,
         is_template: true,
         language: locale,
       }}
-      filters={<ArchivableFilter />}
-      sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
-      perPage={25}
-      actions={<ListActions />}
+      sortField={`i18n.description.${locale}`}
       aside={<PlanListAside permissions={permissions} />}
     >
       <TabbedDatagrid permissions={permissions} />
-    </List>
+    </ResourceList>
   );
 };

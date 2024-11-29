@@ -22,29 +22,30 @@
 
 export default {
   cta: {
-    login: 'Connect',
-    logout: 'Logout',
-
+    connexion: 'Login',
+    login: 'Log in',
+    logout: 'Log out',
     send: 'Send',
-
-    goto_forgot_password: 'Forgot your password?',
-    goto_login: 'Back to login',
-
+    donate: 'Donate',
+    description: 'Description',
+    history: 'History',
+    goto_forgot_password: 'Forgot password?',
+    goto_login: 'Return to the login screen',
     start: 'Start the session',
     settings: 'Configure the effect',
     start_exercise: 'Start',
-    restart: 'Start a new session',
-    restart_exercise: 'Continue',
+    restart: 'Restart',
+    restart_exercise: 'Continue the exercise',
     pause_exercise: 'Pause',
     skip_exercise: 'Skip',
     next_exercise: 'Next',
-    authorize: 'Authorize',
-
+    authorize: 'Allow',
     cancel: 'Cancel',
     close: 'Close',
     save: 'Save',
-    modify: 'Modify',
-    back: 'Back',
+    modify: 'Edit',
+    back: 'Return',
     confirm: 'Ok',
+    support: 'Help',
   },
 };

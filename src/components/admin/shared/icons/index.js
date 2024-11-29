@@ -19,16 +19,15 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import {CategoryIcon} from './CategoryIcon';
-import {ClinicianIcon} from './ClinicianIcon';
-import {DashboardIcon} from './DashboardIcon';
-import {ExerciseIcon} from './ExerciseIcon';
-import {FaceIcon} from './FaceIcon';
-import {SoundIcon} from './SoundIcon';
-import {SubCategoryIcon} from './SubCategoryIcon';
-import {TimeIcon} from './TimeIcon';
-import {TreatmentPlanIcon} from './TreatmentPlanIcon';
+import { CategoryIcon } from './CategoryIcon';
+import { ClinicianIcon } from './ClinicianIcon';
+import { DashboardIcon } from './DashboardIcon';
+import { ExerciseIcon } from './ExerciseIcon';
+import { FaceIcon } from './FaceIcon';
+import { SoundIcon } from './SoundIcon';
+import { SubCategoryIcon } from './SubCategoryIcon';
+import { TimeIcon } from './TimeIcon';
+import { TreatmentPlanIcon } from './TreatmentPlanIcon';
 
 export {
   CategoryIcon,
@@ -39,5 +38,5 @@ export {
   SoundIcon,
   SubCategoryIcon,
   TimeIcon,
-  TreatmentPlanIcon
+  TreatmentPlanIcon,
 };

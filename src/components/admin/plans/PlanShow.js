@@ -19,8 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useEffect, useState } from 'react';
 import { BoxedShowLayout } from 'ra-compact-ui';
+import React, { useEffect, useState } from 'react';
 import {
   ArrayField,
   BooleanField,
@@ -29,22 +29,24 @@ import {
   Show,
   TextField,
   TranslatableFields,
-  usePermissions, useResourceDefinition,
+  usePermissions,
+  useResourceDefinition,
   useTranslate,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
 import { makeStyles } from '@mui/styles';
+
+import { useLocale } from '@hooks/locale/useLocale';
 
 import ClinicianTextField from '@components/admin/clinicians/ClinicianTextField';
 import { Typography } from '@components/admin/shared/dom/sanitize';
+import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import ShowToolBar from '@components/admin/shared/toolbars/ShowToolbar';
 import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 
 import { LANGUAGES } from '../../../locales';
-import {translatorInputStyle} from "@components/admin/shared/styles/shared";
 
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(() => {
   return {
     root: {
       '& .ra-field-exercises': {
@@ -94,19 +96,21 @@ export const PlanShow = (props) => {
         <BooleanField source="is_system" />
         <Typography
           variant="h6"
-          gutterTop={true}
+          gutterTop
           sx={{
             display: 'flex',
             justifyContent: 'flex-start',
-            gap: '1em'
+            gap: '1em',
           }}
         >
           {t('resources.plans.card.labels.exercises')}
-          <span style={{
-            fontWeight: "normal",
-            fontSize: '0.5em',
-            marginTop: '7px'
-          }}>
+          <span
+            style={{
+              fontWeight: 'normal',
+              fontSize: '0.5em',
+              marginTop: '7px',
+            }}
+          >
             {t('resources.plans.fields.randomize')}
             <BooleanField
               size="small"
@@ -116,7 +120,11 @@ export const PlanShow = (props) => {
           </span>
         </Typography>
 
-        <ArrayField source="exercises" label="" sx={{ '&>.MuiStack-root': { width: '100%'} }}>
+        <ArrayField
+          source="exercises"
+          label=""
+          sx={{ '&>.MuiStack-root': { width: '100%' } }}
+        >
           <Datagrid bulkActionButtons={false}>
             <TextField
               source={`i18n.description.${locale}`}
@@ -131,8 +139,8 @@ export const PlanShow = (props) => {
               label={t('resources.plans.fields.exercise.pause')}
             />
             <NumberField
-              source="repeat"
-              label={t('resources.plans.fields.exercise.repeat')}
+              source="repetition"
+              label={t('resources.plans.fields.exercise.repetition')}
             />
           </Datagrid>
         </ArrayField>

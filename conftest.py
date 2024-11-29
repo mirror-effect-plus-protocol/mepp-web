@@ -21,7 +21,6 @@
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
 import pytest
-
 from django.core.management import call_command
 
 

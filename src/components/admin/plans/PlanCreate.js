@@ -20,89 +20,77 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import {
-  ArrayInput, BooleanInput,
-  Create,
-  FormDataConsumer,
+  ArrayInput,
+  BooleanInput,
   NumberInput,
   SimpleForm,
   SimpleFormIterator,
   TextInput,
   TranslatableInputs,
+  useStore,
   usePermissions,
-  useRecordContext, useResourceContext, useStore,
   useTranslate,
+  FormDataConsumer,
 } from 'react-admin';
+import { useSearchParams } from 'react-router-dom';
+
+import GTranslateIcon from '@mui/icons-material/GTranslate';
 
 import { useLocale } from '@hooks/locale/useLocale';
-import ExerciseRow from '@components/admin/plans/ExerciseRow';
-import IsSystemInput from '@components/admin/plans/IsSystem';
+
 import { contextualRedirect, preSave } from '@components/admin/plans/callbacks';
 import { validateExercises } from '@components/admin/plans/validators';
 import { Typography } from '@components/admin/shared/dom/sanitize';
-import {
-  useGetCategories,
-  useGetSubCategories,
-} from '@components/admin/shared/hook';
+import AutoTranslate from '@components/admin/shared/inputs/AutoTranslate';
+import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
+import { translatorInputStyle } from '@components/admin/shared/styles/shared';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
 import { requiredLocalizedField } from '@components/admin/shared/validators';
 import { validateNumber } from '@components/admin/shared/validators';
 
 import { LANGUAGES } from '../../../locales';
-import {
-  categoriesSelectorStyle,
-  translatorInputStyle
-} from "@components/admin/shared/styles/shared";
+import ExerciceRow from './ExerciceRow';
 
 export const PlanCreate = () => {
   const t = useTranslate();
   const { permissions } = usePermissions();
   const { locale } = useLocale();
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [patientUid] = useStore('patient.uid', false);
   const [asTemplate, setAsTemplate] = useState(true);
   const [randomize, setRandomize] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const validateI18n = (value, record) => {
     return requiredLocalizedField(value, record, locale, 'name');
   };
-  const resourceName = useResourceContext();
-  const categories = useGetCategories(locale);
-  const subCategories = useGetSubCategories(locale);
   const redirect = useCallback(
     () => contextualRedirect(patientUid),
-    [patientUid]
+    [patientUid],
   );
+
   const transform = useCallback(
-    (record) => preSave(record, locale, patientUid, asTemplate),
-    [patientUid, asTemplate]
+    (record) => preSave(record, locale, patientUid, asTemplate, permissions),
+    [patientUid, asTemplate],
   );
+
+  const cloned = !!searchParams.get('source');
 
   useEffect(() => {
-    const createTemplate = searchParams.get('source') ? true : false;
     if (patientUid) {
-      setAsTemplate(createTemplate);
+      setAsTemplate(cloned);
     }
   }, [patientUid]);
-
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
 
   const handleRandomizeClick = (event) => {
     setRandomize(event.target.checked);
   };
 
   return (
-    <Create transform={transform} redirect={redirect} mutationOptions={{ onError: onError }}>
+    <ResourceCreate
+      transform={transform}
+      redirect={redirect}
+      permissions={permissions}
+    >
       <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('resources.plans.card.labels.definition')}
@@ -113,22 +101,43 @@ export const PlanCreate = () => {
           sx={translatorInputStyle}
         >
           <TextInput source="i18n.name" validate={validateI18n} fullWidth />
+          <div
+            style={{
+              fontSize: '0.7em',
+              display: 'grid',
+              gridTemplateColumns: 'auto 1fr',
+              gridGap:
+                '10px' /* Adjust the value to add space between the image and text */,
+              alignItems: 'center',
+            }}
+          >
+            <GTranslateIcon /> {t('resources.shared.labels.translate_on_save')}
+          </div>
+          {cloned && (
+            <div
+              style={{
+                fontSize: '0.7em',
+              }}
+            >
+              <FormDataConsumer>
+                {({ formData }) => <AutoTranslate data={formData} />}
+              </FormDataConsumer>
+            </div>
+          )}
         </TranslatableInputs>
         {permissions === 'admin' && asTemplate && (
-          <FormDataConsumer>
-            {({ formData, ...rest }) => <IsSystemInput data={formData} />}
-          </FormDataConsumer>
+          <BooleanInput source="is_system" />
         )}
         <NumberInput source="daily_repeat" validate={validateNumber} />
 
         <Typography
           variant="h6"
           gutterBottom
-          gutterTop={true}
+          gutterTop
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            gap: '1em'
+            gap: '1em',
           }}
         >
           {t('resources.plans.card.labels.exercises')}
@@ -142,21 +151,34 @@ export const PlanCreate = () => {
 
         <ArrayInput
           source="exercises"
-          fullWidth={false}
           label=""
+          sx={{
+            '& .RaSimpleFormIterator-action': {
+              visibility: 'visible!important',
+              margin: '0 !important',
+              position: 'absolute',
+              right: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            },
+            minWidth: '525px',
+            maxWidth: '50%',
+            '& .RaSimpleFormIterator-line': {
+              display: 'flex!important',
+              alignItems: 'center',
+              ':last-child': {
+                marginBottom: 0.5,
+              },
+            },
+          }}
           validate={validateExercises}
         >
-          <SimpleFormIterator
-            sx={categoriesSelectorStyle}
-            disableReordering={randomize}
-          >
-            <ExerciseRow
-              categories={categories}
-              subCategories={subCategories}
-            />
+          <SimpleFormIterator inline disableReordering={randomize}>
+            <ExerciceRow />
           </SimpleFormIterator>
         </ArrayInput>
       </SimpleForm>
-    </Create>
+    </ResourceCreate>
   );
 };

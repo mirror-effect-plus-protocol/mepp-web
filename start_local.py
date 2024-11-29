@@ -237,8 +237,6 @@ class EnvStarter:
     def __write_docker_compose_file(self):
 
         compose_yml = f"""
-version: '3'
-
 services:
   nginx:
     image: nginx:latest
@@ -247,6 +245,7 @@ services:
       - DJANGO_SETTINGS_MODULE=mepp.settings.dev
     volumes:
       - ./.vols/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./media:/www/media
     extra_hosts:
       - mepp.local:{self.__ip_address}
     ports:
@@ -277,9 +276,26 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Forwarded-Host $host:9090;
     proxy_redirect off;
+    client_max_body_size 100M;
 
     location ~ ^/(admin|api|static) {
         proxy_pass http://mepp.local:8000;
+    }
+
+    location /media {
+        sendfile on;
+        root /www;
+
+        # Specific to mp4
+        location ~* \.mp4$ {
+            mp4;
+            mp4_buffer_size 1m;
+            mp4_max_buffer_size 5m;
+            add_header Cache-Control "public, max-age=3600, immutable";
+            gzip off;
+            limit_rate_after 10m;
+            limit_rate 1m;
+        }
     }
 
     location / {

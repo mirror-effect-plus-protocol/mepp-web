@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import ReactAdminFr from 'ra-language-french';
+import RaLanguage from 'ra-language-french';
 
 import a11y from './a11y';
 import admin from './admin';
@@ -28,18 +28,21 @@ import cta from './cta';
 import exercise from './exercise';
 import footer from './footer';
 import form from './form';
+import home from './home';
 import intro from './intro';
 import settings from './settings';
 
-const reactAdminFrOverride = { ...ReactAdminFr };
-reactAdminFrOverride.ra.action.show = 'Voir';
-reactAdminFrOverride.ra.action.edit = 'Modifier';
-reactAdminFrOverride.ra.notification.updated =
+const RaLanguageOverride = { ...RaLanguage };
+RaLanguageOverride.ra.action.show = 'Voir';
+RaLanguageOverride.ra.action.edit = 'Modifier';
+RaLanguageOverride.ra.notification.updated =
   'Élément mis à jour avec succès |||| %{smart_count} élements mis à jour avec succès';
-reactAdminFrOverride.ra.notification.created = 'Élément créé avec succès';
+RaLanguageOverride.ra.notification.created = 'Élément créé avec succès';
+RaLanguageOverride.ra.input.file.upload_single =
+  'Déposez le fichier à téléverser, ou cliquez pour le sélectionner';
 
 export default {
-  ...reactAdminFrOverride,
+  ...RaLanguageOverride,
   ...admin,
   ...a11y,
   ...cta,
@@ -49,6 +52,7 @@ export default {
   ...exercise,
   ...settings,
   ...api,
+  ...home,
 
   temporaryProfile: {
     label: 'Vous êtes connecté(e) dans une session temporaire',

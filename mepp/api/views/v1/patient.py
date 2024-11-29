@@ -22,8 +22,8 @@ import io
 
 import xlsxwriter
 from django.db.models import F
-from django.utils import translation, timezone
 from django.http import HttpResponse
+from django.utils import timezone, translation
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -33,19 +33,19 @@ from mepp.api.enums.action import ActionEnum
 from mepp.api.enums.language import LanguageEnum
 from mepp.api.filters.base import MeppAPIFilter
 from mepp.api.filters.patient import (
-    PatientOrderingFilter,
     PatientFilter,
+    PatientOrderingFilter,
 )
+from mepp.api.helpers.emails import send_onboarding_email
+from mepp.api.models.log import Log
+from mepp.api.models.user import User
+from mepp.api.permissions import MeppExportPermission
 from mepp.api.serializers.v1.patient import PatientSerializer
 from mepp.api.serializers.v1.plan import PatientTreatmentPlanSerializer
 from mepp.api.serializers.v1.widget import (
     DailyRepeatWidgetSerializer,
     SessionsWidgetSerializer,
 )
-from mepp.api.helpers.emails import send_onboarding_email
-from mepp.api.models.log import Log
-from mepp.api.models.user import User
-from mepp.api.permissions import MeppExportPermission
 from mepp.api.views import UUIDLookupFieldViewSet
 
 
@@ -93,8 +93,9 @@ class PatientViewSet(UUIDLookupFieldViewSet):
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
 
-    @action(detail=False, methods=['GET'],
-            permission_classes=[MeppExportPermission])
+    @action(
+        detail=False, methods=['GET'], permission_classes=[MeppExportPermission]
+    )
     def export(self, request, *args, **kwargs) -> HttpResponse:
         output = io.BytesIO()
         language = request.query_params.get(
@@ -230,7 +231,7 @@ class PatientViewSet(UUIDLookupFieldViewSet):
         output.seek(0)
 
         # Set up the Http response.
-        now = timezone.now().strftime("%Y%d%m-%H%M%S")
+        now = timezone.now().strftime('%Y%d%m-%H%M%S')
         filename = f'mepp-patients.{now}.xlsx'
         response = HttpResponse(
             output,

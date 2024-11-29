@@ -23,13 +23,13 @@
 export default {
   api: {
     success: {
-      settings_update: 'Effects settings has been updated successfully',
-      profile_update: 'Your profile has been updated successfully',
+      settings_update: 'Effect change successfully made',
+      profile_update: 'Your profile has been successfully updated.',
     },
     error: {
-      generic: 'An error has occurred',
-      token_invalid: 'Your request is invalid or has expired',
-      pwd_invalid: 'Your password is invalid',
+      generic: 'An unknown error has occurred.',
+      token_invalid: 'Your modification request is invalid or expired.',
+      pwd_invalid: 'Your password is invalid.',
     },
   },
 };

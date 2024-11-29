@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import styled from 'styled-components';
 
@@ -33,6 +32,10 @@ import BasicLayout from '@layouts/Basic';
 
 import Exercises from '@components/exercises/Exercise';
 import ExerciseProvider from '@components/exercises/ExerciseProvider';
+import {
+  ExerciseContext,
+  ExerciseStep,
+} from '@components/exercises/ExerciseProvider';
 import Player from '@components/exercises/Player';
 import { Header } from '@components/header/Header';
 
@@ -46,7 +49,21 @@ const MirrorPage = () => {
     <ExerciseProvider>
       <DisabledBodyScrollGlogalStyle />
       <BasicLayout
-        header={<Header isLogged />}
+        header={
+          <ExerciseContext.Consumer>
+            {({ exerciseStep }) => (
+              <Header
+                isLogged
+                hidden={
+                  exerciseStep !== ExerciseStep.INITIATED &&
+                  exerciseStep !== ExerciseStep.COMPLETED &&
+                  exerciseStep !== ExerciseStep.ENDED &&
+                  exerciseStep !== ExerciseStep.EMPTY
+                }
+              />
+            )}
+          </ExerciseContext.Consumer>
+        }
         content={
           <ContainerWrapper>
             <ContainerInner>

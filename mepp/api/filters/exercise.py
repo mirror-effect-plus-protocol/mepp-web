@@ -39,14 +39,7 @@ class ExerciseFilter(BaseFilterBackend):
         except KeyError:
             pass
         else:
-            queryset = queryset.filter(sub_categories__category__uid=category__uid)
-
-        try:
-            sub_category__uid = request.query_params['sub_category__uid']
-        except KeyError:
-            pass
-        else:
-            queryset = queryset.filter(sub_categories__uid=sub_category__uid)
+            queryset = queryset.filter(categories__uid=category__uid)
 
         return queryset.distinct()
 
@@ -60,9 +53,7 @@ class ExerciseOrderingFilter(OrderingFilter):
         params = request.query_params.get(self.ordering_param)
         if params:
             fields = [param.strip() for param in params.split(',')]
-            fields_to_replace = {
-                'clinician_uid': ['clinician__first_name', 'clinician__last_name'],
-            }
+            fields_to_replace = {}
             for language, _ in list(LanguageEnum.choices()):
                 fields_to_replace[f'i18n.description.{language}'] = ['i18n__description']
 

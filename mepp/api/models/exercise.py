@@ -19,20 +19,25 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
+import os
 
-from django.conf import settings
 from django.db import models
 
 from mepp.api.enums.language import LanguageEnum
 from mepp.api.fields.uuid import UUIDField
-from mepp.api.mixins.models.archivable import Archivable
 from mepp.api.mixins import Template
+from mepp.api.mixins.models.archivable import Archivable
 from mepp.api.mixins.models.searchable import (
     I18nSearchable,
     Searchable,
 )
+
 from .base import BaseModel
-from .category import SubCategory
+from .category import Category
+
+
+def upload_to(instance, filename):
+    return os.path.join('__exercises', 'videos', instance.uid, filename)
 
 
 class Exercise(BaseModel, Archivable, Template, Searchable):
@@ -42,17 +47,12 @@ class Exercise(BaseModel, Archivable, Template, Searchable):
     ]
 
     uid = UUIDField('e')
-    clinician = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name='exercises',
-        on_delete=models.CASCADE,
-    )
-    sub_categories = models.ManyToManyField(
-        SubCategory, related_name='exercises'
-    )
+    categories = models.ManyToManyField(Category, related_name='exercises')
     movement_duration = models.PositiveSmallIntegerField(null=False, default=5)
-    repeat = models.PositiveSmallIntegerField(null=False, default=3)
+    repetition = models.PositiveSmallIntegerField(null=False, default=3)
     pause = models.PositiveSmallIntegerField(null=False, default=5)
+    auto_translate = models.BooleanField(default=False)
+    video = models.FileField(upload_to=upload_to, null=True, blank=True)
 
     def __str__(self):
         name = (
@@ -72,5 +72,3 @@ class ExerciseI18n(I18nSearchable):
 
     def __str__(self):
         return f'{self.description} ({self.language})'
-
-

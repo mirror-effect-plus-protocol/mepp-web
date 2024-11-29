@@ -20,6 +20,7 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { createContext, useEffect, useState } from 'react';
+import { useGetIdentity } from 'react-admin';
 
 import { useApi } from '@hooks/useApi';
 
@@ -33,6 +34,7 @@ import { log } from '@utils/log';
 const ExerciseStep = {
   'INITIATED': 'INIT',
   'STARTED': 'START',
+  'TIMER': 'TIMER',
   'PAUSED': 'PAUSE',
   'SKIPPED': 'SKIP',
   'RESUMED': 'RESUME',
@@ -51,7 +53,7 @@ const ExerciseContext = createContext({
   pause: () => {},
   skip: () => {},
   wait: () => {},
-  repeat: () => {},
+  repetition: () => {},
   complete: () => {},
   next: () => {},
   restart: () => {},
@@ -84,6 +86,7 @@ const ExerciseProvider = ({ children }) => {
     loading: exerciseLoading,
     get,
   } = useApi(RequestEndpoint.SESSION);
+  const { identity } = useGetIdentity();
 
   /**
    * Log Step  - API call
@@ -121,7 +124,11 @@ const ExerciseProvider = ({ children }) => {
   const start = () => {
     if (exerciseStep === ExerciseStep.INITIATED) logs(ExerciseStep.STARTED);
     else logs(ExerciseStep.RESUMED);
-    setExerciseStep(ExerciseStep.STARTED);
+    if (exerciseStep === ExerciseStep.INITIATED && exerciseRepeat === 0) {
+      setExerciseStep(ExerciseStep.TIMER);
+    } else {
+      setExerciseStep(ExerciseStep.STARTED);
+    }
   };
 
   /**
@@ -146,7 +153,7 @@ const ExerciseProvider = ({ children }) => {
    */
   const wait = () => {
     if (!exercise) return;
-    if (exerciseRepeat < exercise.repeatTime)
+    if (exerciseRepeat < exercise.repeatTime - 1)
       setExerciseStep(ExerciseStep.WAITED);
     else {
       logs(ExerciseStep.COMPLETED);
@@ -159,7 +166,7 @@ const ExerciseProvider = ({ children }) => {
    */
   const repeat = () => {
     if (!exercise) return;
-    if (exerciseRepeat >= exercise.repeatTime) {
+    if (exerciseRepeat > exercise.repeatTime) {
       logs(ExerciseStep.COMPLETED);
       setExerciseStep(ExerciseStep.COMPLETED);
     } else {
@@ -204,7 +211,8 @@ const ExerciseProvider = ({ children }) => {
     // timeout to prevent logs request cancel
     // logs will be canceled if taken more than .5s
     setTimeout(() => {
-      window.location.href = '/';
+      window.location.href = '#/intro';
+      window.location.reload();
     }, 500);
   };
 
@@ -213,7 +221,13 @@ const ExerciseProvider = ({ children }) => {
    */
   useEffect(() => {
     if (!exercisesData) return;
-    if (exercisesData.detail === 'Not found.' || !exercisesData.exercises) {
+    if (!identity) return;
+
+    if (
+      exercisesData.detail === 'Not found.' ||
+      !exercisesData.exercises ||
+      exercisesData.exercises.length === 0
+    ) {
       setExerciseStep(ExerciseStep.EMPTY);
       return;
     }
@@ -221,20 +235,27 @@ const ExerciseProvider = ({ children }) => {
     const current = exercisesData.exercises[exerciseCurrent];
 
     if (current) {
-      setExercise({
+      const data = {
         index: exerciseCurrent,
         number: exerciseCurrent + 1,
         next: exerciseCurrent + 1,
         length: exercisesData.exercises.length,
         durationTime: current.movement_duration || 10,
         pauseTime: current.pause || 5,
-        repeatTime: current.repeat || 3,
+        repeatTime: current.repetition || 3,
         text: current.i18n,
-      });
+        cognitive: identity.use_video_only,
+      };
+
+      data.videoUrl =
+        current.video_url && current.video_url !== ''
+          ? current.video_url
+          : null;
+      setExercise(data);
     } else {
       log('Exercise not found: ', exerciseCurrent);
     }
-  }, [exerciseCurrent, exercisesData]);
+  }, [exerciseCurrent, exercisesData, identity]);
 
   /**
    * Log start session
@@ -272,6 +293,7 @@ const ExerciseProvider = ({ children }) => {
         exerciseStep,
         exerciseLoading,
         exerciseReady,
+        exerciseRepeat,
       }}
     >
       {children}

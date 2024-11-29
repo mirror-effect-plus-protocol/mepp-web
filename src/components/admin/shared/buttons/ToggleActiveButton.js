@@ -82,7 +82,7 @@ const ToggleActiveButton = ({
         refresh();
         notify(translatedText, { type: 'info' });
       },
-      onError: (error) => {
+      onError: () => {
         const translatedText = record.active
           ? 'admin.shared.notifications.deactivate.failure'
           : 'admin.shared.notifications.activate.failure';

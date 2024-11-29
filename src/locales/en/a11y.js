@@ -23,7 +23,7 @@
 export default {
   a11y: {
     show_password: 'View your password',
-    settings: 'Go to settings',
-    support: 'Go to support page',
+    settings: 'Go to your account settings',
+    support: 'Go to the help page',
   },
 };

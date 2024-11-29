@@ -21,17 +21,13 @@
  */
 import React from 'react';
 import {
-  Edit,
   SelectInput,
   SimpleForm,
   PasswordInput,
   ReferenceInput,
   TextInput,
   usePermissions,
-  useRefresh,
-  useResourceContext,
   useTranslate,
-  useNotify, useResourceDefinition,
 } from 'react-admin';
 
 import Box from '@mui/material/Box';
@@ -39,8 +35,8 @@ import { makeStyles } from '@mui/styles';
 
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import Options from '@components/admin/shared/options';
+import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 import SimpleFormToolBar from '@components/admin/shared/toolbars/SimpleFormToolbar';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
 import {
   validateEmail,
   validateFirstName,
@@ -50,9 +46,15 @@ import {
   validatePasswords,
 } from '@components/admin/shared/validators';
 
-import { validateAudio, validateClinician, validateSide } from './validators';
+import {
+  validateAudio,
+  validateVideo,
+  validateClinician,
+  validateSide,
+} from './validators';
+import {RaBox} from "ra-compact-ui";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
     display: 'flex',
@@ -64,36 +66,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const PatientEdit = () => {
-  const resourceName = useResourceContext();
-  const { hasShow } = useResourceDefinition();
   const t = useTranslate();
   const classes = useStyles();
   const options = Options();
-  const notify = useNotify();
   const { permissions } = usePermissions();
 
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
-
   return (
-    <Edit
-      mutationOptions={{ onError: onError }}
-      actions={<TopToolbar hasShow={hasShow}/>}
-      mutationMode="pessimistic"
-    >
-      <SimpleForm
-        redirect="list"
-        toolbar={<SimpleFormToolBar identity={false} />}
-      >
+    <ResourceEdit>
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>
@@ -113,16 +93,16 @@ export const PatientEdit = () => {
         </Typography>
         <Box className={classes.root}>
           <SelectInput
-            source="use_audio"
-            choices={options.audio}
-            fullWidth
-            validate={validateAudio}
-          />
-          <SelectInput
             source="side"
+            validate={validateSide}
             choices={options.sides}
             fullWidth
-            validate={validateSide}
+          />
+          <SelectInput
+            source="language"
+            choices={options.languages}
+            fullWidth
+            validate={validateLanguage}
           />
         </Box>
         {permissions === 'admin' && (
@@ -130,31 +110,35 @@ export const PatientEdit = () => {
             <ReferenceInput
               source="clinician_uid"
               reference="clinicians"
-              validate={validateClinician}
               perPage={9999}
               sort={{ field: 'full_name', order: 'ASC' }}
             >
-              <SelectInput optionText="full_name" style={{ width: '100%' }} />
+              <SelectInput
+                optionText="full_name"
+                validate={validateClinician}
+                style={{ width: '100%' }}
+              />
             </ReferenceInput>
-            <SelectInput
-              source="language"
-              choices={options.languages}
-              fullWidth
-              validate={validateLanguage}
-            />
           </Box>
         )}
-        {permissions !== 'admin' && (
-          <Box className={classes.root}>
-            <SelectInput
-              source="language"
-              choices={options.languages}
-              fullWidth
-              validate={validateLanguage}
-            />
-          </Box>
-        )}
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom>
+          {t('admin.shared.labels.card.instructions')}
+        </Typography>
+        <RaBox className={classes.root}>
+          <SelectInput
+            source="use_audio"
+            validate={validateAudio}
+            choices={options.audio}
+            fullWidth
+          />
+          <SelectInput
+            source="use_video_only"
+            validate={validateVideo}
+            choices={options.video}
+            fullWidth
+          />
+        </RaBox>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.reset_password')}
         </Typography>
         <Box className={classes.root}>
@@ -172,6 +156,6 @@ export const PatientEdit = () => {
           />
         </Box>
       </SimpleForm>
-    </Edit>
+    </ResourceEdit>
   );
 };

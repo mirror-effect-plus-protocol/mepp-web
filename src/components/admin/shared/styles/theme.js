@@ -21,10 +21,7 @@
  */
 import { defaultTheme } from 'react-admin';
 
-
-
 import { createTheme } from '@mui/material/styles';
-
 
 const lightBlue = '#33a4e4';
 const blue = '#078EE4';
@@ -286,10 +283,11 @@ export const meppTheme = {
         },
       },
     },
-    RaSimpleFormIterator: {
+    RaFileInput: {
       styleOverrides: {
-        root: {
-          '&>ul>li': { borderBottom: 'none' },
+        removeButton: {
+          display: 'flex',
+          backgroundColor: 'blue',
         },
       },
     },

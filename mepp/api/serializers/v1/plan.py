@@ -32,9 +32,9 @@ from mepp.api.models.plan import (
     TreatmentPlanI18n,
 )
 from mepp.api.serializers import (
-    I18nSerializer,
     HyperlinkedModelUUIDSerializer,
     HyperlinkedUUIDRelatedField,
+    I18nSerializer,
 )
 from mepp.api.serializers.v1.exercise import ExerciseI18nSerializer
 
@@ -97,7 +97,7 @@ class TreatmentPlanExerciseM2MSerializer(HyperlinkedModelUUIDSerializer):
             'index',
             'movement_duration',
             'pause',
-            'repeat',
+            'repetition',
         ]
         read_only_fields = [
             'index',
@@ -150,6 +150,7 @@ class TreatmentPlanSerializer(
             'patient_uid',
             'active',
             'randomize',
+            'auto_translate',
         ]
         read_only_fields = [
             'clinician_uid',
@@ -265,18 +266,9 @@ class TreatmentPlanSerializer(
             try:
                 exercise_obj = Exercise.objects.get(uid=exercise['id'])
             except Exercise.DoesNotExist:
-                # Do not reveal presence of item in DB
+                # Do not reveal the presence of item in DB
                 raise serializers.ValidationError({
                     'exercise': f"No exercises found with uid `{exercise['id']}`"
-                })
-
-            if (
-                request.user.pk != exercise_obj.clinician_id
-                and not request.user.is_superuser
-                and not exercise_obj.is_system
-            ):
-                raise serializers.ValidationError({
-                    'exercise': f"2 - No exercises found with uid `{exercise['id']}`"
                 })
 
             tpe_m2m = TreatmentPlanExerciseM2M()
@@ -284,7 +276,7 @@ class TreatmentPlanSerializer(
             try:
                 tpe_m2m.index = index
                 tpe_m2m.movement_duration = int(exercise['movement_duration'])
-                tpe_m2m.repeat = int(exercise['repeat'])
+                tpe_m2m.repetition = int(exercise['repetition'])
                 tpe_m2m.pause = int(exercise['pause'])
             except (ValueError, KeyError):
                 raise serializers.ValidationError('Invalid values')
@@ -299,10 +291,6 @@ class TreatmentPlanSerializer(
         for exercise in exercises:
             exercise.treatment_plan = instance
         TreatmentPlanExerciseM2M.objects.bulk_create(exercises)
-
-        if instance.is_system:
-            exercise_ids = [e.exercise_id for e in exercises]
-            Exercise.objects.filter(pk__in=exercise_ids).update(is_system=True)
 
     def _update_i18n(self, instance: TreatmentPlan, i18n: list):
         for translation in i18n:

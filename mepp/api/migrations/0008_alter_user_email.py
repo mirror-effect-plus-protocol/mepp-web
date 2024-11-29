@@ -5,13 +5,13 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("api", "0007_treatmentplan_randomize"),
+        ('api', '0007_treatmentplan_randomize'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name="user",
-            name="email",
-            field=models.EmailField(max_length=254, verbose_name="email address"),
+            model_name='user',
+            name='email',
+            field=models.EmailField(max_length=254, verbose_name='email address'),
         ),
     ]

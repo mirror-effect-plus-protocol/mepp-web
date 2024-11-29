@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import { RequestEndpoint, RequestMethod } from '@utils/constants';
 import { fetchData } from '@utils/fetch';
 
@@ -48,6 +47,13 @@ const authProvider = {
       if (data.token) localStorage.setItem('token', data.token);
       if (data.profile)
         localStorage.setItem('profile', JSON.stringify(data.profile));
+      document.body.style.visibility = 'hidden';
+      if (data.permissions === 'admin' || data.permissions === 'staff') {
+        window.location.href = '/';
+      } else {
+        window.location.href = '#/intro';
+        window.location.reload();
+      }
     } else {
       throw new Error(`Service ${response.statusText} error`);
     }
@@ -63,7 +69,7 @@ const authProvider = {
       window.location.href = '/';
       return Promise.reject();
     }
-
+    // eslint-disable-next-line no-undef
     return Promise.resolve();
   },
 

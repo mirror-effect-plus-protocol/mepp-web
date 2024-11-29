@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { spacings } from '@styles/configs/spacings';
-import { FlexAlignCenter } from '@styles/tools';
+import { FlexAlignCenter, FlexDirectionColumn } from '@styles/tools';
 
 import { useLocale } from '@hooks/locale/useLocale';
 
@@ -80,21 +80,53 @@ const LanguageForm = () => {
   return (
     <Container>
       <InputsWrapper>
-        <Input.Radio
-          name="language"
-          label="Français"
-          value={Language.FR}
-          onChange={(e) => setLanguage(e.target.value)}
-          defaultChecked={locale === Language.FR}
-        />
+        <InputsInner>
+          <Input.Radio
+            name="language"
+            label="Français"
+            value={Language.FR}
+            onChange={(e) => setLanguage(e.target.value)}
+            defaultChecked={locale === Language.FR}
+          />
+          <Input.Radio
+            name="language"
+            label="English"
+            value={Language.EN}
+            onChange={(e) => setLanguage(e.target.value)}
+            defaultChecked={locale === Language.EN}
+          />
+          <Input.Radio
+            name="language"
+            label="Italiano"
+            value={Language.IT}
+            onChange={(e) => setLanguage(e.target.value)}
+            defaultChecked={locale === Language.IT}
+          />
+        </InputsInner>
         <SpacerHorizontal size={`${spacings.default * 2}px`} />
-        <Input.Radio
-          name="language"
-          label="English"
-          value={Language.EN}
-          onChange={(e) => setLanguage(e.target.value)}
-          defaultChecked={locale === Language.EN}
-        />
+        <InputsInner>
+          <Input.Radio
+            name="language"
+            label="Español"
+            value={Language.ES}
+            onChange={(e) => setLanguage(e.target.value)}
+            defaultChecked={locale === Language.ES}
+          />
+          <Input.Radio
+            name="language"
+            label="Deutsch"
+            value={Language.DE}
+            onChange={(e) => setLanguage(e.target.value)}
+            defaultChecked={locale === Language.DE}
+          />
+          <Input.Radio
+            name="language"
+            label="Português"
+            value={Language.PT}
+            onChange={(e) => setLanguage(e.target.value)}
+            defaultChecked={locale === Language.PT}
+          />
+        </InputsInner>
       </InputsWrapper>
 
       <ButtonsWrapper>
@@ -111,6 +143,7 @@ const Container = styled.div`
 `;
 
 const InputsWrapper = styled(FlexAlignCenter.Component)``;
+const InputsInner = styled(FlexDirectionColumn.Component)``;
 
 const ButtonsWrapper = styled(FlexAlignCenter.Component)`
   margin-top: ${spacings.default * 3}px;

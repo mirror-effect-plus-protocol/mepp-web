@@ -62,7 +62,7 @@ const ToggleArchiveButton = ({
       select(newSelectedIds);
     }
     // Update data
-    updateHandler();
+    updateHandler().then();
   };
   const [updateHandler, { isLoading }] = useUpdate(
     resource,
@@ -77,22 +77,22 @@ const ToggleArchiveButton = ({
           ? 'admin.shared.notifications.unarchive.success'
           : 'admin.shared.notifications.archive.success';
         if (patientUid) {
-            if (patientUid && resource === 'patients') {
-              setPatientUid(false);
-              redirect(resource);
-            }
+          if (patientUid && resource === 'patients') {
+            setPatientUid(false);
+            redirect(resource);
+          }
         }
         refresh();
         notify(translatedText, { type: 'info' });
         select([]);
       },
-      onError: (error) => {
+      onError: () => {
         const translatedText = record.archived
           ? 'admin.shared.notifications.unarchive.failure'
           : 'admin.shared.notifications.archive.failure';
         notify(translatedText, { type: 'error' });
       },
-    }
+    },
   );
 
   return (
@@ -101,11 +101,7 @@ const ToggleArchiveButton = ({
       onClick={handleToggleArchive}
       disabled={isLoading}
       className={className}
-      {...sanitizeRestProps(
-        rest,
-        ['showLabel', 'showLocation'],
-        true,
-      )}
+      {...sanitizeRestProps(rest, ['showLabel', 'showLocation'], true)}
       variant={rest.variant}
       color={rest.color}
     >

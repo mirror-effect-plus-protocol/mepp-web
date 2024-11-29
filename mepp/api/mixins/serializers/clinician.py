@@ -21,6 +21,7 @@
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
 from rest_framework import serializers
+
 from mepp.api.models.user import User
 
 

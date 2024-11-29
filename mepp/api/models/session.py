@@ -22,18 +22,18 @@
 
 import time
 from collections import defaultdict
-from typing import Optional
 
 from django.conf import settings
 from django.db import models
 
-from mepp.api.fields.uuid import UUIDField
 from mepp.api.enums import (
     ActionEnum,
     StatusEnum,
 )
 from mepp.api.exceptions import SessionStatusException
+from mepp.api.fields.uuid import UUIDField
 from mepp.api.models.plan import TreatmentPlanExerciseM2M
+
 from .base import BaseModel
 
 
@@ -187,12 +187,15 @@ class Session(BaseModel):
 
         exercises = []
         for exercise_through in exercises_through:
+            video = exercise_through.exercise.video
+            video_url = self.__get_url_with_scheme(video.url) if video else ''
             exercise = {
                 'movement_duration': exercise_through.movement_duration,
-                'repeat': exercise_through.repeat,
+                'repetition': exercise_through.repetition,
                 'pause': exercise_through.pause,
                 'i18n': {},
                 'status': StatusEnum.default.name,
+                'video_url': video_url,
                 # saved as timestamp to make `exercise` JSON serializable
                 'modified_at': int(time.time()),
             }
@@ -202,3 +205,10 @@ class Session(BaseModel):
 
             exercises.append(exercise)
         self.exercises = exercises
+
+    @staticmethod
+    def __get_url_with_scheme(url: str) -> str:
+        if url.startswith('http'):
+            return url
+
+        return settings.HTTP_HOST + url

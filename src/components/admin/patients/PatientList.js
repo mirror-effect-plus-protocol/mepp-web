@@ -19,37 +19,38 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, {useEffect} from 'react';
-import {List, ReferenceField, TextField, usePermissions, useStore} from 'react-admin';
+import React, { useEffect } from 'react';
+import {
+  ReferenceField,
+  TextField,
+  usePermissions,
+  useStore,
+} from 'react-admin';
 
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
+import ResourceList from '@components/admin/shared/resources/ResourceList';
 
 import Datagrid from '../shared/Datagrid';
-import ArchivableFilter from '../shared/filters/ArchivableFilter';
-import BulkActionButtons from '../shared/toolbars/BulkActionsToolbar';
+import BulkActionButtons from '../shared/toolbars/BulkActionButtons';
 import RowActionToolbar from '../shared/toolbars/RowActionToolbar';
 import PatientListAside from './PatientListAside';
 
 export const PatientList = () => {
   const { permissions } = usePermissions();
 
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
+  const [, setPatientUid] = useStore('patient.uid', false);
   useEffect(() => {
     setPatientUid(false);
   }, []);
 
   return (
-    <List
-      sort={{ field: 'full_name', order: 'ASC' }}
-      filters={<ArchivableFilter />}
-      filterDefaultValues={{ archived: false }}
+    <ResourceList
+      sortField="full_name"
       aside={<PatientListAside permissions={permissions} />}
-      perPage={25}
-      actions={<ListActions showExport={true} />}
+      showExport
     >
       <Datagrid
         bulkActionButtons={
-          <BulkActionButtons permissions={permissions} showExport={true} />
+          <BulkActionButtons permissions={permissions} showExport />
         }
       >
         <TextField source="full_name" />
@@ -64,6 +65,6 @@ export const PatientList = () => {
         )}
         <RowActionToolbar permissions={permissions} />
       </Datagrid>
-    </List>
+    </ResourceList>
   );
 };

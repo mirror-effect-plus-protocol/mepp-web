@@ -21,7 +21,7 @@
  */
 import { fetchJsonWithAuthToken } from 'ra-data-django-rest-framework';
 import React, { useState } from 'react';
-import { useLocaleState, useTranslate, useNotify } from 'react-admin';
+import { useTranslate, useNotify } from 'react-admin';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -31,6 +31,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { makeStyles } from '@mui/styles';
 
+import { useLocale } from '@hooks/locale/useLocale';
+
 import { RequestEndpoint } from '@utils/constants';
 
 import { LANGUAGES } from '../../../../locales';
@@ -39,7 +41,7 @@ const LocaleSwitcher = () => {
   const t = useTranslate();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [locale, setLocale] = useLocaleState();
+  const { locale, setLocale } = useLocale();
   const notify = useNotify();
 
   const languages = LANGUAGES.map((item) => {
@@ -57,7 +59,7 @@ const LocaleSwitcher = () => {
       method: 'PATCH',
       body: `{"language": "${newLanguage}"}`,
     })
-      .then((response) => {
+      .then(() => {
         notify('admin.shared.notifications.language.success', { type: 'info' });
       })
       .catch(() => {
@@ -65,8 +67,8 @@ const LocaleSwitcher = () => {
           type: 'error',
         });
       });
-
-    return setLocale(newLanguage);
+    setLocale(newLanguage);
+    return newLanguage;
   };
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);

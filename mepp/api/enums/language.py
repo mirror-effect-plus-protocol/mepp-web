@@ -29,5 +29,9 @@ class LanguageEnum(BaseEnum):
     """
     EN = 'en'
     FR = 'fr'
+    IT = 'it'
+    DE = 'de'
+    ES = 'es'
+    PT = 'pt'
 
     default = EN

@@ -24,9 +24,11 @@ import { Admin, CustomRoutes, Resource } from 'react-admin';
 import { Navigate } from 'react-router';
 import { Route } from 'react-router-dom';
 
+import FeedIcon from '@mui/icons-material/Feed';
 import UserIcon from '@mui/icons-material/People';
 
 import Help from '@pages/Help';
+import Home from '@pages/Home';
 import Intro from '@pages/Intro';
 import Login from '@pages/Login';
 import Mirror from '@pages/Mirror';
@@ -38,7 +40,7 @@ import Terms from '@pages/Terms';
 
 import withPage from '@hocs/withPage';
 
-import { CategoryList } from '@components/admin/categories';
+import { ArticleEdit, ArticleCreate } from '@components/admin/articles';
 import {
   ClinicianCreate,
   ClinicianEdit,
@@ -66,7 +68,6 @@ import {
 } from '@components/admin/plans';
 import { MeppAdminLayout } from '@components/admin/shared';
 import {
-  CategoryIcon,
   ClinicianIcon,
   ExerciseIcon,
   TreatmentPlanIcon,
@@ -77,6 +78,7 @@ import AuthProvider from './authProvider';
 import DataProvider from './dataProvider';
 import i18nProvider from './i18nProvider';
 
+// eslint-disable-next-line react/display-name
 export default () => {
   // with auth pages
   const IntroPage = withPage(Intro);
@@ -84,6 +86,7 @@ export default () => {
   const MirrorSettingsPage = withPage(MirrorSettings);
 
   // without auth pages
+  const HomePage = withPage(Home);
   const LoginPage = withPage(Login);
   const PrivacyPage = withPage(Privacy);
   const TermsPage = withPage(Terms);
@@ -103,6 +106,7 @@ export default () => {
       dashboard={Dashboard}
     >
       <CustomRoutes noLayout>
+        <Route exact path="/home" element={<HomePage />} />
         <Route exact path="/privacy" element={<PrivacyPage />} />
         <Route exact path="/termsofuse" element={<TermsPage />} />
         <Route exact path="/support" element={<HelpPage />} />
@@ -116,6 +120,15 @@ export default () => {
       </CustomRoutes>
       {(permissions) => (
         <>
+          {['admin', 'staff'].includes(permissions) && (
+            <Resource
+              name="articles"
+              create={ArticleCreate}
+              edit={ArticleEdit}
+              icon={FeedIcon}
+            />
+          )}
+          ,
           {['admin', 'staff'].includes(permissions) && (
             <Resource
               name="patients"
@@ -160,19 +173,18 @@ export default () => {
             />
           )}
           ,
-          {permissions !== 'user' && (
-            <Resource
-              name="categories"
-              list={CategoryList}
-              icon={CategoryIcon}
-            />
-          )}
-          ,
           {permissions === 'user' && (
             <CustomRoutes noLayout>
-              <Route path="*" element={<Navigate to="/intro" />} />
+              <Route path="*" element={<Navigate to="/home" />} />
             </CustomRoutes>
           )}
+          ,
+          {permissions === 'guest' && (
+            <CustomRoutes noLayout>
+              <Route exact path="/" element={<HomePage />} />
+            </CustomRoutes>
+          )}
+          ,
         </>
       )}
     </Admin>

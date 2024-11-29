@@ -44,7 +44,7 @@ import { Header } from '@components/header/Header';
 const HelpPage = () => {
   const { locale } = useLocale();
   const { t } = useTranslation();
-  useTrackingView('/privacy');
+  useTrackingView('/help');
 
   return (
     <BasicLayout

@@ -23,8 +23,8 @@
 import jsonschema
 from django.utils.translation import gettext as _
 from rest_framework import serializers
-from rest_framework.reverse import reverse
 from rest_framework.fields import empty
+from rest_framework.reverse import reverse
 
 from mepp.api.fields.uuid import HyperlinkedUUIDIdentityField
 from mepp.api.helpers.mirror import default_settings
@@ -58,6 +58,7 @@ class PatientSerializer(
             'last_name',
             'full_name',
             'use_audio',
+            'use_video_only',
             'side',
             'clinician_uid',
             'archived',

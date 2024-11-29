@@ -60,6 +60,7 @@ class User(AbstractUser, Archivable, Searchable):
         max_length=2,
     )
     use_audio = models.BooleanField(null=True)
+    use_video_only = models.BooleanField(default=False)
     side = models.PositiveSmallIntegerField(
         choices=SideEnum.choices(),
         null=True,
@@ -75,7 +76,7 @@ class User(AbstractUser, Archivable, Searchable):
 
     def __init__(self, *args, **kwargs):
         self.email_has_changed = False
-        self.email = models.EmailField(_("email address"), blank=True)
+        self.email = models.EmailField(_('email address'), blank=True)
         super().__init__(*args, **kwargs)
 
     @property
@@ -127,7 +128,7 @@ class User(AbstractUser, Archivable, Searchable):
 
         return self.patient_treatment_plans.filter(
             active=True,
-        ).first()
+        ).order_by('-modified_at').first()
 
     def delete(self, using=None, keep_parents=False):
         # Delete relationship with treatment plans manually to avoid
@@ -136,7 +137,7 @@ class User(AbstractUser, Archivable, Searchable):
         self.clinician_treatment_plans.all().delete()
         return super().delete(using=using, keep_parents=keep_parents)
 
-    def generate_new_token(self) -> ExpiringToken:
+    def generate_new_token(self) -> str:
         try:
             token = ExpiringToken.objects.get(user=self, temporary=False)
         except ExpiringToken.DoesNotExist:

@@ -19,152 +19,90 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import {
   Datagrid,
-  List,
-  ListContextProvider,
-  ReferenceField,
   TextField,
-  useListContext,
+  useListFilterContext,
   usePermissions,
-  useResourceContext, useStore,
+  useStore,
   useTranslate,
 } from 'react-admin';
 
-import { useLocale } from '@hooks/locale/useLocale';
-import { Divider, Tabs, Tab } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-import Spinner from '@components/admin/shared/Spinner';
-import ArchivableFilter from '@components/admin/shared/filters/ArchivableFilter';
-import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionsToolbar';
-import ListActions from '@components/admin/shared/toolbars/ListToolbar';
+import { useLocale } from '@hooks/locale/useLocale';
+
+import ResourceList from '@components/admin/shared/resources/ResourceList';
+import BulkActionButtons from '@components/admin/shared/toolbars/BulkActionButtons';
 import RowActionToolbar from '@components/admin/shared/toolbars/RowActionToolbar';
 
-import ExerciseListAside from './ExerciseListAside';
-
-const tabs = [
-  { id: 'user', is_system: false },
-  { id: 'system', is_system: true },
-];
-
-const ExerciseDatagrid = ({ locale, permissions, ...props }) => {
-  return (
-    <Datagrid
-      {...props}
-      bulkActionButtons={<BulkActionButtons permissions={permissions} />}
-    >
-      <TextField source={`i18n.description.${locale}`} />
-      {permissions === 'admin' && (
-        <ReferenceField source="clinician_uid" reference="clinicians">
-          <TextField source="full_name" />
-        </ReferenceField>
-      )}
-      <RowActionToolbar permissions={permissions} clonable={true} />
-    </Datagrid>
-  );
-};
-
-const TabbedDatagrid = ({ permissions, ...props }) => {
-  const listContext = useListContext();
-  const { locale } = useLocale();
-  const t = useTranslate();
-  const resource = useResourceContext();
-  const { data, filterValues, setFilters, displayedFilters, isLoading } =
-    listContext;
-  const [userExerciseIds, setUserExerciseIds] = useState([]);
-  const [systemExerciseIds, setSystemExerciseIds] = useState([]);
-  const [value, setValue] = useState('user');
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    setFilters &&
-      setFilters(
-        { ...filterValues, is_system: newValue === 'user' ? false : true },
-        displayedFilters,
-      );
-  };
-
-  useEffect(() => {
-    if (filterValues.is_system) {
-      // reset `value` to `system` when it's out of sync
-      if (value === 'user') {
-        setValue('system');
-      }
-      if (data) {
-        let ids = data.map((exercise) => exercise.id);
-        setSystemExerciseIds(ids);
-      }
-    } else {
-      if (data) {
-        let ids = data.map((exercise) => exercise.id);
-        setUserExerciseIds(ids);
-      }
-    }
-  }, [data, filterValues.is_system]);
-
-  return (
-    <Fragment>
-      <Tabs value={value} indicatorColor="primary" onChange={handleChange}>
-        {tabs.map((choice) => (
-          <Tab
-            key={choice.id}
-            label={t(`resources.${resource}.list.labels.${choice.id}`)}
-            value={choice.id}
-          />
-        ))}
-      </Tabs>
-      <Divider />
-      <div>
-        {isLoading && <Spinner />}
-        {!isLoading && filterValues.is_system === false && (
-          <ListContextProvider value={{ ...listContext, ids: userExerciseIds }}>
-            <ExerciseDatagrid
-              locale={locale}
-              permissions={permissions}
-              {...props}
-            />
-          </ListContextProvider>
-        )}
-        {!isLoading && filterValues.is_system === true && (
-          <ListContextProvider
-            value={{ ...listContext, ids: systemExerciseIds }}
-          >
-            <ExerciseDatagrid
-              locale={locale}
-              permissions={permissions}
-              {...props}
-            />
-          </ListContextProvider>
-        )}
-      </div>
-    </Fragment>
-  );
-};
+import { CategoryFilterModal } from './CategoryFilter';
 
 export const ExerciseList = () => {
   const { permissions } = usePermissions();
   const { locale } = useLocale();
+  const [, setPatientUid] = useStore('patient.uid', false);
 
-  const [patientUid, setPatientUid] = useStore('patient.uid', false);
   useEffect(() => {
     setPatientUid(false);
   }, []);
 
+  const CustomEmpty = useCallback(() => {
+    const t = useTranslate();
+    const {filterValues} = useListFilterContext();
+    const category_uid = filterValues?.category__uid;
+
+    return (
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        height="100%"
+        padding="2rem"
+      >
+        {category_uid && (
+          <Typography variant="h6">
+            {t('resources.exercises.empty.title')}
+          </Typography>
+        )}
+        <Typography
+          variant="body1"
+          align="center"
+          color="textSecondary"
+          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+        >
+          {t('resources.exercises.empty.description')}
+          <CategoryFilterModal autoOpen storekey="CategorieFilterIndex" />
+        </Typography>
+      </Box>
+    );
+  }, []);
 
   return (
-    <List
+    <ResourceList
+      hasEdit={permissions === 'admin'}
+      sortField={`i18n.description.${locale}`}
       filterDefaultValues={{
-        archived: false,
-        is_system: false,
         language: locale,
+        category__uid: -1,
       }}
-      filters={<ArchivableFilter />}
-      aside={<ExerciseListAside permissions={permissions} />}
-      sort={{ field: `i18n.description.${locale}`, order: 'ASC' }}
-      perPage={25}
-      actions={<ListActions />}
+      showArchivableFilter={permissions === 'admin'}
+      showCreate={permissions === 'admin'}
+      showExercisesFilter
     >
-      <TabbedDatagrid permissions={permissions} />
-    </List>
+      <Datagrid
+        bulkActionButtons={<BulkActionButtons permissions={permissions} />}
+        empty={<CustomEmpty />}
+      >
+        <TextField source={`i18n.description.${locale}`} />
+        <RowActionToolbar
+          permissions={permissions}
+          clonable={permissions === 'admin'}
+          editable={permissions === 'admin'}
+        />
+      </Datagrid>
+    </ResourceList>
   );
 };

@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'mepp.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default="sqlite:///%s/.vols/db.sqlite3" % BASE_DIR
+        default='sqlite:///%s/.vols/db.sqlite3' % BASE_DIR
     ),
 }
 
@@ -168,3 +168,9 @@ TOKEN_EXPIRY_TTLS = {
     'export': 15,  # 15 seconds
     'default': 60,  # 1 minute
 }
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 100 * 1024 * 1024  # (100 MB)
+DATA_UPLOAD_MAX_MEMORY_SIZE = FILE_UPLOAD_MAX_MEMORY_SIZE
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -24,8 +24,6 @@ from .base import BaseModel
 from .category import (
     Category,
     CategoryI18n,
-    SubCategory,
-    SubCategoryI18n,
 )
 from .exercise import (
     Exercise,
@@ -33,9 +31,9 @@ from .exercise import (
 )
 from .expiring_token import ExpiringToken
 from .log import Log
-from .session import Session
 from .plan import (
     TreatmentPlan,
     TreatmentPlanI18n,
 )
+from .session import Session
 from .user import User

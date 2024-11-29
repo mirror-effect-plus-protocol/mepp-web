@@ -19,15 +19,16 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import React from 'react';
 import { BooleanInput, Filter } from 'react-admin';
 
 const ArchivableFilter = (props) => {
-  return (
-  <Filter {...props}>
-    <BooleanInput size="large" source="archived" alwaysOn />
-  </Filter>
+  return props.show ? (
+    <Filter {...props}>
+      <BooleanInput size="large" source="archived" alwaysOn />
+    </Filter>
+  ) : (
+    <></>
   );
 };
 

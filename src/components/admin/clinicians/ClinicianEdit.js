@@ -23,7 +23,6 @@ import { RaBox } from 'ra-compact-ui';
 import React from 'react';
 import {
   BooleanInput,
-  Edit,
   SelectInput,
   SimpleForm,
   PasswordInput,
@@ -33,15 +32,15 @@ import {
   useResourceContext,
   useTranslate,
   useNotify,
-  useResourceDefinition,
-  useRedirect
+  useRedirect,
 } from 'react-admin';
 import { useSearchParams } from 'react-router-dom';
+
 import { makeStyles } from '@mui/styles';
 
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import Options from '@components/admin/shared/options';
-import TopToolbar from '@components/admin/shared/toolbars/TopToolbar';
+import ResourceEdit from '@components/admin/shared/resources/ResourceEdit';
 import {
   validateEmail,
   validateFirstName,
@@ -53,7 +52,7 @@ import {
 
 import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
     display: 'flex',
@@ -75,25 +74,14 @@ const ProfileRow = ({ identity, identityLoading, ...props }) => {
 
 export const ClinicianEdit = () => {
   const t = useTranslate();
-  const { hasShow } = useResourceDefinition();
   const { identity, isLoading: identityLoading, refetch } = useGetIdentity();
   const resource = useResourceContext();
   const redirect = useRedirect();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const classes = useStyles();
   const notify = useNotify();
   const options = Options();
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
+
   const onSuccess = (data) => {
     if (identity?.uid === data.id) {
       const backUrl = decodeURIComponent(searchParams.get('back'));
@@ -109,20 +97,16 @@ export const ClinicianEdit = () => {
       notify('admin.shared.notifications.profile.success', { type: 'info' });
     } else {
       redirect(`/${resource}`);
-      notify('ra.notification.updated', { type: 'info', messageArgs: { smart_count: 1 }});
+      notify('ra.notification.updated', {
+        type: 'info',
+        messageArgs: { smart_count: 1 },
+      });
     }
   };
 
   return (
-    <Edit
-      mutationMode="pessimistic"
-      mutationOptions={{ onSuccess: onSuccess, onError: onError }}
-      actions={<TopToolbar hasShow={hasShow} identity={identity} />}
-      redirect="list"
-    >
-      <SimpleForm
-        toolbar={<SimpleFormToolBar identity={identity} />}
-      >
+    <ResourceEdit mutationOptions={{ onSuccess }} identity={identity}>
+      <SimpleForm toolbar={<SimpleFormToolBar identity={identity} />}>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>
@@ -138,7 +122,7 @@ export const ClinicianEdit = () => {
           <TextInput source="email" fullWidth validate={validateEmail} />
         </RaBox>
         <ProfileRow identity={identity} identityLoading={identityLoading}>
-          <Typography variant="h6" gutterBottom gutterTop={true}>
+          <Typography variant="h6" gutterBottom gutterTop>
             {t('admin.shared.labels.card.informations')}
           </Typography>
           <RaBox className={classes.root}>
@@ -155,7 +139,7 @@ export const ClinicianEdit = () => {
             />
           </RaBox>
         </ProfileRow>
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.reset_password')}
         </Typography>
         <RaBox className={classes.root}>
@@ -173,6 +157,6 @@ export const ClinicianEdit = () => {
           />
         </RaBox>
       </SimpleForm>
-    </Edit>
+    </ResourceEdit>
   );
 };

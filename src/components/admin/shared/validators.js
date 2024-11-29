@@ -44,6 +44,16 @@ const securePasswordOptional = (new_password) => {
   return undefined;
 };
 
+const validateURL = (value, field) => {
+  if (!field || !value) return undefined;
+
+  if (field.includes('url') && !value.startsWith('http')) {
+    return 'admin.shared.errors.url_missing_scheme';
+  }
+
+  return undefined;
+};
+
 const securePasswordRequired = (new_password) => {
   if (!new_password) {
     return 'admin.shared.errors.password_required';
@@ -64,7 +74,8 @@ export const requiredLocalizedField = (value, record, locale, field) => {
       return 'admin.shared.errors.field_required';
     }
   }
-  return undefined;
+
+  return validateURL(value, field);
 };
 
 export const validateEmail = [required(), email()];
@@ -75,7 +86,10 @@ export const validateNumber = [required(), greaterThanZero];
 export const validatePasswordOptional = [securePasswordOptional];
 export const validatePasswordRequired = [securePasswordRequired];
 export const validatePasswords = (confirm_password, record) => {
-  if ((record.new_password || confirm_password) && record.new_password !== confirm_password) {
+  if (
+    (record.new_password || confirm_password) &&
+    record.new_password !== confirm_password
+  ) {
     return 'admin.shared.errors.password_mismatch';
   }
   return undefined;

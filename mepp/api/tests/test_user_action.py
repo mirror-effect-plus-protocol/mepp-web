@@ -21,13 +21,14 @@
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
 import time
+
 from django.conf import settings
 from django.test import TestCase
 
 from mepp.api.enums import ActionEnum, StatusEnum
 from mepp.api.exceptions import SessionStatusException
-from mepp.api.tests.mixins.prepare_users import PrepareUserMixin
 from mepp.api.models.log import Log
+from mepp.api.tests.mixins.prepare_users import PrepareUserMixin
 
 
 class UserSessionTestCase(PrepareUserMixin, TestCase):

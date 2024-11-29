@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import { BR } from './Break';
 import { H1, H2, H3, H4, H5, H6 } from './Heading';
 import { Href } from './Href';

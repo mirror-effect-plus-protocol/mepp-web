@@ -22,6 +22,7 @@ from rest_framework import status
 
 from mepp.api.models.exercise import Exercise
 from mepp.api.models.plan import TreatmentPlan, TreatmentPlanI18n
+
 from . import BaseV1TestCase
 
 
@@ -97,18 +98,23 @@ class AdminTreatmentPlanCreateAPITestCase(BaseV1TestCase):
                     'index': 0,
                     'movement_duration': 1,
                     'pause': 1,
-                    'repeat': 1,
+                    'repetition': 1,
+                    'video_url': '',
                 }
             ],
             'i18n': {
                 'name': {
                     'fr': 'Lorem Ipsum en français',
-                    'en': 'Lorem Ipsum in English'
+                    'en': 'Lorem Ipsum in English',
+                    'de': 'Lorem Ipsum in German',
+                    'es': 'Lorem Ipsum in Espagnol',
+                    'it': 'Lorem Ipsum in Italian',
+                    'pt': 'Lorem Ipsum in Portuguese',
                 },
             },
             'movement_duration': 1,
             'pause': 1,
-            'repeat': 1,
+            'repetition': 1,
             'is_system': kwargs.get('is_system', False),
             'clinician_uid': user.uid,
         }

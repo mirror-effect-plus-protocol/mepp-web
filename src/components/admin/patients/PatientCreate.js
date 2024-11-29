@@ -22,22 +22,20 @@
 import { RaBox } from 'ra-compact-ui';
 import React from 'react';
 import {
-  Create,
   SelectInput,
   PasswordInput,
   ReferenceInput,
   SimpleForm,
   TextInput,
   usePermissions,
-  useResourceContext,
   useTranslate,
-  useNotify,
 } from 'react-admin';
 
 import { makeStyles } from '@mui/styles';
 
 import { Typography } from '@components/admin/shared/dom/sanitize';
 import Options from '@components/admin/shared/options';
+import ResourceCreate from '@components/admin/shared/resources/ResourceCreate';
 import {
   validateEmail,
   validateFirstName,
@@ -48,9 +46,14 @@ import {
 } from '@components/admin/shared/validators';
 
 import SimpleFormToolBar from '../shared/toolbars/SimpleFormToolbar';
-import { validateAudio, validateClinician, validateSide } from './validators';
+import {
+  validateAudio,
+  validateVideo,
+  validateClinician,
+  validateSide,
+} from './validators';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
     display: 'flex',
@@ -62,27 +65,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const PatientCreate = () => {
-  const resourceName = useResourceContext();
   const t = useTranslate();
   const classes = useStyles();
   const options = Options();
-  const notify = useNotify();
   const { permissions } = usePermissions();
-  const onError = (error) => {
-    let message = '';
-    if (error?.body) {
-      Object.entries(error.body).forEach(([key, values]) => {
-        message += t(`resources.${resourceName}.errors.${key}`);
-      });
-    } else {
-      message = t('api.error.generic');
-    }
-    notify(message, { type: 'error' });
-  };
 
   return (
-    <Create mutationOptions={{ onError: onError }} redirect="list">
-      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />} >
+    <ResourceCreate>
+      <SimpleForm toolbar={<SimpleFormToolBar identity={false} />}>
         <Typography variant="h6" gutterBottom>
           {t('admin.shared.labels.card.identity')}
         </Typography>
@@ -102,16 +92,16 @@ export const PatientCreate = () => {
         </Typography>
         <RaBox className={classes.root}>
           <SelectInput
-            source="use_audio"
-            validate={validateAudio}
-            choices={options.audio}
-            fullWidth
-          />
-          <SelectInput
             source="side"
             validate={validateSide}
             choices={options.sides}
             fullWidth
+          />
+          <SelectInput
+            source="language"
+            choices={options.languages}
+            fullWidth
+            validate={validateLanguage}
           />
         </RaBox>
         {permissions === 'admin' && (
@@ -119,31 +109,35 @@ export const PatientCreate = () => {
             <ReferenceInput
               source="clinician_uid"
               reference="clinicians"
-              validate={validateClinician}
               perPage={9999}
               sort={{ field: 'full_name', order: 'ASC' }}
             >
-              <SelectInput optionText="full_name" style={{ width: '100%' }} />
+              <SelectInput
+                optionText="full_name"
+                validate={validateClinician}
+                style={{ width: '100%' }}
+              />
             </ReferenceInput>
-            <SelectInput
-              source="language"
-              choices={options.languages}
-              fullWidth
-              validate={validateLanguage}
-            />
           </RaBox>
         )}
-        {permissions !== 'admin' && (
-          <RaBox className={classes.root}>
-            <SelectInput
-              source="language"
-              choices={options.languages}
-              fullWidth
-              validate={validateLanguage}
-            />
-          </RaBox>
-        )}
-        <Typography variant="h6" gutterBottom gutterTop={true}>
+        <Typography variant="h6" gutterBottom>
+          {t('admin.shared.labels.card.instructions')}
+        </Typography>
+        <RaBox className={classes.root}>
+          <SelectInput
+            source="use_audio"
+            validate={validateAudio}
+            choices={options.audio}
+            fullWidth
+          />
+          <SelectInput
+            source="use_video_only"
+            validate={validateVideo}
+            choices={options.video}
+            fullWidth
+          />
+        </RaBox>
+        <Typography variant="h6" gutterBottom gutterTop>
           {t('admin.shared.labels.card.create_password')}
         </Typography>
         <RaBox className={classes.root}>
@@ -161,6 +155,6 @@ export const PatientCreate = () => {
           />
         </RaBox>
       </SimpleForm>
-    </Create>
+    </ResourceCreate>
   );
 };

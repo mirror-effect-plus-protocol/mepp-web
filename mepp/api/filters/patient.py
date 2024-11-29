@@ -57,6 +57,24 @@ class PatientFilter(BaseFilterBackend):
         else:
             queryset = queryset.filter(use_audio=use_audio)
 
+        try:
+            use_video_only = strtobool(
+                request.query_params['use_video_only']
+            )
+        except (KeyError, ValueError):
+            pass
+        else:
+            queryset = queryset.filter(
+                use_video_only=use_video_only
+            )
+
+        try:
+            uid = request.query_params['uid']
+        except KeyError:
+            pass
+        else:
+            queryset = queryset.filter(uid=uid)
+
         return queryset
 
 
