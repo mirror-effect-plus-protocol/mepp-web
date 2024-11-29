@@ -25,7 +25,8 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 
 from mepp.api.models.user import User
+from mepp.api.admin.category import Category, CategoryAdmin
 
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.unregister(Group)
-
