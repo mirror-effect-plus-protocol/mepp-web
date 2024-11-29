@@ -54,7 +54,10 @@ class BaseModel(models.Model):
 class BaseI18nModel(BaseModel):
 
     language = models.CharField(
-        max_length=2, default=LanguageEnum.default.value, null=False
+        max_length=2,
+        default=LanguageEnum.default.value,
+        null=False,
+        choices=LanguageEnum.choices(),
     )
 
     class Meta(BaseModel.Meta):
