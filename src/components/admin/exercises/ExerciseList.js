@@ -52,6 +52,7 @@ export const ExerciseList = () => {
     const t = useTranslate();
     const {filterValues} = useListFilterContext();
     const category_uid = filterValues?.category__uid;
+    const isCategoryChosen = !(category_uid === '-1' || category_uid === -1 || category_uid === 'false' || !category_uid);
 
     return (
       <Box
@@ -62,7 +63,7 @@ export const ExerciseList = () => {
         height="100%"
         padding="2rem"
       >
-        {category_uid && (
+        {isCategoryChosen && (
           <Typography variant="h6">
             {t('resources.exercises.empty.title')}
           </Typography>
