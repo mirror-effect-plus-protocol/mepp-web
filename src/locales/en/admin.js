@@ -101,7 +101,7 @@ export default {
         },
         exerciseFilter: {
           loading: 'Loading...',
-          notfound: 'No exercise found in this category!',
+          notfound: 'No exercises found in this category!',
         },
       },
       errors: {
@@ -230,7 +230,7 @@ export default {
     exercises: {
       name: 'Exercise |||| Exercises',
       empty: {
-        title: 'No exercise',
+        title: 'No exercises found',
         description:
           'Please choose a category by clicking on the Filter button.',
       },

@@ -231,7 +231,7 @@ export default {
     exercises: {
       name: 'Exercice |||| Exercices',
       empty: {
-        title: 'Aucun exercice',
+        title: 'Aucun exercice trouvé',
         description:
           'Veuillez choisir une catégorie en cliquant sur le bouton Filtrer',
       },
