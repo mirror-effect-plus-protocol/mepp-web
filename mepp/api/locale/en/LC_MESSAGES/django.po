@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-05 00:06+0000\n"
-"PO-Revision-Date: 2024-11-10 16:35+0000\n"
+"PO-Revision-Date: 2024-11-30 19:19-0500\n"
 "Last-Translator: ChatGPT 4o-mini API\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: mepp/api/authentication.py:28
 msgid "Invalid token."
@@ -67,9 +67,9 @@ msgstr "Hello"
 #: mepp/api/templates/email/staff_registration.txt:4
 msgid "Welcome to the MEPP 2.0, your staff facial rehabilitation website, at"
 msgstr ""
-"It is with pleasure that we welcome you to MEPP 2.0, a site designed to help"
-" you support your patients in the various stages of their facial paralysis "
-"rehabilitation"
+"It is with pleasure that we welcome you to MEPP 2.0, a site designed to "
+"help you support your patients in the various stages of their facial "
+"paralysis rehabilitation"
 
 #: mepp/api/templates/email/staff_registration.html:129
 #: mepp/api/templates/email/staff_registration.source.html:363
@@ -85,9 +85,8 @@ msgstr "Your username is :"
 #, python-format
 msgid ""
 "We invite you to visit <a href=\"%(mepp_host)s\" style=\"color: #008EDE; "
-"text-decoration: underline;\">%(mepp_host)s</a> and click on "
-"<b>Forgot&nbsp;your&nbsp;password?</b> to reset and create your own your "
-"password."
+"text-decoration: underline;\">%(mepp_host)s</a> and click on <b>Forgot&nbsp;"
+"your&nbsp;password?</b> to reset and create your own your password."
 msgstr ""
 "To access the site, go to <a href=\"%(mepp_host)s\" style=\"color: #008EDE; "
 "text-decoration: underline;\">%(mepp_host)s</a>. During your first use, you "
@@ -99,8 +98,8 @@ msgstr ""
 #: mepp/api/templates/email/staff_registration.txt:10
 msgid ""
 "The administrator has created a therapist profile for you. We invite you to "
-"look at the following video of instructions to understand how to navigate in"
-" the system:"
+"look at the following video of instructions to understand how to navigate "
+"in the system:"
 msgstr ""
 "The administrator has created a therapist profile for you. First of all, we "
 "invite you to watch this short video. It explains in detail how to navigate "
@@ -109,7 +108,7 @@ msgstr ""
 #: mepp/api/templates/email/staff_registration.html:133
 #: mepp/api/templates/email/staff_registration.source.html:367
 msgid "staff_introduction_video"
-msgstr "staff_introduction_video"
+msgstr "https://youtu.be/0Xa7Fg3-lis"
 
 #: mepp/api/templates/email/staff_registration.html:135
 #: mepp/api/templates/email/staff_registration.source.html:369
@@ -131,8 +130,8 @@ msgid ""
 "Below are important tips to use the MEPP in an efficient way and to have a "
 "better experience:"
 msgstr ""
-"To optimize your use of MEPP 2.0, you need to adapt it to the type of device"
-" you are using:"
+"To optimize your use of MEPP 2.0, you need to adapt it to the type of "
+"device you are using:"
 
 #: mepp/api/templates/email/staff_registration.html:139
 #: mepp/api/templates/email/staff_registration.source.html:373
@@ -164,7 +163,7 @@ msgstr ""
 #: mepp/api/templates/email/staff_registration.html:144
 #: mepp/api/templates/email/staff_registration.source.html:378
 msgid "staff_training_video"
-msgstr "staff_training_video"
+msgstr "https://youtu.be/tHzH1TbrgYs"
 
 #: mepp/api/templates/email/staff_registration.html:146
 #: mepp/api/templates/email/staff_registration.source.html:380
@@ -213,9 +212,9 @@ msgstr "The MEPP team"
 #: mepp/api/templates/email/user_registration.source.html:364
 #, python-format
 msgid ""
-"We invite you to visit <a href=\"%(mepp_host)s\">%(mepp_host)s</a> and click"
-" on <b>Forgot&nbsp;your&nbsp;password?</b> to reset and create your own your"
-" password."
+"We invite you to visit <a href=\"%(mepp_host)s\">%(mepp_host)s</a> and "
+"click on <b>Forgot&nbsp;your&nbsp;password?</b> to reset and create your "
+"own your password."
 msgstr ""
 "To access the site, go to the <a href=\"%(mepp_host)s\">%(mepp_host)s</a>. "
 "On your first use, you will need to click on <b>Forgot password?</b> to "
@@ -225,12 +224,12 @@ msgstr ""
 #: mepp/api/templates/email/user_registration.source.html:374
 msgid ""
 "In case of technical problems with the website or application, please "
-"contact us at <a "
-"href=\"mailto:info@mirroreffectplus.org\">info@mirroreffectplus.org</a>."
+"contact us at <a href=\"mailto:info@mirroreffectplus."
+"org\">info@mirroreffectplus.org</a>."
 msgstr ""
 "In case of technical issues with the website or the application, please "
-"write to <a "
-"href=\"mailto:info@mirroreffectplus.org\">info@mirroreffectplus.org</a>"
+"write to <a href=\"mailto:info@mirroreffectplus.org\">info@mirroreffectplus."
+"org</a>"
 
 #: mepp/api/templates/email/staff_registration.txt:8
 #: mepp/api/templates/email/user_registration.txt:8
@@ -239,8 +238,8 @@ msgid ""
 "We invite you to visit %(mepp_host)s and click on \"Forgot your password?\" "
 "to reset and create your own your password."
 msgstr ""
-"To access the site, go to %(mepp_host)s. On your first use, you will need to"
-" click on \"Forgot password?\" to reset and create your own password"
+"To access the site, go to %(mepp_host)s. On your first use, you will need "
+"to click on \"Forgot password?\" to reset and create your own password"
 
 #: mepp/api/templates/email/staff_registration.txt:17
 #: mepp/api/templates/email/user_registration.txt:14
@@ -329,8 +328,8 @@ msgstr ""
 #: mepp/api/templates/email/user_registration.source.html:365
 #: mepp/api/templates/email/user_registration.txt:10
 msgid ""
-"Your facial therapist has created a practical session for you. We invite you"
-" to go to your profile and to follow the instructions to realize your "
+"Your facial therapist has created a practical session for you. We invite "
+"you to go to your profile and to follow the instructions to realize your "
 "therapy."
 msgstr ""
 "Your rehabilitation therapist for facial paralysis has created an "
