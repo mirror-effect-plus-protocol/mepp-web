@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-05 00:06+0000\n"
-"PO-Revision-Date: 2024-11-10 16:42+0000\n"
+"PO-Revision-Date: 2024-11-30 19:15-0500\n"
 "Last-Translator: ChatGPT 4o-mini API\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: mepp/api/authentication.py:28
 msgid "Invalid token."
@@ -85,9 +85,8 @@ msgstr "Il tuo nome utente è :"
 #, python-format
 msgid ""
 "We invite you to visit <a href=\"%(mepp_host)s\" style=\"color: #008EDE; "
-"text-decoration: underline;\">%(mepp_host)s</a> and click on "
-"<b>Forgot&nbsp;your&nbsp;password?</b> to reset and create your own your "
-"password."
+"text-decoration: underline;\">%(mepp_host)s</a> and click on <b>Forgot&nbsp;"
+"your&nbsp;password?</b> to reset and create your own your password."
 msgstr ""
 "Per accedere al sito, vai a <a href=\"%(mepp_host)s\" style=\"color: "
 "#008EDE; text-decoration: underline;\">%(mepp_host)s</a>. Alla tua prima "
@@ -99,8 +98,8 @@ msgstr ""
 #: mepp/api/templates/email/staff_registration.txt:10
 msgid ""
 "The administrator has created a therapist profile for you. We invite you to "
-"look at the following video of instructions to understand how to navigate in"
-" the system:"
+"look at the following video of instructions to understand how to navigate "
+"in the system:"
 msgstr ""
 "L’amministratore ti ha creato un profilo di terapeuta. Prima di tutto, ti "
 "invitiamo a guardare questo breve video. Spiega in dettaglio come navigare "
@@ -109,7 +108,7 @@ msgstr ""
 #: mepp/api/templates/email/staff_registration.html:133
 #: mepp/api/templates/email/staff_registration.source.html:367
 msgid "staff_introduction_video"
-msgstr "staff_introduction_video"
+msgstr "https://youtu.be/0Xa7Fg3-lis"
 
 #: mepp/api/templates/email/staff_registration.html:135
 #: mepp/api/templates/email/staff_registration.source.html:369
@@ -165,7 +164,7 @@ msgstr ""
 #: mepp/api/templates/email/staff_registration.html:144
 #: mepp/api/templates/email/staff_registration.source.html:378
 msgid "staff_training_video"
-msgstr "staff_training_video"
+msgstr "https://youtu.be/tHzH1TbrgYs"
 
 #: mepp/api/templates/email/staff_registration.html:146
 #: mepp/api/templates/email/staff_registration.source.html:380
@@ -214,24 +213,24 @@ msgstr "Il team MEPP"
 #: mepp/api/templates/email/user_registration.source.html:364
 #, python-format
 msgid ""
-"We invite you to visit <a href=\"%(mepp_host)s\">%(mepp_host)s</a> and click"
-" on <b>Forgot&nbsp;your&nbsp;password?</b> to reset and create your own your"
-" password."
+"We invite you to visit <a href=\"%(mepp_host)s\">%(mepp_host)s</a> and "
+"click on <b>Forgot&nbsp;your&nbsp;password?</b> to reset and create your "
+"own your password."
 msgstr ""
-"Per accedere al sito, vai su <a href=\"%(mepp_host)s\">%(mepp_host)s</a>. Al"
-" primo utilizzo, dovrai cliccare su <b>Hai dimenticato la password?</b> per "
-"reimpostare e creare la tua password."
+"Per accedere al sito, vai su <a href=\"%(mepp_host)s\">%(mepp_host)s</a>. "
+"Al primo utilizzo, dovrai cliccare su <b>Hai dimenticato la password?</b> "
+"per reimpostare e creare la tua password."
 
 #: mepp/api/templates/email/staff_registration.source.html:381
 #: mepp/api/templates/email/user_registration.source.html:374
 msgid ""
 "In case of technical problems with the website or application, please "
-"contact us at <a "
-"href=\"mailto:info@mirroreffectplus.org\">info@mirroreffectplus.org</a>."
+"contact us at <a href=\"mailto:info@mirroreffectplus."
+"org\">info@mirroreffectplus.org</a>."
 msgstr ""
 "In caso di problemi tecnici con il sito web o l’applicazione, si prega di "
-"scrivere a <a "
-"href=\"mailto:info@mirroreffectplus.org\">info@mirroreffectplus.org</a>"
+"scrivere a <a href=\"mailto:info@mirroreffectplus."
+"org\">info@mirroreffectplus.org</a>"
 
 #: mepp/api/templates/email/staff_registration.txt:8
 #: mepp/api/templates/email/user_registration.txt:8
@@ -332,8 +331,8 @@ msgstr ""
 #: mepp/api/templates/email/user_registration.source.html:365
 #: mepp/api/templates/email/user_registration.txt:10
 msgid ""
-"Your facial therapist has created a practical session for you. We invite you"
-" to go to your profile and to follow the instructions to realize your "
+"Your facial therapist has created a practical session for you. We invite "
+"you to go to your profile and to follow the instructions to realize your "
 "therapy."
 msgstr ""
 "Il tuo terapeuta per la riabilitazione della paralisi facciale ha creato un "

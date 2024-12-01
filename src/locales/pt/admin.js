@@ -45,8 +45,8 @@ export default {
         modal: {
           title: {
             category_filter: 'Por favor, escolha uma categoria',
-            exercise_filter: 'Selecione uma categoria primeiro'
-          }
+            exercise_filter: 'Selecione uma categoria primeiro',
+          },
         },
         profile: 'Meu perfil',
       },

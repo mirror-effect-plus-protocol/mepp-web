@@ -97,7 +97,7 @@ const CategoryFilter = ({ categories, level, onSelect, storekey }) => {
   const [activeIndex, setActiveIndex] = useStore(key, null);
   const [activeIndexKeys, setActiveIndexKeys] = useStore(
     'CategoriesAllKeys',
-    []
+    [],
   );
 
   const Sublist = ({ category, level }) => {

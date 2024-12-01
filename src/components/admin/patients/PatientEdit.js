@@ -19,6 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import { RaBox } from 'ra-compact-ui';
 import React from 'react';
 import {
   SelectInput,
@@ -52,7 +53,6 @@ import {
   validateClinician,
   validateSide,
 } from './validators';
-import {RaBox} from "ra-compact-ui";
 
 const useStyles = makeStyles(() => ({
   root: {
