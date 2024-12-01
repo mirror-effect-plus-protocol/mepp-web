@@ -25,7 +25,7 @@ import { useLocale } from '@hooks/locale/useLocale';
 
 import Spinner from '@components/admin/shared/Spinner';
 
-const CardGrid = ({permissions}) => {
+const CardGrid = ({ permissions }) => {
   const t = useTranslate();
   const { locale } = useLocale();
   const { data, isLoading } = useListContext();
