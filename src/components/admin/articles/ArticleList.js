@@ -25,11 +25,10 @@ import { useLocale } from '@hooks/locale/useLocale';
 
 import Spinner from '@components/admin/shared/Spinner';
 
-const CardGrid = () => {
+const CardGrid = ({ permissions }) => {
   const t = useTranslate();
   const { locale } = useLocale();
   const { data, isLoading } = useListContext();
-  const { permissions } = usePermissions();
 
   if (isLoading) return <Spinner />;
 
@@ -106,6 +105,7 @@ const CardGrid = () => {
 
 export const ArticleList = (props) => {
   const t = useTranslate();
+  const { permissions } = usePermissions();
   const { locale } = useLocale();
 
   return (
@@ -116,7 +116,11 @@ export const ArticleList = (props) => {
       resource="articles"
       perPage={25}
       {...props}
-      actions={<CreateButton label={t('resources.articles.card.labels.add')} />}
+      actions={
+        permissions === 'admin' && (
+          <CreateButton label={t('resources.articles.card.labels.add')} />
+        )
+      }
       sx={{
         '& .MuiPaper-root.RaList-content': {
           marginTop: '1em',

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-05 00:06+0000\n"
-"PO-Revision-Date: 2021-12-05 19:50-0500\n"
+"PO-Revision-Date: 2024-11-30 19:19-0500\n"
 "Last-Translator: Olivier Leger\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.5\n"
 
 #: mepp/api/authentication.py:28
 msgid "Invalid token."
@@ -88,11 +88,11 @@ msgid ""
 "text-decoration: underline;\">%(mepp_host)s</a> and click on <b>Forgot&nbsp;"
 "your&nbsp;password?</b> to reset and create your own your password."
 msgstr ""
-"Pour accéder au site, rendez-vous au <a href=\"%(mepp_host)s\" style="
-"\"color: #008EDE; text-decoration: underline;\">%(mepp_host)s</a>. Lors de "
-"votre première utilisation, vous devrez cliquer sur <b>Mot&nbsp;de&nbsp;"
-"passe&nbsp;oublié?</b> pour réinitialiser votre mot de passe et en créer un "
-"nouveau."
+"Pour accéder au site, rendez-vous au <a href=\"%(mepp_host)s\" "
+"style=\"color: #008EDE; text-decoration: underline;\">%(mepp_host)s</a>. "
+"Lors de votre première utilisation, vous devrez cliquer sur <b>Mot&nbsp;"
+"de&nbsp;passe&nbsp;oublié?</b> pour réinitialiser votre mot de passe et en "
+"créer un nouveau."
 
 #: mepp/api/templates/email/staff_registration.html:132
 #: mepp/api/templates/email/staff_registration.source.html:366
@@ -109,7 +109,7 @@ msgstr ""
 #: mepp/api/templates/email/staff_registration.html:133
 #: mepp/api/templates/email/staff_registration.source.html:367
 msgid "staff_introduction_video"
-msgstr "https://youtu.be/Q0qoov-OJUM"
+msgstr "https://youtu.be/hvV3bZgmZ6E"
 
 #: mepp/api/templates/email/staff_registration.html:135
 #: mepp/api/templates/email/staff_registration.source.html:369
@@ -217,17 +217,17 @@ msgid ""
 "on <b>Forgot&nbsp;your&nbsp;password?</b> to reset and create your own your "
 "password."
 msgstr ""
-"Pour accéder au site, rendez-vous au <a href=\"%(mepp_host)s\">"
-"%(mepp_host)s</a>. Lors de votre première utilisation, vous devrez cliquer "
-"sur <b>Mot&nbsp;de&nbsp;passe&nbsp;oublié?</b> pour réinitialiser et créer "
-"votre propre mot de passe."
+"Pour accéder au site, rendez-vous au <a "
+"href=\"%(mepp_host)s\">%(mepp_host)s</a>. Lors de votre première "
+"utilisation, vous devrez cliquer sur <b>Mot&nbsp;de&nbsp;passe&nbsp;oublié?</"
+"b> pour réinitialiser et créer votre propre mot de passe."
 
 #: mepp/api/templates/email/staff_registration.source.html:381
 #: mepp/api/templates/email/user_registration.source.html:374
 msgid ""
 "In case of technical problems with the website or application, please "
-"contact us at <a href=\"mailto:info@mirroreffectplus.org"
-"\">info@mirroreffectplus.org</a>."
+"contact us at <a href=\"mailto:info@mirroreffectplus."
+"org\">info@mirroreffectplus.org</a>."
 msgstr ""
 "En cas de problème technique avec le site web ou l’application, veuillez "
 "écrire à <a href=\"mailto:info@mirroreffectplus.org\">info@mirroreffectplus."

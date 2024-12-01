@@ -19,10 +19,11 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import {
   Datagrid,
   TextField,
+  useGetOne,
   useListFilterContext,
   usePermissions,
   useStore,
@@ -50,8 +51,31 @@ export const ExerciseList = () => {
 
   const CustomEmpty = useCallback(() => {
     const t = useTranslate();
-    const {filterValues} = useListFilterContext();
+    const { filterValues } = useListFilterContext();
     const category_uid = filterValues?.category__uid;
+    const [isCategoryChosen, setIsCategoryChosen] = useState(false);
+    const [chosenCategory, setChosenCategory] = useState(null);
+
+    // Only call useGetOne if category_uid is valid
+    const shouldFetch =
+      category_uid &&
+      category_uid !== '-1' &&
+      category_uid !== -1 &&
+      category_uid !== 'false';
+    const { data } = useGetOne(
+      'categories',
+      { id: shouldFetch ? category_uid : null },
+      { enabled: shouldFetch },
+    );
+
+    useEffect(() => {
+      if (!shouldFetch) {
+        setIsCategoryChosen(false);
+      } else if (data) {
+        setIsCategoryChosen(true);
+        setChosenCategory(data);
+      }
+    }, [shouldFetch, data]);
 
     return (
       <Box
@@ -62,10 +86,22 @@ export const ExerciseList = () => {
         height="100%"
         padding="2rem"
       >
-        {category_uid && (
-          <Typography variant="h6">
-            {t('resources.exercises.empty.title')}
-          </Typography>
+        {isCategoryChosen && (
+          <>
+            <Typography variant="h7" sx={{ marginBottom: '1em;' }}>
+              <div key={chosenCategory.id}>
+                {chosenCategory.parents.map(
+                  (parent) => `${parent.i18n.name[locale]} -> `,
+                )}
+                <span style={{ display: 'contents', fontWeight: 'bold' }}>
+                  {`${chosenCategory.i18n.name[locale]}`}
+                </span>
+              </div>
+            </Typography>
+            <Typography variant="h6">
+              {t('resources.exercises.empty.title')}
+            </Typography>
+          </>
         )}
         <Typography
           variant="body1"
