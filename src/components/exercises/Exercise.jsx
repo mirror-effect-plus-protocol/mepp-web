@@ -19,9 +19,11 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+
+// import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 import IconThumbup from '@assets/icons/thumbup.svg';
 
@@ -106,7 +108,11 @@ const InitExercise = () => {
   const { locale } = useLocale();
 
   const video = exercise.videoUrl && (
-    <Video src={exercise.videoUrl} useVideoOnly={exercise.useVideoOnly} />
+    <Video
+      src={exercise.videoUrl}
+      useVideoOnly={exercise.useVideoOnly}
+      withAudio={exercise.videoWithAudio}
+    />
   );
 
   const text = (
@@ -146,7 +152,10 @@ const InitExercise = () => {
           <TextExercise type={exerciseStep}>
             {video}
             <InitExerciseWrapper useVideoOnly={exercise.useVideoOnly}>
-              <TextWrapper type={exerciseStep} useVideoOnly={exercise.useVideoOnly}>
+              <TextWrapper
+                type={exerciseStep}
+                useVideoOnly={exercise.useVideoOnly}
+              >
                 {progress}
                 {text}
               </TextWrapper>
@@ -301,19 +310,51 @@ const EmptyExercise = () => {
   );
 };
 
-const Video = ({ src, useVideoOnly }) => {
+const Video = ({ src, useVideoOnly, withAudio }) => {
   const ref = useRef();
+  const [playCount, setPlayCount] = useState(0);
+
+  const handleVideoEnd = () => {
+    setPlayCount((prevCount) => prevCount + 1);
+  };
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current?.load();
+    const video = ref.current;
+
+    if (video) {
+      setPlayCount(0);
+      video?.load();
     }
   }, [src]);
+  //
+  useEffect(() => {
+    const video = ref.current;
+    // play the video in loop only 3 times
+    if (video) {
+      video.currentTime = 0;
+      if (playCount > 0) {
+        video.pause();
+        if (playCount < 3) {
+          setTimeout(() => {
+            if (video) {
+              video.play();
+            }
+          }, 3000);
+        }
+      }
+    }
+  }, [playCount]);
 
   return (
     <VideoWrapper useVideoOnly={useVideoOnly}>
       <VideoInner>
-        <video autoPlay loop playsInline ref={ref}>
+        <video
+          autoPlay
+          muted={!withAudio}
+          playsInline
+          ref={ref}
+          onEnded={handleVideoEnd}
+        >
           <source src={src} type="video/mp4" />
         </video>
         <LoadingCircle />
@@ -510,7 +551,8 @@ const Progress = styled.h3`
 const ButtonsWrapper = styled(FlexAlignCenter.Component)`
   align-self: end;
   margin: 0 0 0 auto;
-  ${({ useVideoOnly }) => useVideoOnly && `margin: 0 0 0 ${spacings.default}px;`}
+  ${({ useVideoOnly }) =>
+    useVideoOnly && `margin: 0 0 0 ${spacings.default}px;`}
 
   ${({ type }) =>
     type === ExerciseStep.STARTED && `margin: 0 0 ${spacings.default}px 0;`}

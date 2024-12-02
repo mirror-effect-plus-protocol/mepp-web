@@ -245,6 +245,7 @@ export default {
         category__uid: 'Category',
         uid: 'Category',
         categories: 'Categories',
+        video_with_audio: 'Video with audio',
         empty: {
           categories: {
             label: 'Choose a category',

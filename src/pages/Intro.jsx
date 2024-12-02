@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
 import { useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -48,6 +48,7 @@ import { Header } from '@components/header/Header';
  */
 const IntroPage = () => {
   const { t } = useTranslation();
+  const ref = useRef();
   const { identity, isLoading: identityLoading } = useGetIdentity();
   const navigate = useNavigate();
   const [permissionAuthorize, setPermissionAuthorize] = useState(false);
@@ -60,6 +61,16 @@ const IntroPage = () => {
    * Camera permission validation
    */
   const onCheckCameraPermission = async () => {
+    const audio = ref.current;
+    const userAgent = window.navigator.userAgent;
+    const isIOSDevice = /iPad|iPhone/.test(userAgent) && !window.MSStream;
+    if (audio && isIOSDevice) {
+      audio.play();
+      console.log('audio has played');
+    } else {
+      console.log('does not play');
+    }
+
     const permission =
       navigator.permissions &&
       (await navigator.permissions
@@ -88,13 +99,16 @@ const IntroPage = () => {
           <ContainerInner>
             {!permissionDenied && !permissionAuthorize && (
               <>
-                <Title>{t('intro:title', { name })}</Title>
+                <Title>{t('intro:title', {name})}</Title>
                 <Introduction xlarge>{t('intro:introduction')}</Introduction>
                 <Instruction medium>{t('intro:instruction')}</Instruction>
                 <ButtonStart
                   label={t('cta:start')}
                   onClick={onCheckCameraPermission}
                 />
+                <audio ref={ref}>
+                  <source src="/assets/silent.mp3" type="audio/mp3" />
+                </audio>
                 {temporaryProfil && (
                   <ButtonEffect
                     label={t('cta:settings')}
@@ -105,8 +119,8 @@ const IntroPage = () => {
                 )}
               </>
             )}
-            {permissionAuthorize && <PermissionAuthorize />}
-            {permissionDenied && <PermissionDenied />}
+            {permissionAuthorize && <PermissionAuthorize/>}
+            {permissionDenied && <PermissionDenied/>}
           </ContainerInner>
         </ContainerWrapper>
       }

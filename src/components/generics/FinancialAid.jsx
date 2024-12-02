@@ -55,7 +55,7 @@ const FinancialAid = () => {
       link: 'https://inven-t.umontreal.ca/accueil/',
     },
     {
-      img: '/assets/logos/logo_umtl.png',
+      img: './assets/logos/logo_umtl.png',
       link: 'https://www.umontreal.ca/',
     },
   ];

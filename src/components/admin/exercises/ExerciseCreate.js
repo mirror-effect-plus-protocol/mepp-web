@@ -21,7 +21,8 @@
  */
 import React from 'react';
 import {
-  ArrayInput, BooleanInput,
+  ArrayInput,
+  BooleanInput,
   NumberInput,
   SimpleForm,
   SimpleFormIterator,

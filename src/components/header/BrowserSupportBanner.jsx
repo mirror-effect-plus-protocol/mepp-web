@@ -29,11 +29,11 @@ import { FlexAlignCenter } from '@styles/tools';
 import { rem } from '@styles/utils/rem';
 
 const browsers = {
-  chrome: '112.0',
-  firefox: '111.0',
+  chrome: '130.0',
+  firefox: '131.0',
   edge: '9999.0',
   'edge-chromium': '9999.0',
-  safari: '13.0',
+  safari: '18.0',
   opera: '9999',
   msie: '20',
   yandex: '9999',
