@@ -244,7 +244,7 @@ const ExerciseProvider = ({ children }) => {
         pauseTime: current.pause || 5,
         repeatTime: current.repetition || 3,
         text: current.i18n,
-        cognitive: identity.use_video_only,
+        useVideoOnly: identity.use_video_only,
       };
 
       data.videoUrl =

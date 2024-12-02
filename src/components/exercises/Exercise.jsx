@@ -106,17 +106,17 @@ const InitExercise = () => {
   const { locale } = useLocale();
 
   const video = exercise.videoUrl && (
-    <Video src={exercise.videoUrl} cognitive={exercise.cognitive} />
+    <Video src={exercise.videoUrl} useVideoOnly={exercise.useVideoOnly} />
   );
 
   const text = (
-    <Text type={exerciseStep} cognitive={exercise.cognitive}>
+    <Text type={exerciseStep} useVideoOnly={exercise.useVideoOnly}>
       {exercise.text[locale]}
     </Text>
   );
 
   const progress = (
-    <Progress cognitive={exercise.cognitive}>
+    <Progress useVideoOnly={exercise.useVideoOnly}>
       {t('exercise:name')}&nbsp;{exercise.number}
       &nbsp;/&nbsp;
       {exercise.length}
@@ -124,7 +124,7 @@ const InitExercise = () => {
   );
 
   const buttons = (
-    <ButtonsWrapper type={exerciseStep} cognitive={exercise.cognitive}>
+    <ButtonsWrapper type={exerciseStep} useVideoOnly={exercise.useVideoOnly}>
       <Button.Outline label={t('cta:skip_exercise')} onClick={skip} />
       <SpacerHorizontal />
       <Button.Default label={t('cta:start_exercise')} onClick={start} />
@@ -133,10 +133,10 @@ const InitExercise = () => {
 
   return (
     <>
-      {exercise.cognitive && exercise.videoUrl ? (
+      {exercise.useVideoOnly && exercise.videoUrl ? (
         <TextExercise type={exerciseStep}>
           {video}
-          <InitExerciseWrapper cognitive={exercise.cognitive}>
+          <InitExerciseWrapper useVideoOnly={exercise.useVideoOnly}>
             {progress}
             {buttons}
           </InitExerciseWrapper>
@@ -145,8 +145,8 @@ const InitExercise = () => {
         <>
           <TextExercise type={exerciseStep}>
             {video}
-            <InitExerciseWrapper cognitive={exercise.cognitive}>
-              <TextWrapper type={exerciseStep} cognitive={exercise.cognitive}>
+            <InitExerciseWrapper useVideoOnly={exercise.useVideoOnly}>
+              <TextWrapper type={exerciseStep} useVideoOnly={exercise.useVideoOnly}>
                 {progress}
                 {text}
               </TextWrapper>
@@ -301,7 +301,7 @@ const EmptyExercise = () => {
   );
 };
 
-const Video = ({ src, cognitive }) => {
+const Video = ({ src, useVideoOnly }) => {
   const ref = useRef();
 
   useEffect(() => {
@@ -311,7 +311,7 @@ const Video = ({ src, cognitive }) => {
   }, [src]);
 
   return (
-    <VideoWrapper cognitive={cognitive}>
+    <VideoWrapper useVideoOnly={useVideoOnly}>
       <VideoInner>
         <video autoPlay loop playsInline ref={ref}>
           <source src={src} type="video/mp4" />
@@ -392,8 +392,8 @@ ${({ type }) =>
 `;
 
 const InitExerciseWrapper = styled(FlexDisplay.Component)`
-  ${({ cognitive }) => cognitive && `justify-content: flex-end;`}
-  ${({ cognitive }) => cognitive && `align-items: center;`}
+  ${({ useVideoOnly }) => useVideoOnly && `justify-content: flex-end;`}
+  ${({ useVideoOnly }) => useVideoOnly && `align-items: center;`}
     ${media.xsToMd`
     display: block ;
   `};
@@ -401,17 +401,17 @@ const InitExerciseWrapper = styled(FlexDisplay.Component)`
 
 const VideoWrapper = styled(FlexDisplay.Component)`
   margin: 0 0 ${spacings.default}px 0;
-  ${({ cognitive }) => cognitive && `margin: 0 0 0 0;`}
-  ${({ cognitive }) => cognitive && `position: absolute;`}
-  ${({ cognitive }) => cognitive && `bottom: 0;`}
+  ${({ useVideoOnly }) => useVideoOnly && `margin: 0 0 0 0;`}
+  ${({ useVideoOnly }) => useVideoOnly && `position: absolute;`}
+  ${({ useVideoOnly }) => useVideoOnly && `bottom: 0;`}
 
   ${media.xsToMd`
     margin: 0 ${spacings.default}px 0 0;
-    ${({ cognitive }) => cognitive && `position: relative;`}
+    ${({ useVideoOnly }) => useVideoOnly && `position: relative;`}
   `}
   ${media.xxsOnly`
     margin: 0 0 ${spacings.default}px 0;
-    ${({ cognitive }) => cognitive && `position: relative;`}
+    ${({ useVideoOnly }) => useVideoOnly && `position: relative;`}
   `}
 `;
 
@@ -463,8 +463,8 @@ const TimerWrapper = styled(FlexDisplay.Component)`
 const TextWrapper = styled.div`
   width: 100%;
 
-  ${({ type, cognitive }) =>
-    type === ExerciseStep.INITIATED && !cognitive && `max-width: 700px;`}
+  ${({ type, useVideoOnly }) =>
+    type === ExerciseStep.INITIATED && !useVideoOnly && `max-width: 700px;`}
 
   ${media.xsOnly``}
 `;
@@ -510,7 +510,7 @@ const Progress = styled.h3`
 const ButtonsWrapper = styled(FlexAlignCenter.Component)`
   align-self: end;
   margin: 0 0 0 auto;
-  ${({ cognitive }) => cognitive && `margin: 0 0 0 ${spacings.default}px;`}
+  ${({ useVideoOnly }) => useVideoOnly && `margin: 0 0 0 ${spacings.default}px;`}
 
   ${({ type }) =>
     type === ExerciseStep.STARTED && `margin: 0 0 ${spacings.default}px 0;`}

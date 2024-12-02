@@ -209,14 +209,15 @@ class Session(BaseModel):
         self.exercises = exercises
 
     def __get_video_url(self, exercise_through: TreatmentPlanExerciseM2M) -> str:
-        video = exercise_through.exercise.video
+        exercise = exercise_through.exercise
+        video = exercise.video
 
         if not video:
             return ''
 
-        if video.video_with_audio:
+        if exercise.video_with_audio:
             # Only support video with audio in French.
-            if self.patient.language != LanguageEnum.FRENCH.value:
+            if self.patient.language != LanguageEnum.FR.value:
                 return ''
 
         url = video.url
