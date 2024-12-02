@@ -26,7 +26,7 @@ SECRET_KEY = 'kp=$wi=6z&i7=%sy!8ab=x5z*7ht6ij^h*y1hjcxtc_lmlvsli'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mepp.local']
+ALLOWED_HOSTS = ['mepp.local', '10.35.0.6']
 
 USE_X_FORWARDED_HOST = True
 
@@ -38,6 +38,6 @@ MIRROR_SESSION_TIMEOUT = 60 * 10  # 10 minutes
 # Should include scheme and domain name
 HTTP_HOST = os.environ.get('HTTP_HOST', 'http://mepp.local:9090')
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'].append('rest_framework.authentication.SessionAuthentication')

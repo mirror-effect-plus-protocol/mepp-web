@@ -22,6 +22,7 @@
 import { BoxedShowLayout, RaBox } from 'ra-compact-ui';
 import React from 'react';
 import {
+  BooleanField,
   NumberField,
   Show,
   TextField,
@@ -83,6 +84,7 @@ export const ExerciseShow = () => {
           {t('resources.exercises.card.labels.video')}
         </Typography>
         <VideoField source="video" label={false} />
+        <BooleanField source="video_with_audio" />
         <Typography variant="h6" gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>

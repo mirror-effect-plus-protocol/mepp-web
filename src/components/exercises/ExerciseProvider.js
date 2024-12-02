@@ -251,6 +251,7 @@ const ExerciseProvider = ({ children }) => {
         current.video_url && current.video_url !== ''
           ? current.video_url
           : null;
+      data.videoWithAudio = current.video_with_audio;
       setExercise(data);
     } else {
       log('Exercise not found: ', exerciseCurrent);

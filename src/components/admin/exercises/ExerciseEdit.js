@@ -22,6 +22,7 @@
 import React from 'react';
 import {
   ArrayInput,
+  BooleanInput,
   FormDataConsumer,
   NumberInput,
   ReferenceField,
@@ -145,6 +146,7 @@ export const ExerciseEdit = () => {
           {t('resources.exercises.card.labels.video')}
         </Typography>
         <VideoInput source="video" label={false} />
+        <BooleanInput source="video_with_audio" />
         <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>
