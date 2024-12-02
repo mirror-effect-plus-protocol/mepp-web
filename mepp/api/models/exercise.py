@@ -53,6 +53,7 @@ class Exercise(BaseModel, Archivable, Template, Searchable):
     pause = models.PositiveSmallIntegerField(null=False, default=5)
     auto_translate = models.BooleanField(default=False)
     video = models.FileField(upload_to=upload_to, null=True, blank=True)
+    video_with_audio = models.BooleanField(default=False)
 
     def __str__(self):
         name = (

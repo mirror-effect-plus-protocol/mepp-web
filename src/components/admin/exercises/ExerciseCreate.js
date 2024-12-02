@@ -22,6 +22,7 @@
 import React from 'react';
 import {
   ArrayInput,
+  BooleanInput,
   NumberInput,
   SimpleForm,
   SimpleFormIterator,
@@ -122,6 +123,7 @@ export const ExerciseCreate = () => {
           {t('resources.exercises.card.labels.video')}
         </Typography>
         <VideoInput source="video" label={false} />
+        <BooleanInput source="video_with_audio" />
         <Typography variant="h6" gutterBottom gutterTop>
           {t('resources.exercises.card.labels.classification')}
         </Typography>

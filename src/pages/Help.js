@@ -78,7 +78,7 @@ const HelpFr = ({ t }) => {
         </li>
         <li>
           <a
-            href="https://youtu.be/Q0qoov-OJUM"
+            href="https://youtu.be/hvV3bZgmZ6E"
             target="_blank"
             rel="noreferrer"
           >
@@ -142,7 +142,7 @@ const HelpEn = ({ t }) => {
         </li>
         <li>
           <a
-            href="https://www.youtube.com/watch?v=Tux2tV9GvyI"
+            href="https://youtu.be/0Xa7Fg3-lis"
             target="_blank"
             rel="noreferrer"
           >

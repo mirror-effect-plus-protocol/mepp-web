@@ -244,13 +244,14 @@ const ExerciseProvider = ({ children }) => {
         pauseTime: current.pause || 5,
         repeatTime: current.repetition || 3,
         text: current.i18n,
-        cognitive: identity.use_video_only,
+        useVideoOnly: identity.use_video_only,
       };
 
       data.videoUrl =
         current.video_url && current.video_url !== ''
           ? current.video_url
           : null;
+      data.videoWithAudio = current.video_with_audio;
       setExercise(data);
     } else {
       log('Exercise not found: ', exerciseCurrent);

@@ -28,6 +28,7 @@ from django.db import models
 
 from mepp.api.enums import (
     ActionEnum,
+    LanguageEnum,
     StatusEnum,
 )
 from mepp.api.exceptions import SessionStatusException
@@ -187,15 +188,16 @@ class Session(BaseModel):
 
         exercises = []
         for exercise_through in exercises_through:
-            video = exercise_through.exercise.video
-            video_url = self.__get_url_with_scheme(video.url) if video else ''
             exercise = {
                 'movement_duration': exercise_through.movement_duration,
                 'repetition': exercise_through.repetition,
+                # for retro-compatibility, will be removed when iOS is released
+                'repeat': exercise_through.repetition,
                 'pause': exercise_through.pause,
                 'i18n': {},
                 'status': StatusEnum.default.name,
-                'video_url': video_url,
+                'video_url': self.__get_video_url(exercise_through),
+                'video_with_audio': exercise_through.exercise.video_with_audio,
                 # saved as timestamp to make `exercise` JSON serializable
                 'modified_at': int(time.time()),
             }
@@ -206,8 +208,19 @@ class Session(BaseModel):
             exercises.append(exercise)
         self.exercises = exercises
 
-    @staticmethod
-    def __get_url_with_scheme(url: str) -> str:
+    def __get_video_url(self, exercise_through: TreatmentPlanExerciseM2M) -> str:
+        exercise = exercise_through.exercise
+        video = exercise.video
+
+        if not video:
+            return ''
+
+        if exercise.video_with_audio:
+            # Only support video with audio in French.
+            if self.patient.language != LanguageEnum.FR.value:
+                return ''
+
+        url = video.url
         if url.startswith('http'):
             return url
 

@@ -19,9 +19,11 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+
+// import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 import IconThumbup from '@assets/icons/thumbup.svg';
 
@@ -106,17 +108,21 @@ const InitExercise = () => {
   const { locale } = useLocale();
 
   const video = exercise.videoUrl && (
-    <Video src={exercise.videoUrl} cognitive={exercise.cognitive} />
+    <Video
+      src={exercise.videoUrl}
+      useVideoOnly={exercise.useVideoOnly}
+      withAudio={exercise.videoWithAudio}
+    />
   );
 
   const text = (
-    <Text type={exerciseStep} cognitive={exercise.cognitive}>
+    <Text type={exerciseStep} useVideoOnly={exercise.useVideoOnly}>
       {exercise.text[locale]}
     </Text>
   );
 
   const progress = (
-    <Progress cognitive={exercise.cognitive}>
+    <Progress useVideoOnly={exercise.useVideoOnly}>
       {t('exercise:name')}&nbsp;{exercise.number}
       &nbsp;/&nbsp;
       {exercise.length}
@@ -124,7 +130,7 @@ const InitExercise = () => {
   );
 
   const buttons = (
-    <ButtonsWrapper type={exerciseStep} cognitive={exercise.cognitive}>
+    <ButtonsWrapper type={exerciseStep} useVideoOnly={exercise.useVideoOnly}>
       <Button.Outline label={t('cta:skip_exercise')} onClick={skip} />
       <SpacerHorizontal />
       <Button.Default label={t('cta:start_exercise')} onClick={start} />
@@ -133,10 +139,10 @@ const InitExercise = () => {
 
   return (
     <>
-      {exercise.cognitive && exercise.videoUrl ? (
+      {exercise.useVideoOnly && exercise.videoUrl ? (
         <TextExercise type={exerciseStep}>
           {video}
-          <InitExerciseWrapper cognitive={exercise.cognitive}>
+          <InitExerciseWrapper useVideoOnly={exercise.useVideoOnly}>
             {progress}
             {buttons}
           </InitExerciseWrapper>
@@ -145,8 +151,11 @@ const InitExercise = () => {
         <>
           <TextExercise type={exerciseStep}>
             {video}
-            <InitExerciseWrapper cognitive={exercise.cognitive}>
-              <TextWrapper type={exerciseStep} cognitive={exercise.cognitive}>
+            <InitExerciseWrapper useVideoOnly={exercise.useVideoOnly}>
+              <TextWrapper
+                type={exerciseStep}
+                useVideoOnly={exercise.useVideoOnly}
+              >
                 {progress}
                 {text}
               </TextWrapper>
@@ -301,19 +310,51 @@ const EmptyExercise = () => {
   );
 };
 
-const Video = ({ src, cognitive }) => {
+const Video = ({ src, useVideoOnly, withAudio }) => {
   const ref = useRef();
+  const [playCount, setPlayCount] = useState(0);
+
+  const handleVideoEnd = () => {
+    setPlayCount((prevCount) => prevCount + 1);
+  };
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current?.load();
+    const video = ref.current;
+
+    if (video) {
+      setPlayCount(0);
+      video?.load();
     }
   }, [src]);
+  //
+  useEffect(() => {
+    const video = ref.current;
+    // play the video in loop only 3 times
+    if (video) {
+      video.currentTime = 0;
+      if (playCount > 0) {
+        video.pause();
+        if (playCount < 3) {
+          setTimeout(() => {
+            if (video) {
+              video.play();
+            }
+          }, 3000);
+        }
+      }
+    }
+  }, [playCount]);
 
   return (
-    <VideoWrapper cognitive={cognitive}>
+    <VideoWrapper useVideoOnly={useVideoOnly}>
       <VideoInner>
-        <video autoPlay muted loop playsInline ref={ref}>
+        <video
+          autoPlay
+          muted={!withAudio}
+          playsInline
+          ref={ref}
+          onEnded={handleVideoEnd}
+        >
           <source src={src} type="video/mp4" />
         </video>
         <LoadingCircle />
@@ -392,8 +433,8 @@ ${({ type }) =>
 `;
 
 const InitExerciseWrapper = styled(FlexDisplay.Component)`
-  ${({ cognitive }) => cognitive && `justify-content: flex-end;`}
-  ${({ cognitive }) => cognitive && `align-items: center;`}
+  ${({ useVideoOnly }) => useVideoOnly && `justify-content: flex-end;`}
+  ${({ useVideoOnly }) => useVideoOnly && `align-items: center;`}
     ${media.xsToMd`
     display: block ;
   `};
@@ -401,17 +442,17 @@ const InitExerciseWrapper = styled(FlexDisplay.Component)`
 
 const VideoWrapper = styled(FlexDisplay.Component)`
   margin: 0 0 ${spacings.default}px 0;
-  ${({ cognitive }) => cognitive && `margin: 0 0 0 0;`}
-  ${({ cognitive }) => cognitive && `position: absolute;`}
-  ${({ cognitive }) => cognitive && `bottom: 0;`}
+  ${({ useVideoOnly }) => useVideoOnly && `margin: 0 0 0 0;`}
+  ${({ useVideoOnly }) => useVideoOnly && `position: absolute;`}
+  ${({ useVideoOnly }) => useVideoOnly && `bottom: 0;`}
 
   ${media.xsToMd`
     margin: 0 ${spacings.default}px 0 0;
-    ${({ cognitive }) => cognitive && `position: relative;`}
+    ${({ useVideoOnly }) => useVideoOnly && `position: relative;`}
   `}
   ${media.xxsOnly`
     margin: 0 0 ${spacings.default}px 0;
-    ${({ cognitive }) => cognitive && `position: relative;`}
+    ${({ useVideoOnly }) => useVideoOnly && `position: relative;`}
   `}
 `;
 
@@ -463,8 +504,8 @@ const TimerWrapper = styled(FlexDisplay.Component)`
 const TextWrapper = styled.div`
   width: 100%;
 
-  ${({ type, cognitive }) =>
-    type === ExerciseStep.INITIATED && !cognitive && `max-width: 700px;`}
+  ${({ type, useVideoOnly }) =>
+    type === ExerciseStep.INITIATED && !useVideoOnly && `max-width: 700px;`}
 
   ${media.xsOnly``}
 `;
@@ -510,7 +551,8 @@ const Progress = styled.h3`
 const ButtonsWrapper = styled(FlexAlignCenter.Component)`
   align-self: end;
   margin: 0 0 0 auto;
-  ${({ cognitive }) => cognitive && `margin: 0 0 0 ${spacings.default}px;`}
+  ${({ useVideoOnly }) =>
+    useVideoOnly && `margin: 0 0 0 ${spacings.default}px;`}
 
   ${({ type }) =>
     type === ExerciseStep.STARTED && `margin: 0 0 ${spacings.default}px 0;`}

@@ -109,6 +109,7 @@ class ExerciseSerializer(HyperlinkedModelUUIDSerializer):
             'archived',
             'auto_translate',
             'video',
+            'video_with_audio',
         ]
         read_only_fields = [
             'created_at',
