@@ -33,7 +33,7 @@ const browsers = {
   firefox: '131.0',
   edge: '9999.0',
   'edge-chromium': '9999.0',
-  safari: '18.0',
+  safari: '16.0',
   opera: '9999',
   msie: '20',
   yandex: '9999',
