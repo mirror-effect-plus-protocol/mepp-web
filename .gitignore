@@ -16,9 +16,5 @@ __pycache__
 .vscode
 .vols
 
-# develop branch only
-build
-requirements.txt
-.well-known
 deepar/mepp.deeparproj
 media/
