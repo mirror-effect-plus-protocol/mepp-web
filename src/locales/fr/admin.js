@@ -251,7 +251,7 @@ export default {
             label: 'Choisir une catégorie',
           },
         },
-        video_with_audio: 'Vidéo avec son'
+        video_with_audio: 'Vidéo avec son',
       },
       card: {
         title: {
