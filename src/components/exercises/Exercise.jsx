@@ -24,7 +24,6 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 // import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-
 import IconThumbup from '@assets/icons/thumbup.svg';
 
 import { media } from '@styles/configs/breakpoints';
@@ -340,6 +339,11 @@ const Video = ({ src, useVideoOnly, withAudio }) => {
               video.play();
             }
           }, 3000);
+        } else if (playCount === 3) {
+          setTimeout(() => {
+            video.play();
+            setPlayCount(0);
+          }, 10000);
         }
       }
     }
@@ -465,10 +469,16 @@ const VideoInner = styled(FlexDisplay.Component)`
   border-radius: 50%;
   overflow: hidden;
 
-  ${media.xsToMd`
+  ${media.xsToSm`
     width: 180px;
     height: 180px;
     min-width: 180px;
+  `}
+
+  ${media.md`
+    width: 240px;
+    height: 240px;
+    min-width: 240px;
   `}
 
   video {
@@ -551,18 +561,35 @@ const Progress = styled.h3`
 const ButtonsWrapper = styled(FlexAlignCenter.Component)`
   align-self: end;
   margin: 0 0 0 auto;
+
   ${({ useVideoOnly }) =>
     useVideoOnly && `margin: 0 0 0 ${spacings.default}px;`}
 
   ${({ type }) =>
     type === ExerciseStep.STARTED && `margin: 0 0 ${spacings.default}px 0;`}
-  ${media.xsToMd`
-  margin: 0 0 ${spacings.default}px 0;
 
-  ${({ type }) =>
-    type === ExerciseStep.INITIATED && `margin: ${spacings.default}px 0 0 0;`}
-  ${({ type }) =>
-    type === ExerciseStep.INITIATED && `justify-content:flex-start;`}
+  ${media.xsToMd`
+    margin: 0 0 ${spacings.default}px 0;
+
+    ${({ type }) =>
+      type === ExerciseStep.INITIATED &&
+      `
+        margin: ${spacings.default}px 0 0 0;
+        justify-content: flex-start;
+        max-width: 400px;
+        button {
+          width: 50%;
+        }
+      `}
+  `};
+
+  ${media.xsOnly`
+
+    ${({ type }) =>
+      type === ExerciseStep.INITIATED &&
+      `
+        max-width: none;
+      `}
   `};
 `;
 
