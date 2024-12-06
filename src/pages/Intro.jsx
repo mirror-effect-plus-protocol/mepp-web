@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import { useGetIdentity } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -99,7 +99,7 @@ const IntroPage = () => {
           <ContainerInner>
             {!permissionDenied && !permissionAuthorize && (
               <>
-                <Title>{t('intro:title', {name})}</Title>
+                <Title>{t('intro:title', { name })}</Title>
                 <Introduction xlarge>{t('intro:introduction')}</Introduction>
                 <Instruction medium>{t('intro:instruction')}</Instruction>
                 <ButtonStart
@@ -119,8 +119,8 @@ const IntroPage = () => {
                 )}
               </>
             )}
-            {permissionAuthorize && <PermissionAuthorize/>}
-            {permissionDenied && <PermissionDenied/>}
+            {permissionAuthorize && <PermissionAuthorize />}
+            {permissionDenied && <PermissionDenied />}
           </ContainerInner>
         </ContainerWrapper>
       }

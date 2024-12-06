@@ -182,6 +182,10 @@ const Outline = styled.button`
   `}
 `;
 
+const Logout = styled(Outline)`
+  white-space: nowrap;
+`;
+
 const Rounded = styled(Outline)`
   border-radius: 50%;
   padding: 0 20px;
@@ -286,4 +290,5 @@ export default {
   Transparent: ButtonFactory(Transparent),
   Liner: ButtonFactory(Liner),
   Rounded: ButtonFactory(Rounded),
+  Logout: ButtonFactory(Logout),
 };

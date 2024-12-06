@@ -140,7 +140,7 @@ const RightSideWithLogout = () => {
         selected={isSettingsActive}
         onClick={handleSettingsClick}
       />
-      <Button.Outline label={t('cta:logout')} onClick={handleLogoutClick} />
+      <Button.Logout label={t('cta:logout')} onClick={handleLogoutClick} />
     </RightWrapper>
   );
 };
