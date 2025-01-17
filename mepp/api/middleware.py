@@ -11,7 +11,7 @@ class BlockOldIOSUserAgentMiddleware:
 
     def __call__(self, request):
         user_agent = request.META.get('HTTP_USER_AGENT', '')
-        if 'MEPP/2.5' in user_agent:
+        if 'MEPP/25' in user_agent:
             return JsonResponse(
                 {'error': 'Deprecated version. Please upgrade to MEPP 2.0.'},
                 status=403
