@@ -132,7 +132,7 @@ export const ArticleList = (props) => {
         },
       }}
     >
-      <CardGrid />
+      <CardGrid permissions={permissions} />
     </List>
   );
 };
