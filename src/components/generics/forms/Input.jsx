@@ -203,7 +203,7 @@ const Email = memo((props) => {
     validation: {
       required: props.required && t('form:field:error:required'),
       pattern: {
-        value: /\b[\w-.+]+@[\w.-]+\.[a-z]{2,5}\b/gi, // to support xxx@mepp.local
+        value: /\b[\w-.+]+@[\w.-]+\.[a-z]{2,10}\b/gi, // to support xxx@mepp.local
         message: t('form:field:error:email_invalid'),
       },
       ...props.validation,
