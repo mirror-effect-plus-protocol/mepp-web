@@ -42,7 +42,7 @@ import HomeLayout from '@layouts/Home';
 import { FinancialAid } from '@components/generics/FinancialAid';
 import { H1, H2, H3, LI, P, UL, Href } from '@components/generics/basics/index';
 import Button from '@components/generics/buttons/Button';
-import DonationWidget from '@components/home/DonationWidget';
+// import DonationWidget from '@components/home/DonationWidget';
 import { FooterHome } from '@components/home/FooterHome';
 import { HeaderHome } from '@components/home/HeaderHome';
 import ImageRounded from '@components/home/ImageRounded';
@@ -82,7 +82,7 @@ const HomePage = () => {
           </GridInner>
           {showDonate && (
             <GridInner background={theme.colors.bluelight} id="donate">
-              <GridTwoColumn left={<DonateLeft />} right={<DonateRight />} />
+              <GridOneColumn content={<DonateLeft />} />
             </GridInner>
           )}
         </WrapperFull>
@@ -506,6 +506,11 @@ const DonateLeft = () => {
     <DonateLeftWrapper>
       <TitleH2>{t('home:donate:title')}</TitleH2>
       <Text>{t('home:donate:text')}</Text>
+      <ButtonDonate
+        label={t('cta:donate')}
+        onClick={() => {
+          window.open('https://secureca.reseau.umontreal.ca/s/1857/bp18/interior.aspx?sid=1857&gid=2&pgid=418&cid=1063&dids=1076&bledit=1&sort=1');
+        }}/>
     </DonateLeftWrapper>
   );
 };
@@ -513,13 +518,13 @@ const DonateLeft = () => {
  * Right side (widget)
  * #TODO add widget script
  */
-const DonateRight = () => {
-  return (
-    <DonateRightWrapper>
-      <DonationWidget />
-    </DonateRightWrapper>
-  );
-};
+// const DonateRight = () => {
+//   return (
+//     <DonateRightWrapper>
+//       <DonationWidget />
+//     </DonateRightWrapper>
+//   );
+// };
 /**
  * Donate Left Wrapper
  */
@@ -532,12 +537,12 @@ const DonateLeftWrapper = styled.div`
 /**
  * Donate Right Wrapper
  */
-const DonateRightWrapper = styled.div`
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  height: 100%;
-`;
+// const DonateRightWrapper = styled.div`
+//   display: flex;
+//   align-content: center;
+//   justify-content: center;
+//   height: 100%;
+// `;
 
 /***********/
 

@@ -63,7 +63,7 @@ export default {
     },
     donate: {
       title: 'Aiutaci a fare in modo che il MEPP sia accessibile a tutti.',
-      text: 'Tutte le donazioni supportano direttamente lo sviluppo del MEPP, così possiamo fornire accesso gratuito ai nostri strumenti a chi ne ha più bisogno. Fai una donazione unica o imposta una donazione mensile ricorrente.',
+      text: 'Tutte le donazioni supportano direttamente lo sviluppo del MEPP, affinché possiamo fornire accesso gratuito ai nostri strumenti a chi ne ha più bisogno. Fai una donazione oggi stesso.',
     },
   },
 };

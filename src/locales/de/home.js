@@ -65,7 +65,7 @@ export default {
     donate: {
       title:
         'Helfen Sie uns, sicherzustellen, dass der MEPP für alle zugänglich ist.',
-      text: 'Alle Spenden unterstützen direkt die Entwicklung des MEPP, damit wir denjenigen, die es am dringendsten benötigen, kostenlosen Zugang zu unseren Werkzeugen bieten können. Tätigen Sie eine einmalige Spende oder richten Sie eine wiederkehrende monatliche Spende ein.',
+      text: 'Alle Spenden unterstützen direkt die Entwicklung des MEPP, damit wir denjenigen, die es am dringendsten benötigen, kostenlosen Zugang zu unseren Werkzeugen bieten können. Spenden Sie noch heute.',
     },
   },
 };
