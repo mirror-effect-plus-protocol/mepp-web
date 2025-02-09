@@ -63,7 +63,7 @@ export default {
     },
     donate: {
       title: 'Help us make the MEPP accessible to everyone.',
-      text: 'All donations directly support the development of the MEPP, so we can provide free access to our tools to those who need them most. Make a one-time donation or set up a recurring monthly donation.',
+      text: 'All donations directly support the development of the MEPP so that we can provide free access to our tools to those who need them the most. Make a donation today.',
     },
   },
 };
