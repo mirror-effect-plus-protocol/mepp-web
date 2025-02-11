@@ -30,7 +30,7 @@ export default {
     },
     description: {
       title: 'La thérapie miroir en rééducation du visage',
-      text: 'Le MEPP est assorti d’une application pour appareils mobiles. Il permet à un.e thérapeute d’offrir de la thérapie miroir en rééducation du visage, pour des patients.tes atteints de paralysie faciale. Le MEPP offrant une plateforme aux cliniciens.nes afin de gérer une base d’exercices, de produire des plans d’exercices individualisés et d’ajouter plusieurs utilisateurs. De plus, le site offre un espace virtuel personnalisé permettant aux personnes ayant besoin de rééducation de réaliser leurs exercices.',
+      text: 'Le MEPP est assorti d’une application pour appareils mobiles. Il permet à un.e thérapeute d’offrir de la thérapie miroir en rééducation du visage, pour des patients.tes atteints de paralysie faciale. Le MEPP offre une plateforme aux cliniciens.nes afin de gérer une base d’exercices, de produire des plans d’exercices individualisés et d’ajouter plusieurs utilisateurs. De plus, le site offre un espace virtuel personnalisé permettant aux personnes ayant besoin de rééducation de réaliser leurs exercices.',
       list: {
         title:
           'Plusieurs études ont été réalisées afin de tester l’utilisabilité et l’efficacité du MEPP:',
