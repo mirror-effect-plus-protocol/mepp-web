@@ -74,7 +74,7 @@ class CurrentUserViewSet(
 
         # On login, create a new token when current has expired.
         token = user.auth_token.order_by('-expiry_date').first()
-        if token.is_expired:
+        if not token or token.is_expired:
             user.generate_new_token()
         else:
             token.extend_expiry()
