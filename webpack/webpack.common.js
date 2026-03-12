@@ -105,7 +105,7 @@ module.exports = {
         {
           from: config.public,
           globOptions: {
-            ignore: ['**/*.md', '**/*.html'],
+            ignore: ['**/*.md', '**/index.html'],
           },
         },
       ],
