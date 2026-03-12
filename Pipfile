@@ -14,6 +14,7 @@ polib = "*"
 ruff = "*"
 
 [packages]
+setuptools = ">=70"
 django = ">=5.2,<5.3"
 werkzeug = "*"
 django-extensions = "*"
