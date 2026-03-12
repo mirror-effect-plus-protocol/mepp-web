@@ -1,0 +1,193 @@
+<!-- Cookie Consent Banner (cookie-banner.ca) -->
+<div id="cookie-consent-banner" role="dialog" aria-live="polite" aria-label="Cookie consent" style="position: fixed; bottom: 0; left: 0; right: 0; background-color: #1f2937 !important; color: #ffffff !important; border-radius: 8px;padding: 20px;box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; animation: cookieFadeIn 0.5s ease-out; display: none;">
+  <div style="position: relative;">
+    <button id="cookie-close-btn" style="position: absolute; top: 8px; right: 8px; background: none; border: none; color: #ffffff; font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; opacity: 0.7;" aria-label="Close">&times;</button>
+
+    <div style="display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap;">
+      <img src="https://mirroreffectplus.org/apple-touch-icon.png" alt="Logo" style="max-width: 120px; max-height: 40px; object-fit: contain;" />
+
+      <div style="flex: 1; min-width: 250px;">
+        <h3 id="cookie-title" style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: #ffffff !important;">We use cookies</h3>
+
+        <p id="cookie-message" style="margin: 0 0 16px 0; font-size: 14px; line-height: 1.5; color: #ffffff !important;">This website uses cookies to enhance your browsing experience and provide personalized content.</p>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button id="cookie-accept-btn" style="background-color: #3b82f6 !important; color: #ffffff !important; border: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 500;">Accept All</button>
+
+          <button id="cookie-reject-btn" style="background-color: transparent; color: #ffffff !important; border: 1px solid #ffffff !important; padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 500;">Reject</button>
+
+          <button id="cookie-preferences-btn" style="background-color: transparent; color: #60a5fa !important; border: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 500;">Preferences</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Preferences Modal -->
+<div id="cookie-preferences-modal" style="position: fixed; inset: 0; z-index: 99999; background-color: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; padding: 16px;">
+  <div style="background: #1f2937; border-radius: 8px; width: 100%; max-width: 512px; max-height: 90vh; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+    <!-- Header -->
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 24px 24px 16px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">
+      <img src="https://mirroreffectplus.org/apple-touch-icon.png" alt="Logo" style="height: 32px; object-fit: contain; max-width: 120px; max-height: 40px; flex-shrink: 0;" onerror="this.style.display='none'" />
+
+      <button id="cookie-prefs-close-btn" style="padding: 8px; background: none; border: none; border-radius: 6px; cursor: pointer; color: #ffffff; font-size: 20px; line-height: 1; flex-shrink: 0; opacity: 0.7;" aria-label="Close">
+        &times;
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div style="display: flex; flex-direction: column; height: 100%; max-height: calc(90vh - 80px);">
+      <div style="padding: 24px 24px 0 24px; flex: 1; overflow-y: auto;">
+        <!-- Title -->
+        <h2 id="prefs-title" style="font-size: 20px; font-weight: bold; color: #ffffff; margin: 0 0 12px 0;">
+          Privacy Center
+        </h2>
+
+        <!-- Description -->
+        <p id="cookie-modal-description" style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin: 0 0 24px 0; line-height: 1.5;">
+          By clicking 'Accept', you agree to the storing of cookies on your device to enhance site navigation, analyze site usage, and assist in our marketing efforts.
+        </p>
+
+        <!-- Accept All Button -->
+        <button id="cookie-accept-all-btn" style="width: 100%; height: 48px; margin-bottom: 24px; font-size: 16px; font-weight: 500; border-radius: 8px; border: none; cursor: pointer; background-color: #3b82f6; color: #ffffff;">
+          ACCEPT ALL
+        </button>
+
+        <!-- Cookie Preferences Section -->
+        <div style="margin-bottom: 24px;">
+          <h3 id="cookie-manage-prefs-title" style="font-weight: bold; color: #ffffff; margin: 0 0 16px 0;">
+            Manage cookie preferences
+          </h3>
+
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <!-- Strictly Necessary -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; background-color: rgba(31, 41, 55, 0.3);">
+              <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
+                <span style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0;">&#8250;</span>
+                <div style="min-width: 0; flex: 1;">
+                  <div id="cat-necessary" style="font-weight: 500; color: #ffffff;">Strictly Necessary Cookies</div>
+                  <div id="cat-necessary-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Always active</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Functionality -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px;">
+              <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
+                <span style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0;">&#8250;</span>
+                <div style="min-width: 0; flex: 1;">
+                  <div id="cat-functionality" style="font-weight: 500; color: #ffffff;">Functional Cookies</div>
+                  <div id="cat-functionality-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Remember preferences and choices</div>
+                </div>
+              </div>
+              <div style="flex-shrink: 0; margin-left: 12px;">
+                <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
+                  <input type="checkbox" id="cookie-func-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
+                  <span id="cookie-func-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
+                  <span id="cookie-func-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Performance -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px;">
+              <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
+                <span style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0;">&#8250;</span>
+                <div style="min-width: 0; flex: 1;">
+                  <div id="cat-analytics" style="font-weight: 500; color: #ffffff;">Performance Cookies</div>
+                  <div id="cat-analytics-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Help us improve our website</div>
+                </div>
+              </div>
+              <div style="flex-shrink: 0; margin-left: 12px;">
+                <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
+                  <input type="checkbox" id="cookie-performance-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
+                  <span id="cookie-performance-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
+                  <span id="cookie-performance-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Targeting -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px;">
+              <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
+                <span style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0;">&#8250;</span>
+                <div style="min-width: 0; flex: 1;">
+                  <div id="cat-marketing" style="font-weight: 500; color: #ffffff;">Targeting Cookies</div>
+                  <div id="cat-marketing-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Personalized ads and content</div>
+                </div>
+              </div>
+              <div style="flex-shrink: 0; margin-left: 12px;">
+                <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
+                  <input type="checkbox" id="cookie-targeting-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
+                  <span id="cookie-targeting-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
+                  <span id="cookie-targeting-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Social Media -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px;">
+              <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
+                <span style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0;">&#8250;</span>
+                <div id="cat-social-media" style="min-width: 0; flex: 1; font-weight: 500; color: #ffffff;">Social Media Cookies</div>
+              </div>
+              <div style="flex-shrink: 0; margin-left: 12px;">
+                <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
+                  <input type="checkbox" id="cookie-social-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
+                  <span id="cookie-social-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
+                  <span id="cookie-social-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer with buttons -->
+      <div style="padding: 24px 24px 0 24px; border-top: 1px solid rgba(255, 255, 255, 0.2); background-color: rgba(31, 41, 55, 0.3);">
+        <!-- Confirm Button -->
+        <button id="cookie-confirm-choices-btn" style="width: 100%; height: 48px; margin-bottom: 16px; font-size: 16px; font-weight: 500; border-radius: 8px; border: none; cursor: pointer; background-color: #3b82f6; color: #ffffff;">
+          CONFIRM MY CHOICES
+        </button>
+
+        <!-- Powered by -->
+        <div style="text-align: center;">
+          <p style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin: 0;">
+            Powered by <a href="https://cookie-banner.ca/" target="_blank" rel="noopener noreferrer" style="font-weight: 600; color: #60a5fa; text-decoration: none;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">cookie-banner.ca</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Cookie Settings Button (separate from banner) -->
+<div id="cookie-settings-float" style="
+  position: fixed;
+  bottom: 16px; left: 16px;
+  z-index: 999998;
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 8px !important;
+  border-radius: 6px !important;
+  width: auto !important;
+  height: auto !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  opacity: 0.9;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+  <img src="https://mirroreffectplus.org/apple-touch-icon.png" alt="Logo" style="width: 16px; height: 16px; object-fit: contain; margin-right: 4px;" /><span>Cookie Settings</span>
+</div>
