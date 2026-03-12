@@ -32,8 +32,20 @@ except KeyError:
 DEBUG = False
 
 SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+CSRF_TRUSTED_ORIGINS = [
+    'https://mirroreffectplus.org',
+    'https://www.mirroreffectplus.org',
+    'https://staging.mirroreffectplus.org',
+]
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = True
 
 ALLOWED_HOSTS = ['staging.mirroreffectplus.org']
 
