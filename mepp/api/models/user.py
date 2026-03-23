@@ -73,6 +73,11 @@ class User(AbstractUser, Archivable, Searchable):
         on_delete=models.SET_NULL,
     )
     mirror_settings = models.JSONField(null=True)
+    anonymized_at = models.DateTimeField(null=True, blank=True, default=None)
+
+    @property
+    def is_anonymized(self):
+        return self.anonymized_at is not None
 
     def __init__(self, *args, **kwargs):
         self.email_has_changed = False

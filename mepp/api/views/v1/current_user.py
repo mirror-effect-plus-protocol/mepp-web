@@ -30,7 +30,12 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED, HTTP_403_FORBIDDEN
+from rest_framework.status import (
+    HTTP_201_CREATED,
+    HTTP_204_NO_CONTENT,
+    HTTP_400_BAD_REQUEST,
+    HTTP_403_FORBIDDEN,
+)
 from user_agents import parse
 
 from mepp.api.enums.action import ActionEnum
@@ -43,6 +48,7 @@ from mepp.api.permissions import (
     MeppMirrorPermission,
     MeppMirrorSettingPermission,
 )
+from mepp.api.services.anonymization import anonymize_user
 from mepp.api.serializers.v1.authtoken import AuthTokenSerializer
 from mepp.api.serializers.v1.log import UserLogSerializer
 from mepp.api.serializers.v1.patient import (
@@ -188,6 +194,29 @@ class CurrentUserViewSet(
         )
         serializer = UserSessionSerializer(user_session)
         return Response(serializer.data)
+
+    @action(
+        detail=False,
+        methods=['POST'],
+        permission_classes=[IsAuthenticated],
+        url_path='anonymize',
+    )
+    def anonymize_self(self, request, *args, **kwargs):
+        user = request.user
+        password = request.data.get('password', '')
+        if not user.check_password(password):
+            return Response(
+                {'detail': 'Invalid password'},
+                status=HTTP_400_BAD_REQUEST,
+            )
+        try:
+            anonymize_user(user)
+        except ValueError as e:
+            return Response(
+                {'detail': str(e)},
+                status=HTTP_400_BAD_REQUEST,
+            )
+        return Response(status=HTTP_204_NO_CONTENT)
 
     def __detail(self, user):
         return {
