@@ -46,6 +46,7 @@ from mepp.api.serializers.v1.widget import (
     DailyRepeatWidgetSerializer,
     SessionsWidgetSerializer,
 )
+from mepp.api.services.anonymization import anonymize_user
 from mepp.api.views import UUIDLookupFieldViewSet
 
 
@@ -68,6 +69,23 @@ class PatientViewSet(UUIDLookupFieldViewSet):
         'clinician__first_name',
         'clinician__last_name',
     ]
+
+    @action(detail=True, methods=['POST'])
+    def anonymize(self, request, uid, *args, **kwargs) -> Response:
+        patient = self.get_object()
+        if not request.data.get('confirm', False):
+            return Response(
+                {'detail': 'Confirmation required'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            anonymize_user(patient)
+        except ValueError as e:
+            return Response(
+                {'detail': str(e)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=True, methods=['POST'])
     def assign_plan(self, request, uid, *args, **kwargs) -> Response:
