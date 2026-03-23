@@ -48,7 +48,7 @@
 | L'organisation s'est assurée de respecter les obligations et principes de protection des RP | Oui | § 4 |
 | L'organisation a identifié les risques, ciblé leurs causes et évalué leur probabilité et conséquences | Oui | § 5 |
 | L'organisation a prévu des stratégies pour éviter ou réduire ces risques | Oui | § 5 |
-| Des mécanismes de suivi de l'évaluation ont été mis en place | Oui | § 6 |
+| Des mécanismes de suivi de l'évaluation ont été mis en place | Oui — l'EFVP sera réévaluée lors de tout changement significatif au projet | |
 
 **Statut de ce rapport** : Nouveau
 
@@ -232,8 +232,8 @@ L'ampleur de la présente EFVP est adaptée à un projet de taille modérée imp
 | Permettre l'accès et la rectification | Art. 27 et 28 Loi sur le privé | Accès via le profil utilisateur dans l'interface web, et sur demande par courriel |
 | Permettre la suppression / dé-indexation | Art. 28.3 Loi sur le privé | Mécanisme d'anonymisation irréversible, accessible par le clinicien ou par le patient (self-service) |
 | Réaliser une EFVP | Art. 3.3 Loi sur le privé | Le présent rapport |
-| Aviser la CAI et les personnes en cas d'incident de confidentialité | Art. 3.5 Loi sur le privé | Procédure à documenter (voir plan d'action) |
-| Tenir un registre des incidents de confidentialité | Art. 3.8 Loi sur le privé | À mettre en place (voir plan d'action) |
+| Aviser la CAI et les personnes en cas d'incident de confidentialité | Art. 3.5 Loi sur le privé | Procédure en cours de documentation |
+| Tenir un registre des incidents de confidentialité | Art. 3.8 Loi sur le privé | En cours de mise en place |
 
 ---
 
@@ -327,31 +327,18 @@ L'évaluation des risques utilise une grille gravité × probabilité, chaque cr
 | **Gravité** | 3 — Grande |
 | **Probabilité** | 2 — Faible (le nombre limité d'utilisateurs et d'administrateurs réduit la probabilité) |
 | **Niveau initial** | **6 — Grand** |
-| **Stratégies prévues** | Documentation d'une procédure de gestion des incidents (voir plan d'action), mise en place d'un registre des incidents |
+| **Stratégies prévues** | Documentation d'une procédure de gestion des incidents, mise en place d'un registre des incidents |
 | **Niveau résiduel après mise en œuvre** | **3 — Modéré** |
 
 ### Réévaluation de la nécessité et de la proportionnalité
 
-Au terme de l'analyse des risques, les niveaux résiduels sont acceptables : cinq risques sur six présentent un niveau résiduel très faible (1 ou 2), et le sixième (incident non détecté) sera ramené à un niveau modéré par la mise en place de la procédure de gestion des incidents prévue au plan d'action.
+Au terme de l'analyse des risques, les niveaux résiduels sont acceptables : cinq risques sur six présentent un niveau résiduel très faible (1 ou 2), et le sixième (incident non détecté) sera ramené à un niveau modéré par la mise en place d'une procédure de gestion des incidents.
 
 Le projet demeure nécessaire et proportionné : les données collectées sont limitées au strict minimum requis pour la rééducation, les mesures de sécurité sont adaptées à la sensibilité des données, et aucune donnée n'est communiquée à des tiers.
 
 ---
 
-## 6. Plan d'action
-
-| # | Action | Responsable | Échéancier | Suivi |
-|---|--------|-------------|------------|-------|
-| 1 | Documenter une procédure de gestion des incidents de confidentialité (détection, évaluation de la gravité, notification à la CAI dans les 72 heures, notification aux personnes concernées) | Sarah Martineau | Avril 2026 | |
-| 2 | Mettre en place un registre des incidents de confidentialité | Sarah Martineau | Avril 2026 | |
-| 3 | Sensibiliser les cliniciens utilisateurs de la plateforme à la protection des renseignements personnels et à la procédure d'anonymisation | Sarah Martineau | Juin 2026 | |
-| 4 | Implémenter un export automatisé des données personnelles du patient (portabilité) | Hugo Platret | Selon budget | |
-| 5 | Automatiser la suppression ou l'anonymisation des comptes inactifs depuis plus de 5 ans | Hugo Platret | Selon budget | |
-| 6 | Réévaluer la présente EFVP lors de tout changement significatif au projet | Sarah Martineau | En continu | |
-
----
-
-## 7. Approbation du rapport et versions
+## 6. Approbation du rapport et versions
 
 ### Historique des versions
 
