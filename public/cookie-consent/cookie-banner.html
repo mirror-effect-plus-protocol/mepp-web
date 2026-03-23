@@ -11,12 +11,14 @@
 
         <p id="cookie-message" style="margin: 0 0 16px 0; font-size: 14px; line-height: 1.5; color: #ffffff !important;">This website uses cookies to enhance your browsing experience and provide personalized content.</p>
 
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
           <button id="cookie-accept-btn" style="background-color: #3b82f6 !important; color: #ffffff !important; border: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 500;">Accept All</button>
 
-          <button id="cookie-reject-btn" style="background-color: transparent; color: #ffffff !important; border: 1px solid #ffffff !important; padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 500;">Reject</button>
+          <button id="cookie-reject-btn" style="background-color: #374151 !important; color: #ffffff !important; border: 1px solid #6b7280 !important; padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 500;">Reject All</button>
 
           <button id="cookie-preferences-btn" style="background-color: transparent; color: #60a5fa !important; border: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 500;">Preferences</button>
+
+          <a id="cookie-privacy-link" href="/#/privacy" target="_blank" rel="noopener noreferrer" style="font-size: 12px; color: #60a5fa !important; text-decoration: underline; margin-left: 4px;">Privacy Policy</a>
         </div>
       </div>
     </div>
@@ -61,83 +63,101 @@
 
           <div style="display: flex; flex-direction: column; gap: 12px;">
             <!-- Strictly Necessary -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; background-color: rgba(31, 41, 55, 0.3);">
-              <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
-                <span style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0;">&#8250;</span>
-                <div style="min-width: 0; flex: 1;">
-                  <div id="cat-necessary" style="font-weight: 500; color: #ffffff;">Strictly Necessary Cookies</div>
-                  <div id="cat-necessary-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Always active</div>
+            <div class="cookie-card" data-category="necessary" style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; background-color: rgba(31, 41, 55, 0.3); overflow: hidden;">
+              <div class="cookie-card-header" style="display: flex; align-items: center; justify-content: space-between; padding: 16px; cursor: pointer;">
+                <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
+                  <span class="cookie-card-chevron" style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0; transition: transform 0.3s;">&#8250;</span>
+                  <div style="min-width: 0; flex: 1;">
+                    <div id="cat-necessary" style="font-weight: 500; color: #ffffff;">Strictly Necessary Cookies</div>
+                    <div id="cat-necessary-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Always active</div>
+                  </div>
                 </div>
               </div>
+              <div class="cookie-card-detail" id="detail-necessary" style="display: none; padding: 0 16px 16px 48px; font-size: 13px; color: rgba(255, 255, 255, 0.7); line-height: 1.5;"></div>
             </div>
 
             <!-- Functionality -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px;">
-              <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
-                <span style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0;">&#8250;</span>
-                <div style="min-width: 0; flex: 1;">
-                  <div id="cat-functionality" style="font-weight: 500; color: #ffffff;">Functional Cookies</div>
-                  <div id="cat-functionality-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Remember preferences and choices</div>
+            <div class="cookie-card" data-category="functionality" style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; overflow: hidden;">
+              <div class="cookie-card-header" style="display: flex; align-items: center; justify-content: space-between; padding: 16px; cursor: pointer;">
+                <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
+                  <span class="cookie-card-chevron" style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0; transition: transform 0.3s;">&#8250;</span>
+                  <div style="min-width: 0; flex: 1;">
+                    <div id="cat-functionality" style="font-weight: 500; color: #ffffff;">Functional Cookies</div>
+                    <div id="cat-functionality-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Remember preferences and choices</div>
+                  </div>
+                </div>
+                <div style="flex-shrink: 0; margin-left: 12px;">
+                  <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
+                    <input type="checkbox" id="cookie-func-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
+                    <span id="cookie-func-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
+                    <span id="cookie-func-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
+                  </label>
                 </div>
               </div>
-              <div style="flex-shrink: 0; margin-left: 12px;">
-                <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
-                  <input type="checkbox" id="cookie-func-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
-                  <span id="cookie-func-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
-                  <span id="cookie-func-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
-                </label>
-              </div>
+              <div class="cookie-card-detail" id="detail-functionality" style="display: none; padding: 0 16px 16px 48px; font-size: 13px; color: rgba(255, 255, 255, 0.7); line-height: 1.5;"></div>
             </div>
 
             <!-- Performance -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px;">
-              <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
-                <span style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0;">&#8250;</span>
-                <div style="min-width: 0; flex: 1;">
-                  <div id="cat-analytics" style="font-weight: 500; color: #ffffff;">Performance Cookies</div>
-                  <div id="cat-analytics-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Help us improve our website</div>
+            <div class="cookie-card" data-category="analytics" style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; overflow: hidden;">
+              <div class="cookie-card-header" style="display: flex; align-items: center; justify-content: space-between; padding: 16px; cursor: pointer;">
+                <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
+                  <span class="cookie-card-chevron" style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0; transition: transform 0.3s;">&#8250;</span>
+                  <div style="min-width: 0; flex: 1;">
+                    <div id="cat-analytics" style="font-weight: 500; color: #ffffff;">Performance Cookies</div>
+                    <div id="cat-analytics-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Help us improve our website</div>
+                  </div>
+                </div>
+                <div style="flex-shrink: 0; margin-left: 12px;">
+                  <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
+                    <input type="checkbox" id="cookie-performance-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
+                    <span id="cookie-performance-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
+                    <span id="cookie-performance-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
+                  </label>
                 </div>
               </div>
-              <div style="flex-shrink: 0; margin-left: 12px;">
-                <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
-                  <input type="checkbox" id="cookie-performance-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
-                  <span id="cookie-performance-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
-                  <span id="cookie-performance-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
-                </label>
-              </div>
+              <div class="cookie-card-detail" id="detail-analytics" style="display: none; padding: 0 16px 16px 48px; font-size: 13px; color: rgba(255, 255, 255, 0.7); line-height: 1.5;"></div>
             </div>
 
             <!-- Targeting -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px;">
-              <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
-                <span style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0;">&#8250;</span>
-                <div style="min-width: 0; flex: 1;">
-                  <div id="cat-marketing" style="font-weight: 500; color: #ffffff;">Targeting Cookies</div>
-                  <div id="cat-marketing-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Personalized ads and content</div>
+            <div class="cookie-card" data-category="marketing" style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; overflow: hidden;">
+              <div class="cookie-card-header" style="display: flex; align-items: center; justify-content: space-between; padding: 16px; cursor: pointer;">
+                <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
+                  <span class="cookie-card-chevron" style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0; transition: transform 0.3s;">&#8250;</span>
+                  <div style="min-width: 0; flex: 1;">
+                    <div id="cat-marketing" style="font-weight: 500; color: #ffffff;">Targeting Cookies</div>
+                    <div id="cat-marketing-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">Personalized ads and content</div>
+                  </div>
+                </div>
+                <div style="flex-shrink: 0; margin-left: 12px;">
+                  <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
+                    <input type="checkbox" id="cookie-targeting-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
+                    <span id="cookie-targeting-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
+                    <span id="cookie-targeting-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
+                  </label>
                 </div>
               </div>
-              <div style="flex-shrink: 0; margin-left: 12px;">
-                <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
-                  <input type="checkbox" id="cookie-targeting-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
-                  <span id="cookie-targeting-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
-                  <span id="cookie-targeting-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
-                </label>
-              </div>
+              <div class="cookie-card-detail" id="detail-marketing" style="display: none; padding: 0 16px 16px 48px; font-size: 13px; color: rgba(255, 255, 255, 0.7); line-height: 1.5;"></div>
             </div>
 
             <!-- Social Media -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px;">
-              <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
-                <span style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0;">&#8250;</span>
-                <div id="cat-social-media" style="min-width: 0; flex: 1; font-weight: 500; color: #ffffff;">Social Media Cookies</div>
+            <div class="cookie-card" data-category="social" style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; overflow: hidden;">
+              <div class="cookie-card-header" style="display: flex; align-items: center; justify-content: space-between; padding: 16px; cursor: pointer;">
+                <div style="display: flex; align-items: center; flex: 1; min-width: 0;">
+                  <span class="cookie-card-chevron" style="margin-right: 12px; color: rgba(255, 255, 255, 0.7); font-size: 20px; flex-shrink: 0; transition: transform 0.3s;">&#8250;</span>
+                  <div style="min-width: 0; flex: 1;">
+                    <div id="cat-social-media" style="font-weight: 500; color: #ffffff;">Social Media Cookies</div>
+                    <div id="cat-social-media-desc" style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;"></div>
+                  </div>
+                </div>
+                <div style="flex-shrink: 0; margin-left: 12px;">
+                  <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
+                    <input type="checkbox" id="cookie-social-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
+                    <span id="cookie-social-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
+                    <span id="cookie-social-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
+                  </label>
+                </div>
               </div>
-              <div style="flex-shrink: 0; margin-left: 12px;">
-                <label style="position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer;">
-                  <input type="checkbox" id="cookie-social-toggle-modal" style="opacity: 0; width: 0; height: 0;" />
-                  <span id="cookie-social-toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.3); transition: .4s; border-radius: 24px;"></span>
-                  <span id="cookie-social-toggle-thumb" style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .4s; border-radius: 50%;"></span>
-                </label>
-              </div>
+              <div class="cookie-card-detail" id="detail-social" style="display: none; padding: 0 16px 16px 48px; font-size: 13px; color: rgba(255, 255, 255, 0.7); line-height: 1.5;"></div>
             </div>
           </div>
         </div>
@@ -149,6 +169,11 @@
         <button id="cookie-confirm-choices-btn" style="width: 100%; height: 48px; margin-bottom: 16px; font-size: 16px; font-weight: 500; border-radius: 8px; border: none; cursor: pointer; background-color: #3b82f6; color: #ffffff;">
           CONFIRM MY CHOICES
         </button>
+
+        <!-- Privacy policy link -->
+        <div style="text-align: center; margin-bottom: 8px;">
+          <a id="cookie-modal-privacy-link" href="/#/privacy" target="_blank" rel="noopener noreferrer" style="font-size: 12px; color: #60a5fa; text-decoration: underline;">Privacy Policy</a>
+        </div>
 
         <!-- Powered by -->
         <div style="text-align: center;">

@@ -93,8 +93,9 @@ var TRANSLATIONS = {
     title: "We use cookies",
     message: "This website uses cookies to enhance your browsing experience and provide personalized content.",
     acceptButton: "Accept All",
-    rejectButton: "Reject",
+    rejectButton: "Reject All",
     preferencesButton: "Preferences",
+    privacyPolicy: "Privacy Policy",
     footerLink: "Cookie Settings",
     preferencesTitle: "Cookie Preferences",
     strictlyNecessary: "Strictly Necessary",
@@ -112,14 +113,20 @@ var TRANSLATIONS = {
     manageCookiePrefs: "Manage cookie preferences",
     confirmChoices: "CONFIRM MY CHOICES",
     socialMedia: "Social Media Cookies",
-    necessaryAlwaysActive: "Always active"
+    necessaryAlwaysActive: "Always active",
+    detailNecessary: "These cookies are essential for the website to function properly. They enable basic features like page navigation, secure access, and session management. The website cannot function without these cookies.",
+    detailFunctionality: "These cookies allow the website to remember choices you make (such as your language preference or the region you are in) and provide enhanced, more personalized features.",
+    detailAnalytics: "These cookies help us understand how visitors interact with the website by collecting and reporting information anonymously. This helps us improve the website's performance and user experience.",
+    detailMarketing: "These cookies are used to deliver advertisements that are relevant to you and your interests. They may also be used to limit the number of times you see an ad and to measure the effectiveness of advertising campaigns.",
+    detailSocial: "These cookies are set by social media services to allow you to share content with your friends and networks. They may track your browser across other sites and build up a profile of your interests."
   },
   fr: {
     title: "Nous utilisons des cookies",
     message: "Ce site web utilise des cookies pour améliorer votre expérience de navigation et fournir du contenu personnalisé.",
     acceptButton: "Accepter tout",
-    rejectButton: "Rejeter",
+    rejectButton: "Tout rejeter",
     preferencesButton: "Préférences",
+    privacyPolicy: "Politique de confidentialité",
     footerLink: "Paramètres des cookies",
     preferencesTitle: "Préférences des cookies",
     strictlyNecessary: "Strictement nécessaire",
@@ -137,13 +144,19 @@ var TRANSLATIONS = {
     manageCookiePrefs: "Gérer les préférences de cookies",
     confirmChoices: "CONFIRMER MES CHOIX",
     socialMedia: "Cookies de réseaux sociaux",
-    necessaryAlwaysActive: "Toujours actif"
+    necessaryAlwaysActive: "Toujours actif",
+    detailNecessary: "Ces cookies sont indispensables au bon fonctionnement du site. Ils permettent les fonctions de base comme la navigation, l'accès sécurisé et la gestion des sessions. Le site ne peut pas fonctionner sans ces cookies.",
+    detailFunctionality: "Ces cookies permettent au site de se souvenir de vos choix (comme votre langue ou votre région) et d'offrir des fonctionnalités améliorées et plus personnalisées.",
+    detailAnalytics: "Ces cookies nous aident à comprendre comment les visiteurs interagissent avec le site en collectant des informations de manière anonyme. Cela nous permet d'améliorer les performances et l'expérience utilisateur du site.",
+    detailMarketing: "Ces cookies sont utilisés pour diffuser des publicités pertinentes selon vos centres d'intérêt. Ils peuvent aussi limiter le nombre de fois qu'une publicité vous est présentée et mesurer l'efficacité des campagnes publicitaires.",
+    detailSocial: "Ces cookies sont déposés par les services de réseaux sociaux pour vous permettre de partager du contenu avec vos amis et réseaux. Ils peuvent suivre votre navigation sur d'autres sites et établir un profil de vos centres d'intérêt."
   },
   es: {
     title: "Utilizamos cookies",
     message: "Este sitio web utiliza cookies para mejorar su experiencia de navegación y ofrecer contenido personalizado.",
     acceptButton: "Aceptar todo",
-    rejectButton: "Rechazar",
+    rejectButton: "Rechazar todo",
+    privacyPolicy: "Política de privacidad",
     preferencesButton: "Preferencias",
     footerLink: "Configuración de cookies",
     preferencesTitle: "Preferencias de cookies",
@@ -162,13 +175,19 @@ var TRANSLATIONS = {
     manageCookiePrefs: "Gestionar preferencias de cookies",
     confirmChoices: "CONFIRMAR MIS OPCIONES",
     socialMedia: "Cookies de redes sociales",
-    necessaryAlwaysActive: "Siempre activas"
+    necessaryAlwaysActive: "Siempre activas",
+    detailNecessary: "Estas cookies son esenciales para el correcto funcionamiento del sitio web. Permiten funciones básicas como la navegación, el acceso seguro y la gestión de sesiones.",
+    detailFunctionality: "Estas cookies permiten que el sitio recuerde sus elecciones (como el idioma o la región) y ofrezca funciones mejoradas y más personalizadas.",
+    detailAnalytics: "Estas cookies nos ayudan a entender cómo los visitantes interactúan con el sitio, recopilando información de forma anónima para mejorar el rendimiento y la experiencia del usuario.",
+    detailMarketing: "Estas cookies se utilizan para mostrar anuncios relevantes según sus intereses y medir la eficacia de las campañas publicitarias.",
+    detailSocial: "Estas cookies son establecidas por servicios de redes sociales para permitirle compartir contenido con sus amigos y redes."
   },
   de: {
     title: "Wir verwenden Cookies",
     message: "Diese Website verwendet Cookies, um Ihr Surferlebnis zu verbessern und personalisierte Inhalte bereitzustellen.",
     acceptButton: "Alle akzeptieren",
-    rejectButton: "Ablehnen",
+    rejectButton: "Alle ablehnen",
+    privacyPolicy: "Datenschutzrichtlinie",
     preferencesButton: "Einstellungen",
     footerLink: "Cookie-Einstellungen",
     preferencesTitle: "Cookie-Einstellungen",
@@ -187,13 +206,19 @@ var TRANSLATIONS = {
     manageCookiePrefs: "Cookie-Einstellungen verwalten",
     confirmChoices: "MEINE AUSWAHL BESTÄTIGEN",
     socialMedia: "Social-Media-Cookies",
-    necessaryAlwaysActive: "Immer aktiv"
+    necessaryAlwaysActive: "Immer aktiv",
+    detailNecessary: "Diese Cookies sind für das ordnungsgemäße Funktionieren der Website unerlässlich. Sie ermöglichen grundlegende Funktionen wie Seitennavigation, sicheren Zugriff und Sitzungsverwaltung.",
+    detailFunctionality: "Diese Cookies ermöglichen es der Website, sich an Ihre Auswahl zu erinnern (z. B. Sprache oder Region) und erweiterte, personalisierte Funktionen bereitzustellen.",
+    detailAnalytics: "Diese Cookies helfen uns zu verstehen, wie Besucher mit der Website interagieren, indem sie anonyme Informationen sammeln, um die Leistung und Benutzererfahrung zu verbessern.",
+    detailMarketing: "Diese Cookies werden verwendet, um relevante Werbung basierend auf Ihren Interessen anzuzeigen und die Wirksamkeit von Werbekampagnen zu messen.",
+    detailSocial: "Diese Cookies werden von sozialen Netzwerken gesetzt, um Ihnen das Teilen von Inhalten mit Ihren Freunden und Netzwerken zu ermöglichen."
   },
   it: {
     title: "Utilizziamo i cookie",
     message: "Questo sito web utilizza i cookie per migliorare la tua esperienza di navigazione e fornire contenuti personalizzati.",
     acceptButton: "Accetta tutto",
-    rejectButton: "Rifiuta",
+    rejectButton: "Rifiuta tutto",
+    privacyPolicy: "Informativa sulla privacy",
     preferencesButton: "Preferenze",
     footerLink: "Impostazioni cookie",
     preferencesTitle: "Preferenze cookie",
@@ -212,13 +237,19 @@ var TRANSLATIONS = {
     manageCookiePrefs: "Gestisci le preferenze dei cookie",
     confirmChoices: "CONFERMA LE MIE SCELTE",
     socialMedia: "Cookie dei social media",
-    necessaryAlwaysActive: "Sempre attivi"
+    necessaryAlwaysActive: "Sempre attivi",
+    detailNecessary: "Questi cookie sono essenziali per il corretto funzionamento del sito. Consentono funzioni di base come la navigazione, l'accesso sicuro e la gestione delle sessioni.",
+    detailFunctionality: "Questi cookie consentono al sito di ricordare le tue scelte (come la lingua o la regione) e di offrire funzionalità migliorate e più personalizzate.",
+    detailAnalytics: "Questi cookie ci aiutano a capire come i visitatori interagiscono con il sito, raccogliendo informazioni in modo anonimo per migliorare le prestazioni e l'esperienza utente.",
+    detailMarketing: "Questi cookie vengono utilizzati per mostrare annunci pertinenti in base ai tuoi interessi e per misurare l'efficacia delle campagne pubblicitarie.",
+    detailSocial: "Questi cookie sono impostati dai servizi di social media per consentirti di condividere contenuti con i tuoi amici e le tue reti."
   },
   pt: {
     title: "Utilizamos cookies",
     message: "Este site utiliza cookies para melhorar a sua experiência de navegação e fornecer conteúdo personalizado.",
     acceptButton: "Aceitar tudo",
-    rejectButton: "Rejeitar",
+    rejectButton: "Rejeitar tudo",
+    privacyPolicy: "Política de privacidade",
     preferencesButton: "Preferências",
     footerLink: "Configurações de cookies",
     preferencesTitle: "Preferências de cookies",
@@ -237,7 +268,12 @@ var TRANSLATIONS = {
     manageCookiePrefs: "Gerir preferências de cookies",
     confirmChoices: "CONFIRMAR AS MINHAS ESCOLHAS",
     socialMedia: "Cookies de redes sociais",
-    necessaryAlwaysActive: "Sempre ativos"
+    necessaryAlwaysActive: "Sempre ativos",
+    detailNecessary: "Estes cookies são essenciais para o bom funcionamento do site. Permitem funções básicas como a navegação, o acesso seguro e a gestão de sessões.",
+    detailFunctionality: "Estes cookies permitem que o site se lembre das suas escolhas (como o idioma ou a região) e ofereça funcionalidades melhoradas e mais personalizadas.",
+    detailAnalytics: "Estes cookies ajudam-nos a compreender como os visitantes interagem com o site, recolhendo informações de forma anónima para melhorar o desempenho e a experiência do utilizador.",
+    detailMarketing: "Estes cookies são utilizados para apresentar anúncios relevantes com base nos seus interesses e medir a eficácia das campanhas publicitárias.",
+    detailSocial: "Estes cookies são definidos por serviços de redes sociais para lhe permitir partilhar conteúdos com os seus amigos e redes."
   }
 };
 
@@ -269,6 +305,14 @@ function applyTranslations() {
   if (acceptBtn) acceptBtn.textContent = trans.acceptButton;
   if (rejectBtn) rejectBtn.textContent = trans.rejectButton;
   if (prefsBtn) prefsBtn.textContent = trans.preferencesButton;
+
+  // Privacy policy links
+  var privacyLink = document.getElementById('cookie-privacy-link');
+  var modalPrivacyLink = document.getElementById('cookie-modal-privacy-link');
+  if (privacyLink) privacyLink.textContent = trans.privacyPolicy;
+  if (modalPrivacyLink) modalPrivacyLink.textContent = trans.privacyPolicy;
+  // Note: Don't overwrite floatBtn content here — updateFloatingButtonIcon manages it.
+  // Only update the text span inside it if it exists.
   if (floatBtn) {
     var floatSpan = floatBtn.querySelector('span');
     if (floatSpan) {
@@ -315,6 +359,52 @@ function applyTranslations() {
   if (confirmChoicesBtn) confirmChoicesBtn.textContent = trans.confirmChoices;
   if (socialMediaLabel) socialMediaLabel.textContent = trans.socialMedia;
   if (necessaryDesc) necessaryDesc.textContent = trans.necessaryAlwaysActive;
+
+  // Detail descriptions for accordion
+  var detailNecessary = document.getElementById('detail-necessary');
+  var detailFunctionality = document.getElementById('detail-functionality');
+  var detailAnalytics = document.getElementById('detail-analytics');
+  var detailMarketing = document.getElementById('detail-marketing');
+  var detailSocial = document.getElementById('detail-social');
+
+  if (detailNecessary) detailNecessary.textContent = trans.detailNecessary;
+  if (detailFunctionality) detailFunctionality.textContent = trans.detailFunctionality;
+  if (detailAnalytics) detailAnalytics.textContent = trans.detailAnalytics;
+  if (detailMarketing) detailMarketing.textContent = trans.detailMarketing;
+  if (detailSocial) detailSocial.textContent = trans.detailSocial;
+}
+
+// Setup accordion behavior for cookie category cards
+function setupAccordion() {
+  var cards = document.querySelectorAll('.cookie-card');
+  cards.forEach(function(card) {
+    var header = card.querySelector('.cookie-card-header');
+    var detail = card.querySelector('.cookie-card-detail');
+    var chevron = card.querySelector('.cookie-card-chevron');
+
+    if (!header || !detail || header.dataset.accordionAttached) return;
+
+    header.addEventListener('click', function(e) {
+      // Don't toggle accordion when clicking the toggle switch
+      if (e.target.closest('label')) return;
+
+      var isOpen = detail.style.display !== 'none';
+      // Close all other cards
+      cards.forEach(function(otherCard) {
+        var otherDetail = otherCard.querySelector('.cookie-card-detail');
+        var otherChevron = otherCard.querySelector('.cookie-card-chevron');
+        if (otherDetail) otherDetail.style.display = 'none';
+        if (otherChevron) otherChevron.style.transform = 'rotate(0deg)';
+      });
+      // Toggle current card
+      if (!isOpen) {
+        detail.style.display = 'block';
+        chevron.style.transform = 'rotate(90deg)';
+      }
+    });
+
+    header.dataset.accordionAttached = 'true';
+  });
 }
 
 
@@ -397,6 +487,22 @@ function setupToggleSwitches() {
           }
         });
 
+        // Handle clicks on the label reliably: the absolutely-positioned
+        // slider/thumb spans can interfere with the label's native toggle
+        // behavior. We intercept clicks on the label, preventDefault to
+        // stop the native toggle, and manually toggle the input once.
+        var label = input.closest('label');
+        if (label && !label.dataset.listenerAttached) {
+          label.addEventListener('click', function(e) {
+            if (e.target !== input) {
+              e.preventDefault();
+              input.checked = !input.checked;
+              input.dispatchEvent(new Event('change'));
+            }
+          });
+          label.dataset.listenerAttached = 'true';
+        }
+
         input.dataset.listenerAttached = 'true';
       }
     }
@@ -412,7 +518,7 @@ function loadConsentIntoModal(consent) {
   if (func) func.checked = consent.functionality || false;
   if (performance) performance.checked = consent.analytics || false;
   if (targeting) targeting.checked = consent.marketing || false;
-  if (social) social.checked = consent.marketing || false;
+  if (social) social.checked = consent.social || false;
 
   // Update visual state
   setupToggleSwitches();
@@ -430,7 +536,7 @@ function showPreferencesModal() {
   if (currentConsent) {
     loadConsentIntoModal(currentConsent);
   } else {
-    loadConsentIntoModal({ essential: true, functionality: false, analytics: false, marketing: false });
+    loadConsentIntoModal({ essential: true, functionality: false, analytics: false, marketing: false, social: false });
   }
 
   modal.style.display = 'flex';
@@ -463,7 +569,7 @@ function updateFloatingButtonIcon(consent) {
   var cookieRejectedIcon = "<img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjMWYxZjFmIj48cGF0aCBkPSJtODE1LTI2MC01OC01OHExOC0zMSAyOS02Ni41dDE0LTczLjVxLTUwLTIyLTc4LjUtNjBUNjgzLTYwM3EtNzctMTEtMTMyLTY2dC02OC0xMzJxLTQ5LTItOTAgMTB0LTc2IDMzbC01Ny01N3E2MS00MiAxMzcuNS01OC41VDU2My04NzJxLTkgNDUgNiA4NC41dDQ1IDY2LjVxMzAgMjcgNzEgMzd0ODYtNXEtMzEgNjkgMTEgMTE4dDk2IDUxcTggNzItOS41IDEzOFQ4MTUtMjYwWk0zNDAtMzYwcS0yNSAwLTQyLjUtMTcuNVQyODAtNDIwcTAtMjUgMTcuNS00Mi41VDM0MC00ODBxMjUgMCA0Mi41IDE3LjVUNDgwLTQyMHEwIDI1LTE3LjUgNDIuNVQzNDAtMzYwWk04MTktMjggNzAxLTE0NnEtNDggMzItMTAzLjUgNDlUNDgwLTgwcS04MyAwLTE1Ni0zMS41VDE5Ny0xOTdxLTU0LTU0LTg1LjUtMTI3VDgwLTQ4MHEwLTYyIDE3LTExNy41VDE0Ni03MDFMMjctODIwbDU3LTU3TDg3Ni04NWwtNTcgNTdaTTQ4MC0xNjBxNDUgMCA4NS41LTEydDc2LjUtMzNMMjA1LTY0MnEtMjEgMzYtMzMgNzYuNVQxNjAtNDgwcTAgMTMzIDkzLjUgMjI2LjVUNDgwLTE2MFptLTU2LTI2NFptMTM1LTEzN1oiLz48L3N2Zz4=\" alt=\"\" style=\"width: 20px; height: 20px; display: inline-flex;\" />";
 
   // Determine if user has accepted any non-essential cookies
-  var hasAcceptedNonEssential = consent.functionality || consent.analytics || consent.marketing;
+  var hasAcceptedNonEssential = consent.functionality || consent.analytics || consent.marketing || consent.social;
 
   // Check if button should show text (preserve text if showText is enabled)
   var shouldShowText = true;
@@ -565,7 +671,7 @@ function init() {
   // Set up banner button handlers ALWAYS (needed even when consent exists, for when user reopens banner)
   if (acceptBtn && !acceptBtn.dataset.handlerAttached) {
     acceptBtn.addEventListener('click', function() {
-      saveConsent({ essential: true, functionality: true, analytics: true, marketing: true });
+      saveConsent({ essential: true, functionality: true, analytics: true, marketing: true, social: true });
       initGA4();
       trackConsentEvent('accept');
       banner.style.display = 'none';
@@ -575,7 +681,7 @@ function init() {
 
   if (rejectBtn && !rejectBtn.dataset.handlerAttached) {
     rejectBtn.addEventListener('click', function() {
-      saveConsent({ essential: true, functionality: false, analytics: false, marketing: false });
+      saveConsent({ essential: true, functionality: false, analytics: false, marketing: false, social: false });
       trackConsentEvent('reject');
       banner.style.display = 'none';
     });
@@ -584,6 +690,8 @@ function init() {
 
   if (closeBtn && !closeBtn.dataset.handlerAttached) {
     closeBtn.addEventListener('click', function() {
+      // Save essential-only consent so the banner doesn't reappear on next visit
+      saveConsent({ essential: true, functionality: false, analytics: false, marketing: false, social: false });
       banner.style.display = 'none';
       trackConsentEvent('dismiss');
     });
@@ -599,7 +707,7 @@ function init() {
         if (currentConsent) {
           loadConsentIntoModal(currentConsent);
         } else {
-          loadConsentIntoModal({ essential: true, functionality: false, analytics: false, marketing: false });
+          loadConsentIntoModal({ essential: true, functionality: false, analytics: false, marketing: false, social: false });
         }
       }
     });
@@ -621,7 +729,7 @@ function init() {
 
   if (acceptAllBtn && !acceptAllBtn.dataset.handlerAttached) {
     acceptAllBtn.addEventListener('click', function() {
-      var consent = { essential: true, functionality: true, analytics: true, marketing: true };
+      var consent = { essential: true, functionality: true, analytics: true, marketing: true, social: true };
       saveConsent(consent);
       loadConsentIntoModal(consent);
       banner.style.display = 'none';
@@ -641,7 +749,8 @@ function init() {
         essential: true,
         functionality: func ? func.checked : false,
         analytics: performance ? performance.checked : false,
-        marketing: (targeting ? targeting.checked : false) || (social ? social.checked : false)
+        marketing: targeting ? targeting.checked : false,
+          social: social ? social.checked : false
       };
 
       console.log('User confirmed cookie preferences:', consent);
@@ -663,8 +772,9 @@ function init() {
     modal.dataset.handlerAttached = 'true';
   }
 
-  // Initialize toggles
+  // Initialize toggles and accordion
   setupToggleSwitches();
+  setupAccordion();
 
   // If consent already exists, restore it and show floating button
   if (existingConsent) {
@@ -690,6 +800,11 @@ function init() {
 
 // Load HTML template and initialize
 function loadBannerHTML() {
+  // Prevent duplicate injection
+  if (document.getElementById('cookie-consent-banner')) {
+    return Promise.resolve();
+  }
+
   return fetch('/cookie-consent/cookie-banner.html')
     .then(function(response) { return response.text(); })
     .then(function(html) {
