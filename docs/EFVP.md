@@ -1,379 +1,378 @@
-# Rapport d'évaluation des facteurs relatifs à la vie privée (EFVP)
+# Rapport d'évaluation des facteurs relatifs à la vie privée
 
-# Plateforme MEPP (Mirror Effect Plus Protocol)
+## Plateforme MEPP (Mirror Effect Plus Protocol)
 
----
+**Organisation** : Université de Montréal — École d'orthophonie et d'audiologie
 
-**Version** : 1.0
-**Date** : Mars 2026
-**Responsable du projet** : Professeure Sarah Martineau, École d'orthophonie et d'audiologie, Université de Montréal
-**Référence légale** : Loi sur la protection des renseignements personnels dans le secteur privé (« Loi sur le privé »), telle que modifiée par la Loi modernisant des dispositions législatives en matière de protection des renseignements personnels (Loi 25)
-**Situation applicable** : Situation 2 — Acquisition, développement ou refonte d'un système d'information ou de prestation électronique de services impliquant des renseignements personnels (art. 3.3 de la Loi sur le privé)
+**Date du document** : Mars 2026
+
+**Dernière révision** : Mars 2026
 
 ---
 
-## Section récapitulative
+## Résumé de l'évaluation
 
-| Élément | Détail |
-|---------|--------|
-| Nom du projet | MEPP — Mirror Effect Plus Protocol |
-| Nature | Plateforme web et mobile de rééducation de la paralysie faciale |
-| Responsable | Professeure Sarah Martineau, UdeM |
-| Responsable de la protection des RP | Professeure Sarah Martineau, UdeM |
-| Raison de l'EFVP | Refonte du système d'information (mise à jour Django 5.2, ajout bannière de cookies, mécanisme d'anonymisation) — art. 3.3 Loi sur le privé |
-| Date de début du projet | 2021 (développement initial) |
-| Date de la refonte | Mars 2026 |
-| Renseignements personnels impliqués | Oui — données d'identification, données de santé |
+### Identification du responsable de l'évaluation
+
+| | |
+|---|---|
+| **Nom du responsable** | Professeure Sarah Martineau |
+| **Titre** | Responsable de la protection des renseignements personnels |
+| **Organisation** | École d'orthophonie et d'audiologie, Université de Montréal |
+| **Coordonnées** | sarah.martineau.2@umontreal.ca — 514 343-7645 |
+
+### Autres personnes impliquées dans l'évaluation
+
+| Nom | Titre | Organisation |
+|-----|-------|--------------|
+| Hugo Platret | Développeur | Freelance |
+
+### Description du projet
+
+| | |
+|---|---|
+| **Description sommaire** | Plateforme web et mobile de rééducation de la paralysie faciale à l'aide de l'effet miroir et des principes d'apprentissage moteur |
+| **Date de début du projet** | 2021 |
+| **Durée prévue** | Projet permanent (plateforme en exploitation continue) |
+| **Le projet implique des renseignements personnels** | Oui |
+
+### Résumé de l'évaluation des facteurs relatifs à la vie privée
+
+| Élément | Statut | Réf. |
+|---------|--------|------|
+| Le projet implique la réalisation obligatoire d'une EFVP en vertu d'une loi | Oui — art. 3.3 de la Loi sur le privé (système d'information impliquant des RP) | |
+| Le projet, ses objectifs et l'objet de l'EFVP ont été définis | Oui | § 1 |
+| L'inventaire des renseignements personnels et leur parcours ont été réalisés | Oui | § 3 |
+| L'ampleur de l'évaluation est proportionnelle à la sensibilité, à la finalité, à la quantité, à la répartition et au support des RP | Oui | § 3 |
+| Les acteurs pertinents ont été impliqués et les rôles précisés | Oui | § 2 |
+| L'organisation s'est assurée de respecter les obligations et principes de protection des RP | Oui | § 4 |
+| L'organisation a identifié les risques, ciblé leurs causes et évalué leur probabilité et conséquences | Oui | § 5 |
+| L'organisation a prévu des stratégies pour éviter ou réduire ces risques | Oui | § 5 |
+| Des mécanismes de suivi de l'évaluation ont été mis en place | Oui | § 6 |
+
+**Statut de ce rapport** : Nouveau
 
 ---
 
-## 1. Description du projet et de ses finalités
+## 1. Description du projet et de l'objet de l'EFVP
 
-### 1.1 Présentation du projet
+### Présentation des grandes lignes du projet
 
-MEPP est une plateforme de rééducation de la paralysie faciale qui guide les patients et les cliniciens dans le processus de réhabilitation, à l'aide de l'effet miroir et des principes d'apprentissage moteur.
+MEPP (Mirror Effect Plus Protocol) est une plateforme de rééducation de la paralysie faciale développée par la professeure Sarah Martineau et son équipe, avec le soutien de l'Université de Montréal, du CIUSSS de l'Est-de-l'Île-de-Montréal et du CIUSSS du Nord-de-l'Île-de-Montréal.
 
 La plateforme comprend :
+
 - Un **site web pour les cliniciens** : gestion des patients, création de plans de traitement personnalisés, suivi de la progression, export de données de recherche
 - Un **site web pour les patients** : exécution d'exercices de rééducation avec miroir augmenté (technologie DeepAR)
 - Une **application iOS** réservée aux patients
 
-Le projet a été développé par la professeure Sarah Martineau et son équipe, avec le soutien de l'Université de Montréal, du CIUSSS de l'Est-de-l'Île-de-Montréal et du CIUSSS du Nord-de-l'Île-de-Montréal.
+Le site web est hébergé au Canada (AWS, région ca-central-1, Montréal) et est accessible à l'adresse mirroreffectplus.org.
 
-### 1.2 Objectifs du projet
+### Échéancier du projet
+
+Le développement initial de MEPP a débuté en 2021. La plateforme est en exploitation continue. La présente EFVP est réalisée dans le cadre d'une refonte comprenant la mise à jour du cadre technique (Django 5.2), l'ajout d'une bannière de consentement aux cookies et l'implémentation d'un mécanisme d'anonymisation des comptes.
+
+### Énoncé et justification des objectifs motivant le projet
 
 1. Offrir un outil de rééducation de la paralysie faciale accessible à distance
-2. Permettre aux cliniciens de personnaliser les exercices selon le profil de chaque patient (côté de la paralysie, préférences audio/vidéo)
+2. Permettre aux cliniciens de personnaliser les exercices selon le profil clinique de chaque patient
 3. Assurer le suivi de la progression des patients par leurs cliniciens
-4. Collecter des données de progression à des fins de recherche scientifique, sous forme dé-identifiée
-5. Améliorer les approches de rééducation de la paralysie faciale et leur efficacité
+4. Contribuer à la recherche scientifique sur la rééducation de la paralysie faciale, à partir de données dé-identifiées
+5. Améliorer les approches de rééducation et leur efficacité
 
-### 1.3 Nécessité et proportionnalité
+### Démonstration que le projet est proportionné aux objectifs et aux risques d'atteinte à la vie privée
 
-**Nécessité** : La collecte de renseignements personnels est nécessaire pour :
-- **Identifier le patient** (nom, courriel) : indispensable pour l'authentification et la communication clinicien-patient
-- **Déterminer le côté de la paralysie** (donnée de santé) : indispensable pour configurer correctement les exercices de rééducation et le miroir augmenté
-- **Enregistrer la progression** (sessions, exercices) : indispensable pour le suivi clinique et l'adaptation du plan de traitement
+La collecte de renseignements personnels est limitée au strict nécessaire :
 
-**Proportionnalité** : La collecte est limitée au strict nécessaire :
-- Aucune donnée biométrique n'est stockée (le miroir AR fonctionne en temps réel côté client, aucune image n'est transmise au serveur)
-- Aucune vidéo du patient n'est enregistrée ou stockée
-- Aucune adresse physique, numéro de téléphone ou identifiant gouvernemental n'est collecté
-- Aucune donnée n'est transmise à des tiers (pas d'analytics externes, pas de publicité)
+- Les **données d'identification** (nom, courriel) sont indispensables à l'authentification et à la relation clinicien-patient
+- Le **côté de la paralysie faciale** (donnée de santé) est indispensable à la configuration des exercices et du miroir augmenté
+- Les **données de progression** (sessions, exercices) sont indispensables au suivi clinique
 
-### 1.4 Contexte de la présente EFVP
+La plateforme **ne collecte pas** de données biométriques (le miroir AR fonctionne en temps réel côté client, aucune image n'est transmise au serveur), de vidéos du patient, d'adresse physique, de numéro de téléphone ni d'identifiant gouvernemental. Aucune donnée n'est transmise à des tiers.
 
-Cette EFVP est réalisée dans le cadre d'une refonte du système d'information comprenant :
-- La mise à jour du framework backend (Django 5.2)
-- L'ajout d'une bannière de consentement aux cookies
-- L'implémentation d'un mécanisme d'anonymisation des comptes (droit de suppression)
-- La mise à jour de la politique de confidentialité pour conformité à la Loi 25
+### Détermination de l'objet de l'évaluation
+
+L'évaluation porte sur l'ensemble de la plateforme MEPP en phase d'exploitation, incluant la collecte et le traitement des renseignements personnels des patients et des cliniciens, les flux de données, les mesures de sécurité et la conformité à la Loi sur le privé telle que modifiée par la Loi 25.
 
 ---
 
-## 2. Objet de l'évaluation et rôles
+## 2. Rôles et responsabilités
 
-### 2.1 Objet de l'évaluation
+### Intervenants impliqués dans la démarche d'EFVP
 
-L'évaluation porte sur l'ensemble de la plateforme MEPP, incluant :
-- La collecte et le traitement des renseignements personnels des patients et des cliniciens
-- Les flux de données (collecte, stockage, accès, transmission, conservation, suppression)
-- Les mesures de sécurité techniques et organisationnelles
-- La conformité aux obligations de la Loi sur le privé telle que modifiée par la Loi 25
+| Nom | Titre | Organisation | Rôle dans la démarche | Raison de l'implication |
+|-----|-------|--------------|-----------------------|------------------------|
+| Sarah Martineau | Professeure, responsable de la protection des RP | UdeM — École d'orthophonie et d'audiologie | Responsable du projet, approbation du rapport | Responsable de la protection des renseignements personnels |
+| Hugo Platret | Développeur | Freelance | Rédaction du volet technique, implémentation des mesures | Connaissance approfondie de l'architecture technique |
 
-### 2.2 Rôles et responsabilités
+### Résumé des consultations
 
-| Rôle | Personne | Responsabilité |
-|------|----------|----------------|
-| Responsable du projet | Professeure Sarah Martineau | Décisions relatives au projet, validation du rapport EFVP |
-| Responsable de la protection des RP | Professeure Sarah Martineau | Supervision de la conformité, point de contact pour les personnes concernées |
-| Développeur | Hugo Platret (freelance) | Implémentation des mesures techniques, rédaction du support technique EFVP |
-| Cliniciens | Utilisateurs staff | Création des comptes patients, gestion des plans de traitement |
+Le volet technique de cette évaluation a été réalisé par le développeur responsable de la plateforme, en consultation avec la responsable du projet. Les mesures techniques (anonymisation, politique de confidentialité, bannière de cookies) ont été implémentées et testées préalablement à la rédaction de ce rapport.
 
 ---
 
-## 3. Inventaire des renseignements personnels
+## 3. Renseignements personnels impliqués et ampleur de l'évaluation
 
-### 3.1 Renseignements collectés
+### Inventaire des renseignements personnels
 
-#### Données d'identification
+#### Données d'identification et d'authentification
 
-| Donnée | Finalité | Sensibilité | Obligatoire |
-|--------|----------|-------------|-------------|
-| Prénom | Identification dans l'interface | Élevée | Oui |
-| Nom de famille | Identification dans l'interface | Élevée | Oui |
-| Adresse courriel | Authentification, communication | Élevée | Oui |
-| Mot de passe (hash bcrypt) | Authentification | N/A (hash irréversible) | Oui |
+| Renseignement | Personnes concernées | Finalité | Nécessité |
+|---------------|---------------------|----------|-----------|
+| Prénom et nom de famille | Patients, cliniciens | Identification dans l'interface, relation clinicien-patient | Indispensable à la gestion du compte |
+| Adresse courriel | Patients, cliniciens | Authentification, communications relatives au compte | Indispensable à l'authentification |
+| Mot de passe (stocké sous forme de hash bcrypt irréversible) | Patients, cliniciens | Authentification | Indispensable à la sécurité du compte |
 
 #### Données de santé
 
-| Donnée | Finalité | Sensibilité | Obligatoire |
-|--------|----------|-------------|-------------|
-| Côté de la paralysie faciale (gauche/droit) | Configuration des exercices et du miroir AR | **Très élevée** | Oui |
-| Sessions d'exercices (contenu, statut, progression) | Suivi clinique | Moyenne | Automatique |
-| Plans de traitement (exercices prescrits, durées) | Personnalisation de la rééducation | Moyenne | Créé par le clinicien |
+| Renseignement | Personnes concernées | Finalité | Nécessité |
+|---------------|---------------------|----------|-----------|
+| Côté de la paralysie faciale (gauche ou droit) | Patients | Configuration des exercices de rééducation et du miroir augmenté | Indispensable au fonctionnement clinique |
+| Historique des sessions d'exercices (contenu, progression, statut) | Patients | Suivi clinique par le clinicien, recherche sous forme dé-identifiée | Indispensable au suivi de la rééducation |
+| Plans de traitement (exercices prescrits, durées, fréquence) | Patients | Personnalisation de la rééducation | Indispensable au suivi clinique |
 
 #### Données de préférence et de configuration
 
-| Donnée | Finalité | Sensibilité | Obligatoire |
-|--------|----------|-------------|-------------|
-| Langue | Personnalisation de l'interface | Faible | Oui |
-| Préférence audio | Configuration des exercices | Faible | Non |
-| Mode vidéo uniquement | Configuration des exercices | Faible | Non |
-| Paramètres miroir (position, rotation, échelle) | Calibration du miroir AR | Faible | Automatique |
+| Renseignement | Personnes concernées | Finalité | Nécessité |
+|---------------|---------------------|----------|-----------|
+| Langue de l'interface | Patients, cliniciens | Personnalisation de l'interface | Nécessaire à l'accessibilité (plateforme multilingue) |
+| Préférences audio et vidéo | Patients | Configuration des exercices | Nécessaire à l'adaptation des exercices |
+| Paramètres du miroir augmenté (position, rotation, échelle) | Patients | Calibration du miroir | Nécessaire au fonctionnement du miroir |
 
-#### Données techniques et métadonnées
+#### Données techniques collectées automatiquement
 
-| Donnée | Finalité | Sensibilité | Obligatoire |
-|--------|----------|-------------|-------------|
-| Date de création du compte | Gestion du cycle de vie | Faible | Automatique |
-| Date de dernière connexion | Sécurité, politique de rétention | Faible | Automatique |
-| Actions effectuées (login, pause, complétion) | Suivi de progression | Faible | Automatique |
-| Agent utilisateur (navigateur) | Diagnostic technique, compatibilité | Faible | Automatique |
-| Jeton d'authentification | Authentification API | Élevée | Automatique |
+| Renseignement | Personnes concernées | Finalité | Nécessité |
+|---------------|---------------------|----------|-----------|
+| Date de création du compte et de dernière connexion | Patients, cliniciens | Gestion du cycle de vie du compte, politique de rétention | Nécessaire à la gestion du compte |
+| Actions effectuées (connexion, début/pause/fin d'exercice) | Patients | Suivi de la progression | Nécessaire au suivi clinique |
+| Agent utilisateur du navigateur | Patients | Diagnostic technique, compatibilité | Utile au support technique |
+| Jetons d'authentification (expirables) | Patients, cliniciens | Authentification des requêtes API | Indispensable à la sécurité |
 
-### 3.2 Données NON collectées
+#### Données non collectées
 
-Il est important de noter que MEPP **ne collecte pas** :
-- De données biométriques (le miroir AR fonctionne en temps réel côté client uniquement)
-- De vidéos ou photos du patient
-- D'adresse physique ou numéro de téléphone
-- De numéro d'assurance sociale ou identifiant gouvernemental
-- De données de géolocalisation
-- De données de navigation à des fins publicitaires
+MEPP ne collecte pas : données biométriques, vidéos ou photos, adresse physique, numéro de téléphone, numéro d'assurance sociale, données de géolocalisation, données à des fins publicitaires.
 
-### 3.3 Regroupement par sensibilité
+### Parcours des renseignements personnels
 
-| Niveau | Données | Justification |
-|--------|---------|---------------|
-| **Très élevé** | Côté de la paralysie | Renseignement de santé au sens de la loi |
-| **Élevé** | Nom, prénom, courriel, jetons | Permettent l'identification directe |
-| **Moyen** | Sessions, plans de traitement | Données cliniques liées à un patient identifiable |
-| **Faible** | Langue, préférences, métadonnées | Ne permettent pas l'identification à elles seules |
+| Renseignement | Collecte | Utilisation | Conservation | Suppression |
+|---------------|----------|-------------|--------------|-------------|
+| Données d'identification (nom, courriel) | Par le clinicien lors de la création du compte, ou par le patient via l'application iOS | Authentification, affichage dans l'interface, communication | Base de données PostgreSQL, serveur AWS ca-central-1, Canada | Anonymisation irréversible sur demande du patient ou du clinicien |
+| Côté de la paralysie | Par le clinicien lors de la création du compte | Configuration des exercices et du miroir | Base de données PostgreSQL, Canada | Supprimé lors de l'anonymisation du compte |
+| Sessions et progression | Automatiquement lors de l'utilisation | Suivi clinique, recherche dé-identifiée | Base de données PostgreSQL, Canada | Conservées sous forme dé-identifiée après anonymisation du compte |
+| Préférences et configuration | Par le patient via l'interface | Personnalisation de l'expérience | Base de données PostgreSQL, Canada | Supprimées lors de l'anonymisation du compte |
+| Données techniques | Automatiquement | Diagnostic, compatibilité | Base de données PostgreSQL, Canada | Conservées sous forme dé-identifiée après anonymisation |
+| Jetons d'authentification | Automatiquement à la connexion | Authentification des requêtes | Base de données PostgreSQL, Canada | Expiration automatique (14 jours) ; supprimés lors de l'anonymisation |
 
----
+### Personnes ayant accès aux renseignements personnels
 
-## 4. Parcours des renseignements personnels
+| Catégorie | Accès | Justification | Mécanisme de contrôle |
+|-----------|-------|---------------|----------------------|
+| Patient | Ses propres données uniquement | Consultation de son profil et de ses exercices | Jeton d'authentification personnel, permissions applicatives |
+| Clinicien | Données de ses patients uniquement | Gestion clinique des patients qui lui sont assignés | Jeton d'authentification, filtrage systématique par clinicien au niveau de la base de données |
+| Administrateur | Toutes les données | Administration de la plateforme | Jeton d'authentification, rôle superutilisateur |
+| Développeur | Accès au serveur pour maintenance | Maintenance technique | Accès SSH par clé privée uniquement |
 
-### 4.1 Points de collecte
+### Ampleur de l'évaluation
 
-| Point de collecte | Données collectées | Qui collecte | Comment |
-|--------------------|--------------------|--------------|---------|
-| Création de compte patient | Nom, prénom, courriel, côté paralysie, langue | Le clinicien | Via l'interface d'administration (react-admin) |
-| Inscription iOS | Nom, prénom, courriel, côté paralysie | Le patient | Via l'application iOS (self-service) |
-| Connexion | Identifiants (courriel/mot de passe) | Le patient | Via le formulaire de connexion |
-| Session d'exercice | Actions (début, pause, complétion, saut), agent utilisateur | Le système | Automatiquement lors de l'utilisation |
-| Calibration miroir | Paramètres du miroir (position, rotation, échelle) | Le patient | Via l'interface miroir |
+| Critère | Évaluation |
+|---------|------------|
+| **Sensibilité** | Certains renseignements sont sensibles (donnée de santé : côté de la paralysie). La majorité des autres données sont des renseignements d'identification courants. |
+| **Finalité** | Rééducation clinique et recherche scientifique dé-identifiée. Pas de profilage, pas de décision automatisée, pas de publicité. |
+| **Quantité** | Nombre limité de personnes concernées (patients suivis en clinique de rééducation faciale). Volume de données modéré par patient. |
+| **Répartition** | Données centralisées dans une seule base de données, hébergée au Canada. Aucune communication à des tiers ou à l'extérieur du Québec. |
+| **Support** | Exclusivement numérique (base de données PostgreSQL sur serveur infonuagique AWS). |
 
-**Note importante** : Sur le site web, les patients ne peuvent pas s'inscrire eux-mêmes. Le compte est créé par le clinicien responsable. L'inscription self-service est uniquement disponible via l'application iOS.
-
-### 4.2 Stockage
-
-| Élément | Détail |
-|---------|--------|
-| Base de données | PostgreSQL |
-| Localisation | Serveur AWS, région `ca-central-1` (Montréal, Canada) |
-| Chiffrement au repos | Géré par l'infrastructure AWS (chiffrement EBS) |
-| Sauvegardes | Gérées par l'infrastructure AWS |
-| Accès physique | Aucun — serveurs infonuagiques uniquement |
-
-Les renseignements personnels ne sont **jamais stockés à l'extérieur du Canada**.
-
-### 4.3 Accès
-
-| Rôle | Périmètre d'accès | Mécanisme de contrôle |
-|------|--------------------|-----------------------|
-| Patient | Ses propres données uniquement (profil, sessions, exercices) | Jeton d'authentification, permission `MeppMirrorPermission` |
-| Clinicien | Ses patients uniquement + exercices/plans qu'il a créés + modèles système | Jeton d'authentification, permission `MeppAPIPermission`, filtrage par clinicien |
-| Superutilisateur (admin) | Toutes les données | Jeton d'authentification, permission superutilisateur |
-| Développeur | Accès au serveur pour maintenance | Clé SSH privée uniquement, pas de mot de passe |
-
-**Isolation des données** : Un clinicien ne peut en aucun cas accéder aux patients d'un autre clinicien. Cette isolation est appliquée au niveau de la base de données (filtrage systématique des requêtes).
-
-### 4.4 Transmission
-
-- **Protocole** : Toutes les communications sont chiffrées via HTTPS/TLS (certificat Let's Encrypt)
-- **API** : Architecture REST, authentification par jeton expirant transmis dans l'en-tête HTTP `Authorization`
-- **Aucune transmission à des tiers** : Les données ne sont transmises à aucun service externe (pas d'analytics, pas de publicité, pas de sous-traitant)
-- **Aucune donnée sensible dans les URL** : Les paramètres sensibles sont transmis dans le corps des requêtes, jamais dans les URL
-
-### 4.5 Conservation
-
-| Type de donnée | Durée de conservation | Mécanisme |
-|----------------|----------------------|-----------|
-| Compte patient actif | Tant que le compte est actif | — |
-| Compte patient inactif | 5 ans après la dernière connexion | Politique documentée dans la politique de confidentialité |
-| Sessions et journaux | Conservés sous forme dé-identifiée après anonymisation du compte | Mécanisme d'anonymisation |
-| Jetons d'authentification | 14 jours (renouvelés à chaque connexion) | Expiration automatique |
-| Jetons miroir | 30 minutes | Expiration automatique |
-| Jetons d'export | 15 secondes | Expiration automatique |
-
-### 4.6 Suppression et anonymisation
-
-Le mécanisme d'anonymisation permet la suppression des renseignements personnels tout en préservant les données de recherche sous forme dé-identifiée :
-
-1. Les données d'identification (nom, prénom, courriel) sont remplacées par des valeurs irréversibles (hash cryptographique)
-2. Les données de santé directes (côté de la paralysie) sont supprimées
-3. Les paramètres de configuration (miroir, préférences) sont supprimés
-4. Le lien avec le clinicien est supprimé
-5. Le mot de passe est rendu inutilisable
-6. Tous les jetons d'authentification sont supprimés
-7. Le compte est archivé (connexion impossible)
-8. Les sessions et journaux sont conservés mais ne peuvent plus être associés à une personne identifiable
-
-Ce mécanisme est accessible :
-- Par le clinicien du patient ou un administrateur (via l'API)
-- Par le patient lui-même (self-service avec vérification du mot de passe)
+L'ampleur de la présente EFVP est adaptée à un projet de taille modérée impliquant des données de santé pour un nombre limité de personnes, avec une répartition centralisée et aucune communication à des tiers.
 
 ---
 
-## 5. Obligations applicables
+## 4. Conformité aux obligations et aux principes de protection des renseignements personnels
 
-### 5.1 Obligations provinciales
+### Obligations relatives au cycle de vie des renseignements personnels
 
-| Obligation | Référence | Statut |
-|------------|-----------|--------|
-| Nommer un responsable de la protection des RP | Art. 3.1 Loi sur le privé | Conforme (Sarah Martineau) |
-| Réaliser une EFVP pour tout système d'information impliquant des RP | Art. 3.3 Loi sur le privé | **Présent document** |
-| Obtenir le consentement pour la collecte | Art. 8 et 8.1 Loi sur le privé | Conforme (consentement implicite via politique + bannière cookies) |
-| Limiter la collecte au nécessaire | Art. 5 Loi sur le privé | Conforme (voir section 1.3) |
-| Assurer la sécurité des RP | Art. 10 Loi sur le privé | Conforme (voir section 6) |
-| Permettre l'accès et la rectification | Art. 27 et 28 Loi sur le privé | Conforme (via profil utilisateur et contact) |
-| Permettre la suppression / désindexation | Art. 28.3 Loi sur le privé | Conforme (mécanisme d'anonymisation) |
-| Aviser la CAI et les personnes en cas d'incident | Art. 3.5 Loi sur le privé | **Procédure à documenter** |
-| Conserver un registre des incidents | Art. 3.8 Loi sur le privé | **À mettre en place** |
-| Politique de confidentialité publiée | Art. 8.2 Loi sur le privé | Conforme (page Vie privée en 6 langues) |
-| Ne pas communiquer les RP à l'extérieur du Québec sans EFVP | Art. 17 Loi sur le privé | Non applicable (données hébergées au Canada, pas de transfert) |
+| Obligation | Référence | Moyens mis en place |
+|------------|-----------|---------------------|
+| **Collecte** — Ne recueillir que les RP nécessaires | Art. 5 Loi sur le privé | La collecte est limitée aux données indispensables à la rééducation (voir inventaire ci-dessus). Aucune donnée superflue n'est recueillie. |
+| **Collecte** — Informer la personne concernée | Art. 8 et 8.1 Loi sur le privé | Politique de confidentialité publiée sur le site en 6 langues, accessible à tout moment. Bannière de consentement aux cookies. |
+| **Utilisation** — Utiliser les RP uniquement aux fins pour lesquelles ils ont été recueillis | Art. 13 Loi sur le privé | Les données sont utilisées exclusivement pour la rééducation clinique et la recherche dé-identifiée, tel que décrit dans la politique de confidentialité. |
+| **Communication** — Ne pas communiquer les RP sans consentement | Art. 13 Loi sur le privé | Aucune donnée n'est communiquée à des tiers. Pas d'analytics externes, pas de publicité, pas de sous-traitant ayant accès aux données. |
+| **Conservation** — Détruire ou anonymiser les RP lorsque la finalité est atteinte | Art. 12 Loi sur le privé | Durée de conservation de 5 ans après la dernière connexion. Mécanisme d'anonymisation irréversible disponible. |
+| **Sécurité** — Prendre les mesures de sécurité propres à assurer la protection des RP | Art. 10 Loi sur le privé | Voir ci-dessous. |
 
-### 5.2 Normes et bonnes pratiques
+### Mesures de sécurité
 
-| Norme | Application |
-|-------|-------------|
-| Chiffrement en transit (TLS) | Appliqué (HTTPS obligatoire) |
-| Hachage des mots de passe | Appliqué (bcrypt) |
-| Principe du moindre privilège | Appliqué (isolation par clinicien, permissions granulaires) |
-| Minimisation des données | Appliqué (pas de collecte superflue) |
+**Authentification et contrôle d'accès**
 
----
+- Authentification par jeton expirant (durée de vie : 14 jours pour l'authentification courante, 30 minutes pour le miroir, 15 secondes pour l'export)
+- Mots de passe stockés sous forme de hash bcrypt irréversible
+- Règles de complexité de mot de passe configurables
+- Isolation stricte des données par clinicien : un clinicien ne peut accéder qu'aux données de ses propres patients (filtrage au niveau de la base de données)
+- Permissions applicatives granulaires selon le rôle (patient, clinicien, administrateur)
 
-## 6. Évaluation des risques et stratégies d'atténuation
+**Sécurité des communications**
 
-### 6.1 Risques identifiés
+- Communications chiffrées via HTTPS/TLS sur tous les environnements (certificat Let's Encrypt)
+- Jetons transmis exclusivement dans les en-têtes HTTP, jamais dans les URL
+- Protection CSRF activée
+- En-têtes de sécurité HTTP (X-Frame-Options, Content-Security-Policy)
 
-| # | Risque | Description | Probabilité | Impact | Niveau initial |
-|---|--------|-------------|-------------|--------|----------------|
-| R1 | Accès non autorisé aux données patients | Un utilisateur accède aux données d'un patient qui n'est pas le sien | Faible | Élevé | **Moyen** |
-| R2 | Interception de données en transit | Un tiers intercepte les communications entre le client et le serveur | Faible | Élevé | **Moyen** |
-| R3 | Conservation excessive | Des données sont conservées au-delà de la durée nécessaire | Moyenne | Moyen | **Moyen** |
-| R4 | Accès non autorisé au serveur | Un tiers obtient un accès au serveur de production | Faible | Très élevé | **Moyen** |
-| R5 | Perte de données | Les données sont perdues suite à une défaillance technique | Faible | Élevé | **Moyen** |
-| R6 | Ré-identification de données de recherche | Les données dé-identifiées sont croisées pour identifier un patient | Très faible | Moyen | **Faible** |
-| R7 | Incident de confidentialité non détecté | Un incident survient sans être détecté ni signalé | Faible | Très élevé | **Élevé** |
+**Sécurité de l'infrastructure**
 
-### 6.2 Stratégies d'atténuation et risques résiduels
+- Hébergement sur serveur AWS au Canada (région ca-central-1, Montréal)
+- Accès au serveur par clé SSH privée uniquement (pas d'accès par mot de passe)
+- Conteneurisation Docker (isolation des services)
+- Sauvegardes automatiques gérées par l'infrastructure AWS
 
-| # | Risque | Mesures en place | Niveau résiduel |
-|---|--------|------------------|-----------------|
-| R1 | Accès non autorisé | Jetons expirables (14 jours), permissions granulaires par rôle, isolation stricte par clinicien au niveau du filtrage des requêtes, protection CSRF | **Faible** |
-| R2 | Interception réseau | HTTPS/TLS obligatoire sur tous les environnements, jetons transmis uniquement dans les en-têtes HTTP, aucune donnée sensible dans les URL | **Faible** |
-| R3 | Conservation excessive | Politique de rétention de 5 ans documentée dans la politique de confidentialité, mécanisme d'anonymisation opérationnel, jetons à durée de vie limitée (14j / 30min / 15s) | **Faible** |
-| R4 | Accès serveur | Accès SSH par clé privée uniquement (pas de mot de passe), serveurs AWS avec sécurité gérée, aucun accès physique possible | **Faible** |
-| R5 | Perte de données | Sauvegardes AWS automatiques, conteneurisation Docker (reconstruction rapide), infrastructure déclarative reproductible | **Faible** |
-| R6 | Ré-identification | Après anonymisation : hash irréversible, suppression du côté de la paralysie et du lien clinicien, pas de données croisables permettant la ré-identification | **Très faible** |
-| R7 | Incident non détecté | **Risque résiduel élevé** — Aucun système de détection d'incident n'est en place. Voir le plan d'action. | **Moyen** |
+### Obligations transversales
 
-### 6.3 Réévaluation de la nécessité et de la proportionnalité
-
-Au terme de l'analyse des risques, les stratégies d'atténuation en place réduisent les risques à un niveau acceptable pour tous les risques identifiés, à l'exception du risque R7 (incident non détecté) qui fait l'objet d'une action au plan d'action.
-
-Le projet demeure nécessaire et proportionné : les données collectées sont limitées au strict minimum requis pour la rééducation de la paralysie faciale, et les mesures de sécurité sont adaptées à la sensibilité des données traitées.
+| Obligation | Référence | Moyens mis en place |
+|------------|-----------|---------------------|
+| Nommer un responsable de la protection des RP | Art. 3.1 Loi sur le privé | Professeure Sarah Martineau |
+| Publier une politique de confidentialité | Art. 8.2 Loi sur le privé | Politique publiée sur le site en 6 langues, mentionnant les types de données, les finalités, les durées de conservation, les droits des personnes et les coordonnées du responsable |
+| Permettre l'accès et la rectification | Art. 27 et 28 Loi sur le privé | Accès via le profil utilisateur dans l'interface web, et sur demande par courriel |
+| Permettre la suppression / dé-indexation | Art. 28.3 Loi sur le privé | Mécanisme d'anonymisation irréversible, accessible par le clinicien ou par le patient (self-service) |
+| Réaliser une EFVP | Art. 3.3 Loi sur le privé | Le présent rapport |
+| Aviser la CAI et les personnes en cas d'incident de confidentialité | Art. 3.5 Loi sur le privé | Procédure à documenter (voir plan d'action) |
+| Tenir un registre des incidents de confidentialité | Art. 3.8 Loi sur le privé | À mettre en place (voir plan d'action) |
 
 ---
 
-## 7. Mesures de sécurité détaillées
+## 5. Identification des risques et des stratégies pour les atténuer
 
-### 7.1 Authentification
+### Grille d'évaluation utilisée
 
-| Mesure | Détail |
-|--------|--------|
-| Type | Jeton expirant (implémentation personnalisée) |
-| Durée de vie du jeton authentifié | 14 jours (renouvelé à chaque connexion) |
-| Durée de vie du jeton miroir | 30 minutes |
-| Durée de vie du jeton d'export | 15 secondes |
-| Validation du mot de passe | Règles de complexité configurables |
-| Hachage du mot de passe | bcrypt (standard Django) |
+L'évaluation des risques utilise une grille gravité × probabilité, chaque critère étant coté de 1 à 4 :
 
-### 7.2 Autorisations
+| | 1 — Très faible | 2 — Faible | 3 — Grande | 4 — Très grande |
+|---|---|---|---|---|
+| **Gravité** | Aucune conséquence ou conséquences très mineures | Conséquences mineures pour un petit nombre de personnes | Conséquences importantes pour une personne ou mineures pour un grand nombre | Conséquences majeures pour une personne ou importantes pour un grand nombre |
+| **Probabilité** | Le risque n'a aucune chance de se concrétiser | Le risque a peu de chances de se concrétiser | Le risque a de bonnes chances de se réaliser | Le risque a de très grandes chances de se concrétiser |
 
-| Niveau | Mécanisme | Description |
-|--------|-----------|-------------|
-| API globale | `MeppAPIPermission` | Accès réservé aux cliniciens (staff). Au niveau de l'objet : seul le clinicien du patient ou un superutilisateur peut accéder/modifier |
-| Profil clinicien | `MeppStaffProfilePermission` | Un clinicien ne peut voir/modifier que son propre profil. Les superutilisateurs peuvent tout voir |
-| Miroir patient | `MeppMirrorPermission` | Le patient n'accède qu'à ses propres données miroir |
-| Paramètres miroir | `MeppMirrorSettingPermission` | Le patient ne modifie que ses propres paramètres |
-| Export | `MeppExportPermission` | Export via jeton temporaire à usage unique (15 secondes) |
+**Niveaux de risque** : Très faible (1–2) · Modéré (3–4) · Grand (6–8) · Très grand (9–12)
 
-### 7.3 Sécurité applicative
+### Analyse des risques
 
-| Mesure | Détail |
-|--------|--------|
-| Protection CSRF | Middleware Django activé |
-| En-têtes de sécurité HTTP | SecurityMiddleware activé |
-| Protection clickjacking | X-Frame-Options via middleware |
-| Blocage versions obsolètes | Middleware bloquant les versions iOS non supportées |
-| Validation des entrées | Sérialiseurs Django REST Framework avec validation des types et des contraintes |
+#### Risque 1 — Accès non autorisé aux données d'un patient par un autre utilisateur
 
-### 7.4 Infrastructure
+| | |
+|---|---|
+| **Description** | Un clinicien ou un utilisateur accède aux données d'un patient qui ne lui est pas assigné |
+| **Causes possibles** | Défaillance du contrôle d'accès, erreur de configuration des permissions |
+| **Conséquences potentielles** | Atteinte à la confidentialité des données de santé du patient |
+| **Gravité** | 3 — Grande (données de santé concernées) |
+| **Probabilité** | 1 — Très faible (isolation par clinicien appliquée systématiquement au niveau de la base de données) |
+| **Niveau initial** | **3 — Modéré** |
+| **Stratégies en place** | Filtrage systématique des requêtes par clinicien, permissions applicatives par rôle, jetons d'authentification individuels |
+| **Niveau résiduel** | **2 — Très faible** |
 
-| Élément | Détail |
-|---------|--------|
-| Hébergement | AWS ca-central-1 (Montréal, Canada) |
-| Protocole | HTTPS obligatoire (certificat Let's Encrypt) |
-| Conteneurisation | Docker + Docker Compose |
-| Serveur web | Nginx (proxy inverse) + uWSGI |
-| Accès serveur | SSH avec clé privée uniquement, aucun accès par mot de passe |
+#### Risque 2 — Interception de données en transit
+
+| | |
+|---|---|
+| **Description** | Un tiers intercepte les communications entre le client et le serveur |
+| **Causes possibles** | Absence de chiffrement, attaque de type « homme du milieu » |
+| **Conséquences potentielles** | Divulgation de données d'identification et de santé |
+| **Gravité** | 3 — Grande |
+| **Probabilité** | 1 — Très faible (HTTPS/TLS obligatoire sur tous les environnements) |
+| **Niveau initial** | **3 — Modéré** |
+| **Stratégies en place** | HTTPS obligatoire, jetons transmis dans les en-têtes HTTP uniquement, aucune donnée sensible dans les URL |
+| **Niveau résiduel** | **1 — Très faible** |
+
+#### Risque 3 — Conservation de données au-delà de la durée nécessaire
+
+| | |
+|---|---|
+| **Description** | Des renseignements personnels sont conservés alors que la finalité justifiant leur collecte est atteinte |
+| **Causes possibles** | Absence de mécanisme de suppression automatique, oubli de demande de suppression |
+| **Conséquences potentielles** | Atteinte au droit de suppression des personnes concernées |
+| **Gravité** | 2 — Faible (données accessibles uniquement par le clinicien et l'administrateur) |
+| **Probabilité** | 2 — Faible (politique de rétention de 5 ans documentée, mécanisme d'anonymisation opérationnel) |
+| **Niveau initial** | **4 — Modéré** |
+| **Stratégies en place** | Politique de rétention de 5 ans après la dernière connexion, mécanisme d'anonymisation irréversible sur demande, jetons à durée de vie limitée |
+| **Niveau résiduel** | **2 — Très faible** |
+
+#### Risque 4 — Accès non autorisé au serveur
+
+| | |
+|---|---|
+| **Description** | Un tiers obtient un accès au serveur de production |
+| **Causes possibles** | Compromission de la clé SSH, vulnérabilité de l'infrastructure |
+| **Conséquences potentielles** | Accès à l'ensemble des données de la plateforme |
+| **Gravité** | 4 — Très grande |
+| **Probabilité** | 1 — Très faible (accès par clé SSH uniquement, infrastructure AWS gérée) |
+| **Niveau initial** | **4 — Modéré** |
+| **Stratégies en place** | Accès SSH par clé privée uniquement, aucun accès par mot de passe, infrastructure AWS avec sécurité gérée, conteneurisation Docker |
+| **Niveau résiduel** | **2 — Très faible** |
+
+#### Risque 5 — Perte de données
+
+| | |
+|---|---|
+| **Description** | Les données sont perdues à la suite d'une défaillance technique |
+| **Causes possibles** | Défaillance matérielle, erreur humaine, incident logiciel |
+| **Conséquences potentielles** | Perte de l'historique de rééducation du patient |
+| **Gravité** | 2 — Faible (les données peuvent être reconstituées par le clinicien) |
+| **Probabilité** | 1 — Très faible (sauvegardes automatiques AWS) |
+| **Niveau initial** | **2 — Très faible** |
+| **Stratégies en place** | Sauvegardes automatiques AWS, conteneurisation Docker permettant une reconstruction rapide |
+| **Niveau résiduel** | **1 — Très faible** |
+
+#### Risque 6 — Incident de confidentialité non détecté
+
+| | |
+|---|---|
+| **Description** | Un incident de confidentialité survient sans être détecté ni signalé dans les délais requis |
+| **Causes possibles** | Absence de procédure formelle de gestion des incidents, absence de journalisation des accès |
+| **Conséquences potentielles** | Non-respect du délai de notification à la CAI (72 heures), préjudice prolongé pour les personnes concernées |
+| **Gravité** | 3 — Grande |
+| **Probabilité** | 2 — Faible (le nombre limité d'utilisateurs et d'administrateurs réduit la probabilité) |
+| **Niveau initial** | **6 — Grand** |
+| **Stratégies prévues** | Documentation d'une procédure de gestion des incidents (voir plan d'action), mise en place d'un registre des incidents |
+| **Niveau résiduel après mise en œuvre** | **3 — Modéré** |
+
+### Réévaluation de la nécessité et de la proportionnalité
+
+Au terme de l'analyse des risques, les niveaux résiduels sont acceptables : cinq risques sur six présentent un niveau résiduel très faible (1 ou 2), et le sixième (incident non détecté) sera ramené à un niveau modéré par la mise en place de la procédure de gestion des incidents prévue au plan d'action.
+
+Le projet demeure nécessaire et proportionné : les données collectées sont limitées au strict minimum requis pour la rééducation, les mesures de sécurité sont adaptées à la sensibilité des données, et aucune donnée n'est communiquée à des tiers.
 
 ---
 
-## 8. Droits des personnes concernées
+## 6. Plan d'action
 
-| Droit | Mécanisme | Statut |
-|-------|-----------|--------|
-| **Accès** | Le patient peut consulter ses données via son profil dans l'interface web. Il peut également en faire la demande par courriel. | Conforme |
-| **Rectification** | Le patient peut modifier certaines données via son profil (langue, préférences). Pour les autres modifications, il peut contacter son clinicien ou le responsable. | Conforme |
-| **Suppression / Anonymisation** | Mécanisme d'anonymisation irréversible disponible via l'API. Accessible par le clinicien, l'administrateur, ou le patient lui-même (self-service avec vérification du mot de passe). | Conforme |
-| **Portabilité** | Le patient peut demander l'export de ses données en contactant le responsable. | Partiellement conforme (processus manuel) |
-| **Retrait du consentement** | Le patient peut retirer son consentement aux cookies via la bannière de consentement, et demander l'anonymisation de son compte. | Conforme |
-| **Plainte** | Le patient peut déposer une plainte auprès de la Commission d'accès à l'information du Québec (CAI). Les coordonnées sont publiées dans la politique de confidentialité. | Conforme |
-
----
-
-## 9. Plan d'action
-
-| # | Action | Responsable | Priorité | Échéancier |
-|---|--------|-------------|----------|------------|
-| A1 | ~~Nommer un responsable de la protection des renseignements personnels~~ | Sarah Martineau | ✅ Fait | — |
-| A2 | **Documenter une procédure de gestion des incidents de confidentialité** (détection, évaluation, notification CAI dans les 72h, notification des personnes concernées) | Sarah Martineau + Hugo Platret | Obligatoire | Avril 2026 |
-| A3 | **Mettre en place un registre des incidents de confidentialité** | Sarah Martineau | Obligatoire | Avril 2026 |
-| A4 | **Former les cliniciens** à la protection des renseignements personnels et à la procédure d'anonymisation | Sarah Martineau | Recommandé | Juin 2026 |
-| A5 | **Implémenter l'export automatisé des données personnelles** (portabilité via API) | Hugo Platret | Recommandé | Selon budget |
-| A6 | **Automatiser la purge des comptes inactifs** après 5 ans | Hugo Platret | Recommandé | Selon budget |
-| A7 | **Mettre en place une journalisation d'audit** (qui accède à quel dossier et quand) | Hugo Platret | Optionnel | Selon budget |
+| # | Action | Responsable | Échéancier | Suivi |
+|---|--------|-------------|------------|-------|
+| 1 | Documenter une procédure de gestion des incidents de confidentialité (détection, évaluation de la gravité, notification à la CAI dans les 72 heures, notification aux personnes concernées) | Sarah Martineau | Avril 2026 | |
+| 2 | Mettre en place un registre des incidents de confidentialité | Sarah Martineau | Avril 2026 | |
+| 3 | Sensibiliser les cliniciens utilisateurs de la plateforme à la protection des renseignements personnels et à la procédure d'anonymisation | Sarah Martineau | Juin 2026 | |
+| 4 | Implémenter un export automatisé des données personnelles du patient (portabilité) | Hugo Platret | Selon budget | |
+| 5 | Automatiser la suppression ou l'anonymisation des comptes inactifs depuis plus de 5 ans | Hugo Platret | Selon budget | |
+| 6 | Réévaluer la présente EFVP lors de tout changement significatif au projet | Sarah Martineau | En continu | |
 
 ---
 
-## 10. Conclusion
+## 7. Approbation du rapport et versions
 
-La plateforme MEPP collecte un ensemble limité de renseignements personnels, dont certains sont sensibles (données de santé relatives à la paralysie faciale). L'analyse démontre que cette collecte est nécessaire et proportionnée aux finalités du projet.
+### Historique des versions
 
-Les mesures de sécurité en place — authentification par jeton expirant, permissions granulaires avec isolation par clinicien, chiffrement en transit, hébergement au Canada — offrent un niveau de protection adapté à la sensibilité des données traitées.
+| Version | Date | Auteur | Description |
+|---------|------|--------|-------------|
+| 1.0 | Mars 2026 | Hugo Platret | Version initiale |
 
-Le mécanisme d'anonymisation implémenté répond au droit de suppression exigé par la Loi 25, tout en préservant les données de recherche sous forme dé-identifiée.
+### Approbation
 
-Les risques résiduels sont acceptables, à l'exception de la gestion des incidents de confidentialité qui nécessite la mise en place d'une procédure formelle (action A2) et d'un registre (action A3).
-
-Les actions prioritaires identifiées sont la nomination d'un responsable de la protection des renseignements personnels et la documentation d'une procédure de gestion des incidents.
+| | Nom | Titre | Date | Signature |
+|---|-----|-------|------|-----------|
+| Rédigé par | Hugo Platret | Développeur | Mars 2026 | |
+| Approuvé par | Sarah Martineau | Responsable de la protection des RP | | |
 
 ---
 
-*Ce rapport a été préparé conformément au guide d'accompagnement de la Commission d'accès à l'information du Québec (CAI), version 3.1 — Avril 2024, dans le cadre de la conformité à la Loi sur la protection des renseignements personnels dans le secteur privé, telle que modifiée par la Loi 25.*
+## Documents joints
+
+- Politique de confidentialité (publiée sur le site, en 6 langues)
+- Code source du mécanisme d'anonymisation (`mepp/api/services/anonymization.py`)
+
+---
+
+*Ce rapport a été préparé à l'aide du modèle générique de rapport d'EFVP proposé par la Commission d'accès à l'information du Québec (version 1.1 — Avril 2024).*
