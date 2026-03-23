@@ -19,7 +19,7 @@
 | Nom du projet | MEPP — Mirror Effect Plus Protocol |
 | Nature | Plateforme web et mobile de rééducation de la paralysie faciale |
 | Responsable | Professeure Sarah Martineau, UdeM |
-| Responsable de la protection des RP | *À nommer* |
+| Responsable de la protection des RP | Professeure Sarah Martineau, UdeM |
 | Raison de l'EFVP | Refonte du système d'information (mise à jour Django 5.2, ajout bannière de cookies, mécanisme d'anonymisation) — art. 3.3 Loi sur le privé |
 | Date de début du projet | 2021 (développement initial) |
 | Date de la refonte | Mars 2026 |
@@ -86,7 +86,7 @@ L'évaluation porte sur l'ensemble de la plateforme MEPP, incluant :
 | Rôle | Personne | Responsabilité |
 |------|----------|----------------|
 | Responsable du projet | Professeure Sarah Martineau | Décisions relatives au projet, validation du rapport EFVP |
-| Responsable de la protection des RP | *À nommer (obligation Loi 25)* | Supervision de la conformité, point de contact pour les personnes concernées |
+| Responsable de la protection des RP | Professeure Sarah Martineau | Supervision de la conformité, point de contact pour les personnes concernées |
 | Développeur | Hugo Platret (freelance) | Implémentation des mesures techniques, rédaction du support technique EFVP |
 | Cliniciens | Utilisateurs staff | Création des comptes patients, gestion des plans de traitement |
 
@@ -233,7 +233,7 @@ Ce mécanisme est accessible :
 
 | Obligation | Référence | Statut |
 |------------|-----------|--------|
-| Nommer un responsable de la protection des RP | Art. 3.1 Loi sur le privé | **À faire** |
+| Nommer un responsable de la protection des RP | Art. 3.1 Loi sur le privé | Conforme (Sarah Martineau) |
 | Réaliser une EFVP pour tout système d'information impliquant des RP | Art. 3.3 Loi sur le privé | **Présent document** |
 | Obtenir le consentement pour la collecte | Art. 8 et 8.1 Loi sur le privé | Conforme (consentement implicite via politique + bannière cookies) |
 | Limiter la collecte au nécessaire | Art. 5 Loi sur le privé | Conforme (voir section 1.3) |
@@ -352,7 +352,7 @@ Le projet demeure nécessaire et proportionné : les données collectées sont l
 
 | # | Action | Responsable | Priorité | Échéancier |
 |---|--------|-------------|----------|------------|
-| A1 | **Nommer un responsable de la protection des renseignements personnels** | Sarah Martineau | Obligatoire | Immédiat |
+| A1 | ~~Nommer un responsable de la protection des renseignements personnels~~ | Sarah Martineau | ✅ Fait | — |
 | A2 | **Documenter une procédure de gestion des incidents de confidentialité** (détection, évaluation, notification CAI dans les 72h, notification des personnes concernées) | Sarah Martineau + Hugo Platret | Obligatoire | Avril 2026 |
 | A3 | **Mettre en place un registre des incidents de confidentialité** | Sarah Martineau | Obligatoire | Avril 2026 |
 | A4 | **Former les cliniciens** à la protection des renseignements personnels et à la procédure d'anonymisation | Sarah Martineau | Recommandé | Juin 2026 |
