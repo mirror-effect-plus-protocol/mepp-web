@@ -269,7 +269,12 @@ function applyTranslations() {
   if (acceptBtn) acceptBtn.textContent = trans.acceptButton;
   if (rejectBtn) rejectBtn.textContent = trans.rejectButton;
   if (prefsBtn) prefsBtn.textContent = trans.preferencesButton;
-  if (floatBtn) floatBtn.textContent = trans.footerLink;
+  if (floatBtn) {
+    var floatSpan = floatBtn.querySelector('span');
+    if (floatSpan) {
+      floatSpan.textContent = trans.footerLink;
+    }
+  }
 
   // Preferences panel
   var prefsTitle = document.getElementById('prefs-title');
@@ -392,12 +397,6 @@ function setupToggleSwitches() {
           }
         });
 
-        // Add click event listener to slider for better UX
-        slider.addEventListener('click', function() {
-          input.checked = !input.checked;
-          input.dispatchEvent(new Event('change'));
-        });
-
         input.dataset.listenerAttached = 'true';
       }
     }
@@ -468,7 +467,9 @@ function updateFloatingButtonIcon(consent) {
 
   // Check if button should show text (preserve text if showText is enabled)
   var shouldShowText = true;
-  var text = "Cookie Settings";
+  var lang = detectLanguage();
+  var trans = TRANSLATIONS[lang] || TRANSLATIONS.en;
+  var text = trans.footerLink;
   var hasLogo = true;
   var logoUrl = "https://mirroreffectplus.org/apple-touch-icon.png";
   var shape = "pill";
