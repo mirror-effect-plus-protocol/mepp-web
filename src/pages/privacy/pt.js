@@ -126,7 +126,41 @@ const LocalizedPrivacy = () => {
         conosco.
       </P>
 
-      <H5>3. TECNOLOGIAS</H5>
+      <H6>2.4 Direito à eliminação e anonimização</H6>
+
+      <P>
+        Pode solicitar a eliminação da sua conta e a anonimização das suas
+        informações pessoais. Os seus dados de identificação (nome, email)
+        serão anonimizados de forma irreversível. Os dados de sessão e
+        exercícios serão conservados de forma desidentificada para fins de
+        investigação científica. Para exercer este direito, contacte o seu
+        clínico ou o nosso responsável pela proteção de dados nos contactos
+        indicados abaixo.
+      </P>
+
+      <H6>2.5 Direito à portabilidade dos dados</H6>
+
+      <P>
+        Pode solicitar receber as suas informações pessoais num formato
+        estruturado e de uso comum. Para exercer este direito, contacte-nos
+        nos contactos indicados abaixo.
+      </P>
+
+      <H6>2.6 Finalidades detalhadas</H6>
+
+      <P>
+        As informações pessoais são recolhidas e tratadas para as seguintes
+        finalidades:
+      </P>
+      <UL>
+        <LI>a criação e gestão da sua conta;</LI>
+        <LI>a personalização dos seus exercícios de reabilitação;</LI>
+        <LI>o acompanhamento do seu progresso pelo seu clínico;</LI>
+        <LI>a investigação científica de forma desidentificada;</LI>
+        <LI>a melhoria do MEPP e das abordagens de reabilitação.</LI>
+      </UL>
+
+      <H5>3. TECNOLOGIAS E COOKIES</H5>
 
       <P>
         Certas tecnologias do MEPP estão vinculadas a informações gerais sobre
@@ -134,6 +168,14 @@ const LocalizedPrivacy = () => {
         Essas tecnologias são necessárias para que o MEPP funcione corretamente
         e serão excluídas automaticamente se você desinstalar o MEPP. Não hesite
         em nos contatar caso tenha alguma dúvida.
+      </P>
+
+      <P>
+        O MEPP utiliza cookies estritamente necessários ao funcionamento da
+        aplicação (sessão, autenticação). Não são utilizados cookies de
+        rastreamento ou publicitários. Pode gerir as suas preferências de
+        cookies através do banner de consentimento apresentado na sua primeira
+        visita.
       </P>
 
       <H5>4. MEDIDAS DE SEGURANÇA</H5>
@@ -151,14 +193,26 @@ const LocalizedPrivacy = () => {
         interceptação de dados ou outros eventos fora de controle.
       </P>
 
-      <H5>5. PERGUNTAS</H5>
+      <H5>5. ENQUADRAMENTO JURÍDICO E RECLAMAÇÕES</H5>
+
+      <P>
+        O MEPP está em conformidade com a Lei de proteção de informações
+        pessoais no setor privado (Lei 25) do Quebec. Se considerar que os seus
+        direitos não estão a ser respeitados, pode apresentar uma reclamação
+        junto da Commission d&apos;accès à l&apos;information du Québec (CAI):{' '}
+        <a href="https://www.cai.gouv.qc.ca" target="_blank" rel="noopener noreferrer">
+          www.cai.gouv.qc.ca
+        </a>.
+      </P>
+
+      <H5>6. PERGUNTAS</H5>
 
       <P>
         Você pode entrar em contato conosco caso tenha dúvidas sobre nossas
         práticas de privacidade.
       </P>
 
-      <H5>6. HIPERLINKS</H5>
+      <H5>7. HIPERLINKS</H5>
 
       <P>
         O MEPP e seu conteúdo incluem links para outros recursos. Esses
@@ -177,9 +231,9 @@ const LocalizedPrivacy = () => {
         relação a eles. Cabe a você decidir consultar esses hiperlinks.
       </P>
 
-      <H5>7. OUTROS TERMOS</H5>
+      <H5>8. OUTROS TERMOS</H5>
 
-      <H6>7.1 Acordo completo</H6>
+      <H6>8.1 Acordo completo</H6>
 
       <P>
         Esta política de privacidade constitui, junto com os termos de uso, o
@@ -188,7 +242,7 @@ const LocalizedPrivacy = () => {
         download no site do MEPP.
       </P>
 
-      <H6>7.2 Modificações</H6>
+      <H6>8.2 Modificações</H6>
 
       <P>
         Podemos modificar esta política de privacidade. Essas alterações serão
@@ -198,7 +252,7 @@ const LocalizedPrivacy = () => {
         ou desinstalar o aplicativo antes que essas alterações entrem em vigor.
       </P>
 
-      <H6>7.3 Leis aplicáveis e disputas</H6>
+      <H6>8.3 Leis aplicáveis e disputas</H6>
 
       <P>
         O MEPP, seu conteúdo e esta política de privacidade estão sujeitos às
@@ -208,7 +262,14 @@ const LocalizedPrivacy = () => {
         resolvê-la.
       </P>
 
-      <H6>7.4 Comunicações</H6>
+      <H6>8.4 Responsável pela proteção de dados</H6>
+
+      <P>
+        Para qualquer questão sobre a proteção das suas informações pessoais
+        ou para exercer os seus direitos, pode contactar o nosso responsável:
+      </P>
+
+      <H6>8.5 Comunicações</H6>
 
       <P>Você pode entrar em contato conosco usando os seguintes detalhes:</P>
 
