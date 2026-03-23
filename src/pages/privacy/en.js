@@ -123,7 +123,40 @@ const LocalizedPrivacy = () => {
         your profile. Otherwise, we invite you to contact us.
       </P>
 
-      <H5>3. TECHNOLOGIES</H5>
+      <H6>2.4 Right to Deletion and Anonymization</H6>
+
+      <P>
+        You may request the deletion of your account and the anonymization of
+        your personal information. Your identifying data (name, email) will be
+        irreversibly anonymized. Session and exercise data will be retained in
+        de-identified form for scientific research purposes. To exercise this
+        right, contact your clinician or our privacy officer at the contact
+        details provided below.
+      </P>
+
+      <H6>2.5 Right to Data Portability</H6>
+
+      <P>
+        You may request to receive your personal information in a structured
+        and commonly used format. To exercise this right, contact us at the
+        details provided below.
+      </P>
+
+      <H6>2.6 Detailed Purposes</H6>
+
+      <P>
+        Personal information is collected and processed for the following
+        purposes:
+      </P>
+      <UL>
+        <LI>creating and managing your account;</LI>
+        <LI>personalizing your rehabilitation exercises;</LI>
+        <LI>enabling your clinician to monitor your progress;</LI>
+        <LI>scientific research in de-identified form;</LI>
+        <LI>improving MEPP and rehabilitation approaches.</LI>
+      </UL>
+
+      <H5>3. TECHNOLOGIES AND COOKIES</H5>
 
       <P>
         Certain MEPP technologies are linked to general information about your
@@ -131,6 +164,13 @@ const LocalizedPrivacy = () => {
         are required for MEPP to function properly and will be automatically
         deleted if you uninstall MEPP. Do not hesitate to contact us for any
         questions.
+      </P>
+
+      <P>
+        MEPP uses cookies that are strictly necessary for the application to
+        function (session, authentication). No tracking or advertising cookies
+        are used. You can manage your cookie preferences via the consent banner
+        displayed on your first visit.
       </P>
 
       <H5>4. SECURITY MEASURES</H5>
@@ -147,14 +187,26 @@ const LocalizedPrivacy = () => {
         not be subject to data interception or other uncontrollable events.
       </P>
 
-      <H5>5. QUESTIONS</H5>
+      <H5>5. LEGAL FRAMEWORK AND COMPLAINTS</H5>
+
+      <P>
+        MEPP complies with Quebec&apos;s Act respecting the protection of personal
+        information in the private sector (Law 25). If you believe your rights
+        are not being respected, you may file a complaint with the Commission
+        d&apos;accès à l&apos;information du Québec (CAI) at:{' '}
+        <a href="https://www.cai.gouv.qc.ca" target="_blank" rel="noopener noreferrer">
+          www.cai.gouv.qc.ca
+        </a>.
+      </P>
+
+      <H5>6. QUESTIONS</H5>
 
       <P>
         You can contact us if you have any questions regarding our privacy
         practices.
       </P>
 
-      <H5>6. HYPERLINKS</H5>
+      <H5>7. HYPERLINKS</H5>
 
       <P>
         MEPP and its content include links to other resources. These hyperlinks
@@ -172,9 +224,9 @@ const LocalizedPrivacy = () => {
         your decision to consult these hyperlinks.
       </P>
 
-      <H5>7. OTHER TERMS</H5>
+      <H5>8. OTHER TERMS</H5>
 
-      <H6>7.1 Complete Agreement</H6>
+      <H6>8.1 Complete Agreement</H6>
 
       <P>
         This privacy policy constitutes, along with the terms of use, the full
@@ -183,7 +235,7 @@ const LocalizedPrivacy = () => {
         website.
       </P>
 
-      <H6>7.2 Modifications</H6>
+      <H6>8.2 Modifications</H6>
 
       <P>
         We may modify this privacy policy. These changes will be brought to your
@@ -193,7 +245,7 @@ const LocalizedPrivacy = () => {
         application before these changes take effect.
       </P>
 
-      <H6>7.3 Applicable Laws and Disputes</H6>
+      <H6>8.3 Applicable Laws and Disputes</H6>
 
       <P>
         MEPP, its content, and this privacy policy are subject to the laws in
@@ -203,7 +255,14 @@ const LocalizedPrivacy = () => {
         resolve it.
       </P>
 
-      <H6>7.4 Communications</H6>
+      <H6>8.4 Privacy Officer</H6>
+
+      <P>
+        For any questions regarding the protection of your personal information
+        or to exercise your rights, you may contact our privacy officer:
+      </P>
+
+      <H6>8.5 Communications</H6>
 
       <P>You can contact us using the following details:</P>
 
