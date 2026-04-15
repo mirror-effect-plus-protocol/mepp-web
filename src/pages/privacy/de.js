@@ -130,7 +130,42 @@ const LocalizedPrivacy = () => {
         laden wir Sie ein, uns zu kontaktieren.
       </P>
 
-      <H5>3. TECHNOLOGIEN</H5>
+      <H6>2.4 Recht auf Löschung und Anonymisierung</H6>
+
+      <P>
+        Sie können die Löschung Ihres Kontos und die Anonymisierung Ihrer
+        personenbezogenen Daten beantragen. Ihre Identifikationsdaten (Name,
+        E-Mail) werden unwiderruflich anonymisiert. Sitzungs- und Übungsdaten
+        werden in entidentifizierter Form für wissenschaftliche
+        Forschungszwecke aufbewahrt. Um dieses Recht auszuüben, wenden Sie sich
+        an Ihren Kliniker oder unseren Datenschutzbeauftragten unter den unten
+        angegebenen Kontaktdaten.
+      </P>
+
+      <H6>2.5 Recht auf Datenübertragbarkeit</H6>
+
+      <P>
+        Sie können beantragen, Ihre personenbezogenen Daten in einem
+        strukturierten und gängigen Format zu erhalten. Um dieses Recht
+        auszuüben, kontaktieren Sie uns unter den unten angegebenen
+        Kontaktdaten.
+      </P>
+
+      <H6>2.6 Detaillierte Zwecke</H6>
+
+      <P>
+        Personenbezogene Daten werden für folgende Zwecke erhoben und
+        verarbeitet:
+      </P>
+      <UL>
+        <LI>Erstellung und Verwaltung Ihres Kontos;</LI>
+        <LI>Personalisierung Ihrer Rehabilitationsübungen;</LI>
+        <LI>Überwachung Ihres Fortschritts durch Ihren Kliniker;</LI>
+        <LI>wissenschaftliche Forschung in entidentifizierter Form;</LI>
+        <LI>Verbesserung von MEPP und der Rehabilitationsansätze.</LI>
+      </UL>
+
+      <H5>3. TECHNOLOGIEN UND COOKIES</H5>
 
       <P>
         Bestimmte MEPP-Technologien sind mit allgemeinen Informationen über Ihr
@@ -138,6 +173,13 @@ const LocalizedPrivacy = () => {
         gewährleisten. Diese Technologien sind erforderlich, damit MEPP
         ordnungsgemäß funktioniert, und werden automatisch gelöscht, wenn Sie
         MEPP deinstallieren. Zögern Sie nicht, uns bei Fragen zu kontaktieren.
+      </P>
+
+      <P>
+        MEPP verwendet ausschließlich für den Betrieb der Anwendung notwendige
+        Cookies (Sitzung, Authentifizierung). Es werden keine Tracking- oder
+        Werbe-Cookies verwendet. Sie können Ihre Cookie-Einstellungen über das
+        bei Ihrem ersten Besuch angezeigte Zustimmungsbanner verwalten.
       </P>
 
       <H5>4. SICHERHEITSMASSNAHMEN</H5>
@@ -157,14 +199,26 @@ const LocalizedPrivacy = () => {
         unterliegt.
       </P>
 
-      <H5>5. FRAGEN</H5>
+      <H5>5. RECHTSRAHMEN UND BESCHWERDEN</H5>
+
+      <P>
+        MEPP entspricht dem Gesetz zum Schutz personenbezogener Daten im
+        privaten Sektor (Gesetz 25) von Quebec. Wenn Sie der Meinung sind, dass
+        Ihre Rechte nicht respektiert werden, können Sie eine Beschwerde bei der
+        Commission d&apos;accès à l&apos;information du Québec (CAI) einreichen:{' '}
+        <a href="https://www.cai.gouv.qc.ca" target="_blank" rel="noopener noreferrer">
+          www.cai.gouv.qc.ca
+        </a>.
+      </P>
+
+      <H5>6. FRAGEN</H5>
 
       <P>
         Sie können uns kontaktieren, wenn Sie Fragen zu unseren
         Datenschutzpraktiken haben.
       </P>
 
-      <H5>6. HYPERLINKS</H5>
+      <H5>7. HYPERLINKS</H5>
 
       <P>
         MEPP und dessen Inhalte enthalten Links zu anderen Ressourcen. Diese
@@ -184,9 +238,9 @@ const LocalizedPrivacy = () => {
         konsultieren.
       </P>
 
-      <H5>7. WEITERE BEDINGUNGEN</H5>
+      <H5>8. WEITERE BEDINGUNGEN</H5>
 
-      <H6>7.1 Gesamte Vereinbarung</H6>
+      <H6>8.1 Gesamte Vereinbarung</H6>
 
       <P>
         Diese Datenschutzrichtlinie stellt zusammen mit den Nutzungsbedingungen
@@ -195,7 +249,7 @@ const LocalizedPrivacy = () => {
         diese Richtlinie auf der MEPP-Website zum Download verfügbar sind.
       </P>
 
-      <H6>7.2 Änderungen</H6>
+      <H6>8.2 Änderungen</H6>
 
       <P>
         Wir können diese Datenschutzrichtlinie ändern. Diese Änderungen werden
@@ -206,7 +260,7 @@ const LocalizedPrivacy = () => {
         Anwendung vor Inkrafttreten dieser Änderungen deinstallieren.
       </P>
 
-      <H6>7.3 Anwendbares Recht und Streitigkeiten</H6>
+      <H6>8.3 Anwendbares Recht und Streitigkeiten</H6>
 
       <P>
         MEPP, dessen Inhalte und diese Datenschutzrichtlinie unterliegen den in
@@ -216,7 +270,14 @@ const LocalizedPrivacy = () => {
         zuständig sind, um diese zu lösen.
       </P>
 
-      <H6>7.4 Kommunikation</H6>
+      <H6>8.4 Datenschutzbeauftragter</H6>
+
+      <P>
+        Bei Fragen zum Schutz Ihrer personenbezogenen Daten oder zur Ausübung
+        Ihrer Rechte können Sie unseren Datenschutzbeauftragten kontaktieren:
+      </P>
+
+      <H6>8.5 Kommunikation</H6>
 
       <P>Sie können uns unter den folgenden Angaben kontaktieren:</P>
 
