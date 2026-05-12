@@ -69,6 +69,38 @@ def send_onboarding_email(user: 'api.User') -> bool:
     return True
 
 
+def send_mfa_challenge_email(user: 'api.User', code: str, ttl_minutes: int) -> bool:
+    context = {
+        'first_name': user.first_name or user.username,
+        'code': code,
+        'ttl_minutes': ttl_minutes,
+        'mepp_host': settings.HTTP_HOST,
+    }
+
+    translation.activate(user.language)
+
+    email_html_message = render_to_string(
+        'email/mfa_challenge.html', context
+    )
+    email_plaintext_message = render_to_string(
+        'email/mfa_challenge.txt', context
+    )
+
+    msg = EmailMultiAlternatives(
+        translation.gettext('Your MEPP verification code'),
+        email_plaintext_message,
+        settings.DEFAULT_FROM_EMAIL,
+        [user.email],
+    )
+    msg.attach_alternative(email_html_message, 'text/html')
+    try:
+        msg.send()
+    except Exception as e:
+        logging.error(str(e))
+        return False
+    return True
+
+
 def send_alert_email(user: 'api.User') -> bool:
     # send an e-mail to the user
     mepp_host = settings.HTTP_HOST
