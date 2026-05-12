@@ -39,10 +39,13 @@ class MFALoginTestCase(BaseV1TestCase):
     Patients keep the one-step flow.
     """
 
-    def _post_credentials(self, username):
+    def _post_credentials(self, username, language=None):
+        data = {'username': username, 'password': self.common_password}
+        if language is not None:
+            data['language'] = language
         return self.client.post(
             self.reverse('current-user-profile-list'),
-            data={'username': username, 'password': self.common_password},
+            data=data,
         )
 
     def test_patient_login_bypasses_mfa(self):
@@ -270,6 +273,54 @@ class MFALoginTestCase(BaseV1TestCase):
         self.assertIn('Hello', sent.body)
         self.assertIn('This code is valid for', sent.body)
         self.assertNotIn('Bonjour', sent.body)
+
+    def test_login_language_override_wins_over_user_language(self):
+        # User is FR in the DB but picks Spanish on the login screen.
+        self.john.language = 'fr'
+        self.john.save(update_fields=['language'])
+
+        self._post_credentials(self.john.username, language='es')
+
+        self.assertEqual(len(mail.outbox), 1)
+        sent = mail.outbox[0]
+        self.assertEqual(sent.subject, 'Su código de verificación MEPP')
+        self.assertIn('Hola', sent.body)
+        self.assertIn('Este código es válido durante', sent.body)
+        self.assertNotIn('Bonjour', sent.body)
+        self.assertNotIn('Hello', sent.body)
+
+    def test_login_unknown_language_falls_back_to_user_language(self):
+        self.john.language = 'fr'
+        self.john.save(update_fields=['language'])
+
+        # Bogus / unsupported value — must fall back to user.language (fr).
+        self._post_credentials(self.john.username, language='zz')
+
+        sent = mail.outbox[0]
+        self.assertEqual(sent.subject, 'Votre code de vérification MEPP')
+        self.assertIn('Bonjour', sent.body)
+
+    def test_resend_uses_request_language(self):
+        # First challenge is created in FR.
+        self.john.language = 'fr'
+        self.john.save(update_fields=['language'])
+        self._post_credentials(self.john.username, language='fr')
+        challenge = MFAChallenge.objects.get(user=self.john)
+        mail.outbox.clear()
+
+        # User switches the login page to Spanish, hits resend.
+        response = self.client.post(
+            self.reverse('current-user-profile-mfa-resend'),
+            data={
+                'challenge_id': str(challenge.challenge_id),
+                'language': 'es',
+            },
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        sent = mail.outbox[0]
+        self.assertEqual(sent.subject, 'Su código de verificación MEPP')
+        self.assertIn('Hola', sent.body)
 
     def test_bad_password_does_not_create_challenge(self):
         response = self.client.post(

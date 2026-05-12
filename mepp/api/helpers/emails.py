@@ -26,6 +26,24 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils import translation
 
+from mepp.api.enums.language import LanguageEnum
+
+
+def _resolve_language(language: str | None, user: 'api.User') -> str:
+    """
+    Choose the locale for an email.
+
+    `language` is treated as an override (typically the UI language picked at
+    login time before the user has authenticated) and only used when it
+    matches one of the supported `LanguageEnum` values. Falls back to the
+    user's stored preference otherwise.
+    """
+    if language:
+        supported = {choice for choice, _ in LanguageEnum.choices()}
+        if language in supported:
+            return language
+    return user.language
+
 
 def send_onboarding_email(user: 'api.User') -> bool:
     # send an e-mail to the user
@@ -69,7 +87,12 @@ def send_onboarding_email(user: 'api.User') -> bool:
     return True
 
 
-def send_mfa_challenge_email(user: 'api.User', code: str, ttl_minutes: int) -> bool:
+def send_mfa_challenge_email(
+    user: 'api.User',
+    code: str,
+    ttl_minutes: int,
+    language: str | None = None,
+) -> bool:
     context = {
         'first_name': user.first_name or user.username,
         'code': code,
@@ -77,7 +100,7 @@ def send_mfa_challenge_email(user: 'api.User', code: str, ttl_minutes: int) -> b
         'mepp_host': settings.HTTP_HOST,
     }
 
-    translation.activate(user.language)
+    translation.activate(_resolve_language(language, user))
 
     email_html_message = render_to_string(
         'email/mfa_challenge.html', context

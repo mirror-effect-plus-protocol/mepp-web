@@ -33,7 +33,7 @@ msgstr "Ihr Profil wurde aktiviert"
 #: helpers/emails.py:90 templates/email/mfa_challenge.html:28
 #: templates/email/mfa_challenge.html:106
 msgid "Your MEPP verification code"
-msgstr ""
+msgstr "Ihr MEPP-Bestätigungscode"
 
 #: helpers/emails.py:126
 msgid "Your e-mail address has been changed"
@@ -86,16 +86,16 @@ msgstr "Hallo"
 
 #: templates/email/mfa_challenge.html:132 templates/email/mfa_challenge.txt:4
 msgid "Use the verification code below to finish signing in to MEPP."
-msgstr ""
+msgstr "Verwenden Sie den unten stehenden Bestätigungscode, um sich bei MEPP anzumelden."
 
 #: templates/email/mfa_challenge.html:134 templates/email/mfa_challenge.txt:8
 #, python-format
 msgid "This code is valid for %(ttl_minutes)s minutes."
-msgstr ""
+msgstr "Dieser Code ist %(ttl_minutes)s Minuten lang gültig."
 
 #: templates/email/mfa_challenge.html:135 templates/email/mfa_challenge.txt:10
 msgid "If you did not request this code, please ignore this email."
-msgstr ""
+msgstr "Wenn Sie diesen Code nicht angefordert haben, ignorieren Sie diese E-Mail bitte."
 
 #: templates/email/mfa_challenge.html:136 templates/email/mfa_challenge.txt:12
 #: templates/email/staff_registration.html:170

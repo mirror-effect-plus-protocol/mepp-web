@@ -43,6 +43,10 @@ export default {
         label: 'Neues Passwort',
         placeholder: '',
       },
+      mfa_code: {
+        label: 'Bestätigungscode',
+        placeholder: '6-stelliger Code',
+      },
       error: {
         login_invalid: 'Ungültige E-Mail-Adresse oder Passwort',
         email_invalid: 'Ungültige E-Mail-Adresse',
@@ -50,11 +54,19 @@ export default {
         pwd: 'Muss einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen (-_ @$!%*#?&) enthalten.',
         min_length: 'Dieses Passwort ist zu kurz.',
         required: 'Dieses Feld ist erforderlich.',
+        mfa_invalid: 'Ungültiger oder abgelaufener Code',
+        mfa_code_format: 'Der Code muss 6 Ziffern enthalten',
       },
     },
 
     login: {
       title: 'Anmeldung',
+    },
+
+    mfa: {
+      title: 'Zwei-Faktor-Authentifizierung',
+      hint: 'Ein 6-stelliger Code wurde an Ihre E-Mail-Adresse gesendet. Geben Sie ihn unten ein, um die Anmeldung abzuschließen.',
+      code_sent: 'Ein neuer Code wurde gesendet.',
     },
 
     reset_password: {
