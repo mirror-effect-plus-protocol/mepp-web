@@ -48,4 +48,6 @@ MIRROR_SESSION_TIMEOUT = 5
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+RESEARCH_DEID_SALT = 'test-only-salt-not-for-production'
+
 HTTP_HOST = 'http://testserver'

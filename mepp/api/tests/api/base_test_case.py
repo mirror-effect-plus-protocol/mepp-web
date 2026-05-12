@@ -20,7 +20,10 @@
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 
+from unittest.mock import patch
+
 from django.contrib.auth import get_user_model
+from django.core import mail
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -29,6 +32,10 @@ from mepp.api.tests.mixins.prepare_users import PrepareUserMixin
 
 
 class BaseTestCase(PrepareUserMixin, APITestCase):
+
+    # Fixed OTP code used during tests. _generate_code is patched so MFA
+    # challenges sent to staff users always carry this value.
+    MFA_TEST_CODE = '123456'
 
     def setUp(self):
         self.prepare_users()
@@ -41,13 +48,33 @@ class BaseTestCase(PrepareUserMixin, APITestCase):
             'username': username,
             'password': password,
         }
-        response = self.client.post(
-            self.reverse('current-user-profile-list'), data=data
-        )
-        user = get_user_model().objects.get(username=username)
+        with patch(
+            'mepp.api.services.mfa._generate_code',
+            return_value=self.MFA_TEST_CODE,
+        ):
+            response = self.client.post(
+                self.reverse('current-user-profile-list'), data=data
+            )
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        if response.data.get('mfa_required'):
+            response = self.client.post(
+                self.reverse('current-user-profile-mfa-verify'),
+                data={
+                    'challenge_id': response.data['challenge_id'],
+                    'code': self.MFA_TEST_CODE,
+                },
+            )
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        user = get_user_model().objects.get(username=username)
         self.assertEqual(response.data['profile']['uid'], user.uid)
         self.assertEqual(response.data['token'], user.token)
+
+        # Discard any MFA notification email so tests that assert on
+        # mail.outbox see only the messages produced by the code under test.
+        mail.outbox.clear()
 
         return response.data['token']
 

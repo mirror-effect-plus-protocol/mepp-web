@@ -31,6 +31,7 @@ import BasicLayout from '@layouts/Basic';
 import { Footer } from '@components/footer/Footer';
 import ForgotPwd from '@components/forms/ForgotPwdForm';
 import LoginForm from '@components/forms/LoginForm';
+import MfaForm from '@components/forms/MfaForm';
 import { Header } from '@components/header/Header';
 
 /**
@@ -38,7 +39,11 @@ import { Header } from '@components/header/Header';
  */
 const LoginPage = () => {
   const [switchForm, setSwitchForm] = useState(false);
+  const [mfaChallenge, setMfaChallenge] = useState(null);
   useTrackingView('/login');
+
+  const showCredentials = !switchForm && !mfaChallenge;
+  const showForgot = switchForm && !mfaChallenge;
 
   return (
     <BasicLayout
@@ -46,8 +51,21 @@ const LoginPage = () => {
       content={
         <ContainerWrapper>
           <ContainerInner>
-            {!switchForm && <LoginForm onSwitch={() => setSwitchForm(true)} />}
-            {switchForm && <ForgotPwd onSwitch={() => setSwitchForm(false)} />}
+            {showCredentials && (
+              <LoginForm
+                onSwitch={() => setSwitchForm(true)}
+                onMfaRequired={(challenge) => setMfaChallenge(challenge)}
+              />
+            )}
+            {showForgot && <ForgotPwd onSwitch={() => setSwitchForm(false)} />}
+            {mfaChallenge && (
+              <MfaForm
+                challengeId={mfaChallenge.challengeId}
+                expiresAt={mfaChallenge.expiresAt}
+                onCancel={() => setMfaChallenge(null)}
+                onChallengeRenewed={(fresh) => setMfaChallenge(fresh)}
+              />
+            )}
           </ContainerInner>
         </ContainerWrapper>
       }
