@@ -43,6 +43,10 @@ export default {
         label: 'New password',
         placeholder: '',
       },
+      mfa_code: {
+        label: 'Verification code',
+        placeholder: '6-digit code',
+      },
       error: {
         login_invalid: 'Invalid email address or password',
         email_invalid: 'Invalid email address',
@@ -50,11 +54,19 @@ export default {
         pwd: 'Must contain a lowercase letter, an uppercase letter, a digit, and a special character (-_ @$!%*#?&)',
         min_length: 'This password is too short.',
         required: 'This field is required.',
+        mfa_invalid: 'Invalid or expired code',
+        mfa_code_format: 'The code must be 6 digits',
       },
     },
 
     login: {
       title: 'Login',
+    },
+
+    mfa: {
+      title: 'Two-step verification',
+      hint: 'A 6-digit code has been sent to your email. Enter it below to complete sign-in.',
+      code_sent: 'A new code has been sent.',
     },
 
     reset_password: {

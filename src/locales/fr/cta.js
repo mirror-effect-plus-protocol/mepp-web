@@ -47,5 +47,7 @@ export default {
     back: 'Retour',
     confirm: 'Ok',
     support: 'Aide',
+    verify: 'Vérifier',
+    mfa_resend: 'Renvoyer le code',
   },
 };

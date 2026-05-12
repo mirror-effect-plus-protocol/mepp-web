@@ -20,11 +20,11 @@
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
 import React, { useState } from 'react';
-import { useLogin, useNotify } from 'react-admin';
+import { useNotify } from 'react-admin';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { MfaRequiredError } from '@admin/authProvider';
+import authProvider from '@admin/authProvider';
 
 import { spacings } from '@styles/configs/spacings';
 import { FlexAlignCenter, FlexAlignMiddle } from '@styles/tools';
@@ -36,32 +36,44 @@ import Form from '@components/generics/forms/Form';
 import Input from '@components/generics/forms/Input';
 
 /**
- * Login Form
+ * Email-OTP second-step form for staff (clinician / admin) login.
+ *
+ * Props:
+ *  - challengeId / expiresAt: returned by the first POST /me/ call
+ *  - onCancel: caller goes back to the credentials step
+ *  - onChallengeRenewed({challengeId, expiresAt}): caller updates challenge state after resend
  */
-const LoginForm = ({ onSwitch, onMfaRequired }) => {
+const MfaForm = ({ challengeId, onCancel, onChallengeRenewed }) => {
   const { t } = useTranslation();
-  const login = useLogin();
   const notify = useNotify();
   const [loading, setLoading] = useState(false);
 
-  const submit = (data) => {
+  const submit = ({ code }) => {
     setLoading(true);
-    login(data).catch((err) => {
+    authProvider.mfaVerify({ challengeId, code }).catch((err) => {
       setLoading(false);
-      if (err instanceof MfaRequiredError) {
-        onMfaRequired({
-          challengeId: err.challengeId,
-          expiresAt: err.expiresAt,
-        });
-        return;
-      }
-      notify('form.field.error.login_invalid', { type: 'error' });
+      notify(err.message || 'form.field.error.mfa_invalid', { type: 'error' });
     });
+  };
+
+  const resend = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const fresh = await authProvider.mfaResend({ challengeId });
+      onChallengeRenewed(fresh);
+      notify('form.mfa.code_sent', { type: 'info' });
+    } catch (err) {
+      notify(err.message || 'form.field.error.mfa_invalid', { type: 'error' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
-      <Title>{t('form:login:title')}</Title>
+      <Title>{t('form:mfa:title')}</Title>
+      <Hint>{t('form:mfa:hint')}</Hint>
 
       <FormWrapper>
         <Form
@@ -73,42 +85,39 @@ const LoginForm = ({ onSwitch, onMfaRequired }) => {
         >
           {({ errors }) => (
             <>
-              <Input.Email
-                name="username"
-                placeholder={t('form:field:email:placeholder')}
+              <Input.Text
+                name="code"
+                placeholder={t('form:field:mfa_code:placeholder')}
+                autoComplete="one-time-code"
+                inputMode="numeric"
                 required
+                validation={{
+                  pattern: {
+                    value: /^\d{6}$/,
+                    message: t('form:field:error:mfa_code_format'),
+                  },
+                }}
               />
-              {errors.username && (
+              {errors.code && (
                 <FieldError role="alert" small>
-                  {errors.username.message}
-                </FieldError>
-              )}
-
-              <Input.Password
-                name="password"
-                placeholder={t('form:field:password:placeholder')}
-                required
-              />
-              {errors.password && (
-                <FieldError role="alert" small>
-                  {errors.password.message}
+                  {errors.code.message}
                 </FieldError>
               )}
 
               <ButtonWrapper>
-                <Button.Default label={t('cta:login')} type="submit" />
-                <LinkPassword
+                <Button.Default label={t('cta:verify')} type="submit" />
+                <LinkResend href="#" onClick={resend}>
+                  {t('cta:mfa_resend')}
+                </LinkResend>
+                <LinkCancel
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
-                    onSwitch();
+                    onCancel();
                   }}
                 >
-                  {t('cta:goto_forgot_password')}
-                </LinkPassword>
-                <LinkHelp href="#/support" aria-label={t('a11y:support')}>
-                  {t('cta:support')}
-                </LinkHelp>
+                  {t('cta:back')}
+                </LinkCancel>
               </ButtonWrapper>
             </>
           )}
@@ -121,6 +130,11 @@ const LoginForm = ({ onSwitch, onMfaRequired }) => {
 
 const Title = styled(H2)`
   text-align: center;
+`;
+
+const Hint = styled(P)`
+  text-align: center;
+  margin-bottom: ${spacings.default * 2}px;
 `;
 
 const FormWrapper = styled(FlexAlignCenter.Component)`
@@ -138,11 +152,11 @@ const ButtonWrapper = styled.div`
   flex-direction: column;
 `;
 
-const LinkPassword = styled(Href)`
+const LinkResend = styled(Href)`
   margin: ${spacings.default * 2}px 0 0;
 `;
 
-const LinkHelp = styled(Href)`
+const LinkCancel = styled(Href)`
   margin: ${spacings.default / 2}px 0 0;
 `;
 
@@ -152,4 +166,4 @@ const FieldError = styled(P)`
   color: ${({ theme }) => theme.colors.error};
 `;
 
-export default LoginForm;
+export default MfaForm;
