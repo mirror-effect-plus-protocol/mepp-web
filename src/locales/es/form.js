@@ -43,6 +43,10 @@ export default {
         label: 'Nueva contraseña',
         placeholder: '',
       },
+      mfa_code: {
+        label: 'Código de verificación',
+        placeholder: 'Código de 6 dígitos',
+      },
       error: {
         login_invalid: 'Dirección de correo electrónico o contraseña inválida',
         email_invalid: 'Dirección de correo electrónico inválida',
@@ -50,11 +54,19 @@ export default {
         pwd: 'Debe contener una minúscula, una mayúscula, un número y un carácter especial (-_ @$!%*#?&)',
         min_length: 'Esta contraseña es demasiado corta.',
         required: 'Este campo es requerido.',
+        mfa_invalid: 'Código inválido o expirado',
+        mfa_code_format: 'El código debe contener 6 dígitos',
       },
     },
 
     login: {
       title: 'Conexión',
+    },
+
+    mfa: {
+      title: 'Verificación en dos pasos',
+      hint: 'Se ha enviado un código de 6 dígitos a su dirección de correo electrónico. Ingréselo a continuación para completar el inicio de sesión.',
+      code_sent: 'Se ha enviado un nuevo código.',
     },
 
     reset_password: {

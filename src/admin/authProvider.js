@@ -19,8 +19,16 @@
  * You should have received a copy of the GNU General Public License
  * along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
  */
+import i18n from 'locales';
+
 import { RequestEndpoint, RequestMethod } from '@utils/constants';
 import { fetchData } from '@utils/fetch';
+
+// Two-letter language code currently active in the UI. The backend uses it
+// to localize the MFA email even when the user's stored preference differs
+// (e.g. a clinician with language='fr' on the login screen picks Español
+// — they should still get the Spanish email).
+const currentUiLanguage = () => (i18n.language || '').slice(0, 2).toLowerCase();
 
 // temporary token injected by URL like http://[url]]/?tt=wererrwerwe#/mirror
 let temporaryToken = null;
@@ -64,7 +72,7 @@ const authProvider = {
   login: async ({ username, password }) => {
     const { data, response } = await fetchData(
       RequestEndpoint.LOGIN,
-      { username, password },
+      { username, password, language: currentUiLanguage() },
       RequestMethod.POST,
     );
 
@@ -100,7 +108,7 @@ const authProvider = {
   mfaResend: async ({ challengeId }) => {
     const { data, response } = await fetchData(
       RequestEndpoint.MFA_RESEND,
-      { challenge_id: challengeId },
+      { challenge_id: challengeId, language: currentUiLanguage() },
       RequestMethod.POST,
     );
 
