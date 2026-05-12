@@ -30,6 +30,33 @@ let temporaryProfil = null;
 let permissions = null;
 
 /**
+ * Thrown by `authProvider.login` when the backend requires a second-factor
+ * step (email OTP). The caller is expected to read `challengeId` and prompt
+ * for the code, then call `authProvider.mfaVerify`.
+ */
+class MfaRequiredError extends Error {
+  constructor({ challengeId, expiresAt }) {
+    super('MFA_REQUIRED');
+    this.name = 'MfaRequiredError';
+    this.challengeId = challengeId;
+    this.expiresAt = expiresAt;
+  }
+}
+
+const persistSessionAndRedirect = (data) => {
+  if (data.token) localStorage.setItem('token', data.token);
+  if (data.profile)
+    localStorage.setItem('profile', JSON.stringify(data.profile));
+  document.body.style.visibility = 'hidden';
+  if (data.permissions === 'admin' || data.permissions === 'staff') {
+    window.location.href = '/';
+  } else {
+    window.location.href = '#/intro';
+    window.location.reload();
+  }
+};
+
+/**
  * Based on `tokenAuthProvider` from ra-data-django-rest-framework
  * See https://github.com/bmihelac/ra-data-django-rest-framework/blob/master/src/tokenAuthProvider.ts
  */
@@ -44,19 +71,47 @@ const authProvider = {
     if (data) {
       const error = data.non_field_errors || data.detail;
       if (error) throw new Error(error);
-      if (data.token) localStorage.setItem('token', data.token);
-      if (data.profile)
-        localStorage.setItem('profile', JSON.stringify(data.profile));
-      document.body.style.visibility = 'hidden';
-      if (data.permissions === 'admin' || data.permissions === 'staff') {
-        window.location.href = '/';
-      } else {
-        window.location.href = '#/intro';
-        window.location.reload();
+      if (data.mfa_required) {
+        throw new MfaRequiredError({
+          challengeId: data.challenge_id,
+          expiresAt: data.expires_at,
+        });
       }
+      persistSessionAndRedirect(data);
     } else {
       throw new Error(`Service ${response.statusText} error`);
     }
+  },
+
+  mfaVerify: async ({ challengeId, code }) => {
+    const { data, response } = await fetchData(
+      RequestEndpoint.MFA_VERIFY,
+      { challenge_id: challengeId, code },
+      RequestMethod.POST,
+    );
+
+    if (!data) {
+      throw new Error(`Service ${response.statusText} error`);
+    }
+    if (data.detail) throw new Error(data.detail);
+    persistSessionAndRedirect(data);
+  },
+
+  mfaResend: async ({ challengeId }) => {
+    const { data, response } = await fetchData(
+      RequestEndpoint.MFA_RESEND,
+      { challenge_id: challengeId },
+      RequestMethod.POST,
+    );
+
+    if (!data) {
+      throw new Error(`Service ${response.statusText} error`);
+    }
+    if (data.detail) throw new Error(data.detail);
+    return {
+      challengeId: data.challenge_id,
+      expiresAt: data.expires_at,
+    };
   },
 
   logout: (reload) => {
@@ -137,5 +192,5 @@ const authTemporaryToken = async (token) => {
 };
 
 export { temporaryToken, temporaryProfil };
-export { authTemporaryToken };
+export { authTemporaryToken, MfaRequiredError };
 export default authProvider;
