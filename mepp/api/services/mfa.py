@@ -98,9 +98,14 @@ def create_challenge(user) -> tuple[MFAChallenge, str]:
     return challenge, code
 
 
-def send_challenge_email(user, code: str) -> None:
+def send_challenge_email(user, code: str, language: str | None = None) -> None:
     ttl_minutes = getattr(settings, 'MFA_CODE_TTL_SECONDS', 300) // 60
-    send_mfa_challenge_email(user, code=code, ttl_minutes=ttl_minutes)
+    send_mfa_challenge_email(
+        user,
+        code=code,
+        ttl_minutes=ttl_minutes,
+        language=language,
+    )
 
 
 def verify_challenge(challenge_id: str, code: str) -> MFAChallenge:

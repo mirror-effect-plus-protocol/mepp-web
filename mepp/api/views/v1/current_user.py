@@ -88,7 +88,9 @@ class CurrentUserViewSet(
 
         if requires_mfa(user):
             challenge, code = create_challenge(user)
-            send_challenge_email(user, code)
+            send_challenge_email(
+                user, code, language=request.data.get('language'),
+            )
             return Response({
                 'mfa_required': True,
                 'challenge_id': str(challenge.challenge_id),
@@ -291,7 +293,9 @@ class CurrentUserViewSet(
             )
 
         challenge, code = create_challenge(previous.user)
-        send_challenge_email(previous.user, code)
+        send_challenge_email(
+            previous.user, code, language=request.data.get('language'),
+        )
         return Response({
             'mfa_required': True,
             'challenge_id': str(challenge.challenge_id),
