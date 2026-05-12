@@ -26,10 +26,10 @@ import secrets
 from datetime import timedelta
 
 from django.conf import settings
-from django.core.mail import send_mail
 from django.db import transaction
 from django.utils import timezone
 
+from mepp.api.helpers.emails import send_mfa_challenge_email
 from mepp.api.models.mfa import MFAChallenge
 
 
@@ -99,31 +99,8 @@ def create_challenge(user) -> tuple[MFAChallenge, str]:
 
 
 def send_challenge_email(user, code: str) -> None:
-    subject = getattr(
-        settings,
-        'MFA_EMAIL_SUBJECT',
-        'MEPP — verification code',
-    )
     ttl_minutes = getattr(settings, 'MFA_CODE_TTL_SECONDS', 300) // 60
-    body = (
-        f'Bonjour {user.first_name or user.username},\n\n'
-        f'Votre code de vérification MEPP est : {code}\n'
-        f'Ce code est valide pendant {ttl_minutes} minutes.\n'
-        "Si vous n'êtes pas à l'origine de cette demande, ignorez ce courriel.\n\n"
-        f'---\n\n'
-        f'Hello {user.first_name or user.username},\n\n'
-        f'Your MEPP verification code is: {code}\n'
-        f'This code is valid for {ttl_minutes} minutes.\n'
-        f'If you did not request this code, please ignore this email.\n'
-    )
-
-    send_mail(
-        subject=subject,
-        message=body,
-        from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', None),
-        recipient_list=[user.email],
-        fail_silently=False,
-    )
+    send_mfa_challenge_email(user, code=code, ttl_minutes=ttl_minutes)
 
 
 def verify_challenge(challenge_id: str, code: str) -> MFAChallenge:
