@@ -237,6 +237,40 @@ class MFALoginTestCase(BaseV1TestCase):
         self.assertNotEqual(challenge.code_hash, '123456')
         self.assertEqual(challenge.code_hash, _hash_code('123456'))
 
+    def test_email_subject_and_body_use_user_language_fr(self):
+        self.john.language = 'fr'
+        self.john.save(update_fields=['language'])
+
+        self._post_credentials(self.john.username)
+
+        self.assertEqual(len(mail.outbox), 1)
+        sent = mail.outbox[0]
+        self.assertEqual(sent.subject, 'Votre code de vérification MEPP')
+        self.assertIn('Bonjour', sent.body)
+        self.assertIn('Ce code est valide pendant', sent.body)
+        self.assertIn("Si vous n’êtes pas à l’origine", sent.body)
+        self.assertNotIn('Hello ', sent.body)
+
+        # HTML alternative is attached and also localized.
+        self.assertEqual(len(sent.alternatives), 1)
+        html_body, mime_type = sent.alternatives[0]
+        self.assertEqual(mime_type, 'text/html')
+        self.assertIn('Bonjour', html_body)
+        self.assertIn('Ce code est valide pendant', html_body)
+
+    def test_email_subject_and_body_use_user_language_en(self):
+        self.john.language = 'en'
+        self.john.save(update_fields=['language'])
+
+        self._post_credentials(self.john.username)
+
+        self.assertEqual(len(mail.outbox), 1)
+        sent = mail.outbox[0]
+        self.assertEqual(sent.subject, 'Your MEPP verification code')
+        self.assertIn('Hello', sent.body)
+        self.assertIn('This code is valid for', sent.body)
+        self.assertNotIn('Bonjour', sent.body)
+
     def test_bad_password_does_not_create_challenge(self):
         response = self.client.post(
             self.reverse('current-user-profile-list'),

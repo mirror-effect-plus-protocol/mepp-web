@@ -177,7 +177,6 @@ MFA_REQUIRED_FOR_STAFF = (
 MFA_CODE_LENGTH = 6
 MFA_CODE_TTL_SECONDS = 5 * 60  # 5 minutes
 MFA_MAX_ATTEMPTS = 5
-MFA_EMAIL_SUBJECT = 'MEPP — Code de vérification / verification code'
 
 # Tokens lifespan in seconds
 TOKEN_EXPIRY_TTLS = {
