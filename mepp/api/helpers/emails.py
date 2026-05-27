@@ -26,6 +26,24 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils import translation
 
+from mepp.api.enums.language import LanguageEnum
+
+
+def _resolve_language(language: str | None, user: 'api.User') -> str:
+    """
+    Choose the locale for an email.
+
+    `language` is treated as an override (typically the UI language picked at
+    login time before the user has authenticated) and only used when it
+    matches one of the supported `LanguageEnum` values. Falls back to the
+    user's stored preference otherwise.
+    """
+    if language:
+        supported = {choice for choice, _ in LanguageEnum.choices()}
+        if language in supported:
+            return language
+    return user.language
+
 
 def send_onboarding_email(user: 'api.User') -> bool:
     # send an e-mail to the user
@@ -59,6 +77,43 @@ def send_onboarding_email(user: 'api.User') -> bool:
         settings.DEFAULT_FROM_EMAIL,
         # to:
         [user.email]
+    )
+    msg.attach_alternative(email_html_message, 'text/html')
+    try:
+        msg.send()
+    except Exception as e:
+        logging.error(str(e))
+        return False
+    return True
+
+
+def send_mfa_challenge_email(
+    user: 'api.User',
+    code: str,
+    ttl_minutes: int,
+    language: str | None = None,
+) -> bool:
+    context = {
+        'first_name': user.first_name or user.username,
+        'code': code,
+        'ttl_minutes': ttl_minutes,
+        'mepp_host': settings.HTTP_HOST,
+    }
+
+    translation.activate(_resolve_language(language, user))
+
+    email_html_message = render_to_string(
+        'email/mfa_challenge.html', context
+    )
+    email_plaintext_message = render_to_string(
+        'email/mfa_challenge.txt', context
+    )
+
+    msg = EmailMultiAlternatives(
+        translation.gettext('Your MEPP verification code'),
+        email_plaintext_message,
+        settings.DEFAULT_FROM_EMAIL,
+        [user.email],
     )
     msg.attach_alternative(email_html_message, 'text/html')
     try:

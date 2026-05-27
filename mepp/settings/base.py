@@ -162,6 +162,22 @@ DEFAULT_FROM_EMAIL = os.environ.get('DJANGO_DEFAULT_FROM_EMAIL')
 # Should include scheme and domain name
 HTTP_HOST = os.environ.get('HTTP_HOST', 'https://mirroreffectplus.org')
 
+# De-identification (research dataset export). Must be set via the environment;
+# this value is independent from SECRET_KEY by design — a compromise of one
+# must not enable re-identification.
+RESEARCH_DEID_SALT = os.environ.get('RESEARCH_DEID_SALT')
+
+# Multi-factor authentication (email OTP for all user accounts).
+# MFA_REQUIRED can be flipped via env without redeploying — useful if a user
+# account ends up with an unreachable mailbox and needs emergency access while
+# we fix it.
+MFA_REQUIRED = (
+    os.environ.get('MFA_REQUIRED', 'true').strip().lower() == 'true'
+)
+MFA_CODE_LENGTH = 6
+MFA_CODE_TTL_SECONDS = 5 * 60  # 5 minutes
+MFA_MAX_ATTEMPTS = 5
+
 # Tokens lifespan in seconds
 TOKEN_EXPIRY_TTLS = {
     'authenticated': 60 * 60 * 24 * 14,  # 7 days

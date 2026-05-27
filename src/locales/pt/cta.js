@@ -50,5 +50,7 @@ export default {
     back: 'Voltar',
     confirm: 'Ok',
     support: 'Ajuda',
+    verify: 'Verificar',
+    mfa_resend: 'Reenviar o código',
   },
 };

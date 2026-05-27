@@ -46,6 +46,8 @@ export const RequestMethod = {
 
 export const RequestEndpoint = {
   LOGIN: '/me/',
+  MFA_VERIFY: '/me/mfa/verify/',
+  MFA_RESEND: '/me/mfa/resend/',
   SESSION: '/me/session/',
   PROFILE: '/me/profile/',
   SETTINGS: '/me/settings/',

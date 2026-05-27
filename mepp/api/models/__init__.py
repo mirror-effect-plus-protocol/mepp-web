@@ -31,6 +31,7 @@ from .exercise import (
 )
 from .expiring_token import ExpiringToken
 from .log import Log
+from .mfa import MFAChallenge
 from .plan import (
     TreatmentPlan,
     TreatmentPlanI18n,

@@ -48,7 +48,6 @@ from mepp.api.permissions import (
     MeppMirrorPermission,
     MeppMirrorSettingPermission,
 )
-from mepp.api.services.anonymization import anonymize_user
 from mepp.api.serializers.v1.authtoken import AuthTokenSerializer
 from mepp.api.serializers.v1.log import UserLogSerializer
 from mepp.api.serializers.v1.patient import (
@@ -56,6 +55,17 @@ from mepp.api.serializers.v1.patient import (
     PatientSettingsSerializer,
 )
 from mepp.api.serializers.v1.session import UserSessionSerializer
+from mepp.api.services.anonymization import anonymize_user
+from mepp.api.services.mfa import (
+    MFAChallengeExpiredError,
+    MFAChallengeLockedError,
+    MFAChallengeNotFoundError,
+    MFAInvalidCodeError,
+    create_challenge,
+    requires_mfa,
+    send_challenge_email,
+    verify_challenge,
+)
 
 
 class CurrentUserViewSet(
@@ -75,6 +85,21 @@ class CurrentUserViewSet(
         )
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
+
+        if requires_mfa(user):
+            challenge, code = create_challenge(user)
+            send_challenge_email(
+                user, code, language=request.data.get('language'),
+            )
+            return Response({
+                'mfa_required': True,
+                'challenge_id': str(challenge.challenge_id),
+                'expires_at': challenge.expires_at.isoformat(),
+            })
+
+        return Response(self._issue_session(user))
+
+    def _issue_session(self, user):
         user.last_login = now()
         user.save()
 
@@ -85,7 +110,7 @@ class CurrentUserViewSet(
         else:
             token.extend_expiry()
 
-        return Response(self.__detail(user))
+        return self.__detail(user)
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
@@ -194,6 +219,88 @@ class CurrentUserViewSet(
         )
         serializer = UserSessionSerializer(user_session)
         return Response(serializer.data)
+
+    @action(
+        detail=False,
+        methods=['POST'],
+        permission_classes=[],
+        authentication_classes=[],
+        url_path='mfa/verify',
+    )
+    def mfa_verify(self, request, *args, **kwargs):
+        challenge_id = request.data.get('challenge_id', '')
+        code = request.data.get('code', '')
+
+        if not challenge_id or not code:
+            return Response(
+                {'detail': 'challenge_id and code are required'},
+                status=HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            challenge = verify_challenge(challenge_id, code)
+        except MFAChallengeNotFoundError:
+            return Response(
+                {'detail': 'Invalid or expired challenge'},
+                status=HTTP_400_BAD_REQUEST,
+            )
+        except MFAChallengeExpiredError:
+            return Response(
+                {'detail': 'Challenge expired'},
+                status=HTTP_400_BAD_REQUEST,
+            )
+        except MFAChallengeLockedError:
+            return Response(
+                {'detail': 'Too many attempts. Request a new code.'},
+                status=HTTP_400_BAD_REQUEST,
+            )
+        except MFAInvalidCodeError:
+            return Response(
+                {'detail': 'Invalid code'},
+                status=HTTP_400_BAD_REQUEST,
+            )
+
+        return Response(self._issue_session(challenge.user))
+
+    @action(
+        detail=False,
+        methods=['POST'],
+        permission_classes=[],
+        authentication_classes=[],
+        url_path='mfa/resend',
+    )
+    def mfa_resend(self, request, *args, **kwargs):
+        previous_id = request.data.get('challenge_id', '')
+        if not previous_id:
+            return Response(
+                {'detail': 'challenge_id is required'},
+                status=HTTP_400_BAD_REQUEST,
+            )
+
+        from mepp.api.models.mfa import MFAChallenge
+        try:
+            previous = MFAChallenge.objects.get(challenge_id=previous_id)
+        except MFAChallenge.DoesNotExist:
+            return Response(
+                {'detail': 'Invalid challenge'},
+                status=HTTP_400_BAD_REQUEST,
+            )
+
+        if previous.is_consumed:
+            return Response(
+                {'detail': 'Invalid challenge'},
+                status=HTTP_400_BAD_REQUEST,
+            )
+
+        challenge, code = create_challenge(previous.user)
+        send_challenge_email(
+            previous.user, code, language=request.data.get('language'),
+        )
+        return Response({
+            'mfa_required': True,
+            'challenge_id': str(challenge.challenge_id),
+            'expires_at': challenge.expires_at.isoformat(),
+        })
 
     @action(
         detail=False,

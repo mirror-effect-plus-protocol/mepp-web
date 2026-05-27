@@ -43,6 +43,10 @@ export default {
         label: 'Nuova password',
         placeholder: '',
       },
+      mfa_code: {
+        label: 'Codice di verifica',
+        placeholder: 'Codice di 6 cifre',
+      },
       error: {
         login_invalid: 'Indirizzo email o password non validi',
         email_invalid: 'Indirizzo email non valido',
@@ -50,11 +54,19 @@ export default {
         pwd: 'Deve contenere una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale (-_ @$!%*#?&)',
         min_length: 'Questa password è troppo corta',
         required: 'Questo campo è obbligatorio',
+        mfa_invalid: 'Codice non valido o scaduto',
+        mfa_code_format: 'Il codice deve contenere 6 cifre',
       },
     },
 
     login: {
       title: 'Accesso',
+    },
+
+    mfa: {
+      title: 'Verifica in due passaggi',
+      hint: 'Un codice di 6 cifre è stato inviato al tuo indirizzo email. Inseriscilo qui sotto per completare l’accesso.',
+      code_sent: 'Un nuovo codice è stato inviato.',
     },
 
     reset_password: {
