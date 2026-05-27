@@ -57,12 +57,10 @@ def requires_mfa(user) -> bool:
     """
     Return True if this user must complete an MFA step to obtain a token.
 
-    Patients (non-staff) bypass MFA. Staff and superusers are gated by the
-    MFA_REQUIRED_FOR_STAFF flag.
+    All authenticated users — patients, clinicians, admins, superusers — are
+    gated by the MFA_REQUIRED flag.
     """
-    if not getattr(settings, 'MFA_REQUIRED_FOR_STAFF', True):
-        return False
-    return bool(user.is_staff or user.is_superuser)
+    return bool(getattr(settings, 'MFA_REQUIRED', True))
 
 
 def _hash_code(code: str) -> str:
