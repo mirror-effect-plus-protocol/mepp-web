@@ -167,12 +167,12 @@ HTTP_HOST = os.environ.get('HTTP_HOST', 'https://mirroreffectplus.org')
 # must not enable re-identification.
 RESEARCH_DEID_SALT = os.environ.get('RESEARCH_DEID_SALT')
 
-# Multi-factor authentication (email OTP for staff/admin accounts).
-# MFA_REQUIRED_FOR_STAFF can be flipped via env without redeploying — useful
-# if a clinician account ends up with an unreachable mailbox and needs
-# emergency access while we fix it.
-MFA_REQUIRED_FOR_STAFF = (
-    os.environ.get('MFA_REQUIRED_FOR_STAFF', 'true').strip().lower() == 'true'
+# Multi-factor authentication (email OTP for all user accounts).
+# MFA_REQUIRED can be flipped via env without redeploying — useful if a user
+# account ends up with an unreachable mailbox and needs emergency access while
+# we fix it.
+MFA_REQUIRED = (
+    os.environ.get('MFA_REQUIRED', 'true').strip().lower() == 'true'
 )
 MFA_CODE_LENGTH = 6
 MFA_CODE_TTL_SECONDS = 5 * 60  # 5 minutes

@@ -35,8 +35,7 @@ from . import BaseV1TestCase
 
 class MFALoginTestCase(BaseV1TestCase):
     """
-    Two-step login for staff users (clinicians, admins).
-    Patients keep the one-step flow.
+    Two-step login for every user — patients, clinicians, admins, superusers.
     """
 
     def _post_credentials(self, username, language=None):
@@ -48,13 +47,18 @@ class MFALoginTestCase(BaseV1TestCase):
             data=data,
         )
 
-    def test_patient_login_bypasses_mfa(self):
+    def test_patient_login_returns_mfa_challenge(self):
         response = self._post_credentials(self.patient_john.username)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertNotIn('mfa_required', response.data)
-        self.assertIn('token', response.data)
-        self.assertEqual(MFAChallenge.objects.count(), 0)
-        self.assertEqual(len(mail.outbox), 0)
+        self.assertTrue(response.data['mfa_required'])
+        self.assertIn('challenge_id', response.data)
+        self.assertIn('expires_at', response.data)
+        self.assertNotIn('token', response.data)
+        self.assertEqual(
+            MFAChallenge.objects.filter(user=self.patient_john).count(), 1,
+        )
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn(self.patient_john.email, mail.outbox[0].to)
 
     def test_clinician_login_returns_mfa_challenge(self):
         response = self._post_credentials(self.john.username)
