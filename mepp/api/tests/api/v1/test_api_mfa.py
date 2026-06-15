@@ -38,13 +38,17 @@ class MFALoginTestCase(BaseV1TestCase):
     Two-step login for every user — patients, clinicians, admins, superusers.
     """
 
-    def _post_credentials(self, username, language=None):
+    def _post_credentials(self, username, language=None, user_agent=None):
         data = {'username': username, 'password': self.common_password}
         if language is not None:
             data['language'] = language
+        extra = {}
+        if user_agent is not None:
+            extra['HTTP_USER_AGENT'] = user_agent
         return self.client.post(
             self.reverse('current-user-profile-list'),
             data=data,
+            **extra,
         )
 
     def test_patient_login_returns_mfa_challenge(self):
@@ -73,6 +77,49 @@ class MFALoginTestCase(BaseV1TestCase):
 
     def test_admin_login_returns_mfa_challenge(self):
         response = self._post_credentials(self.admin.username)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(response.data['mfa_required'])
+
+    def test_legacy_ios_app_skips_mfa_and_gets_token(self):
+        """
+        The legacy iOS app (App Store build "MEPP/1") predates the MFA flow and
+        cannot complete two-step login. It must receive a token directly so its
+        patients are not locked out, and no challenge/email is created.
+        """
+        response = self._post_credentials(
+            self.patient_john.username,
+            user_agent='MEPP/1 CFNetwork/3860.600.12 Darwin/25.5.0',
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('token', response.data)
+        self.assertNotIn('mfa_required', response.data)
+        self.assertEqual(
+            MFAChallenge.objects.filter(user=self.patient_john).count(), 0,
+        )
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_browser_still_requires_mfa(self):
+        response = self._post_credentials(
+            self.patient_john.username,
+            user_agent=(
+                'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) '
+                'AppleWebKit/605.1.15 (KHTML, like Gecko) '
+                'Version/17.0 Mobile/15E148 Safari/604.1'
+            ),
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(response.data['mfa_required'])
+        self.assertNotIn('token', response.data)
+
+    def test_future_app_version_still_requires_mfa(self):
+        """
+        A future MFA-aware app must bump its version (e.g. "MEPP/2") so the
+        exemption no longer matches and 2FA is enforced again.
+        """
+        response = self._post_credentials(
+            self.patient_john.username,
+            user_agent='MEPP/2 CFNetwork/3860.600.12 Darwin/25.5.0',
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(response.data['mfa_required'])
 
