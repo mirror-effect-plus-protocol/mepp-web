@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with MEPP.  If not, see <http://www.gnu.org/licenses/>.
 import logging
+import re
 
 from django.contrib.auth import get_user_model
 from django.http import Http404
@@ -67,6 +68,20 @@ from mepp.api.services.mfa import (
     verify_challenge,
 )
 
+# The legacy iOS app shipped as build "MEPP/1" predates the two-step (MFA) login
+# and cannot complete the challenge: it expects a token in the /me/ response and
+# silently fails otherwise, locking patients out. Until an MFA-aware build ships,
+# requests from this exact build skip MFA and receive a token directly.
+# A future fixed app must bump its version (e.g. "MEPP/2") so this no longer
+# matches and 2FA is enforced again. The even older "MEPP/25" build is instead
+# hard-blocked upstream by middleware.BlockOldIOSUserAgentMiddleware.
+LEGACY_APP_WITHOUT_MFA_UA = re.compile(r'\bMEPP/1\b')
+
+
+def _is_legacy_app_without_mfa(request):
+    ua_string = request.META.get('HTTP_USER_AGENT', '')
+    return bool(LEGACY_APP_WITHOUT_MFA_UA.search(ua_string))
+
 
 class CurrentUserViewSet(
     ObtainAuthToken,
@@ -86,7 +101,7 @@ class CurrentUserViewSet(
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
 
-        if requires_mfa(user):
+        if requires_mfa(user) and not _is_legacy_app_without_mfa(request):
             challenge, code = create_challenge(user)
             send_challenge_email(
                 user, code, language=request.data.get('language'),
